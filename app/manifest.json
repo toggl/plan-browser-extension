@@ -1,0 +1,22 @@
+{
+  "name": "Teamweek Button",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Add tasks to Teamweek directly from Github and Trello",
+  "icons": {
+    "16": "images/icon-16.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "background": {
+    "scripts": [
+      "scripts/background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://b1149d9764ff4a9a7e8698f7a56ed003796d8582.htmlb.in/"],
+      "js": ["scripts/content_blank.js"]
+    }
+  ]
+}
