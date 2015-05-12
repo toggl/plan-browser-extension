@@ -1,0 +1,24 @@
+<div class="popup">
+  <div class="popup__title">Add to Teamweek</div>
+
+  <div class="popup__form form">
+    <div class="form__row">
+      <div class="form__label">
+        <label for="tw-form-{{cid}}-name">Name</label>
+      </div>
+      <div class="form__control">
+        <input type="text" name="name" id="tw-form-{{cid}}-name">
+      </div>
+    </div>
+
+    <div class="form__row">
+      <div class="form__label">
+        <label for="tw-form-{{cid}}-user">User</label>
+      </div>
+      <div class="form__control">
+        <select name="user_id" id="tw-form-{{cid}}-user">
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
