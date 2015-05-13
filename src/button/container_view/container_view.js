@@ -13,6 +13,8 @@ var ContainerView = View.extend({
     this.listenTo(button, 'click', this.showPopup);
     this.renderSubview(button);
 
+    this.showPopup();
+
     return this;
   },
 

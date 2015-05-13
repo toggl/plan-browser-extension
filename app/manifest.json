@@ -16,7 +16,8 @@
   "content_scripts": [
     {
       "matches": ["https://b1149d9764ff4a9a7e8698f7a56ed003796d8582.htmlb.in/"],
-      "js": ["scripts/content_blank.js"]
+      "js": ["scripts/content_blank.js"],
+      "css": ["styles/button.css"]
     }
   ]
 }

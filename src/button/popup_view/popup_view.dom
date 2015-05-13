@@ -7,7 +7,7 @@
         <label for="tw-form-{{cid}}-name">Name</label>
       </div>
       <div class="form__control">
-        <input type="text" name="name" id="tw-form-{{cid}}-name">
+        <input type="text" name="name" id="tw-form-{{cid}}-name" placeholder="Enter name...">
       </div>
     </div>
 
@@ -17,8 +17,38 @@
       </div>
       <div class="form__control">
         <select name="user_id" id="tw-form-{{cid}}-user">
+          <option value="0" disabled selected>Choose...</option>
         </select>
       </div>
     </div>
+
+    <div class="form__row">
+      <div class="form__label">
+        <label for="tw-form-{{cid}}-start-date">Start</label>
+      </div>
+      <div class="form__control form__control--datepicker">
+        <input type="date" name="start_date" id="tw-form-{{cid}}-start-date">
+      </div>
+      <div class="form__control form__control--timepicker">
+        <input type="time" name="start_time" id="tw-form-{{cid}}-start-time">
+      </div>
+    </div>
+
+    <div class="form__row">
+      <div class="form__label">
+        <label for="tw-form-{{cid}}-end-date">End</label>
+      </div>
+      <div class="form__control form__control--datepicker">
+        <input type="date" name="end_date" id="tw-form-{{cid}}-end-date">
+      </div>
+      <div class="form__control form__control--timepicker">
+        <input type="time" name="end_time" id="tw-form-{{cid}}-end-time">
+      </div>
+    </div>
+  </div>
+
+  <div class="popup__buttons">
+    <a href="#" class="button button--cancel">Cancel</a>
+    <a href="#" class="button button--submit">Add</a>
   </div>
 </div>

@@ -1,8 +1,64 @@
 .popup {
   position: absolute;
   width: 400px;
-  height: 300px;
 
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.popup__title {
+  margin: 3px;
+  padding: 12px 18px;
+
+  font-size: 16px;
+  color: #8dc63f;
+}
+
+.popup__form {
+  margin: 3px;
+  background-color: #f8f8f8;
+}
+
+.popup__buttons {
+  margin: 3px;
+}
+
+.form__row {
+  display: flex;
+  height: 45px;
+  align-items: center;
+
+  border-bottom: 1px solid #e6e6e6;
+
+  &:last-child {
+    border-bottom-style: none;
+  }
+}
+
+.form__label {
+  flex-grow: 0;
+  width: 100px;
+  padding: 0 18px;
+  box-sizing: border-box;
+
+  font-size: 14px;
+  color: #999;
+}
+
+.form__control {
+  flex-grow: 1;
+}
+
+.form__control input,
+.form__control select {
+  padding: 0;
+
+  -webkit-appearance: none;
+  border-style: none;
+  background-color: transparent;
+  font-size: 16px;
+
+  &:focus {
+    outline: none;
+  }
 }
