@@ -1,10 +1,8 @@
 var View = require('ampersand-view');
-var StylesheetView = require('../stylesheet_view/stylesheet_view');
 
 var ButtonView = View.extend({
 
   template: require('./button_view.dom'),
-  stylesheet: require('./button_view.css'),
 
   events: {
     'click': 'onClick'
@@ -12,10 +10,6 @@ var ButtonView = View.extend({
 
   render: function() {
     this.renderWithTemplate();
-
-    var stylesheet = new StylesheetView({stylesheet: this.stylesheet});
-    this.renderSubview(stylesheet);
-    
     return this;
   },
 

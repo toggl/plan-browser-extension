@@ -8,18 +8,17 @@ var ContainerView = View.extend({
 
   render: function() {
     this.renderWithTemplate();
-    this.shadow = this.el.createShadowRoot();
 
     var button = new ButtonView();
-    this.renderSubview(button, this.shadow);
     this.listenTo(button, 'click', this.showPopup);
+    this.renderSubview(button);
 
     return this;
   },
 
   showPopup: function() {
     var popup = new PopupView();
-    this.renderSubview(popup, this.shadow);
+    this.renderSubview(popup);
   }
 
 });
