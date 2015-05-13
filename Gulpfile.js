@@ -3,6 +3,7 @@ var watchify = require('watchify');
 var browserify = require('browserify');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
+var less = require('gulp-less');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var through = require('through2');
@@ -79,4 +80,14 @@ gulp.task('watch:js', function() {
   });
 
   return stream;
+});
+
+gulp.task('build:less', function() {
+  gulp.src('src/button/button.less')
+    .pipe(less())
+    .pipe(gulp.dest('app/styles/'));
+});
+
+gulp.task('watch:less', ['build:less'], function() {
+  gulp.watch('src/button/**/*.less', ['build:less']);
 });
