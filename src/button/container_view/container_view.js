@@ -4,7 +4,7 @@ var PopupView = require('../popup_view/popup_view');
 
 var ContainerView = View.extend({
 
-  template: require('./container_view.html'),
+  template: require('./container_view.dom'),
 
   render: function() {
     this.renderWithTemplate();

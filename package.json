@@ -7,8 +7,7 @@
   "devDependencies": {
     "browserify": "^10.1.3",
     "domthing": "^0.4.0",
-    "domthingify": "^0.2.0",
-    "partialify": "^3.1.3"
+    "domthingify": "^0.2.0"
   },
   "engines": {
     "node": ">=0.8.0"
