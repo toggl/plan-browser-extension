@@ -19,5 +19,8 @@
       "js": ["scripts/content_blank.js"],
       "css": ["styles/button.css"]
     }
+  ],
+  "web_accessible_resources": [
+    "fonts/*"
   ]
 }
