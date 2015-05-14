@@ -1,4 +1,5 @@
 var View = require('ampersand-view');
+var proxy = require('../../proxy');
 var ButtonView = require('../button_view/button_view');
 var TaskView = require('../task_view/task_view');
 var AuthView = require('../auth_view/auth_view');
@@ -20,8 +21,13 @@ var ContainerView = View.extend({
   },
 
   showPopup: function() {
-    var popup = new AuthView();
-    this.renderSubview(popup);
+    var self = this;
+
+    proxy.call('isAuthenticated')
+      .then(function(result) {
+        var popup = result ? new TaskView() : new AuthView();
+        self.renderSubview(popup);
+      });
   }
 
 });

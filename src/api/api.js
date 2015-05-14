@@ -4,8 +4,8 @@ exports.isAuthenticated = function() {
   return false;
 };
 
-exports.authenticate = function(username, password) {
-  if (password == 'password') {
+exports.authenticate = function(data) {
+  if (data.password == 'password') {
     return Promise.resolve();
   } else {
     return Promise.reject({ message: 'Wrong password' });
