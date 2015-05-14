@@ -11,8 +11,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, respond) {
 
     Promise.resolve(result)
       .then(function(result) {
+        console.log('Sending success', result);
         respond({ success: true, result: result });
       }, function(error) {
+        console.warn('Sending error', error);
         respond({ success: false, error: error });
       });
 

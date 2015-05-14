@@ -8,6 +8,10 @@
     "48": "images/icon-48.png",
     "128": "images/icon-128.png"
   },
+  "permissions": [
+    "storage",
+    "https://app.teamweek.com/"
+  ],
   "background": {
     "scripts": [
       "scripts/background.js"

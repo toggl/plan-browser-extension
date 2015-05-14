@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "dependencies": {
     "ampersand-view": "^7.3.0",
-    "promise": "^7.0.1"
+    "promise": "^7.0.1",
+    "superagent": "^1.2.0"
   },
   "devDependencies": {
     "browserify": "^10.1.3",
