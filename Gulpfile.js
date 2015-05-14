@@ -70,8 +70,6 @@ gulp.task('build:js', function() {
     });
   });
 
-  compileScript('src/background.js', 'background.js').pipe(stream);
-
   return stream;
 });
 
@@ -89,8 +87,6 @@ gulp.task('watch:js', function() {
       watchScript(input, output).pipe(stream);
     });
   });
-
-  watchScript('src/background.js', 'background.js').pipe(stream);
 
   return stream;
 });

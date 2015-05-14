@@ -1,5 +1,5 @@
 var View = require('ampersand-view');
-var proxy = require('../../proxy');
+var api = require('../../api/api');
 
 var AuthView = View.extend({
 
@@ -20,7 +20,7 @@ var AuthView = View.extend({
       password: this.queryByHook('input-password').value
     };
 
-    proxy.call('authenticate', values);
+    api.authenticate(values);
   }
 
 });
