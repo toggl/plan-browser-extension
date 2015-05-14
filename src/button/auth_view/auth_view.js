@@ -1,8 +1,8 @@
 var View = require('ampersand-view');
 
-var PopupView = View.extend({
+var AuthView = View.extend({
 
-  template: require('./popup_view.dom'),
+  template: require('./auth_view.dom'),
 
   render: function() {
     this.renderWithTemplate(this);
@@ -11,4 +11,4 @@ var PopupView = View.extend({
 
 });
 
-module.exports = PopupView;
+module.exports = AuthView;
