@@ -17,7 +17,7 @@ var methodMap = {
   'read':   'get'
 };
 
-module.exports = function(method, model, options) {
+function sync(method, model, options) {
   var type = methodMap[method];
   var url = options.url || result(model, 'url') || urlError();
   var request = superagent[type](url);
@@ -35,13 +35,30 @@ module.exports = function(method, model, options) {
 
   return new Promise(function(resolve, reject) {
     request.end(function(error, response) {
-      if (error) {
+      if (response == null) {
         if (options.error) options.error(error);
         reject(error);
-      } else {
+
+      } else if (response.unauthorized) {
+        var refresh = tokens.refresh().then(function() {
+          return sync(method, model, options);
+        }, function(error) {
+          if (options.error) options.error(error);
+          return Promise.reject(error);
+        });
+
+        resolve(refresh);
+
+      } else if (response.ok) {
         if (options.success) options.success(response.body);
         resolve(model);
+
+      } else {
+        if (options.error) options.error();
+        reject({ message: 'unknown_error' });
       }
     });
   });
 };
+
+module.exports = sync;

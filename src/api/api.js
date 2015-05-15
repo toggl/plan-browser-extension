@@ -26,27 +26,7 @@ exports.isAuthenticated = function() {
 };
 
 exports.authenticate = function(credentials) {
-  return new Promise(function(resolve, reject) {
-    request
-      .post('https://teamweek.com/api/v3/authenticate/token')
-      .set('Authorization', 'Basic ' + state.tokens.app_token)
-      .type('form').send({
-        username: credentials.username,
-        password: credentials.password,
-        grant_type: 'password'
-      })
-      .end(function(error, response) {
-        if (error != null) {
-          reject({ message: 'network_error' });
-        } else if (response.ok) {
-          resolve(state.tokens.save(response.body));
-        } else if (response.clientError) {
-          reject({ message: 'invalid_credentials' });
-        } else {
-          reject({ message: 'unknown_error' });
-        }
-      });
-  });
+  return state.tokens.authenticate(credentials);
 };
 
 exports.fetchAccounts = function() {
