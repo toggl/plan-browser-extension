@@ -2,7 +2,7 @@ var View = require('ampersand-view');
 
 var ButtonView = View.extend({
 
-  template: require('./button_view.dom'),
+  template: require('./button_view.hbs'),
 
   events: {
     'click': 'onClick'

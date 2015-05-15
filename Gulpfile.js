@@ -12,7 +12,7 @@ var glob = require('glob');
 function createBrowserify(filename, args) {
   return browserify(args)
     .add(filename)
-    .transform('domthingify');
+    .transform('hbsfy');
 }
 
 function createWatchify(filename) {

@@ -6,7 +6,7 @@ var AuthView = require('../auth_view/auth_view');
 
 var ContainerView = View.extend({
 
-  template: require('./container_view.dom'),
+  template: require('./container_view.hbs'),
 
   render: function() {
     this.renderWithTemplate();

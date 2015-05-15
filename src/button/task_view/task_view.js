@@ -3,7 +3,7 @@ var api = require('../../api/api');
 
 var TaskView = View.extend({
 
-  template: require('./task_view.dom'),
+  template: require('./task_view.hbs'),
 
   render: function() {
     api.fetchAccounts()

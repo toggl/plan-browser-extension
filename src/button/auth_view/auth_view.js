@@ -3,7 +3,7 @@ var api = require('../../api/api');
 
 var AuthView = View.extend({
 
-  template: require('./auth_view.dom'),
+  template: require('./auth_view.hbs'),
 
   events: {
     'click [data-hook=button-sign-in]': 'onSubmit'
