@@ -1,0 +1,11 @@
+<select name="{{name}}" id="{{id}}">
+  <option disabled selected>Choose...</option>
+
+  {{#each collection.models}}
+  <optgroup label="{{name}}">
+    {{#each users.models}}
+    <option value="{{../id}}-{{id}}">{{name}}</option>
+    {{/each}}
+  </optgroup>
+  {{/each}}
+</select>

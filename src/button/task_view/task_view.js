@@ -1,19 +1,32 @@
 var View = require('ampersand-view');
 var api = require('../../api/api');
+var UserListView = require('./user_list_view');
+var AccountCollection = require('../../models/account_collection');
 
 var TaskView = View.extend({
 
   template: require('./task_view.hbs'),
 
+  collections: {
+    accounts: AccountCollection
+  },
+
   render: function() {
-    api.fetchAccounts()
-      .then(function(accounts) {
-        console.log(accounts);
-      }, function(error) {
-        console.error(error);
+    this.renderWithTemplate(this);
+
+    var users = new UserListView({
+      name: 'user',
+      id: 'tw-form-' + this.cid + '-user',
+      collection: this.accounts
+    });
+
+    this.renderSubview(users, this.queryByHook('container-users'));
+
+    api.fetchAccounts(this.accounts)
+      .then(function() {
+        users.render();
       });
 
-    this.renderWithTemplate(this);
     return this;
   }
 

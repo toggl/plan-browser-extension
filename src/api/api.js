@@ -2,7 +2,6 @@ var request = require('superagent');
 var Promise = require('promise');
 
 var TokensModel = require('../models/tokens_model');
-var AccountCollection = require('../models/account_collection');
 
 var state = {
   tokens: new TokensModel({
@@ -29,9 +28,7 @@ exports.authenticate = function(credentials) {
   return state.tokens.authenticate(credentials);
 };
 
-exports.fetchAccounts = function() {
-  var accounts = new AccountCollection();
-
+exports.fetchAccounts = function(accounts) {
   return accounts.fetch()
     .then(function() {
       var users = accounts.map(function(account) {
