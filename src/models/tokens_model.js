@@ -9,6 +9,7 @@ var TokensState = Model.extend({
     app_secret: 'string',
     access_token: 'string',
     refresh_token: 'string',
+    refresh_promise: 'object'
   },
 
   derived: {
@@ -72,24 +73,30 @@ var TokensState = Model.extend({
   refresh: function() {
     var self = this;
 
-    return new Promise(function(resolve, reject) {
-      request
-        .post('https://teamweek.com/api/v3/authenticate/token')
-        .set('Authorization', 'Basic ' + self.app_token)
-        .type('form').send({
-          refresh_token: self.refresh_token,
-          grant_type: 'refresh_token'
-        })
-        .end(function(error, response) {
-          if (error != null) {
-            reject({ message: 'network_error' });
-          } else if (response.ok) {
-            resolve(self.save(response.body));
-          } else {
-            reject({ message: 'unknown_error' });
-          }
-        });
-    });
+    if (this.refresh_promise == null) {
+      this.refresh_promise = new Promise(function(resolve, reject) {
+        request
+          .post('https://teamweek.com/api/v3/authenticate/token')
+          .set('Authorization', 'Basic ' + self.app_token)
+          .type('form').send({
+            refresh_token: self.refresh_token,
+            grant_type: 'refresh_token'
+          })
+          .end(function(error, response) {
+            self.refresh_promise = null;
+            
+            if (error != null) {
+              reject({ message: 'network_error' });
+            } else if (response.ok) {
+              resolve(self.save(response.body));
+            } else {
+              reject({ message: 'unknown_error' });
+            }
+          });
+      });
+    }
+
+    return this.refresh_promise;
   }
 
 });
