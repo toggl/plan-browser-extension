@@ -8,7 +8,19 @@ var AccountCollection = RestCollection.extend({
 
   url: 'https://teamweek.com/api/v3/me/accounts',
 
-  sync: sync
+  sync: sync,
+
+  fetchWithUsers: function() {
+    return this.fetch().then(this.fetchAllUsers.bind(this));
+  },
+
+  fetchAllUsers: function() {
+    var users = this.map(function(account) {
+      return account.users.fetch();
+    });
+
+    return Promise.all(users);
+  }
 
 });
 

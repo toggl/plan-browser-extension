@@ -27,25 +27,3 @@ exports.isAuthenticated = function() {
 exports.authenticate = function(credentials) {
   return state.tokens.authenticate(credentials);
 };
-
-exports.fetchAccounts = function(accounts) {
-  return accounts.fetch()
-    .then(function() {
-      var users = accounts.map(function(account) {
-        return account.users.fetch();
-      });
-
-      return Promise.all(users);
-    })
-    .then(function() {
-      return accounts;
-    });
-};
-
-exports.addTask = function(data) {
-  if (data.title = 'Teamweek rocks') {
-    return Promise.resolve();
-  } else {
-    return Promise.reject({ message: 'Invalid title' });
-  }
-};

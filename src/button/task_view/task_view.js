@@ -22,7 +22,7 @@ var TaskView = View.extend({
 
     this.renderSubview(users, this.queryByHook('container-users'));
 
-    api.fetchAccounts(this.accounts)
+    this.accounts.fetchWithUsers()
       .then(function() {
         users.render();
       });
