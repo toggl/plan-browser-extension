@@ -1,4 +1,6 @@
 var Button = require('../button/button.js');
 
-var el = Button.render();
-document.body.appendChild(el);
+Button.initialize().then(function() {
+  var el = Button.render();
+  document.body.appendChild(el);
+});

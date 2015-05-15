@@ -23,11 +23,8 @@ var ContainerView = View.extend({
   showPopup: function() {
     var self = this;
 
-    api.isAuthenticated()
-      .then(function(result) {
-        var popup = result ? new TaskView() : new AuthView();
-        self.renderSubview(popup);
-      });
+    var popup = api.isAuthenticated() ? new TaskView() : new AuthView();
+    this.renderSubview(popup);
   }
 
 });

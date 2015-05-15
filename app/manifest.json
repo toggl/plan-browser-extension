@@ -10,7 +10,7 @@
   },
   "permissions": [
     "storage",
-    "https://app.teamweek.com/"
+    "https://teamweek.com/"
   ],
   "content_scripts": [
     {

@@ -1,17 +1,12 @@
 var Promise = require('promise');
 
-exports.get = function(key) {
+exports.get = function(items) {
   return new Promise(function(resolve, reject) {
-    chrome.storage.local.get(key, function(items) {
-      resolve(items[key]);
-    });
+    chrome.storage.local.get(items, resolve);
   });
 };
 
-exports.set = function(key, value) {
-  var items = {};
-  items[key] = value;
-
+exports.set = function(items) {
   return new Promise(function(resolve, reject) {
     chrome.storage.local.set(items, resolve);
   });
