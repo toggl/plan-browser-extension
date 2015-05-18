@@ -20,7 +20,7 @@ var AuthView = View.extend({
       password: this.queryByHook('input-password').value
     };
 
-    api.authenticate(values);
+    api.auth.authenticate(values);
   }
 
 });

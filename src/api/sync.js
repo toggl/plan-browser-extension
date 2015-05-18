@@ -27,10 +27,8 @@ function sync(method, model, options) {
     request.send(data);
   }
 
-  var tokens = api.getTokens();
-
-  if (tokens.has_auth_tokens) {
-    request.set('Authorization', 'Bearer ' + tokens.access_token);
+  if (api.auth.authenticated) {
+    request.set('Authorization', 'Bearer ' + api.auth.tokens.access_token);
   }
 
   return new Promise(function(resolve, reject) {
@@ -40,7 +38,7 @@ function sync(method, model, options) {
         reject(error);
 
       } else if (response.unauthorized) {
-        var refresh = tokens.refresh().then(function() {
+        var refresh = api.auth.refreshTokens().then(function() {
           return sync(method, model, options);
         }, function(error) {
           if (options.error) options.error(error);

@@ -1,6 +1,5 @@
 var moment = require('moment');
 var View = require('ampersand-view');
-var api = require('../../api/api');
 var AccountCollection = require('../../models/account_collection');
 var TaskModel = require('../../models/task_model');
 

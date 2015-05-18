@@ -23,7 +23,7 @@ var ContainerView = View.extend({
   showPopup: function() {
     var self = this;
 
-    var popup = api.isAuthenticated() ? new TaskView() : new AuthView();
+    var popup = api.auth.authenticated ? new TaskView() : new AuthView();
     this.renderSubview(popup);
   }
 
