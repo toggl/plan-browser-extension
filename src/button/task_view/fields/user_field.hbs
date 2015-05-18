@@ -1,0 +1,10 @@
+<option value="{{user_list_value account=null user=null}}"
+  disabled selected>Choose...</option>
+
+{{#each collection.models}}
+<optgroup label="{{name}}">
+  {{#each users.models}}
+  <option value="{{user_list_value account=../id user=id}}">{{name}}</option>
+  {{/each}}
+</optgroup>
+{{/each}}
