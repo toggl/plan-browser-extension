@@ -19,6 +19,12 @@ var UserField = View.extend({
       fn: function() {
         return JSON.stringify(this.value);
       }
+    },
+    isFilled: {
+      deps: ['value'],
+      fn: function() {
+        return this.value != null && this.value.user != null && this.value.account != null;
+      }
     }
   },
 

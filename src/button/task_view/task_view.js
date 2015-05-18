@@ -13,15 +13,6 @@ var TaskView = View.extend({
 
   template: require('./task_view.hbs'),
 
-  props: {
-    name: 'state',
-    user: 'state',
-    start_date: 'state',
-    end_date: 'state',
-    start_time: 'state',
-    end_time: 'state'
-  },
-
   subviews: {
     name: { hook: 'input-name', constructor: TextField },
     start_date: { hook: 'input-start-date', constructor: DateField },
@@ -57,19 +48,62 @@ var TaskView = View.extend({
   onSubmit: function(event) {
     event.preventDefault();
 
-    var task = new TaskModel({
-      name: this.name.value,
-      user_id: this.user.value.user,
-      start_date: this.start_date.value,
-      end_date: this.end_date.value,
-      start_time: this.start_time.value,
-      end_time: this.end_time.value
+    if (!this.validate()) return;
+
+    this.accounts
+      .get(this.user.value.account)
+      .tasks.create({
+        name: this.name.value,
+        user_id: this.user.value.user,
+        start_date: this.start_date.value,
+        end_date: this.end_date.value,
+        start_time: this.start_time.value,
+        end_time: this.end_time.value
+      });
+  },
+
+  validate: function() {
+    var valid = true;
+
+    this.clearErrors();
+
+    if (!this.name.isFilled) {
+      this.addError('name', 'Task name cannot be empty');
+      valid = false;
+    }
+
+    if (!this.user.isFilled) {
+      this.addError('user', 'User cannot be empty');
+      valid = false;
+    }
+
+    if (!this.start_date.isFilled) {
+      this.addError('start', 'Start date cannot be empty');
+      valid = false;
+    }
+
+    if (!this.end_date.isFilled) {
+      this.addError('end', 'End date cannot be empty');
+      valid = false;
+    }
+
+    if (moment(this.end_date.value).isBefore(this.start_date.value, 'day')) {
+      this.addError('end', 'End date cannot be before start date');
+      valid = false;
+    }
+
+    return valid;
+  },
+
+  clearErrors: function() {
+    this.queryAll('[data-hook^=errors]').forEach(function(el) {
+      el.innerText = null;
     });
+  },
 
-    var account = this.accounts.get(this.user.value.account);
-
-    account.tasks.add(task);
-    task.save();
+  addError: function(key, error) {
+    var el = this.queryByHook('errors-' + key);
+    el.innerText = error;
   }
 
 });
