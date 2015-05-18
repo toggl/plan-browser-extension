@@ -1,5 +1,6 @@
 var Model = require('ampersand-model');
 var UserCollection = require('./user_collection');
+var TaskCollection = require('./task_collection');
 var sync = require('../api/sync');
 
 var AccountModel = Model.extend({
@@ -10,7 +11,8 @@ var AccountModel = Model.extend({
   },
 
   collections: {
-    users: UserCollection
+    users: UserCollection,
+    tasks: TaskCollection
   },
 
   sync: sync
