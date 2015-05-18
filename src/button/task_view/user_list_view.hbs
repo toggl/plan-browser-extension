@@ -1,10 +1,11 @@
-<select name="{{name}}" id="{{id}}">
-  <option disabled selected>Choose...</option>
+<select name="{{name}}" id="{{id}}" data-hook="select-user">
+  <option value="{{user_list_value account=null user=null}}"
+    disabled selected>Choose...</option>
 
   {{#each collection.models}}
   <optgroup label="{{name}}">
     {{#each users.models}}
-    <option value="{{../id}}-{{id}}">{{name}}</option>
+    <option value="{{user_list_value account=../id user=id}}">{{name}}</option>
     {{/each}}
   </optgroup>
   {{/each}}

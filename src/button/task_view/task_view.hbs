@@ -7,7 +7,8 @@
         <label for="tw-form-{{cid}}-name">Name</label>
       </div>
       <div class="form__control">
-        <input type="text" name="name" id="tw-form-{{cid}}-name" placeholder="Enter name...">
+        <input type="text" name="name" id="tw-form-{{cid}}-name" placeholder="Enter name..."
+          data-hook="input-name">
       </div>
     </div>
 
@@ -25,10 +26,12 @@
         <label for="tw-form-{{cid}}-start-date">Start</label>
       </div>
       <div class="form__control form__control--datepicker">
-        <input type="date" name="start_date" id="tw-form-{{cid}}-start-date">
+        <input type="date" name="start_date" id="tw-form-{{cid}}-start-date"
+          data-hook="input-start-date">
       </div>
       <div class="form__control form__control--timepicker">
-        <input type="time" name="start_time" id="tw-form-{{cid}}-start-time">
+        <input type="time" name="start_time" id="tw-form-{{cid}}-start-time"
+          data-hook="input-start-time">
       </div>
     </div>
 
@@ -37,16 +40,18 @@
         <label for="tw-form-{{cid}}-end-date">End</label>
       </div>
       <div class="form__control form__control--datepicker">
-        <input type="date" name="end_date" id="tw-form-{{cid}}-end-date">
+        <input type="date" name="end_date" id="tw-form-{{cid}}-end-date"
+          data-hook="input-end-date">
       </div>
       <div class="form__control form__control--timepicker">
-        <input type="time" name="end_time" id="tw-form-{{cid}}-end-time">
+        <input type="time" name="end_time" id="tw-form-{{cid}}-end-time"
+          data-hook="input-end-time">
       </div>
     </div>
   </div>
 
   <div class="popup__buttons">
-    <a href="#" class="button button--submit">Add</a>
-    <a href="#" class="button button--cancel">Cancel</a>
+    <a href="#" class="button button--submit" data-hook="button-submit">Add</a>
+    <a href="#" class="button button--cancel" data-hook="button-cancel">Cancel</a>
   </div>
 </div>
