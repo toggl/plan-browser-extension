@@ -2,6 +2,7 @@ var moment = require('moment');
 var View = require('ampersand-view');
 var api = require('../../api/api');
 var AccountCollection = require('../../models/account_collection');
+var TaskModel = require('../../models/task_model');
 
 var TextField = require('./fields/text_field');
 var UserField = require('./fields/user_field');
@@ -55,6 +56,20 @@ var TaskView = View.extend({
 
   onSubmit: function(event) {
     event.preventDefault();
+
+    var task = new TaskModel({
+      name: this.name.value,
+      user_id: this.user.value.user,
+      start_date: this.start_date.value,
+      end_date: this.end_date.value,
+      start_time: this.start_time.value,
+      end_time: this.end_time.value
+    });
+
+    var account = this.accounts.get(this.user.value.account);
+
+    account.tasks.add(task);
+    task.save();
   }
 
 });
