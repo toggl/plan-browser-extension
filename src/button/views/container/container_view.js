@@ -1,8 +1,7 @@
 var View = require('ampersand-view');
 var api = require('../../api/api');
 var ButtonView = require('../button/button_view');
-var TaskView = require('../task/task_view');
-var AuthView = require('../auth/auth_view');
+var PopupView = require('../popup/popup_view');
 
 var ContainerView = View.extend({
 
@@ -21,9 +20,7 @@ var ContainerView = View.extend({
   },
 
   showPopup: function() {
-    var self = this;
-
-    var popup = api.auth.authenticated ? new TaskView() : new AuthView();
+    var popup = new PopupView();
     this.renderSubview(popup);
   }
 
