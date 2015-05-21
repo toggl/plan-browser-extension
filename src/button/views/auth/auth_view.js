@@ -5,6 +5,10 @@ var AuthView = View.extend({
 
   template: require('./auth_view.hbs'),
 
+  props: {
+    hub: 'state'
+  },
+
   events: {
     'click [data-hook=button-sign-in]': 'onSubmit'
   },

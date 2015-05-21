@@ -12,6 +12,10 @@ var TaskView = View.extend({
 
   template: require('./task_view.hbs'),
 
+  props: {
+    hub: 'state'
+  },
+
   subviews: {
     name: { hook: 'input-name', constructor: TextField },
     start_date: { hook: 'input-start-date', constructor: DateField },

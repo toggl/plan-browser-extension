@@ -8,13 +8,20 @@ var PopupView = View.extend({
 
   template: require('./popup_view.hbs'),
 
+  props: {
+    hub: 'state'
+  },
+
   render: function() {
     this.renderWithTemplate();
 
     this.switcher = new ViewSwitcher(this.el);
     this.registerSubview(this.switcher);
 
-    var content = api.auth.authenticated ? new TaskView() : new AuthView();
+    var content = api.auth.authenticated ?
+      new TaskView({ hub: this.hub }) :
+      new AuthView({ hub: this.hub });
+    
     this.switcher.set(content);
   }
 

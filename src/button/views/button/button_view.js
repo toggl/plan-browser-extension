@@ -4,6 +4,10 @@ var ButtonView = View.extend({
 
   template: require('./button_view.hbs'),
 
+  props: {
+    hub: 'state'
+  },
+
   events: {
     'click': 'onClick'
   },
@@ -15,7 +19,7 @@ var ButtonView = View.extend({
 
   onClick: function(event) {
     event.preventDefault();
-    this.trigger('click');
+    this.hub.trigger('popup:open');
   }
 
 });
