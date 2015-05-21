@@ -25,7 +25,12 @@ var AuthView = View.extend({
       password: this.queryByHook('input-password').value
     };
 
-    api.auth.authenticate(values);
+    var hub = this.hub;
+    hub.trigger('loader:show');
+
+    api.auth.authenticate(values).then(function() {
+      hub.trigger('loader:hide');
+    });
   },
 
   onCancel: function(event) {
