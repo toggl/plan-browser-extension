@@ -10,7 +10,8 @@ var AuthView = View.extend({
   },
 
   events: {
-    'click [data-hook=button-sign-in]': 'onSubmit'
+    'click [data-hook=button-sign-in]': 'onSubmit',
+    'click [data-hook=button-cancel]': 'onCancel'
   },
 
   render: function() {
@@ -25,6 +26,11 @@ var AuthView = View.extend({
     };
 
     api.auth.authenticate(values);
+  },
+
+  onCancel: function(event) {
+    event.preventDefault();
+    this.hub.trigger('popup:close');
   }
 
 });

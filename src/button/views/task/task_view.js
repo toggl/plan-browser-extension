@@ -32,7 +32,8 @@ var TaskView = View.extend({
   },
 
   events: {
-    'click [data-hook=button-submit]': 'onSubmit'
+    'click [data-hook=button-submit]': 'onSubmit',
+    'click [data-hook=button-cancel]': 'onCancel'
   },
 
   render: function() {
@@ -75,6 +76,11 @@ var TaskView = View.extend({
       hub.trigger('loader:hide');
       hub.trigger('popup:close');
     });
+  },
+
+  onCancel: function(event) {
+    event.preventDefault();
+    this.hub.trigger('popup:close');
   },
 
   validate: function() {
