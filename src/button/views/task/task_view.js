@@ -55,16 +55,25 @@ var TaskView = View.extend({
 
     if (!this.validate()) return;
 
+    var task = new TaskModel({
+      name: this.name.value,
+      user_id: this.user.value.user,
+      start_date: this.start_date.value,
+      end_date: this.end_date.value,
+      start_time: this.start_time.value,
+      end_time: this.end_time.value
+    });
+
     this.accounts
       .get(this.user.value.account)
-      .tasks.create({
-        name: this.name.value,
-        user_id: this.user.value.user,
-        start_date: this.start_date.value,
-        end_date: this.end_date.value,
-        start_time: this.start_time.value,
-        end_time: this.end_time.value
-      });
+      .tasks.add(task);
+
+    var hub = this.hub;
+    hub.trigger('loader:show');
+
+    task.save().then(function() {
+      hub.trigger('loader:hide');
+    });
   },
 
   validate: function() {
