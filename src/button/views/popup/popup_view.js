@@ -13,6 +13,10 @@ var PopupView = View.extend({
     hub: 'state'
   },
 
+  initialize: function() {
+    this.listenTo(this.hub, 'popup:close', this.remove);
+  },
+
   render: function() {
     this.renderWithTemplate();
 

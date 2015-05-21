@@ -73,6 +73,7 @@ var TaskView = View.extend({
 
     task.save().then(function() {
       hub.trigger('loader:hide');
+      hub.trigger('popup:close');
     });
   },
 
