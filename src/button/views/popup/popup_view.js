@@ -15,6 +15,7 @@ var PopupView = View.extend({
 
   initialize: function() {
     this.listenTo(this.hub, 'popup:close', this.remove);
+    this.listenTo(this.hub, 'popup:show:task', this.showTaskForm);
   },
 
   render: function() {
@@ -30,6 +31,11 @@ var PopupView = View.extend({
       new TaskView({ hub: this.hub }) :
       new AuthView({ hub: this.hub });
     
+    this.switcher.set(content);
+  },
+
+  showTaskForm: function() {
+    var content = new TaskView({ hub: this.hub });
     this.switcher.set(content);
   }
 

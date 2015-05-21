@@ -30,6 +30,7 @@ var AuthView = View.extend({
 
     api.auth.authenticate(values).then(function() {
       hub.trigger('loader:hide');
+      hub.trigger('popup:show:task');
     });
   },
 
