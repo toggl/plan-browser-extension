@@ -20,15 +20,10 @@ var AuthView = View.extend({
   },
 
   onSubmit: function() {
-    var values = {
-      username: this.queryByHook('input-email').value,
-      password: this.queryByHook('input-password').value
-    };
-
     var hub = this.hub;
     hub.trigger('loader:show');
 
-    api.auth.authenticate(values).then(function() {
+    api.auth.authenticate().then(function() {
       hub.trigger('loader:hide');
       hub.trigger('popup:show:task');
     });

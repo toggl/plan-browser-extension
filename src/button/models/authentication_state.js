@@ -28,8 +28,8 @@ var AuthenticationState = State.extend({
 
   initialize: function() {
     this.oauth.set({
-      id: 'teamweek_timeline',
-      secret: 'b8bfafcc06bbe59fbeab4cc6f071fda4'
+      id: '9c782f95e771811bdedb77dc12e6be98ca286ea8',
+      secret: '441a5bc3e3828910866ea5929fc0313e63a71a77934f3e248a4322f830253c2164e4cd33bead4e3397a27e2b9863ba4a'
     });
   },
 
@@ -37,11 +37,40 @@ var AuthenticationState = State.extend({
     return this.tokens.fetch();
   },
 
-  authenticate: function(credentials) {
-    return this.fetchTokens(credentials);
+  authenticate: function() {
+    return this.fetchCode().then(this.fetchTokens.bind(this));
   },
 
-  fetchTokens: function(credentials) {
+  fetchCode: function() {
+    var self = this;
+
+    return new Promise(function(resolve, reject) {
+      var redirectUrl = 'https://hmdlkemmnelpfepmkgickgjhggipilof.chromiumapp.org/teamweek';
+
+      var oauthUrl = url.format({
+        protocol: 'https',
+        host: 'teamweek.com',
+        pathname: 'oauth/login',
+        query: {
+          response_type: 'code',
+          client_id: self.oauth.id,
+          redirect_uri: redirectUrl
+        }
+      });
+
+      chrome.runtime.sendMessage({ type: 'oauth_flow', url: oauthUrl }, function(response) {
+        var responseUrl = url.parse(response, true);
+
+        if (responseUrl.query.code != null) {
+          resolve(responseUrl.query.code);
+        } else {
+          reject({ message: 'unknown_error' });
+        }
+      });
+    });
+  },
+
+  fetchTokens: function(code) {
     var self = this;
 
     return new Promise(function(resolve, reject) {
@@ -49,9 +78,9 @@ var AuthenticationState = State.extend({
         .post('https://teamweek.com/api/v3/authenticate/token')
         .set('Authorization', 'Basic ' + self.oauth.token)
         .type('form').send({
-          grant_type: 'password',
-          username: credentials.username,
-          password: credentials.password
+          client_id: self.oauth.id,
+          grant_type: 'authorization_code',
+          code: code
         })
         .end(function(error, response) {
           if (response == null) {

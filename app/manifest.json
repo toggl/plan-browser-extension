@@ -10,6 +10,7 @@
   },
   "permissions": [
     "storage",
+    "identity",
     "https://teamweek.com/"
   ],
   "content_scripts": [
@@ -19,6 +20,10 @@
       "css": ["styles/button.css"]
     }
   ],
+  "background": {
+    "scripts": ["background/oauth_flow.js"],
+    "persistent": false
+  },
   "web_accessible_resources": [
     "fonts/*"
   ]
