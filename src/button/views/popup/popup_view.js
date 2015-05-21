@@ -10,7 +10,8 @@ var PopupView = View.extend({
   template: require('./popup_view.hbs'),
 
   props: {
-    hub: 'state'
+    hub: 'state',
+    task: 'state'
   },
 
   initialize: function() {
@@ -28,14 +29,14 @@ var PopupView = View.extend({
     this.registerSubview(this.switcher);
 
     var content = api.auth.authenticated ?
-      new TaskView({ hub: this.hub }) :
+      new TaskView({ hub: this.hub, model: this.task }) :
       new AuthView({ hub: this.hub });
     
     this.switcher.set(content);
   },
 
   showTaskForm: function() {
-    var content = new TaskView({ hub: this.hub });
+    var content = new TaskView({ hub: this.hub, model: this.task });
     this.switcher.set(content);
   }
 

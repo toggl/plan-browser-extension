@@ -38,6 +38,11 @@ var TaskView = View.extend({
 
   render: function() {
     this.renderWithTemplate(this);
+
+    this.name.value = this.model.name;
+    this.start_date.value = this.model.start_date;
+    this.end_date.value = this.model.end_date
+
     this.hub.trigger('loader:show');
 
     var self = this;
@@ -56,7 +61,7 @@ var TaskView = View.extend({
 
     if (!this.validate()) return;
 
-    var task = new TaskModel({
+    this.model.set({
       name: this.name.value,
       user_id: this.user.value.user,
       start_date: this.start_date.value,
@@ -67,12 +72,12 @@ var TaskView = View.extend({
 
     this.accounts
       .get(this.user.value.account)
-      .tasks.add(task);
+      .tasks.add(this.model);
 
     var hub = this.hub;
     hub.trigger('loader:show');
 
-    task.save().then(function() {
+    this.model.save().then(function() {
       hub.trigger('loader:hide');
       hub.trigger('popup:close');
     });

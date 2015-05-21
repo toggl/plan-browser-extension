@@ -9,7 +9,8 @@ var ContainerView = View.extend({
   template: require('./container_view.hbs'),
 
   props: {
-    hub: 'state'
+    hub: 'state',
+    task: 'state'
   },
 
   initialize: function() {
@@ -31,7 +32,7 @@ var ContainerView = View.extend({
   },
 
   showPopup: function() {
-    var popup = new PopupView({ hub: this.hub });
+    var popup = new PopupView({ hub: this.hub, task: this.task });
     this.renderSubview(popup);
   }
 
