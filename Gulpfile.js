@@ -58,7 +58,7 @@ function watchScript(input, output) {
 gulp.task('build:js', function() {
   var stream = processScripts();
 
-  glob('src/content/*.js', function(err, files) {
+  glob('src/bootloader/*.js', function(err, files) {
     if (err) {
       stream.emit('error', err);
       return;
@@ -76,7 +76,7 @@ gulp.task('build:js', function() {
 gulp.task('watch:js', function() {
   var stream = processScripts();
 
-  glob('src/content/*.js', function(err, files) {
+  glob('src/bootloader/*.js', function(err, files) {
     if (err) {
       stream.emit('error', err);
       return;

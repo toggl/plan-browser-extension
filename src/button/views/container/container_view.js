@@ -1,8 +1,8 @@
 var View = require('ampersand-view');
 var api = require('../../api/api');
-var ButtonView = require('../button_view/button_view');
-var TaskView = require('../task_view/task_view');
-var AuthView = require('../auth_view/auth_view');
+var ButtonView = require('../button/button_view');
+var TaskView = require('../task/task_view');
+var AuthView = require('../auth/auth_view');
 
 var ContainerView = View.extend({
 
