@@ -37,12 +37,14 @@ var TaskView = View.extend({
 
   render: function() {
     this.renderWithTemplate(this);
+    this.hub.trigger('loader:show');
 
     var self = this;
 
     this.accounts.fetchWithUsers()
       .then(function() {
         self.user.render();
+        self.hub.trigger('loader:hide');
       });
 
     return this;
