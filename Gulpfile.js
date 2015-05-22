@@ -4,91 +4,79 @@ var browserify = require('browserify');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var less = require('gulp-less');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var through = require('through2');
+var rename = require('gulp-rename');
 var glob = require('glob');
+var through = require('through2');
+var Vinyl = require('vinyl');
 
-function createBrowserify(filename, args) {
-  return browserify(args)
-    .add(filename)
-    .transform('hbsfy');
+function createBrowserify(path, args) {
+  return browserify(args).add(path).transform('hbsfy');
 }
 
-function createWatchify(filename) {
-  var browserify = createBrowserify(filename, watchify.args);
-  return watchify(browserify);
+function createWatchify(path) {
+  var br = createBrowserify(path, watchify.args);
+  return watchify(br);
 }
 
-function processScripts() {
-  return through()
-    .pipe(gulp.dest('app/scripts'));
-}
+function createBundle(relativePath, br) {
+  var stream = through.obj();
+  var absolutePath = path.resolve(relativePath);
+  var baseDirectory = path.dirname(absolutePath);
 
-function processBundle(bundle, filename) {
-  return bundle
-    .pipe(source(filename))
-    .pipe(buffer());
-}
-
-function compileScript(input, output) {
-  var bundle = createBrowserify(input).bundle();
-  return processBundle(bundle, output);
-}
-
-function watchScript(input, output) {
-  var w = createWatchify(input);
-
-  w.on('update', function(ids) {
-    var files = ids.map(path.basename).join(', ');
-    gutil.log(gutil.colors.cyan(files), 'changed, rebuilding');
-    
-    var bundle = w.bundle();
-    processBundle(bundle, output).pipe(processScripts());
-  });
-
-  w.on('time', function(time) {
-    var seconds = (time / 1000).toFixed(1);
-    gutil.log('Finished in', gutil.colors.magenta(seconds), gutil.colors.magenta('s'));
-  });
-
-  return processBundle(w.bundle(), output);
-}
-
-gulp.task('build:js', function() {
-  var stream = processScripts();
-
-  glob('src/bootloader/*.js', function(err, files) {
-    if (err) {
-      stream.emit('error', err);
-      return;
-    }
-
-    files.forEach(function(input) {
-      var output = 'content_' + path.basename(input);
-      compileScript(input, output).pipe(stream);
+  br.bundle(function(error, buffer) {
+    var v = new Vinyl({
+      base: baseDirectory,
+      path: absolutePath,
+      contents: buffer
     });
+
+    stream.push(v);
   });
 
   return stream;
-});
+}
 
 gulp.task('watch:js', function() {
-  var stream = processScripts();
+  var output = through.obj();
 
-  glob('src/bootloader/*.js', function(err, files) {
-    if (err) {
-      stream.emit('error', err);
-      return;
-    }
+  glob('src/bootloader/*.js', function(error, files) {
+    files.forEach(function(file) {
+      var w = createWatchify(file);
 
-    files.forEach(function(input) {
-      var output = 'content_' + path.basename(input);
-      watchScript(input, output).pipe(stream);
+      w.on('update', function(ids) {
+        var files = ids.map(path.basename).join(', ');
+        gutil.log(gutil.colors.cyan(files), 'changed, rebuilding');
+        
+        createBundle(file, w).pipe(output);
+      });
+
+      w.on('time', function(time) {
+        var seconds = (time / 1000).toFixed(1);
+        gutil.log('Finished in', gutil.colors.magenta(seconds), gutil.colors.magenta('s'));
+      });
+
+      createBundle(file, w).pipe(output);
     });
   });
 
-  return stream;
+  return output
+    .pipe(rename({ prefix: 'content_' }))
+    .pipe(gulp.dest('app/scripts'));
+});
+
+gulp.task('build:js', function() {
+  var output = through.obj();
+
+  glob('src/bootloader/*.js', function(error, files) {
+    files.forEach(function(file) {
+      var b = createBrowserify(file);
+      createBundle(file, b).pipe(output);
+    });
+  });
+
+  return output
+    .pipe(rename({ prefix: 'content_' }))
+    .pipe(gulp.dest('app/scripts'));
 });
 
 gulp.task('build:less', function() {
