@@ -31,8 +31,6 @@ var ContainerView = View.extend({
     var button = new ButtonView({ hub: this.hub });
     this.renderSubview(button, this.shadow);
 
-    this.showPopup();
-
     return this;
   },
 
