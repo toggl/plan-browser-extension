@@ -1,6 +1,7 @@
 var View = require('ampersand-view');
 var State = require('ampersand-state');
 var api = require('../../api/api');
+var StyleView = require('../style/style_view');
 var ButtonView = require('../button/button_view');
 var PopupView = require('../popup/popup_view');
 
@@ -22,9 +23,13 @@ var ContainerView = View.extend({
 
   render: function() {
     this.renderWithTemplate();
+    this.shadow = this.el.createShadowRoot();
+
+    var style = new StyleView();
+    this.renderSubview(style, this.shadow);
 
     var button = new ButtonView({ hub: this.hub });
-    this.renderSubview(button);
+    this.renderSubview(button, this.shadow);
 
     this.showPopup();
 
@@ -33,7 +38,7 @@ var ContainerView = View.extend({
 
   showPopup: function() {
     var popup = new PopupView({ hub: this.hub, task: this.task });
-    this.renderSubview(popup);
+    this.renderSubview(popup, this.shadow);
   }
 
 });

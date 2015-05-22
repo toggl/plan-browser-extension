@@ -92,11 +92,11 @@ gulp.task('watch:js', function() {
 });
 
 gulp.task('build:less', function() {
-  gulp.src('src/button/button.less')
+  gulp.src('src/button/styles/*.less')
     .pipe(less())
     .pipe(gulp.dest('app/styles/'));
 });
 
 gulp.task('watch:less', ['build:less'], function() {
-  gulp.watch('src/button/**/*.less', ['build:less']);
+  gulp.watch('src/button/styles/*.less', ['build:less']);
 });
