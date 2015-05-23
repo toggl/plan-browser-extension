@@ -12,7 +12,8 @@
     "storage",
     "identity",
     "https://teamweek.com/",
-    "https://*.github.com/*"
+    "https://*.github.com/*",
+    "https://*.trello.com/*"
   ],
   "content_scripts": [
     {
@@ -23,6 +24,11 @@
     {
       "matches": ["https://*.github.com/*/*/milestones"],
       "js": ["scripts/content_github.js"],
+      "css": ["styles/global.css"]
+    },
+    {
+      "matches": ["https://*.trello.com/*"],
+      "js": ["scripts/content_trello.js"],
       "css": ["styles/global.css"]
     }
   ],
