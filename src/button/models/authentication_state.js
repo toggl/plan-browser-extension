@@ -59,12 +59,17 @@ var AuthenticationState = State.extend({
       });
 
       chrome.runtime.sendMessage({ type: 'oauth_flow', url: oauthUrl }, function(response) {
+        if (response == null) {
+          reject({ message: 'authentication_failed' });
+          return;
+        }
+
         var responseUrl = url.parse(response, true);
 
         if (responseUrl.query.code != null) {
           resolve(responseUrl.query.code);
         } else {
-          reject({ message: 'unknown_error' });
+          reject({ message: 'authentication_failed' });
         }
       });
     });
@@ -115,6 +120,8 @@ var AuthenticationState = State.extend({
               reject({ message: 'network_error' });
             } else if (response.ok) {
               resolve(self.tokens.save(response.body));
+            } else if (response.clientError) {
+              reject({ message: 'refresh_denied' });
             } else {
               reject({ message: 'unknown_error' });
             }
