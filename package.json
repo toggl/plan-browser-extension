@@ -7,6 +7,7 @@
     "ampersand-state": "^4.5.4",
     "ampersand-view": "^7.3.0",
     "ampersand-view-switcher": "^2.0.0",
+    "document-offset": "^1.0.4",
     "gulp-rename": "^1.2.2",
     "lodash.result": "^3.1.1",
     "moment": "^2.10.3",

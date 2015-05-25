@@ -1,4 +1,5 @@
-var Button = require('../button/button.js');
+var offset = require('document-offset');
+var ButtonState = require('../button/button');
  
 function createButtons() {
   var titles = document.querySelectorAll('.milestone-title-link');
@@ -6,11 +7,23 @@ function createButtons() {
   Array.prototype.forEach.call(titles, function(title) {
     var name = title.querySelector('a').innerText;
  
-    var button = Button.create({
-      name: name
+    var state = new ButtonState({
+      task: { name: name }
     });
- 
-    title.appendChild(button);
+
+    var buttonEl = state.button.render().el;
+    title.appendChild(buttonEl);
+
+    state.on('popup:created', function() {
+      var popupEl = state.popup.render().el;
+      var position = offset(buttonEl);
+
+      popupEl.style.position = 'absolute';
+      popupEl.style.left = position.left + 'px';
+      popupEl.style.top = position.top + 'px';
+
+      document.body.appendChild(popupEl);
+    });
   });
 }
  
@@ -18,6 +31,6 @@ function handleError(error) {
   console.error(error);
 }
  
-Button.initialize()
+ButtonState.initialize()
   .then(createButtons)
   .catch(handleError);
