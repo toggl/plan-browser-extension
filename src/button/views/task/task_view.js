@@ -58,6 +58,7 @@ var TaskView = View.extend({
 
   onSubmit: function(event) {
     event.preventDefault();
+    event.stopPropagation();
 
     if (!this.validate()) return;
 
@@ -85,6 +86,7 @@ var TaskView = View.extend({
 
   onCancel: function(event) {
     event.preventDefault();
+    event.stopPropagation();
     this.hub.trigger('popup:close');
   },
 

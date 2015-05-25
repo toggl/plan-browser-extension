@@ -19,7 +19,10 @@ var AuthView = View.extend({
     return this;
   },
 
-  onSubmit: function() {
+  onSubmit: function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
     var hub = this.hub;
     hub.trigger('loader:show');
 
@@ -31,6 +34,8 @@ var AuthView = View.extend({
 
   onCancel: function(event) {
     event.preventDefault();
+    event.stopPropagation();
+    
     this.hub.trigger('popup:close');
   }
 
