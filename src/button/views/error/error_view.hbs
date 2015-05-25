@@ -1,5 +1,16 @@
 <div class="error">
-  <div class="error__message">{{message}}</div>
+  <div class="error__message">
+    {{#if message}}
+      <p>{{message}}</p>
+    {{/if}}
+
+    {{#if contact_us}}
+      <p>
+        Please contact us on <a href="mailto:support@teamweek.com">support@teamweek.com</a><br>
+        describing how you got this error.
+      </p>
+    {{/if}}
+  </div>
   <div class="error__dismiss">
     <a href="#" data-hook="button-dismiss">Dismiss</a>
   </div>
