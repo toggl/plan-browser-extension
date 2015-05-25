@@ -45,7 +45,7 @@ var AuthenticationState = State.extend({
     var self = this;
 
     return new Promise(function(resolve, reject) {
-      var redirectUrl = 'https://hmdlkemmnelpfepmkgickgjhggipilof.chromiumapp.org/teamweek';
+      var redirectUrl = 'https://' + chrome.runtime.id + '.chromiumapp.org/teamweek';
 
       var oauthUrl = url.format({
         protocol: 'https',

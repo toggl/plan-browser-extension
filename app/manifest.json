@@ -11,9 +11,7 @@
   "permissions": [
     "storage",
     "identity",
-    "https://teamweek.com/",
-    "https://*.github.com/*",
-    "https://*.trello.com/*"
+    "https://teamweek.com/"
   ],
   "content_scripts": [
     {
@@ -35,5 +33,6 @@
     "styles/*",
     "fonts/*"
   ],
-  "minimum_chrome_version": "35"
+  "minimum_chrome_version": "35",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxm3PifguYiFk+uAqbTSlPO0fwzbPJF7eGYHD9MFZZfupkGv/auivjNWmL13dClcsHHHv5+XVarMQ0bUUQ6ONTGnh7deFNJLHKQMBGUyryIiVsB/c0jWHNi8vJJjhggSZx6X97M0L+xCehsp6TgovCVwY6ouD78oVvvqB+S/SMUbP4CWN3Qp+7QdSuOmzCcVAaveHQxokrhkaLJXWk+0q8pGQGxr0wwxyUa7C1VdFBHS/MqFyhuK0aSC9dbPiwJ1vTn8y9DyxbBrxQnCCcMgIBrFwqJbfi8E+NfjFcctoXRbbfuuWJBJxtP8ZdhYoeBJEFCxczRFaA4rhREpfuMzW2wIDAQAB"
 }
