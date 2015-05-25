@@ -4,7 +4,8 @@ var View = require('ampersand-view');
 var TimeField = View.extend({
 
   props: {
-    value: 'string'
+    value: 'string',
+    focus: 'boolean'
   },
 
   derived: {
@@ -12,6 +13,12 @@ var TimeField = View.extend({
       deps: ['value'],
       fn: function() {
         return this.value != null ? moment(this.value, 'HH:mm').format('HH:mm:ss') : null;
+      }
+    },
+    showPlaceholder: {
+      deps: ['focus', 'isFilled'],
+      fn: function() {
+        return !this.focus && !this.isFilled;
       }
     },
     isFilled: {
@@ -23,16 +30,35 @@ var TimeField = View.extend({
   },
 
   events: {
-    'change': 'onChange'
+    'change [data-hook=control]': 'onChange',
+    'click [data-hook=placeholder]': 'onClick',
+    'blur [data-hook=control]': 'onBlur'
   },
 
   bindings: {
-    formatted: { type: 'value' }
+    formatted: { type: 'value' },
+    showPlaceholder: {
+      type: 'toggle',
+      yes: '[data-hook=placeholder]',
+      no: '[data-hook=control]'
+    }
   },
 
   onChange: function(event) {
-    var m = moment(this.el.value, 'HH:mm:ss a');
+    var m = moment(this.queryByHook('control').value, 'HH:mm:ss a');
     this.value = m.isValid() ? m.format('HH:mm') : null;
+  },
+
+  onClick: function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.focus = true;
+    this.queryByHook('control').focus();
+  },
+
+  onBlur: function(event) {
+    this.focus = false;
   },
 
   render: function() {
