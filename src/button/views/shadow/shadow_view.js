@@ -11,6 +11,10 @@ var ShadowView = View.extend({
     content: 'state'
   },
 
+  events: {
+    'click': 'onClick'
+  },
+
   render: function() {
     this.renderWithTemplate();
     this.shadow = this.el.createShadowRoot();
@@ -25,6 +29,10 @@ var ShadowView = View.extend({
     }
 
     return this;
+  },
+
+  onClick: function(event) {
+    event.stopPropagation();
   }
 
 });
