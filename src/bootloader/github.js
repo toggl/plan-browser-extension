@@ -1,10 +1,9 @@
 var offset = require('document-offset');
 var ButtonState = require('../button/button');
+var observer = require('../utils/observer');
  
 function createButtons() {
-  var titles = document.querySelectorAll('.milestone-title-link');
- 
-  Array.prototype.forEach.call(titles, function(title) {
+  observer.create('.milestone-title-link', function(title) {
     var name = title.querySelector('a').innerText;
  
     var state = new ButtonState({

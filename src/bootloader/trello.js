@@ -1,13 +1,9 @@
 var offset = require('document-offset');
 var ButtonState = require('../button/button.js');
-var btn = ButtonState.initialize();
+var observer = require('../utils/observer');
 
-function onMutation(mutations) {
-  mutations.forEach(function(mutation) {
-    Array.prototype.forEach.call(mutation.addedNodes, function(node) {
-      if (node.matches('.card-detail-window')) createButton(node);
-    });
-  });
+function createObserver() {
+  observer.create('.card-detail-window', createButton);
 }
 
 function createButton(node) {
@@ -36,6 +32,10 @@ function createButton(node) {
   });
 }
 
-var wrapper = document.querySelector('.window-wrapper');
-var observer = new MutationObserver(onMutation);
-observer.observe(wrapper, { childList: true });
+function handleError(error) {
+  console.error(error);
+}
+
+ButtonState.initialize()
+  .then(createObserver)
+  .catch(handleError);
