@@ -13,7 +13,8 @@ var TaskView = View.extend({
   template: require('./task_view.hbs'),
 
   props: {
-    hub: 'state'
+    hub: 'state',
+    user: 'state'
   },
 
   subviews: {
@@ -34,6 +35,15 @@ var TaskView = View.extend({
   events: {
     'click [data-hook=button-submit]': 'onSubmit',
     'click [data-hook=button-cancel]': 'onCancel'
+  },
+
+  bindings: {
+    'user.isFilled': {
+      type: 'booleanClass',
+      hook: 'select-user',
+      yes: 'user-select--filled',
+      no: 'user-select--empty'
+    }
   },
 
   render: function() {
