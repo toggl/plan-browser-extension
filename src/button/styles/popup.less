@@ -135,7 +135,8 @@
 }
 
 .button--submit,
-.button--cancel {
+.button--cancel,
+.button--text {
   display: inline-block;
   line-height: 40px;
   height: 40px;
@@ -165,6 +166,15 @@
   &:hover {
     background-color: lighten(#8dc63f, 10%);
     box-shadow: none;
+  }
+}
+
+.button--text {
+  padding: 0 30px;
+  color: #8dc63f;
+
+  &:hover {
+    color: lighten(#8dc63f, 10%);
   }
 }
 
@@ -213,12 +223,16 @@
   text-align: center;
 }
 
-.error__message,
-.error__dismiss {
+.error__message {
   margin: 10px 0;
-
+  
   a {
     color: #8dc63f;
     text-decoration: none;
   }
+}
+
+.error__buttons {
+  display: flex;
+  justify-content: center;
 }

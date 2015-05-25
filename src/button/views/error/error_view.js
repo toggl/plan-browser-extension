@@ -10,7 +10,8 @@ var ErrorView = View.extend({
   },
 
   events: {
-    'click [data-hook=button-dismiss]': 'onDismiss'
+    'click [data-hook=button-back]': 'onBack',
+    'click [data-hook=button-close]': 'onClose'
   },
 
   messages: {
@@ -52,9 +53,14 @@ var ErrorView = View.extend({
     return this;
   },
 
-  onDismiss: function(event) {
+  onBack: function(event) {
     event.preventDefault();
     this.hub.trigger('error:hide');
+  },
+
+  onClose: function(event) {
+    event.preventDefault();
+    this.hub.trigger('popup:close');
   }
 
 });
