@@ -10,8 +10,8 @@ var TaskModel = Model.extend({
     id: 'number',
     name: 'string',
     user_id: 'number',
-    start_date: 'date',
-    end_date: 'date',
+    start_date: { type: 'date', required: true },
+    end_date: { type: 'date', required: true },
     start_time: 'string',
     end_time: 'string'
   },
