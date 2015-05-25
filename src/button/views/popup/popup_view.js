@@ -15,7 +15,6 @@ var PopupView = View.extend({
   },
 
   initialize: function() {
-    this.listenTo(this.hub, 'popup:close', this.remove);
     this.listenTo(this.hub, 'popup:show:task', this.showTaskForm);
   },
 

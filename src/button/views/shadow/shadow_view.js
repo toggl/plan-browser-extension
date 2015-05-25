@@ -21,7 +21,6 @@ var ShadowView = View.extend({
     }
 
     if (this.content != null) {
-      this.listenTo(this.content, 'remove', this.remove);
       this.renderSubview(this.content, this.shadow);
     }
 
