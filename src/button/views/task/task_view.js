@@ -61,6 +61,9 @@ var TaskView = View.extend({
       .then(function() {
         self.user.render();
         self.hub.trigger('loader:hide');
+      }, function(error) {
+        self.hub.trigger('loader:hide');
+        self.hub.trigger('error:show', error);
       });
 
     return this;
@@ -91,6 +94,9 @@ var TaskView = View.extend({
     this.model.save().then(function() {
       hub.trigger('loader:hide');
       hub.trigger('popup:close');
+    }, function(error) {
+      hub.trigger('loader:hide');
+      hub.trigger('error:show', error);
     });
   },
 

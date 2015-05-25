@@ -29,6 +29,9 @@ var AuthView = View.extend({
     api.auth.authenticate().then(function() {
       hub.trigger('loader:hide');
       hub.trigger('popup:show:task');
+    }, function(error) {
+      hub.trigger('loader:hide');
+      hub.trigger('error:show', error);
     });
   },
 

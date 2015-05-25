@@ -35,7 +35,7 @@ function sync(method, model, options) {
     request.end(function(error, response) {
       if (response == null) {
         if (options.error) options.error(error);
-        reject(error);
+        reject({ message: 'network_error', error: error });
 
       } else if (response.unauthorized) {
         var refresh = api.auth.refreshTokens().then(function() {
