@@ -1,5 +1,5 @@
 var Model = require('ampersand-model');
-var storage = require('../api/storage');
+var storage = require('../../utils/storage');
 
 var TokensState = Model.extend({
 
