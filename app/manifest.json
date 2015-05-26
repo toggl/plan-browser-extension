@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "manifest_version": 2,
   "description": "Add tasks to Teamweek directly from Github and Trello",
+  "short_name": "TW Button",
   "icons": {
     "16": "images/icon-16.png",
     "48": "images/icon-48.png",
@@ -33,6 +34,5 @@
     "styles/*",
     "fonts/*"
   ],
-  "minimum_chrome_version": "35",
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxm3PifguYiFk+uAqbTSlPO0fwzbPJF7eGYHD9MFZZfupkGv/auivjNWmL13dClcsHHHv5+XVarMQ0bUUQ6ONTGnh7deFNJLHKQMBGUyryIiVsB/c0jWHNi8vJJjhggSZx6X97M0L+xCehsp6TgovCVwY6ouD78oVvvqB+S/SMUbP4CWN3Qp+7QdSuOmzCcVAaveHQxokrhkaLJXWk+0q8pGQGxr0wwxyUa7C1VdFBHS/MqFyhuK0aSC9dbPiwJ1vTn8y9DyxbBrxQnCCcMgIBrFwqJbfi8E+NfjFcctoXRbbfuuWJBJxtP8ZdhYoeBJEFCxczRFaA4rhREpfuMzW2wIDAQAB"
+  "minimum_chrome_version": "35"
 }
