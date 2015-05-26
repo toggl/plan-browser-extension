@@ -5,11 +5,11 @@ var StyleView = View.extend({
   template: require('./style_view.hbs'),
 
   props: {
-    name: 'string'
+    style: 'string'
   },
 
   render: function() {
-    this.renderWithTemplate({ id: chrome.runtime.id, name: this.name });
+    this.renderWithTemplate(this);
     return this;
   }
 

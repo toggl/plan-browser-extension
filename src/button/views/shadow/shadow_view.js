@@ -20,7 +20,7 @@ var ShadowView = View.extend({
     this.shadow = this.el.createShadowRoot();
 
     if (this.style != null) {
-      var style = new StyleView({ name: this.style });
+      var style = new StyleView({ style: this.style });
       this.renderSubview(style, this.shadow);
     }
 

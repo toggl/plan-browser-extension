@@ -10,7 +10,10 @@ var through = require('through2');
 var Vinyl = require('vinyl');
 
 function createBrowserify(path, args) {
-  return browserify(args).add(path).transform('hbsfy');
+  return browserify(args)
+    .transform('partialify')
+    .transform('hbsfy')
+    .add(path);
 }
 
 function createWatchify(path) {
@@ -24,13 +27,17 @@ function createBundle(relativePath, br) {
   var baseDirectory = path.dirname(absolutePath);
 
   br.bundle(function(error, buffer) {
-    var v = new Vinyl({
-      base: baseDirectory,
-      path: absolutePath,
-      contents: buffer
-    });
+    if (error) {
+      stream.emit('error', error);
+    } else {
+      var v = new Vinyl({
+        base: baseDirectory,
+        path: absolutePath,
+        contents: buffer
+      });
 
-    stream.push(v);
+      stream.push(v);
+    }
   });
 
   return stream;

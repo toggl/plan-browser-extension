@@ -25,7 +25,7 @@ var ButtonState = State.extend({
 
     this.button = new ShadowView({
       name: 'tw-button',
-      style: 'button',
+      style: require('../../app/styles/button.css'),
       content: new ButtonView({
         hub: this.hub
       })
@@ -35,7 +35,7 @@ var ButtonState = State.extend({
   createPopup: function() {
     this.popup = new ShadowView({
       name: 'tw-popup',
-      style: 'popup',
+      style: require('../../app/styles/popup.css'),
       content: new PopupView({
         hub: this.hub,
         task: this.task
