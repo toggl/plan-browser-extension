@@ -1,27 +1,51 @@
-exports.create = function(selector, callback) {
-  var seenElements = [];
+var difference = require('lodash.difference');
 
-  var observer = new MutationObserver(runCallbackForMatchingElements);
-  observer.observe(document, { childList: true, subtree: true });
-  runCallbackForMatchingElements();
+function Observer(selector) {
+  this.selector = selector;
+  this.mutationHandlers = [];
+  this.seenElements = [];
 
-  function runCallbackForMatchingElements() {
-    var newMatchingElements = findMatchingElements().filter(isNewElement);
+  var onMutation = this.onMutation.bind(this);
+  this.observer = new MutationObserver(onMutation);
+}
 
-    newMatchingElements.forEach(setElementSeen);
-    newMatchingElements.forEach(callback);
-  }
+Observer.prototype.onMutation = function() {
+  var oldSeenElements = this.seenElements;
+  var newSeenElements = this.findMatchingElements();
 
-  function findMatchingElements() {
-    var matching = document.querySelectorAll(selector);
-    return Array.prototype.slice.call(matching);
-  }
+  this.mutationHandlers.forEach(function(handler) {
+    handler(oldSeenElements, newSeenElements);
+  });
 
-  function isNewElement(element) {
-    return seenElements.indexOf(element) === -1;
-  }
+  this.seenElements = newSeenElements;
+};
 
-  function setElementSeen(element) {
-    seenElements.push(element);
-  }
+Observer.prototype.findMatchingElements = function() {
+  var elements = document.querySelectorAll(this.selector);
+  return Array.prototype.slice.call(elements);
+};
+
+Observer.prototype.onAdded = function(callback) {
+  this.mutationHandlers.push(function(oldEls, newEls) {
+    difference(newEls, oldEls).forEach(callback);
+  });
+
+  return this;
+};
+
+Observer.prototype.onRemoved = function(callback) {
+  this.mutationHandlers.push(function(oldEls, newEls) {
+    difference(oldEls, newEls).forEach(callback);
+  });
+
+  return this;
+};
+
+Observer.prototype.start = function() {
+  this.observer.observe(document, { childList: true, subtree: true });
+  this.onMutation();
+};
+
+exports.create = function(selector) {
+  return new Observer(selector);
 };

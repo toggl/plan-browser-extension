@@ -1,9 +1,15 @@
+var HashMap = require('hashmap');
 var offset = require('document-offset');
 var ButtonState = require('../button/button.js');
 var observer = require('../utils/observer');
 
+var buttons = new HashMap();
+
 function createObserver() {
-  observer.create('.card-detail-window', createButton);
+  observer.create('.card-detail-window')
+    .onAdded(createButton)
+    .onRemoved(removeButton)
+    .start();
 }
 
 function createButton(node) {
@@ -30,6 +36,13 @@ function createButton(node) {
 
     overlayEl.appendChild(popupEl);
   });
+
+  buttons.set(node, state);
+}
+
+function removeButton(node) {
+  var button = buttons.get(node);
+  if (button != null) button.remove();
 }
 
 function handleError(error) {

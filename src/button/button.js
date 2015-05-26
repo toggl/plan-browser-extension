@@ -50,6 +50,12 @@ var ButtonState = State.extend({
     this.popup = null;
     
     this.trigger('popup:destroyed');
+  },
+
+  remove: function() {
+    this.button.remove();
+    if (this.popup != null) this.popup.remove();
+    if (this.overlay != null) this.overlay.remove();
   }
 
 });
