@@ -12,7 +12,10 @@ var ShadowView = View.extend({
   },
 
   events: {
-    'click': 'onClick'
+    'click': 'stopPropagation',
+    'keyup': 'stopPropagation',
+    'keydown': 'stopPropagation',
+    'keypress': 'stopPropagation'
   },
 
   render: function() {
@@ -31,7 +34,7 @@ var ShadowView = View.extend({
     return this;
   },
 
-  onClick: function(event) {
+  stopPropagation: function(event) {
     event.stopPropagation();
   }
 
