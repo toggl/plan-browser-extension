@@ -26,10 +26,6 @@
       "css": ["styles/global.css", "styles/trello.css"]
     }
   ],
-  "background": {
-    "scripts": ["background/oauth_flow.js"],
-    "persistent": false
-  },
   "web_accessible_resources": [
     "styles/*",
     "fonts/*"
