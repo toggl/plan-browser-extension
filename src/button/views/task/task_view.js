@@ -1,3 +1,4 @@
+var Promise = require('promise');
 var moment = require('moment');
 var View = require('ampersand-view');
 var AccountCollection = require('../../models/account_collection');
@@ -15,7 +16,8 @@ var TaskView = View.extend(FormMixin, {
 
   props: {
     hub: 'state',
-    user: 'state'
+    user: 'state',
+    overlay: 'boolean'
   },
 
   subviews: {
@@ -44,6 +46,12 @@ var TaskView = View.extend(FormMixin, {
       hook: 'select-user',
       yes: 'user-select--filled',
       no: 'user-select--empty'
+    },
+    'overlay': {
+      type: 'booleanClass',
+      hook: 'done-overlay',
+      yes: 'task-popup__overlay--visible',
+      no: 'task-popup__overlay--hidden'
     }
   },
 
@@ -89,16 +97,18 @@ var TaskView = View.extend(FormMixin, {
       .get(this.user.value.account)
       .tasks.add(this.model);
 
-    var hub = this.hub;
-    hub.trigger('loader:show');
+    this.showLoader();
+    var self = this;
 
-    this.model.save().then(function() {
-      hub.trigger('loader:hide');
-      hub.trigger('popup:close');
-    }, function(error) {
-      hub.trigger('loader:hide');
-      hub.trigger('error:show', error);
-    });
+    this.model.save()
+      .then(function() {
+        self.hideLoader();
+        self.showOverlay()
+          .then(function() { self.closePopup() });
+      }, function(error) {
+        self.hideLoader();
+        self.showError(error);
+      });
   },
 
   onCancel: function(event) {
@@ -138,6 +148,31 @@ var TaskView = View.extend(FormMixin, {
     }
 
     return valid;
+  },
+
+  showLoader: function() {
+    this.hub.trigger('loader:show');
+  },
+
+  hideLoader: function() {
+    this.hub.trigger('loader:hide');
+  },
+
+  showOverlay: function() {
+    var self = this;
+
+    return new Promise(function(resolve, reject) {
+      self.overlay = true;
+      setTimeout(resolve, 2000);
+    });
+  },
+
+  closePopup: function() {
+    this.hub.trigger('popup:close');
+  },
+
+  showError: function(error) {
+    this.hub.trigger('error:show', error);
   }
 
 });
