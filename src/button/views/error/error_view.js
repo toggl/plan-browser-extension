@@ -20,12 +20,8 @@ var ErrorView = View.extend({
       contact_us: true
     },
     network_error: {
-      message: 'Sorry, it looks like something is wrong with the connection.',
+      message: 'Sorry, it looks like something is wrong with your connection.',
       contact_us: false,
-    },
-    authentication_failed: {
-      message: 'Sorry, authentication has failed.',
-      contact_us: true,
     },
     invalid_credentials: {
       message: 'Sorry, the credentials you have provided are not valid.',

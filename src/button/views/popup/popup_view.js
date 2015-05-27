@@ -12,20 +12,22 @@ var PopupView = View.extend({
 
   props: {
     hub: 'state',
-    task: 'state'
+    task: 'state',
+    loader: 'state',
+    error: 'state'
   },
 
   initialize: function() {
     this.listenTo(this.hub, 'popup:show:task', this.updateContentView);
-    this.listenTo(this.hub, 'error:hide', this.updateContentView);
     this.listenTo(this.hub, 'error:show', this.showError);
+    this.listenTo(this.hub, 'error:hide', this.hideError);
   },
 
   render: function() {
     this.renderWithTemplate();
 
-    var loader = new LoaderView({ hub: this.hub });
-    this.renderSubview(loader);
+    this.loader = new LoaderView({ hub: this.hub });
+    this.renderSubview(this.loader);
 
     this.switcher = new ViewSwitcher(this.queryByHook('popup-content'));
     this.registerSubview(this.switcher);
@@ -42,8 +44,12 @@ var PopupView = View.extend({
   },
 
   showError: function(error) {
-    var content = new ErrorView({ hub: this.hub, error: error });
-    this.switcher.set(content);
+    this.error = new ErrorView({ hub: this.hub, error: error });
+    this.renderSubview(this.error);
+  },
+
+  hideError: function() {
+    this.error.remove();
   }
 
 });

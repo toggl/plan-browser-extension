@@ -194,6 +194,10 @@
   z-index: 2;
 }
 
+.popup .error {
+  z-index: 3;
+}
+
 .loader {
   position: absolute;
   left: 0; right: 0;
@@ -219,13 +223,19 @@
 }
 
 .error {
+  position: absolute;
+  left: 0; right: 0;
+  top: 0; bottom: 0;
   padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   text-align: center;
+  background-color: #ffffff;
 }
 
 .error__message {
-  margin: 10px 0;
-  
   a {
     color: #8dc63f;
     text-decoration: none;
