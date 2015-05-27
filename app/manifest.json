@@ -18,12 +18,12 @@
     {
       "matches": ["https://*.github.com/*"],
       "js": ["scripts/content_github.js"],
-      "css": ["styles/global.css"]
+      "css": ["styles/global.css", "styles/github.css"]
     },
     {
       "matches": ["https://*.trello.com/*"],
       "js": ["scripts/content_trello.js"],
-      "css": ["styles/global.css"]
+      "css": ["styles/global.css", "styles/trello.css"]
     }
   ],
   "background": {
