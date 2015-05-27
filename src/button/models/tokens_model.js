@@ -4,6 +4,7 @@ var storage = require('../../utils/storage');
 var TokensState = Model.extend({
 
   props: {
+    id: ['string', true, 'tokens'],
     access_token: 'string',
     refresh_token: 'string'
   },
@@ -17,30 +18,24 @@ var TokensState = Model.extend({
     }
   },
 
-  isNew: function() {
-    return false;
-  },
-
   sync: function(method, model, options) {
     if (method == 'read') {
-      return storage.get([
-        'access_token', 'refresh_token'
-      ]).then(options.success);
+      return storage.get(model.id).then(function(data) {
+        options.success(data[model.id]);
+      });
     }
 
     if (method == 'update' || method == 'create') {
-      return storage.set({
-        access_token: model.access_token,
-        refresh_token: model.refresh_token
-      }).then(function() {
+      var data = {};
+      data[model.id] = model.toJSON();
+
+      return storage.set(data).then(function() {
         options.success();
       });
     }
 
     if (method == 'delete') {
-      return storage.remove([
-        'access_token', 'refresh_token'
-      ]).then(function() {
+      return storage.remove(model.id).then(function() {
         options.success();
       });
     }
