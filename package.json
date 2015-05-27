@@ -10,6 +10,7 @@
     "document-offset": "^1.0.4",
     "gulp-rename": "^1.2.2",
     "hashmap": "^2.0.3",
+    "is-email": "^0.1.1",
     "lodash.difference": "^3.2.1",
     "lodash.result": "^3.1.1",
     "moment": "^2.10.3",

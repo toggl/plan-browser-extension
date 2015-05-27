@@ -37,45 +37,11 @@ var AuthenticationState = State.extend({
     return this.tokens.fetch();
   },
 
-  authenticate: function() {
-    return this.fetchCode().then(this.fetchTokens.bind(this));
+  authenticate: function(credentials) {
+    return this.fetchTokens(credentials);
   },
 
-  fetchCode: function() {
-    var self = this;
-
-    return new Promise(function(resolve, reject) {
-      var redirectUrl = 'https://' + chrome.runtime.id + '.chromiumapp.org/teamweek';
-
-      var oauthUrl = url.format({
-        protocol: 'https',
-        host: 'teamweek.com',
-        pathname: 'oauth/login',
-        query: {
-          response_type: 'code',
-          client_id: self.oauth.id,
-          redirect_uri: redirectUrl
-        }
-      });
-
-      chrome.runtime.sendMessage({ type: 'oauth_flow', url: oauthUrl }, function(response) {
-        if (response == null) {
-          reject({ message: 'authentication_failed' });
-          return;
-        }
-
-        var responseUrl = url.parse(response, true);
-
-        if (responseUrl.query.code != null) {
-          resolve(responseUrl.query.code);
-        } else {
-          reject({ message: 'authentication_failed' });
-        }
-      });
-    });
-  },
-
-  fetchTokens: function(code) {
+  fetchTokens: function(credentials) {
     var self = this;
 
     return new Promise(function(resolve, reject) {
@@ -83,9 +49,9 @@ var AuthenticationState = State.extend({
         .post('https://teamweek.com/api/v3/authenticate/token')
         .set('Authorization', 'Basic ' + self.oauth.token)
         .type('form').send({
-          client_id: self.oauth.id,
-          grant_type: 'authorization_code',
-          code: code
+          grant_type: 'password',
+          username: credentials.username,
+          password: credentials.password
         })
         .end(function(error, response) {
           if (response == null) {

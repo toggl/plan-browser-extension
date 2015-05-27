@@ -3,12 +3,13 @@ var View = require('ampersand-view');
 var AccountCollection = require('../../models/account_collection');
 var TaskModel = require('../../models/task_model');
 
-var TextField = require('./fields/text_field');
-var UserField = require('./fields/user_field');
-var DateField = require('./fields/date_field');
-var TimeField = require('./fields/time_field');
+var FormMixin = require('../form/form_mixin');
+var TextField = require('../fields/text_field');
+var UserField = require('../fields/user_field');
+var DateField = require('../fields/date_field');
+var TimeField = require('../fields/time_field');
 
-var TaskView = View.extend({
+var TaskView = View.extend(FormMixin, {
 
   template: require('./task_view.hbs'),
 
@@ -137,17 +138,6 @@ var TaskView = View.extend({
     }
 
     return valid;
-  },
-
-  clearErrors: function() {
-    this.queryAll('[data-hook^=errors]').forEach(function(el) {
-      el.innerText = null;
-    });
-  },
-
-  addError: function(key, error) {
-    var el = this.queryByHook('errors-' + key);
-    el.innerText = error;
   }
 
 });
