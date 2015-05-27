@@ -17,6 +17,10 @@ var TokensState = Model.extend({
     }
   },
 
+  isNew: function() {
+    return false;
+  },
+
   sync: function(method, model, options) {
     if (method == 'read') {
       return storage.get([
@@ -29,6 +33,14 @@ var TokensState = Model.extend({
         access_token: model.access_token,
         refresh_token: model.refresh_token
       }).then(function() {
+        options.success();
+      });
+    }
+
+    if (method == 'delete') {
+      return storage.remove([
+        'access_token', 'refresh_token'
+      ]).then(function() {
         options.success();
       });
     }

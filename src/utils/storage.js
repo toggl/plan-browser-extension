@@ -11,3 +11,9 @@ exports.set = function(items) {
     chrome.storage.local.set(items, resolve);
   });
 };
+
+exports.remove = function(items) {
+  return new Promise(function(resolve, reject) {
+    chrome.storage.local.remove(items, resolve);
+  });
+};

@@ -44,8 +44,12 @@ var PopupView = View.extend({
   },
 
   showError: function(error) {
-    this.error = new ErrorView({ hub: this.hub, error: error });
-    this.renderSubview(this.error);
+    if (error.message == 'refresh_denied') {
+      this.updateContentView();
+    } else {
+      this.error = new ErrorView({ hub: this.hub, error: error });
+      this.renderSubview(this.error);
+    }
   },
 
   hideError: function() {

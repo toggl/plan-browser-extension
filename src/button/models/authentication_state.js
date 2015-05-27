@@ -85,9 +85,14 @@ var AuthenticationState = State.extend({
             if (response == null) {
               reject({ message: 'network_error' });
             } else if (response.ok) {
-              resolve(self.tokens.save(response.body));
+              var result = self.tokens.set(response.body).save();
+              resolve(result);
             } else if (response.clientError) {
-              reject({ message: 'refresh_denied' });
+              var result = self.tokens.clear().destroy().then(function() {
+                return Promise.reject({ message: 'refresh_denied' });
+              });
+
+              resolve(result);
             } else {
               reject({ message: 'unknown_error' });
             }
