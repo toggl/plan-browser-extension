@@ -12,10 +12,10 @@ var ButtonState = State.extend({
   props: {
     button: 'state',
     popup: 'state',
+    task: 'object',
   },
 
   children: {
-    task: TaskModel,
     hub: HubState
   },
 
@@ -33,12 +33,14 @@ var ButtonState = State.extend({
   },
 
   createPopup: function() {
+    var task = new TaskModel(this.task);
+
     this.popup = new ShadowView({
       name: 'tw-popup',
       style: require('../../app/styles/popup.css'),
       content: new PopupView({
         hub: this.hub,
-        task: this.task
+        task: task
       })
     });
 
