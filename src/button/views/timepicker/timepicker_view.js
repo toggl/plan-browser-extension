@@ -6,7 +6,8 @@ var TimepickerView = View.extend({
   template: require('./timepicker_view.hbs'),
 
   events: {
-    'mousedown [data-time]': 'onSelect'
+    'click [data-time]': 'onSelect',
+    'mousedown': 'onMousedown'
   },
 
   render: function() {
@@ -43,6 +44,10 @@ var TimepickerView = View.extend({
     event.preventDefault();
     var time = event.target.getAttribute('data-time');
     this.trigger('select', time);
+  },
+
+  onMousedown: function(event) {
+    event.preventDefault();
   }
 
 });
