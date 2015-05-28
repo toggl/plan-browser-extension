@@ -18,12 +18,6 @@ var TimeField = View.extend({
         return this.value != null ? moment(this.value, 'HH:mm').format('LT') : null;
       }
     },
-    showPlaceholder: {
-      deps: ['hasFocus', 'isFilled'],
-      fn: function() {
-        return !this.hasFocus && !this.isFilled;
-      }
-    },
     showTimepicker: {
       deps: ['hasFocus', 'pickedTime'],
       fn: function() {
@@ -40,7 +34,6 @@ var TimeField = View.extend({
 
   events: {
     'change [data-hook=control]': 'onChange',
-    'click [data-hook=placeholder]': 'onClick',
     'focus [data-hook=control]': 'onFocus',
     'blur [data-hook=control]': 'onBlur'
   },
@@ -49,11 +42,6 @@ var TimeField = View.extend({
     formatted: {
       type: 'value',
       hook: 'control'
-    },
-    showPlaceholder: {
-      type: 'toggle',
-      yes: '[data-hook=placeholder]',
-      no: '[data-hook=control]'
     },
     showTimepicker: {
       type: 'toggle',
@@ -64,14 +52,6 @@ var TimeField = View.extend({
   onChange: function(event) {
     var m = moment(this.queryByHook('control').value, 'LT');
     this.value = m.isValid() ? m.format('HH:mm') : null;
-  },
-
-  onClick: function(event) {
-    event.preventDefault();
-    event.stopPropagation();
-
-    this.hasFocus = true;
-    this.queryByHook('control').focus();
   },
 
   onFocus: function(event) {
