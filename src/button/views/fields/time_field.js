@@ -14,7 +14,7 @@ var TimeField = View.extend({
     formatted: {
       deps: ['value'],
       fn: function() {
-        return this.value != null ? moment(this.value, 'HH:mm').format('HH:mm:ss') : null;
+        return this.value != null ? moment(this.value, 'HH:mm').format('LT') : null;
       }
     },
     showPlaceholder: {
@@ -61,7 +61,7 @@ var TimeField = View.extend({
   },
 
   onChange: function(event) {
-    var m = moment(this.queryByHook('control').value, 'HH:mm:ss a');
+    var m = moment(this.queryByHook('control').value, 'LT');
     this.value = m.isValid() ? m.format('HH:mm') : null;
   },
 
