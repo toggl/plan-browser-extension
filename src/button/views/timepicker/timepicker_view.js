@@ -21,6 +21,11 @@ var TimepickerView = View.extend({
     return this;
   },
 
+  scroll: function() {
+    var item = this.query('[data-time="07:00"]');
+    this.el.scrollTop = item.offsetTop;
+  },
+
   createTimes: function() {
     var times = [];
     var start = moment().set({ hours: 0, minutes: 0 });

@@ -7,7 +7,8 @@ var TimeField = View.extend({
   props: {
     value: 'string',
     hasFocus: 'boolean',
-    pickedTime: 'boolean'
+    pickedTime: 'boolean',
+    timepicker: 'state'
   },
 
   derived: {
@@ -76,6 +77,7 @@ var TimeField = View.extend({
   onFocus: function(event) {
     this.hasFocus = true;
     this.pickedTime = false;
+    this.timepicker.scroll();
   },
 
   onBlur: function(event) {
@@ -83,9 +85,9 @@ var TimeField = View.extend({
   },
 
   render: function() {
-    var timepicker = new TimepickerView();
-    this.listenTo(timepicker, 'select', this.onTimePicked);
-    this.renderSubview(timepicker, this.queryByHook('timepicker'));
+    this.timepicker = new TimepickerView();
+    this.listenTo(this.timepicker, 'select', this.onTimePicked);
+    this.renderSubview(this.timepicker, this.queryByHook('timepicker'));
 
     return this;
   },
