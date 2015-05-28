@@ -8,7 +8,7 @@
       </div>
       <div class="form__control">
         <input type="text" name="name" id="tw-form-{{cid}}-name" placeholder="Enter name..."
-          data-hook="input-name">
+          data-hook="input-name" tabindex="1">
       </div>
       <div class="form__errors" data-hook="errors-name"></div>
     </div>
@@ -19,7 +19,7 @@
       </div>
       <div class="form__control">
         <select name="user" id="tw-form-{{cid}}-user" class="user-select"
-          data-hook="select-user"></select>
+          data-hook="select-user" tabindex="2"></select>
       </div>
       <div class="form__errors" data-hook="errors-user"></div>
     </div>
@@ -31,7 +31,7 @@
       <div class="form__control form__control--datepicker">
         <div class="date-input" data-hook="input-start-date">
           <input type="text" name="start_date" id="tw-form-{{cid}}-start-date"
-            data-hook="control">
+            data-hook="control" tabindex="3">
           <div class="date-input__datepicker" data-hook="datepicker"></div>
         </div>
       </div>
@@ -39,7 +39,7 @@
         <div class="time-input" data-hook="input-start-time">
           <div class="time-input__timepicker" data-hook="timepicker"></div>
           <input type="text" name="start_time" id="tw-form-{{cid}}-start-time"
-            class="time-input__control" placeholder="Set time..." data-hook="control">
+            class="time-input__control" placeholder="Set time..." data-hook="control" tabindex="4">
         </div>
       </div>
       <div class="form__errors" data-hook="errors-start"></div>
@@ -52,7 +52,7 @@
       <div class="form__control form__control--datepicker">
         <div class="date-input" data-hook="input-end-date">
           <input type="text" name="end_date" id="tw-form-{{cid}}-end-date"
-            data-hook="control">
+            data-hook="control" tabindex="5">
           <div class="date-input__datepicker" data-hook="datepicker"></div>
         </div>
       </div>
@@ -60,7 +60,7 @@
         <div class="time-input" data-hook="input-end-time">
           <div class="time-input__timepicker" data-hook="timepicker"></div>
           <input type="text" name="end_time" id="tw-form-{{cid}}-end-time"
-            class="time-input__control" placeholder="Set time..." data-hook="control">
+            class="time-input__control" placeholder="Set time..." data-hook="control" tabindex="6">
         </div>
       </div>
       <div class="form__errors" data-hook="errors-end"></div>
@@ -68,8 +68,8 @@
   </div>
 
   <div class="popup__buttons">
-    <a href="#" class="button button--submit" data-hook="button-submit">Add</a>
-    <a href="#" class="button button--cancel" data-hook="button-cancel">Cancel</a>
+    <a href="#" class="button button--submit" data-hook="button-submit" tabindex="7">Add</a>
+    <a href="#" class="button button--cancel" data-hook="button-cancel" tabindex="8">Cancel</a>
   </div>
 
   <div class="task-popup__overlay" data-hook="done-overlay">
