@@ -83,12 +83,9 @@ var TimeField = View.extend({
   },
 
   render: function() {
-    var timepickerEl = this.queryByHook('timepicker');
-    var timepickerView = new TimepickerView({ el: timepickerEl });
-
-    this.listenTo(timepickerView, 'select', this.onTimePicked);
-    this.registerSubview(timepickerView);
-    timepickerView.render();
+    var timepicker = new TimepickerView();
+    this.listenTo(timepicker, 'select', this.onTimePicked);
+    this.renderSubview(timepicker, this.queryByHook('timepicker'));
 
     return this;
   },

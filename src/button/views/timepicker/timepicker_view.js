@@ -3,25 +3,22 @@ var View = require('ampersand-view');
 
 var TimepickerView = View.extend({
 
-  partials: {
-    item: require('./timepicker_item.hbs')
-  },
+  template: require('./timepicker_view.hbs'),
 
   events: {
     'mousedown [data-time]': 'onSelect'
   },
 
   render: function() {
-    var times = this.createTimes();
-
-    var items = times.map(function(time) {
-      return this.partials.item({
+    var times = this.createTimes().map(function(time) {
+      return {
         time: time.format('HH:mm'),
-        text: time.format('HH:mm')
-      });
-    }, this);
+        text: time.format('LT')
+      };
+    });
 
-    this.el.innerHTML = items.join('\n');
+    this.renderWithTemplate({ times: times });
+    return this;
   },
 
   createTimes: function() {
