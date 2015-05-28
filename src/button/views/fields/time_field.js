@@ -1,11 +1,13 @@
 var moment = require('moment');
 var View = require('ampersand-view');
+var TimepickerView = require('../timepicker/timepicker_view.js');
 
 var TimeField = View.extend({
 
   props: {
     value: 'string',
-    focus: 'boolean'
+    hasFocus: 'boolean',
+    pickedTime: 'boolean'
   },
 
   derived: {
@@ -16,9 +18,15 @@ var TimeField = View.extend({
       }
     },
     showPlaceholder: {
-      deps: ['focus', 'isFilled'],
+      deps: ['hasFocus', 'isFilled'],
       fn: function() {
-        return !this.focus && !this.isFilled;
+        return !this.hasFocus && !this.isFilled;
+      }
+    },
+    showTimepicker: {
+      deps: ['hasFocus', 'pickedTime'],
+      fn: function() {
+        return this.hasFocus && !this.pickedTime;
       }
     },
     isFilled: {
@@ -32,15 +40,23 @@ var TimeField = View.extend({
   events: {
     'change [data-hook=control]': 'onChange',
     'click [data-hook=placeholder]': 'onClick',
+    'focus [data-hook=control]': 'onFocus',
     'blur [data-hook=control]': 'onBlur'
   },
 
   bindings: {
-    formatted: { type: 'value' },
+    formatted: {
+      type: 'value',
+      hook: 'control'
+    },
     showPlaceholder: {
       type: 'toggle',
       yes: '[data-hook=placeholder]',
       no: '[data-hook=control]'
+    },
+    showTimepicker: {
+      type: 'toggle',
+      hook: 'timepicker'
     }
   },
 
@@ -53,16 +69,33 @@ var TimeField = View.extend({
     event.preventDefault();
     event.stopPropagation();
 
-    this.focus = true;
+    this.hasFocus = true;
     this.queryByHook('control').focus();
   },
 
+  onFocus: function(event) {
+    this.hasFocus = true;
+    this.pickedTime = false;
+  },
+
   onBlur: function(event) {
-    this.focus = false;
+    this.hasFocus = false;
   },
 
   render: function() {
+    var timepickerEl = this.queryByHook('timepicker');
+    var timepickerView = new TimepickerView({ el: timepickerEl });
+
+    this.listenTo(timepickerView, 'select', this.onTimePicked);
+    this.registerSubview(timepickerView);
+    timepickerView.render();
+
     return this;
+  },
+
+  onTimePicked: function(time) {
+    this.value = time;
+    this.pickedTime = true;
   }
 
 });
