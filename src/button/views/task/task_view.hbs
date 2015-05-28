@@ -29,8 +29,11 @@
         <label for="tw-form-{{cid}}-start-date">Start</label>
       </div>
       <div class="form__control form__control--datepicker">
-        <input type="date" name="start_date" id="tw-form-{{cid}}-start-date"
-          data-hook="input-start-date">
+        <div class="date-input" data-hook="input-start-date">
+          <input type="text" name="start_date" id="tw-form-{{cid}}-start-date"
+            data-hook="control">
+          <div class="date-input__datepicker" data-hook="datepicker"></div>
+        </div>
       </div>
       <div class="form__control form__control--timepicker">
         <div class="time-input" data-hook="input-start-time">
@@ -48,8 +51,11 @@
         <label for="tw-form-{{cid}}-end-date">End</label>
       </div>
       <div class="form__control form__control--datepicker">
-        <input type="date" name="end_date" id="tw-form-{{cid}}-end-date"
-          data-hook="input-end-date">
+        <div class="date-input" data-hook="input-end-date">
+          <input type="text" name="end_date" id="tw-form-{{cid}}-end-date"
+            data-hook="control">
+          <div class="date-input__datepicker" data-hook="datepicker"></div>
+        </div>
       </div>
       <div class="form__control form__control--timepicker">
         <div class="time-input" data-hook="input-end-time">
