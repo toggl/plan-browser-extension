@@ -36,7 +36,7 @@ var TaskView = View.extend(FormMixin, {
   },
 
   events: {
-    'click [data-hook=button-submit]': 'onSubmit',
+    'submit [data-hook=form]': 'onSubmit',
     'click [data-hook=button-cancel]': 'onCancel'
   },
 

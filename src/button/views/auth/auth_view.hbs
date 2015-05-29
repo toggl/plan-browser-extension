@@ -1,32 +1,34 @@
 <div class="auth-popup">
   <div class="popup__title">Sign in to Teamweek</div>
 
-  <div class="popup__form form">
-    <div class="form__row">
-      <div class="form__label">
-        <label for="tw-form-{{cid}}-email">E-mail</label>
-      </div>
-      <div class="form__control">
-        <input type="text" name="email" id="tw-form-{{cid}}-email" placeholder="Enter e-mail..."
-          data-hook="input-email">
-      </div>
-      <div class="form__errors" data-hook="errors-email"></div>
+  <form data-hook="form">
+    <div class="popup__form form">
+        <div class="form__row">
+          <div class="form__label">
+            <label for="tw-form-{{cid}}-email">E-mail</label>
+          </div>
+          <div class="form__control">
+            <input type="text" name="email" id="tw-form-{{cid}}-email" placeholder="Enter e-mail..."
+              data-hook="input-email">
+          </div>
+          <div class="form__errors" data-hook="errors-email"></div>
+        </div>
+        
+        <div class="form__row">
+          <div class="form__label">
+            <label for="tw-form-{{cid}}-password">Password</label>
+          </div>
+          <div class="form__control">
+            <input type="password" name="password" id="tw-form-{{cid}}-password" placeholder="Enter password..."
+              data-hook="input-password">
+          </div>
+          <div class="form__errors" data-hook="errors-password"></div>
+        </div>
     </div>
 
-    <div class="form__row">
-      <div class="form__label">
-        <label for="tw-form-{{cid}}-password">Password</label>
-      </div>
-      <div class="form__control">
-        <input type="password" name="password" id="tw-form-{{cid}}-password" placeholder="Enter password..."
-          data-hook="input-password">
-      </div>
-      <div class="form__errors" data-hook="errors-password"></div>
+    <div class="popup__buttons">
+      <input type="submit" value="Sign in" class="button button--submit" data-hook="button-submit">
+      <input type="button" value="Cancel" class="button button--cancel" data-hook="button-cancel">
     </div>
-  </div>
-
-  <div class="popup__buttons">
-    <a href="#" class="button button--submit" data-hook="button-sign-in">Sign in</a>
-    <a href="#" class="button button--cancel" data-hook="button-cancel">Cancel</a>
-  </div>
+  </form>
 </div>

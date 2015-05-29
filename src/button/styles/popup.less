@@ -131,15 +131,21 @@
   display: none;
 }
 
-.button--submit,
-.button--cancel,
-.button--text {
+.button {
   display: inline-block;
   line-height: 40px;
   height: 40px;
 
   font-size: 14px;
   text-decoration: none;
+  font-family: inherit;
+  background: none;
+  cursor: pointer;
+  border: none;
+}
+
+.button:active {
+  outline: none;
 }
 
 .button--cancel {

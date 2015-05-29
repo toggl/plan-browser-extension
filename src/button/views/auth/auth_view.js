@@ -19,7 +19,7 @@ var AuthView = View.extend(FormMixin, {
   },
 
   events: {
-    'click [data-hook=button-sign-in]': 'onSubmit',
+    'submit [data-hook=form]': 'onSubmit',
     'click [data-hook=button-cancel]': 'onCancel'
   },
 
