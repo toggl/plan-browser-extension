@@ -1,4 +1,5 @@
 var View = require('ampersand-view');
+var FilteredCollection = require('ampersand-filtered-subcollection');
 var Handlebars = require('hbsfy/runtime');
 
 Handlebars.registerHelper('user_list_value', function(options) {
@@ -7,7 +8,7 @@ Handlebars.registerHelper('user_list_value', function(options) {
 
 var UserField = View.extend({
 
-  template: require('./user_field.hbs'),
+  template: require('./user_field_default.hbs'),
 
   props: {
     value: 'object'
@@ -42,6 +43,29 @@ var UserField = View.extend({
 
   render: function() {
     this.el.innerHTML = this.template(this);
+    this.renderCollection(this.collection, UserGroup, this.el);
+    return this;
+  }
+
+});
+
+var UserGroup = View.extend({
+
+  template: require('./user_field_group.hbs'),
+
+  props: {
+    users: 'object'
+  },
+
+  initialize: function() {
+    this.users = new FilteredCollection(this.model.users, {
+      where: { active: true },
+      comparator: 'name'
+    });
+  },
+
+  render: function() {
+    this.renderWithTemplate();
     return this;
   }
 
