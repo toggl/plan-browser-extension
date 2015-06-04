@@ -8,7 +8,6 @@
     "ampersand-view": "^7.3.0",
     "ampersand-view-switcher": "^2.0.0",
     "document-offset": "^1.0.4",
-    "gulp-rename": "^1.2.2",
     "hashmap": "^2.0.3",
     "is-email": "^0.1.1",
     "lodash.difference": "^3.2.1",
@@ -23,6 +22,7 @@
     "glob": "^5.0.6",
     "gulp": "^3.8.11",
     "gulp-less": "^3.0.3",
+    "gulp-rename": "^1.2.2",
     "gulp-util": "^3.0.4",
     "handlebars": "^3.0.3",
     "hbsfy": "^2.2.1",
@@ -33,5 +33,9 @@
   },
   "engines": {
     "node": ">=0.8.0"
+  },
+  "scripts": {
+    "build": "gulp build:js build:less",
+    "watch": "gulp watch:js watch:less"
   }
 }
