@@ -1,4 +1,4 @@
-# Teamwek button
+# Teamweek button
 
 ## Requirements
 You need to have node.js and npm installed. That's it.
