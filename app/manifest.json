@@ -24,6 +24,11 @@
       "matches": ["https://*.trello.com/*"],
       "js": ["scripts/content_trello.js"],
       "css": ["styles/global.css", "styles/trello.css"]
+    },
+    {
+      "matches": ["https://*.gitlab.com/*"],
+      "js": ["scripts/content_gitlab.js"],
+      "css": ["styles/global.css", "styles/gitlab.css"]
     }
   ],
   "web_accessible_resources": [
