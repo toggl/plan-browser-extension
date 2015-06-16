@@ -10,10 +10,15 @@
     "128": "images/icon-128.png"
   },
   "permissions": [
+    "tabs",
     "storage",
-    "identity",
-    "https://teamweek.com/"
+    "contextMenus",
+    "<all_urls>"
   ],
+  "background": {
+    "scripts": ["background/context_menu.js"],
+    "persistent": false
+  },
   "content_scripts": [
     {
       "matches": ["https://*.github.com/*"],
