@@ -1,3 +1,4 @@
+var Promise = require('promise');
 var RestCollection = require('ampersand-rest-collection');
 var AccountModel = require('./account_model');
 var sync = require('../api/sync');
@@ -10,8 +11,16 @@ var AccountCollection = RestCollection.extend({
 
   sync: sync,
 
-  fetchWithUsers: function() {
-    return this.fetch().then(this.fetchAllUsers.bind(this));
+  fetchEverything: function() {
+    var self = this;
+
+    return this.fetch()
+      .then(function() {
+        return Promise.all([
+          self.fetchAllUsers(),
+          self.fetchAllProjects()
+        ]);
+      });
   },
 
   fetchAllUsers: function() {
@@ -20,6 +29,14 @@ var AccountCollection = RestCollection.extend({
     });
 
     return Promise.all(users);
+  },
+
+  fetchAllProjects: function() {
+    var projects = this.map(function(account) {
+      return account.projects.fetch();
+    });
+
+    return Promise.all(projects);
   }
 
 });

@@ -66,7 +66,7 @@ var TaskView = View.extend(FormMixin, {
 
     var self = this;
 
-    this.accounts.fetchWithUsers()
+    this.accounts.fetchEverything()
       .then(function() {
         self.user.render();
         self.hub.trigger('loader:hide');
