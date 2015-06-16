@@ -19,11 +19,11 @@
   },
   "devDependencies": {
     "gulp": "^3.8.11",
-    "gulp-browserify": "https://github.com/miscer/gulp-browserify/archive/v1.0.0.tar.gz",
+    "gulp-browserify": "miscer/gulp-browserify#v1.0.0",
     "gulp-less": "^3.0.3",
     "gulp-load-plugins": "^1.0.0-rc.1",
     "gulp-rename": "^1.2.2",
-    "gulp-watchify": "https://github.com/miscer/gulp-watchify/archive/v1.0.0.tar.gz",
+    "gulp-watchify": "miscer/gulp-watchify#v1.0.0",
     "handlebars": "^3.0.3",
     "hbsfy": "^2.2.1",
     "partialify": "^3.1.3"
