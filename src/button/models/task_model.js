@@ -14,7 +14,8 @@ var TaskModel = Model.extend({
     start_date: { type: 'date', required: true },
     end_date: { type: 'date', required: true },
     start_time: 'string',
-    end_time: 'string'
+    end_time: 'string',
+    estimated_hours: 'number'
   },
 
   serialize: function() {

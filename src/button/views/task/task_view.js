@@ -8,6 +8,7 @@ var FormMixin = require('../form/form_mixin');
 var TextField = require('../fields/text_field');
 var UserField = require('../fields/user_field');
 var ProjectField = require('../fields/project_field');
+var EstimateField = require('../fields/estimate_field');
 var DateField = require('../fields/date_field');
 var TimeField = require('../fields/time_field');
 
@@ -31,7 +32,8 @@ var TaskView = View.extend(FormMixin, {
     user: { hook: 'select-user', prepareView: function(el) {
       return new UserField({ el: el, collection: this.accounts, parent: this });
     } },
-    project: { hook: 'select-project', constructor: ProjectField }
+    project: { hook: 'select-project', constructor: ProjectField },
+    estimate: { hook: 'input-estimate', constructor: EstimateField }
   },
 
   collections: {
@@ -108,7 +110,8 @@ var TaskView = View.extend(FormMixin, {
       start_date: this.start_date.value,
       end_date: this.end_date.value,
       start_time: this.start_time.value,
-      end_time: this.end_time.value
+      end_time: this.end_time.value,
+      estimated_hours: this.estimate.value
     });
 
     this.accounts
@@ -162,6 +165,11 @@ var TaskView = View.extend(FormMixin, {
 
     if (moment(this.end_date.value).isBefore(this.start_date.value, 'day')) {
       this.addError('end', 'End date cannot be before start date');
+      valid = false;
+    }
+
+    if (!this.estimate.isValid) {
+      this.addError('estimate', 'Daily estimate is not valid');
       valid = false;
     }
 
