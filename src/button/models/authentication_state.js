@@ -60,6 +60,15 @@ var AuthenticationState = State.extend({
   },
 
   /**
+   * Remove tokens from storage
+   *
+   * @return Promise
+   */
+  revoke: function() {
+    return this.tokens.clear().destroy();
+  },
+
+  /**
    * Fetch tokens from the server using given credentials
    *
    * @param credentials Object with username and password keys
