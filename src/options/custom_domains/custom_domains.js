@@ -9,7 +9,8 @@ var CustomDomainsView = View.extend({
 
   initialize: function() {
     this.collection = new CustomDomainCollection([
-      {domain: 'gitlab.websupport.sk', service: 'gitlab'}
+      {domain: 'gitlab.websupport.sk', service: 'gitlab'},
+      {domain: 'example.com', service: 'gitlab'}
     ]);
 
     this.form = new FormView({collection: this.collection});

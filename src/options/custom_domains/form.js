@@ -1,4 +1,5 @@
 var View = require('ampersand-view');
+var permissions = require('../../utils/permissions');
 
 var FormView = View.extend({
 
@@ -14,12 +15,20 @@ var FormView = View.extend({
   },
 
   onCreate: function() {
-    this.collection.add({
-      domain: this.queryByHook('domain').value,
-      service: this.queryByHook('service').value
-    });
+    var self = this;
 
-    this.render();
+    var domain = this.queryByHook('domain').value;
+    var service = this.queryByHook('service').value;
+
+    permissions.request(domain)
+      .then(function() {
+        self.collection.add({
+          domain: domain,
+          service: service
+        });
+
+        self.render();
+      });
   }
 
 });

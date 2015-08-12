@@ -1,4 +1,5 @@
 var View = require('ampersand-view');
+var permissions = require('../../utils/permissions');
 
 var ItemView = View.extend({
 
@@ -15,9 +16,22 @@ var ItemView = View.extend({
     }
   },
 
+  events: {
+    'click [data-hook=remove]': 'onRemove'
+  },
+
   render: function() {
     this.renderWithTemplate();
-    return this
+    return this;
+  },
+
+  onRemove: function() {
+    var self = this;
+
+    permissions.remove(this.model.domain)
+      .then(function() {
+        self.collection.remove(self.model);
+      });
   }
 
 });
