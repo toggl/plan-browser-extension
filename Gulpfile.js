@@ -15,11 +15,13 @@ gulp.task('watch:js', function() {
     .pipe(plugins.rename({ prefix: 'content_' }))
     .pipe(gulp.dest('app/scripts'));
 
-  var options = gulp.src('src/options/options.js')
+  var files = ['src/options/options.js', 'src/background/background.js'];
+  
+  var scripts = gulp.src(files)
     .pipe(plugins.watchify(configure))
     .pipe(gulp.dest('app/scripts'));
 
-  return merge(bootloaders, options);
+  return merge(bootloaders, scripts);
 });
 
 gulp.task('build:js', function() {
@@ -28,11 +30,13 @@ gulp.task('build:js', function() {
     .pipe(plugins.rename({ prefix: 'content_' }))
     .pipe(gulp.dest('app/scripts'));
 
-  var options = gulp.src('src/options/options.js')
+  var files = ['src/options/options.js', 'src/background/background.js'];
+  
+  var scripts = gulp.src(files)
     .pipe(plugins.browserify(configure))
     .pipe(gulp.dest('app/scripts'));
 
-  return merge(bootloaders, options);
+  return merge(bootloaders, scripts);
 });
 
 gulp.task('build:less', function() {
