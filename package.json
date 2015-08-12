@@ -2,6 +2,7 @@
   "name": "teamweek-button",
   "version": "0.0.0",
   "dependencies": {
+    "ampersand-filtered-subcollection": "^2.0.4",
     "ampersand-model": "^5.0.3",
     "ampersand-rest-collection": "^4.0.0",
     "ampersand-state": "^4.5.4",
@@ -20,11 +21,11 @@
   },
   "devDependencies": {
     "gulp": "^3.8.11",
-    "gulp-browserify": "miscer/gulp-browserify#v1.0.0",
+    "gulp-browserify": "miscer/gulp-browserify#v1.0.1",
     "gulp-less": "^3.0.3",
     "gulp-load-plugins": "^1.0.0-rc.1",
     "gulp-rename": "^1.2.2",
-    "gulp-watchify": "miscer/gulp-watchify#v1.0.0",
+    "gulp-watchify": "miscer/gulp-watchify#v1.0.1",
     "handlebars": "^3.0.3",
     "hbsfy": "^2.2.1",
     "merge-stream": "^0.1.8",
