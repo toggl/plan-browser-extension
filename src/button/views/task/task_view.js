@@ -1,8 +1,8 @@
 var Promise = require('promise');
 var moment = require('moment');
 var View = require('ampersand-view');
-var AccountCollection = require('../../models/account_collection');
-var TaskModel = require('../../models/task_model');
+var AccountCollection = require('../../../models/account_collection');
+var TaskModel = require('../../../models/task_model');
 
 var FormMixin = require('../form/form_mixin');
 var TextField = require('../fields/text_field');

@@ -1,9 +1,9 @@
 var State = require('ampersand-state');
-var api = require ('./api/api');
+var api = require ('../api/api');
 var ShadowView = require('./views/shadow/shadow_view');
 var ButtonView = require('./views/button/button_view');
 var PopupView = require('./views/popup/popup_view');
-var TaskModel = require('./models/task_model');
+var TaskModel = require('../models/task_model');
 
 var HubState = State.extend({});
 

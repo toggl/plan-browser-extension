@@ -1,5 +1,5 @@
 var Model = require('ampersand-model');
-var storage = require('../../utils/storage');
+var storage = require('../utils/storage');
 
 /** Model for storing OAuth access and refresh tokens in local storage */
 var TokensModel = Model.extend({

@@ -1,5 +1,5 @@
 var OptionsView = require('./options_view.js');
-var api = require('../button/api/api');
+var api = require('../api/api');
 
 function initialize() {
   return api.auth.load();

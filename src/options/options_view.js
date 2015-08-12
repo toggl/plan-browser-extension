@@ -1,5 +1,5 @@
 var View = require('ampersand-view');
-var api = require('../button/api/api');
+var api = require('../api/api');
 
 var OptionsView = View.extend({
 
