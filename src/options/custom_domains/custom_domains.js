@@ -8,10 +8,8 @@ var CustomDomainsView = View.extend({
   template: require('./custom_domains.hbs'),
 
   initialize: function() {
-    this.collection = new CustomDomainCollection([
-      {domain: 'gitlab.websupport.sk', service: 'gitlab'},
-      {domain: 'example.com', service: 'gitlab'}
-    ]);
+    this.collection = new CustomDomainCollection()
+    this.collection.fetch();
 
     this.form = new FormView({collection: this.collection});
   },

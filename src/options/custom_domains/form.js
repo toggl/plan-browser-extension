@@ -22,11 +22,12 @@ var FormView = View.extend({
 
     permissions.request(domain)
       .then(function() {
-        self.collection.add({
+        return self.collection.create({
           domain: domain,
           service: service
         });
-
+      })
+      .then(function() {
         self.render();
       });
   }
