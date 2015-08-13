@@ -30,6 +30,8 @@ var ButtonState = State.extend({
         hub: this.hub
       })
     });
+
+    ButtonState.setLoaded();
   },
 
   createPopup: function() {
@@ -64,6 +66,14 @@ var ButtonState = State.extend({
 
 ButtonState.initialize = function() {
   return api.auth.load();
+};
+
+ButtonState.isLoaded = function() {
+  return window['__tw-button'];
+};
+
+ButtonState.setLoaded = function() {
+  window['__tw-button'] = true;
 };
 
 module.exports = ButtonState;
