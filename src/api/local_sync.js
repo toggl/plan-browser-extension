@@ -95,7 +95,7 @@ module.exports = function(namespace) {
       case 'update':
         promise = store.update(model);
         break;
-      case 'destroy':
+      case 'delete':
         promise = store.destroy(model);
         break;
     }

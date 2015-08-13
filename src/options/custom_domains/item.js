@@ -30,7 +30,7 @@ var ItemView = View.extend({
 
     permissions.remove(this.model.domain)
       .then(function() {
-        self.collection.remove(self.model);
+        return self.model.destroy();
       });
   }
 
