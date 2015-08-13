@@ -1,6 +1,6 @@
 var moment = require('moment');
 var Model = require('ampersand-model');
-var sync = require('../api/sync');
+var sync = require('../api/api_sync');
 
 var TaskModel = Model.extend({
 

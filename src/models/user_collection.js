@@ -1,7 +1,7 @@
 var RestCollection = require('ampersand-rest-collection');
 var UserModel = require('./user_model');
 var config = require('../api/config');
-var sync = require('../api/sync');
+var sync = require('../api/api_sync');
 
 var UserCollection = RestCollection.extend({
 
