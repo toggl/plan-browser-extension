@@ -1,4 +1,4 @@
-var Promise = require('promise');
+var Promise = require('bluebird');
 var storage = require('../utils/storage');
 var find = require('lodash.find');
 var uuid = require('uuid');

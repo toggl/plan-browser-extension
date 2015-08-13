@@ -1,4 +1,4 @@
-var Promise = require('promise');
+var Promise = require('bluebird');
 var State = require('ampersand-state');
 var request = require('superagent');
 var url = require('url');

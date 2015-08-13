@@ -1,4 +1,4 @@
-var Promise = require('promise');
+var Promise = require('bluebird');
 var moment = require('moment');
 var View = require('ampersand-view');
 var AccountCollection = require('../../../models/account_collection');

@@ -1,4 +1,4 @@
-var Promise = require('promise');
+var Promise = require('bluebird');
 var RestCollection = require('ampersand-rest-collection');
 var AccountModel = require('./account_model');
 var config = require('../api/config');

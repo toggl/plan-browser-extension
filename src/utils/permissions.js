@@ -1,4 +1,4 @@
-var Promise = require('promise');
+var Promise = require('bluebird');
 
 exports.request = function(domain) {
   return new Promise(function(resolve, reject) {
