@@ -29,6 +29,11 @@
       "matches": ["https://*.gitlab.com/*"],
       "js": ["scripts/content_gitlab.js"],
       "css": ["styles/global.css", "styles/gitlab.css"]
+    },
+    {
+      "matches": ["https://*.atlassian.com/*"],
+      "js": ["scripts/content_jira.js"],
+      "css": ["styles/global.css", "styles/jira.css"]
     }
   ],
   "web_accessible_resources": [
