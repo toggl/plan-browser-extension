@@ -168,7 +168,7 @@ var TaskView = View.extend(FormMixin, {
       valid = false;
     }
 
-    if (!this.estimate.isValid) {
+    if (this.estimate.isFilled && !this.estimate.isValid) {
       this.addError('estimate', 'Daily estimate is not valid');
       valid = false;
     }
