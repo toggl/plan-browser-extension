@@ -44,5 +44,9 @@
   "options_ui": {
     "page": "options.html",
     "chrome_style": true
-  }
+  },
+  "background": {
+    "page": "background.html"
+  },
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }

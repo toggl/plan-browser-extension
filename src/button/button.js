@@ -4,6 +4,7 @@ var ShadowView = require('./views/shadow/shadow_view');
 var ButtonView = require('./views/button/button_view');
 var PopupView = require('./views/popup/popup_view');
 var TaskModel = require('../models/task_model');
+var analytics = require('../utils/analytics');
 
 var HubState = State.extend({});
 
@@ -45,6 +46,8 @@ var ButtonState = State.extend({
     });
 
     this.trigger('popup:created');
+
+    analytics.track('button', 'click');
   },
 
   destroyPopup: function() {
