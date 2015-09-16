@@ -4,6 +4,10 @@ exports.track = function(category, action) {
   chrome.runtime.sendMessage({
     type: 'track_event',
     category: category,
-    action: action
+    action: action,
+    fields: {
+      dimension1: location.hostname,
+      dimension2: location.href
+    }
   });
 };

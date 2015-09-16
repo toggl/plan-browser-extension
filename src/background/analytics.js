@@ -17,5 +17,5 @@ ga('set', 'checkProtocolTask', null);
 
 chrome.runtime.onMessage.addListener(function(data) {
   if (data.type != 'track_event') return;
-  ga('send', 'event', data.category, data.action);
+  ga('send', 'event', data.category, data.action, data.fields);
 });
