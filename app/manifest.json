@@ -1,6 +1,6 @@
 {
   "name": "Teamweek Button",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "manifest_version": 2,
   "description": "Add tasks to Teamweek directly from Github, Trello, GitLab and JIRA",
   "short_name": "TW Button",
