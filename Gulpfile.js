@@ -15,13 +15,16 @@ gulp.task('watch:js', function() {
     .pipe(plugins.rename({ prefix: 'content_' }))
     .pipe(gulp.dest('app/scripts'));
 
-  var files = ['src/options/options.js', 'src/background/background.js'];
-  
-  var scripts = gulp.src(files)
+  var backgrounds = gulp.src('src/background/*.js')
+    .pipe(plugins.watchify(configure))
+    .pipe(plugins.rename({ prefix: 'background_' }))
+    .pipe(gulp.dest('app/scripts'));
+
+  var options = gulp.src('src/options/options.js')
     .pipe(plugins.watchify(configure))
     .pipe(gulp.dest('app/scripts'));
 
-  return merge(bootloaders, scripts);
+  return merge(bootloaders, backgrounds, options);
 });
 
 gulp.task('build:js', function() {
@@ -30,13 +33,16 @@ gulp.task('build:js', function() {
     .pipe(plugins.rename({ prefix: 'content_' }))
     .pipe(gulp.dest('app/scripts'));
 
-  var files = ['src/options/options.js', 'src/background/background.js'];
-  
-  var scripts = gulp.src(files)
+  var backgrounds = gulp.src('src/background/*.js')
+    .pipe(plugins.browserify(configure))
+    .pipe(plugins.rename({ prefix: 'background_' }))
+    .pipe(gulp.dest('app/scripts'));
+
+  var options = gulp.src('src/options/options.js')
     .pipe(plugins.browserify(configure))
     .pipe(gulp.dest('app/scripts'));
 
-  return merge(bootloaders, scripts);
+  return merge(bootloaders, backgrounds, options);
 });
 
 gulp.task('build:less', function() {
