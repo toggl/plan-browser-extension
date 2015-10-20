@@ -79,6 +79,8 @@ function handleError(error) {
   console.error(error);
 }
 
-ButtonState.initialize()
-  .then(createObserver)
-  .catch(handleError);
+if (!ButtonState.isLoaded()) {
+  ButtonState.initialize()
+    .then(createObserver)
+    .catch(handleError);
+}
