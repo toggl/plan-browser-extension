@@ -19,9 +19,6 @@
     "https://*/",
     "tabs"
   ],
-  "background": {
-    "scripts": ["scripts/background.js"]
-  },
   "content_scripts": [
     {
       "matches": ["https://*.github.com/*"],
