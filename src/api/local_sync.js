@@ -62,7 +62,7 @@ module.exports = function(namespace) {
           var previous = find(models, {id: model.id});
           var index = models.indexOf(previous);
           models.splice(index, 1, serialized);
-          return this.set(models);
+          return self.set(models);
         })
         .then(function() {
           return model;
@@ -77,7 +77,7 @@ module.exports = function(namespace) {
           var previous = find(models, {id: model.id});
           var index = models.indexOf(previous);
           models.splice(index, 1);
-          return this.set(models);
+          return self.set(models);
         });
     }
   };
