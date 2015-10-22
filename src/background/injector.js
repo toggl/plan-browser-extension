@@ -1,4 +1,5 @@
 var CustomDomainCollection = require('../models/custom_domain_collection');
+var assets = require('./injected_assets.json');
 
 var injector = {
 
@@ -33,13 +34,13 @@ var injector = {
   },
 
   injectTab: function(tab, service) {
-    var css = 'styles/' + service + '.css';
-    var js = 'scripts/content_' + service + '.js';
+    assets[service].scripts.forEach(file => {
+      chrome.tabs.executeScript(tab, {file: file});
+    });
 
-    chrome.tabs.insertCSS(tab, {file: 'styles/global.css'});
-    chrome.tabs.insertCSS(tab, {file: css});
-
-    chrome.tabs.executeScript(tab, {file: js});
+    assets[service].styles.forEach(file => {
+      chrome.tabs.insertCSS(tab, {file: file});
+    });
   }
 
 };

@@ -1,0 +1,6 @@
+{
+  "gitlab": {
+    "scripts": ["scripts/content_gitlab.js"],
+    "styles": ["styles/global.css", "styles/gitlab.css"]
+  }
+}
