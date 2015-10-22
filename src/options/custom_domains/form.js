@@ -1,5 +1,6 @@
 var View = require('ampersand-view');
 var permissions = require('../../utils/permissions');
+var services = require('./services.json');
 
 var FormView = View.extend({
 
@@ -10,7 +11,7 @@ var FormView = View.extend({
   },
 
   render: function() {
-    this.renderWithTemplate();
+    this.renderWithTemplate({services: services});
     return this;
   },
 

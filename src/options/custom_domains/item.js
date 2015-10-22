@@ -1,16 +1,26 @@
 var View = require('ampersand-view');
 var permissions = require('../../utils/permissions');
+var services = require('./services.json');
 
 var ItemView = View.extend({
 
   template: require('./item.hbs'),
+
+  derived: {
+    service: {
+      deps: ['model.service'],
+      fn: function() {
+        return services[this.model.service];
+      }
+    }
+  },
 
   bindings: {
     'model.domain': {
       type: 'text',
       hook: 'domain'
     },
-    'model.service': {
+    'service': {
       type: 'text',
       hook: 'service'
     }

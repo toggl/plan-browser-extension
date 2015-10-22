@@ -5,7 +5,9 @@
   <td class="domains-table__service">
     <select name="service" data-hook="service">
       <option disabled selected>Service...</option>
-      <option value="gitlab">GitLab</option>
+      {{#each services}}
+      <option value="{{@key}}">{{this}}</option>
+      {{/each}}
     </select>
   </td>
   <td class="domains-table__action">
