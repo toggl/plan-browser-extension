@@ -3,10 +3,10 @@ var Promise = require('bluebird');
 exports.request = function(domain) {
   return new Promise(function(resolve, reject) {
     chrome.permissions.request({
-      permissions: ['tabs'],
+      permissions: ['tabs', 'webNavigation'],
       origins: [
-        'http://' + domain + '/',
-        'https://' + domain + '/'
+        'http://' + domain + '/*',
+        'https://' + domain + '/*'
       ]
     }, function(granted) {
       if (granted) {

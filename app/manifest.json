@@ -17,7 +17,8 @@
   "optional_permissions": [
     "http://*/",
     "https://*/",
-    "tabs"
+    "tabs",
+    "webNavigation"
   ],
   "content_scripts": [
     {
