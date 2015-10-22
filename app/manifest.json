@@ -14,6 +14,12 @@
     "identity",
     "https://teamweek.com/"
   ],
+  "optional_permissions": [
+    "http://*/",
+    "https://*/",
+    "tabs",
+    "webNavigation"
+  ],
   "content_scripts": [
     {
       "matches": ["https://*.github.com/*"],

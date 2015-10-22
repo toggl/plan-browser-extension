@@ -1,5 +1,6 @@
 var View = require('ampersand-view');
 var api = require('../api/api');
+var CustomDomainsView = require('./custom_domains/custom_domains');
 
 var OptionsView = View.extend({
 
@@ -7,6 +8,13 @@ var OptionsView = View.extend({
 
   events: {
     'click [data-hook=button-logout]': 'onLogout'
+  },
+
+  subviews: {
+    domains: {
+      hook: 'subview-domains',
+      constructor: CustomDomainsView
+    }
   },
   
   render: function() {
