@@ -21,7 +21,7 @@ var FormView = View.extend({
     var domain = this.queryByHook('domain').value;
     var service = this.queryByHook('service').value;
 
-    permissions.request(domain)
+    permissions.request(['tabs', 'webNavigation'], domain)
       .then(function() {
         return self.collection.create({
           domain: domain,

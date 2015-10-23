@@ -1,9 +1,9 @@
 var Promise = require('bluebird');
 
-exports.request = function(domain) {
+exports.request = function(permissions, domain) {
   return new Promise(function(resolve, reject) {
     chrome.permissions.request({
-      permissions: ['tabs', 'webNavigation'],
+      permissions: permissions,
       origins: [
         'http://' + domain + '/*',
         'https://' + domain + '/*'
