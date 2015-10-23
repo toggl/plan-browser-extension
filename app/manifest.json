@@ -10,10 +10,10 @@
     "128": "images/icon-128.png"
   },
   "permissions": [
-    "tabs",
     "storage",
+    "identity",
     "contextMenus",
-    "<all_urls>"
+    "https://teamweek.com/"
   ],
   "optional_permissions": [
     "http://*/",
