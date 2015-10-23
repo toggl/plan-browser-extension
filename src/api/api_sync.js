@@ -1,4 +1,4 @@
-var Promise = require('promise');
+var Promise = require('bluebird');
 var result = require('lodash.result');
 var superagent = require('superagent');
 var api = require('./api');

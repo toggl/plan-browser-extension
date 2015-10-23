@@ -1,6 +1,6 @@
 var View = require('ampersand-view');
 var ViewSwitcher = require('ampersand-view-switcher');
-var api = require('../../api/api');
+var api = require('../../../api/api');
 var TaskView = require('../task/task_view');
 var AuthView = require('../auth/auth_view');
 var LoaderView = require('../loader/loader_view');
@@ -14,7 +14,21 @@ var PopupView = View.extend({
     hub: 'state',
     task: 'state',
     loader: 'state',
-    error: 'state'
+    error: 'state',
+    direction: {
+      type: 'string',
+      values: ['left', 'right'],
+      default: 'right'
+    }
+  },
+
+  bindings: {
+    direction: {
+      type: function(el, value, previous) {
+        if (previous) el.classList.remove('popup--' + previous);
+        if (value) el.classList.add('popup--' + value);
+      }
+    }
   },
 
   initialize: function() {

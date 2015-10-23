@@ -6,29 +6,27 @@ var observer = require('../utils/observer');
 var buttons = new HashMap();
 
 function createObserver() {
-  observer.create('.card-detail-window')
+  observer.create('#issue-content')
     .onAdded(createButton)
     .onRemoved(removeButton)
     .start();
 }
 
 function createButton(node) {
-  var titleEl = node.querySelector('.window-title');
-  var currentListEl = node.querySelector('.js-current-list');
-  var overlayEl = document.querySelector('.window-overlay');
-
-  var name = titleEl.querySelector('.window-title-text').innerText;
+  var contentEl = node;
+  var titleEl = contentEl.querySelector('#summary-val');
+  var name = titleEl.innerText;
 
   var state = new ButtonState({
     task: { name: name }
   });
 
   var buttonEl = state.button.render().el;
-  titleEl.insertBefore(buttonEl, currentListEl.nextSibling);
+  titleEl.appendChild(buttonEl);
 
   state.on('popup:created', function() {
     var popupEl = state.popup.render().el;
-    var position = getPosition(overlayEl, buttonEl);
+    var position = getPosition(contentEl, buttonEl);
 
     if (position.direction != null)
       state.popup.content.direction = position.direction;
@@ -42,26 +40,32 @@ function createButton(node) {
     if (position.right != null)
       popupEl.style.right = position.right + 'px';
     
-    overlayEl.appendChild(popupEl);
+    contentEl.appendChild(popupEl);
   });
 
   buttons.set(node, state);
 }
 
-function getPosition(overlayEl, buttonEl) {
+function getPosition(contentEl, buttonEl) {
+  var contentOffset = offset(contentEl);
   var buttonOffset = offset(buttonEl);
 
-  if (buttonOffset.left < overlayEl.offsetWidth / 2) {
+  var relativeOffset = {
+    left: buttonOffset.left - contentOffset.left,
+    top: buttonOffset.top - contentOffset.top
+  };
+
+  if (relativeOffset.left < contentEl.offsetWidth / 2) {
     return {
       direction: 'right',
-      left: buttonOffset.left,
-      top: buttonOffset.top + overlayEl.scrollTop
+      left: relativeOffset.left,
+      top: relativeOffset.top
     };
   } else {
     return {
       direction: 'left',
-      right: overlayEl.offsetWidth - buttonOffset.left - buttonEl.offsetWidth,
-      top: buttonOffset.top + overlayEl.scrollTop
+      right: contentEl.offsetWidth - relativeOffset.left - buttonEl.offsetWidth,
+      top: relativeOffset.top
     };
   }
 }

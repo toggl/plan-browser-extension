@@ -6,15 +6,14 @@ var observer = require('../utils/observer');
 var buttons = new HashMap();
  
 function createObserver() {
-  observer.create('.milestone')
+  observer.create('.issue-title-link')
     .onAdded(createButton)
     .onRemoved(removeButton)
     .start();
 }
 
-function createButton(milestone) {
-  var title = milestone.querySelector('h4');
-  var name = title.querySelector('a').innerText;
+function createButton(title) {
+  var name = title.innerText;
   
   var state = new ButtonState({
     task: { name: name }

@@ -1,8 +1,8 @@
 {
   "name": "Teamweek Button",
-  "version": "1.2.0",
+  "version": "1.6.5",
   "manifest_version": 2,
-  "description": "Add tasks to Teamweek directly from Github and Trello",
+  "description": "Add tasks to Teamweek directly from Github, Trello, GitLab and JIRA",
   "short_name": "TW Button",
   "icons": {
     "16": "images/icon-16.png",
@@ -15,14 +15,16 @@
     "contextMenus",
     "<all_urls>"
   ],
-  "background": {
-    "scripts": ["background/context_menu.js"],
-    "persistent": false
-  },
+  "optional_permissions": [
+    "http://*/",
+    "https://*/",
+    "tabs",
+    "webNavigation"
+  ],
   "content_scripts": [
     {
       "matches": ["https://*.github.com/*"],
-      "js": ["scripts/content_github.js"],
+      "js": ["scripts/content_github.js", "scripts/content_github_issues.js"],
       "css": ["styles/global.css", "styles/github.css"]
     },
     {
@@ -34,11 +36,24 @@
       "matches": ["https://*.gitlab.com/*"],
       "js": ["scripts/content_gitlab.js"],
       "css": ["styles/global.css", "styles/gitlab.css"]
+    },
+    {
+      "matches": ["https://*.atlassian.com/*", "https://*.atlassian.net/*"],
+      "js": ["scripts/content_jira.js"],
+      "css": ["styles/global.css", "styles/jira.css"]
     }
   ],
   "web_accessible_resources": [
     "styles/*",
     "fonts/*"
   ],
-  "minimum_chrome_version": "35"
+  "minimum_chrome_version": "35",
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
+  "background": {
+    "page": "background.html"
+  },
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }

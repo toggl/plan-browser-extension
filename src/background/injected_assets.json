@@ -1,0 +1,14 @@
+{
+  "gitlab": {
+    "scripts": ["scripts/content_gitlab.js"],
+    "styles": ["styles/global.css", "styles/gitlab.css"]
+  },
+  "github": {
+    "scripts": ["scripts/content_github.js", "scripts/content_github_issues.js"],
+    "styles": ["styles/global.css", "styles/github.css"]
+  },
+  "jira": {
+    "scripts": ["scripts/content_jira.js"],
+    "styles": ["styles/global.css", "styles/jira.css"]
+  }
+}

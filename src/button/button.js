@@ -1,9 +1,10 @@
 var State = require('ampersand-state');
-var api = require ('./api/api');
+var api = require ('../api/api');
 var ShadowView = require('./views/shadow/shadow_view');
 var ButtonView = require('./views/button/button_view');
 var PopupView = require('./views/popup/popup_view');
-var TaskModel = require('./models/task_model');
+var TaskModel = require('../models/task_model');
+var analytics = require('../utils/analytics');
 
 var HubState = State.extend({});
 
@@ -30,6 +31,8 @@ var ButtonState = State.extend({
         hub: this.hub
       })
     });
+
+    ButtonState.setLoaded();
   },
 
   createPopup: function() {
@@ -45,6 +48,8 @@ var ButtonState = State.extend({
     });
 
     this.trigger('popup:created');
+
+    analytics.track('button', 'click');
   },
 
   destroyPopup: function() {
@@ -64,6 +69,14 @@ var ButtonState = State.extend({
 
 ButtonState.initialize = function() {
   return api.auth.load();
+};
+
+ButtonState.isLoaded = function() {
+  return window['__tw-button'];
+};
+
+ButtonState.setLoaded = function() {
+  window['__tw-button'] = true;
 };
 
 module.exports = ButtonState;

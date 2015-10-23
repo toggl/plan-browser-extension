@@ -1,8 +1,9 @@
-var Promise = require('promise');
+var Promise = require('bluebird');
 var State = require('ampersand-state');
 var request = require('superagent');
 var url = require('url');
 
+var config = require('../api/config');
 var OAuthState = require('./oauth_state');
 var TokensModel = require('./tokens_model');
 
@@ -59,6 +60,15 @@ var AuthenticationState = State.extend({
   },
 
   /**
+   * Remove tokens from storage
+   *
+   * @return Promise
+   */
+  revoke: function() {
+    return this.tokens.clear().destroy();
+  },
+
+  /**
    * Fetch tokens from the server using given credentials
    *
    * @param credentials Object with username and password keys
@@ -70,7 +80,7 @@ var AuthenticationState = State.extend({
     return new Promise(function(resolve, reject) {
       // Create a request that will return access and refresh tokens
       request
-        .post('https://teamweek.com/api/v3/authenticate/token')
+        .post(config.api.host + '/api/v3/authenticate/token')
         // Use base64'd client ID and secret for authorization
         .set('Authorization', 'Basic ' + self.oauth.token)
         // Send credentials in form data
@@ -114,7 +124,7 @@ var AuthenticationState = State.extend({
       this.refresh_promise = new Promise(function(resolve, reject) {
         // Create a request that will fetch new tokens
         request
-          .post('https://teamweek.com/api/v3/authenticate/token')
+          .post(config.api.host + '/api/v3/authenticate/token')
           // Use base64'd client ID and secret for authorization
           .set('Authorization', 'Basic ' + self.oauth.token)
           // Send refresh token in form data

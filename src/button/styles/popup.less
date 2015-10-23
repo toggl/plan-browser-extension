@@ -2,7 +2,7 @@
 
 .popup {
   position: relative;
-  left: 40px; top: -15px;
+  top: -15px;
   width: 400px;
 
   background-color: white;
@@ -10,11 +10,19 @@
   font-family: 'Teamweek Button Avenir Next';
 }
 
+.popup--right {
+  left: 40px;
+}
+
+.popup--left {
+  right: 40px;
+}
+
 .popup:after {
   content: "";
   display: block;
   position: absolute;
-  left: -10px; top: 17px;
+  top: 17px;
   z-index: 0;
   width: 20px;
   height: 20px;
@@ -22,6 +30,14 @@
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
   transform: rotate(45deg);
+}
+
+.popup--right:after {
+  left: -10px;
+}
+
+.popup--left:after {
+  right: -10px;
 }
 
 .popup__title {
@@ -67,7 +83,8 @@
 
 .form__label {
   flex-grow: 0;
-  width: 100px;
+  flex-shrink: 0;
+  width: 130px;
   padding: 0 18px;
   box-sizing: border-box;
 
@@ -99,7 +116,8 @@
   }
 }
 
-.user-select--empty {
+.user-select--empty,
+.project-select--empty {
   color: #999;
 }
 
@@ -257,6 +275,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10;
 
   background-color: white;
 }
@@ -339,5 +358,40 @@
 
   &:last-child {
     border-bottom: none;
+  }
+}
+
+.estimate-input {
+  position: relative;
+}
+
+.estimate-input__control {
+  position: relative;
+  z-index: 2;
+  line-height: 20px;
+}
+
+.estimate-lengths(@n, @i: 1) when (@i =< @n) {
+  .estimate-input--length-@{i} & {
+    display: block;
+    left: 8px + @i * 9px;
+  }
+
+  .estimate-lengths(@n, (@i + 1));
+}
+
+.estimate-input__suffix {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  top: 0px;
+
+  font-size: 16px;
+  line-height: 20px;
+
+  .estimate-lengths(8);
+
+  .estimate-input--empty & {
+    color: #999;
   }
 }

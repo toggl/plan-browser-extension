@@ -1,6 +1,6 @@
 var moment = require('moment');
 var Model = require('ampersand-model');
-var sync = require('../api/sync');
+var sync = require('../api/api_sync');
 
 var TaskModel = Model.extend({
 
@@ -10,10 +10,12 @@ var TaskModel = Model.extend({
     id: 'number',
     name: 'string',
     user_id: 'number',
+    project_id: 'number',
     start_date: { type: 'date', required: true },
     end_date: { type: 'date', required: true },
     start_time: 'string',
-    end_time: 'string'
+    end_time: 'string',
+    estimated_hours: 'number'
   },
 
   serialize: function() {
