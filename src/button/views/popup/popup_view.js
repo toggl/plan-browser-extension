@@ -17,7 +17,7 @@ var PopupView = View.extend({
     error: 'state',
     direction: {
       type: 'string',
-      values: ['left', 'right'],
+      values: ['left', 'right', 'center'],
       default: 'right'
     }
   },

@@ -12,6 +12,7 @@
   "permissions": [
     "storage",
     "identity",
+    "contextMenus",
     "https://teamweek.com/"
   ],
   "optional_permissions": [
