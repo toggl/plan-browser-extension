@@ -1,27 +1,19 @@
 var offset = require('document-offset');
 var ButtonState = require('../button/button');
  
-function createObserver() {
+function createButton() {
   var selection = window.getSelection();
-  createButton(selection);
-}
-
-function createButton(selection) {
   var range = selection.getRangeAt(0);
   var title = range.toString();
   
   var state = new ButtonState({
-    task: { name: title }
+    task: { name: title },
+    type: 'modal'
   });
 
   state.on('popup:created', function() {
     var popupEl = state.popup.render().el;
-    var position = offset(range);
-
-    popupEl.style.position = 'absolute';
-    popupEl.style.left = position.left + 'px';
-    popupEl.style.top = position.top + 'px';
-
+    state.popup.content.direction = 'center';
     document.body.appendChild(popupEl);
   });
 
@@ -33,5 +25,5 @@ function handleError(error) {
 }
  
 ButtonState.initialize()
-  .then(createObserver)
+  .then(createButton)
   .catch(handleError);

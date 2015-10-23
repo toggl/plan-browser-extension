@@ -14,6 +14,11 @@ var ButtonState = State.extend({
     button: 'state',
     popup: 'state',
     task: 'object',
+    layout: {
+      type: 'string',
+      values: ['popup', 'modal'],
+      default: 'popup'
+    }
   },
 
   children: {
@@ -37,9 +42,10 @@ var ButtonState = State.extend({
 
   createPopup: function() {
     var task = new TaskModel(this.task);
+    var name = (this.type == 'popup') ? 'tw-popup' : 'tw-modal';
 
     this.popup = new ShadowView({
-      name: 'tw-popup',
+      name: name,
       style: require('../../app/styles/popup.css'),
       content: new PopupView({
         hub: this.hub,

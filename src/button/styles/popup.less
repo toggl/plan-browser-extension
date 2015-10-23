@@ -1,8 +1,6 @@
 @import "modules/pikaday.less";
 
 .popup {
-  position: relative;
-  top: -15px;
   width: 400px;
 
   background-color: white;
@@ -10,34 +8,47 @@
   font-family: 'Teamweek Button Avenir Next';
 }
 
+.popup--right,
+.popup--left {
+  position: relative;
+  top: -15px;
+
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 17px;
+    z-index: 0;
+    width: 20px;
+    height: 20px;
+
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    transform: rotate(45deg);
+  }
+}
+
 .popup--right {
   left: 40px;
+
+  &:after {
+    left: -10px;
+  }
 }
 
 .popup--left {
   right: 40px;
+
+  &:after {
+    right: -10px;
+  }
 }
 
-.popup:after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 17px;
-  z-index: 0;
-  width: 20px;
-  height: 20px;
-
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-  transform: rotate(45deg);
-}
-
-.popup--right:after {
-  left: -10px;
-}
-
-.popup--left:after {
-  right: -10px;
+.popup--center {
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  margin-left: -200px;
 }
 
 .popup__title {
