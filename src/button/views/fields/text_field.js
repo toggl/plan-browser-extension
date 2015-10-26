@@ -27,6 +27,11 @@ var TextField = View.extend({
     this.value = this.el.value;
   },
 
+  focus: function() {
+    this.el.setSelectionRange(0, this.value.length);
+    this.el.focus();
+  },
+
   render: function() {
     return this;
   }

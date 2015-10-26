@@ -83,6 +83,7 @@ var TaskView = View.extend(FormMixin, {
       .then(function() {
         self.user.render();
         self.hub.trigger('loader:hide');
+        self.focusNameField();
       }, function(error) {
         self.hub.trigger('loader:hide');
         self.hub.trigger('error:show', error);
@@ -174,6 +175,10 @@ var TaskView = View.extend(FormMixin, {
     }
 
     return valid;
+  },
+
+  focusNameField: function() {
+    this.name.focus();
   },
 
   showLoader: function() {

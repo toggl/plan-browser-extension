@@ -9,7 +9,7 @@
           </div>
           <div class="form__control">
             <input type="text" name="email" id="tw-form-{{cid}}-email" placeholder="Enter e-mail..."
-              data-hook="input-email">
+              data-hook="input-email" autofocus>
           </div>
           <div class="form__errors" data-hook="errors-email"></div>
         </div>
@@ -27,8 +27,8 @@
     </div>
 
     <div class="popup__buttons">
-      <input type="submit" value="Sign in" class="button button--submit" data-hook="button-submit">
-      <input type="button" value="Cancel" class="button button--cancel" data-hook="button-cancel">
+      <input type="submit" value="Sign in" class="button button--submit popup__button" data-hook="button-submit">
+      <input type="button" value="Cancel" class="button button--cancel popup__button" data-hook="button-cancel">
     </div>
   </form>
 </div>

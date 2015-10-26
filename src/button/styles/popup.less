@@ -70,6 +70,10 @@
   flex-direction: row-reverse;
 }
 
+.popup__button {
+  margin-left: 3px;
+}
+
 .popup__copy {
   margin: 3px;
   padding: 12px;
@@ -96,7 +100,7 @@
   flex-grow: 0;
   flex-shrink: 0;
   width: 130px;
-  padding: 0 18px;
+  padding: 0 12px 0 18px;
   box-sizing: border-box;
 
   font-size: 14px;
@@ -105,6 +109,7 @@
 
 .form__control {
   flex-grow: 1;
+  padding-right: 6px;
 }
 
 .form__control--timepicker {
@@ -114,17 +119,24 @@
 .form__control input,
 .form__control select {
   width: 100%;
-  padding: 0;
+  padding: 6px;
+  box-sizing: border-box;
 
   -webkit-appearance: none;
   border-style: none;
+  border-radius: 0;
   background-color: transparent;
   font-size: 16px;
   font-family: inherit;
 
   &:focus {
     outline: none;
+    background-color: #ebebeb;
   }
+}
+
+.form__control input::-webkit-input-placeholder {
+  color: #999;
 }
 
 .user-select--empty,
@@ -171,19 +183,24 @@
   background: none;
   cursor: pointer;
   border: none;
-}
 
-.button:active {
-  outline: none;
+  &:active, &:focus {
+    outline: none;
+  }
 }
 
 .button--cancel {
   padding: 0 30px;
 
   color: #999;
+  border-radius: 3px;
 
-  &:hover {
+  &:hover, &:focus {
     color: #666;
+  }
+
+  &:focus {
+    background-color: #ebebeb;
   }
 }
 
@@ -195,7 +212,7 @@
   border-radius: 3px;
   box-shadow: inset 0 -2px 1px #85bb3a;
 
-  &:hover {
+  &:hover, &:focus, &:active {
     background-color: lighten(#8dc63f, 10%);
     box-shadow: none;
   }
@@ -385,7 +402,7 @@
 .estimate-lengths(@n, @i: 1) when (@i =< @n) {
   .estimate-input--length-@{i} & {
     display: block;
-    left: 8px + @i * 9px;
+    left: 12px + @i * 9px;
   }
 
   .estimate-lengths(@n, (@i + 1));
@@ -393,12 +410,13 @@
 
 .estimate-input__suffix {
   display: none;
-  position: absolute;
   z-index: 1;
-  top: 0px;
+
+  position: absolute;
+  transform: translateY(-50%);
+  top: 50%;
 
   font-size: 16px;
-  line-height: 20px;
 
   .estimate-lengths(8);
 
