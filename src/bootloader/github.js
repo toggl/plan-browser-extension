@@ -1,26 +1,43 @@
+var moment = require('moment');
 var HashMap = require('hashmap');
 var offset = require('document-offset');
 var ButtonState = require('../button/button');
 var observer = require('../utils/observer');
 
 var buttons = new HashMap();
+
+var DATE_RE = /(January|February|March|April|May|June|July|August|September|October|November|December) (\d{1,2}), (\d{4})/;
  
 function createObserver() {
-  observer.create('.milestone-title-link')
+  observer.create('.milestone')
     .onAdded(createButton)
     .onRemoved(removeButton)
     .start();
 }
 
-function createButton(title) {
-  var name = title.querySelector('a').innerText;
+function findDate(meta) {
+  var matches = DATE_RE.exec(meta);
+  if (matches == null) return;
+
+  var m = moment(matches[0], 'MMMM DD, YYYY');
+  if (!m.isValid()) return;
+
+  return m.toDate();
+}
+
+function createButton(element) {
+  var titleEl = element.querySelector('.milestone-title-link');
+  var metaEl = element.querySelector('.milestone-meta');
+
+  var name = titleEl.querySelector('a').innerText;
+  var date = findDate(metaEl.innerText);
   
   var state = new ButtonState({
-    task: { name: name }
+    task: { name: name, end_date: date }
   });
 
   var buttonEl = state.button.render().el;
-  title.appendChild(buttonEl);
+  titleEl.appendChild(buttonEl);
 
   state.on('popup:created', function() {
     var popupEl = state.popup.render().el;
@@ -33,7 +50,7 @@ function createButton(title) {
     document.body.appendChild(popupEl);
   });
 
-  buttons.set(title, state);
+  buttons.set(element, state);
 }
 
 function removeButton(node) {
