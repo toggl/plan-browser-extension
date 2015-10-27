@@ -78,7 +78,7 @@ var ButtonState = State.extend({
 
   createPopup: function() {
     var task = new TaskModel(this.task);
-    var name = (this.type == 'popup') ? 'tw-popup' : 'tw-modal';
+    var name = (this.layout == 'popup') ? 'tw-popup' : 'tw-modal';
 
     this.popup = new ShadowView({
       name: name,
