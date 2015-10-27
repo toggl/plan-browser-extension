@@ -50,7 +50,7 @@ var DateField = View.extend({
   },
 
   onChange: function(event) {
-    var m = moment(this.el.value);
+    var m = moment(event.target.value);
     this.value = m.isValid() ? m.toDate() : null;
   },
 

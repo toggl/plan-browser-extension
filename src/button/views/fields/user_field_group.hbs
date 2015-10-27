@@ -1,4 +1,6 @@
 <optgroup label="{{model.name}}">
+  <option value="{{user_list_value account=model.id user=null}}">Add to backlog</option>
+
   {{#each users.models}}
   <option value="{{user_list_value account=../model.id user=id}}">{{name}}</option>
   {{/each}}

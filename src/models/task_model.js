@@ -11,8 +11,8 @@ var TaskModel = Model.extend({
     name: 'string',
     user_id: 'number',
     project_id: 'number',
-    start_date: { type: 'date', required: true },
-    end_date: { type: 'date', required: true },
+    start_date: ['date', false, function() { return new Date(); }],
+    end_date: ['date', false, function() { return new Date(); }],
     start_time: 'string',
     end_time: 'string',
     estimated_hours: 'number'
@@ -20,8 +20,10 @@ var TaskModel = Model.extend({
 
   serialize: function() {
     var res = Model.prototype.serialize.call(this);
-    res.start_date = moment(res.start_date).format('YYYY-MM-DD');
-    res.end_date = moment(res.end_date).format('YYYY-MM-DD');
+
+    if (res.start_date != null) res.start_date = moment(res.start_date).format('YYYY-MM-DD');
+    if (res.end_date != null) res.end_date = moment(res.end_date).format('YYYY-MM-DD');
+    
     return res;
   }
 

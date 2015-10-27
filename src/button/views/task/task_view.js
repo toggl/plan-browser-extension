@@ -154,19 +154,21 @@ var TaskView = View.extend(FormMixin, {
       valid = false;
     }
 
-    if (!this.start_date.isFilled) {
-      this.addError('start', 'Start date cannot be empty');
-      valid = false;
-    }
+    if (this.user.hasUser) {
+      if (!this.start_date.isFilled) {
+        this.addError('start', 'Start date cannot be empty');
+        valid = false;
+      }
 
-    if (!this.end_date.isFilled) {
-      this.addError('end', 'End date cannot be empty');
-      valid = false;
-    }
+      if (!this.end_date.isFilled) {
+        this.addError('end', 'End date cannot be empty');
+        valid = false;
+      }
 
-    if (moment(this.end_date.value).isBefore(this.start_date.value, 'day')) {
-      this.addError('end', 'End date cannot be before start date');
-      valid = false;
+      if (moment(this.end_date.value).isBefore(this.start_date.value, 'day')) {
+        this.addError('end', 'End date cannot be before start date');
+        valid = false;
+      }
     }
 
     if (this.estimate.isFilled && !this.estimate.isValid) {

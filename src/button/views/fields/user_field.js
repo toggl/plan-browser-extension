@@ -22,9 +22,21 @@ var UserField = View.extend({
       }
     },
     isFilled: {
+      deps: ['hasAccount'],
+      fn: function() {
+        return this.hasAccount;
+      }
+    },
+    hasAccount: {
       deps: ['value'],
       fn: function() {
-        return this.value != null && this.value.user != null && this.value.account != null;
+        return this.value != null && this.value.account != null;
+      }
+    },
+    hasUser: {
+      deps: ['value'],
+      fn: function() {
+        return this.value != null && this.value.user != null;
       }
     }
   },
