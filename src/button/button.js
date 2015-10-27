@@ -47,6 +47,11 @@ var ButtonState = State.extend({
   },
 
   handleButtonClick: function() {
+    if (this.link == null) {
+      this.hub.trigger('popup:open');
+      return;
+    }
+    
     var taskSource = collections.taskSources.find({
       source_link: this.link
     });

@@ -28,11 +28,14 @@ function findDate(meta) {
 function createButton(element) {
   var titleEl = element.querySelector('.milestone-title-link');
   var metaEl = element.querySelector('.milestone-meta');
+  var linkEl = titleEl.querySelector('a');
 
   var name = titleEl.querySelector('a').innerText;
   var date = findDate(metaEl.innerText);
+  var link = linkEl.href;
   
   var state = new ButtonState({
+    link: link,
     task: { name: name, end_date: date }
   });
 

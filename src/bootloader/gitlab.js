@@ -27,10 +27,14 @@ function findDate(title) {
 
 function createButton(element) {
   var titleEl = element.querySelector('h4');
-  var name = titleEl.querySelector('a').innerText;
+  var linkEl = titleEl.querySelector('a');
+
+  var name = linkEl.innerText;
   var date = findDate(titleEl.innerText);
+  var link = linkEl.href;
   
   var state = new ButtonState({
+    link: link,
     task: { name: name, end_date: date }
   });
 

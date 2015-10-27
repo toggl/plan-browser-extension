@@ -15,9 +15,13 @@ function createObserver() {
 function createButton(node) {
   var contentEl = node;
   var titleEl = contentEl.querySelector('#summary-val');
+  var linkEl = contentEl.querySelector('.issue-link');
+
   var name = titleEl.innerText;
+  var link = linkEl.href;
 
   var state = new ButtonState({
+    link: link,
     task: { name: name }
   });
 
