@@ -6,16 +6,16 @@ var observer = require('../utils/observer');
 var buttons = new HashMap();
 
 function createObserver() {
-  observer.create('#issue-content')
+  observer.create('.issue-header-content')
     .onAdded(createButton)
     .onRemoved(removeButton)
     .start();
 }
 
 function createButton(node) {
-  var contentEl = node;
-  var titleEl = contentEl.querySelector('#summary-val');
-  var linkEl = contentEl.querySelector('.issue-link');
+  var titleEl = node.querySelector('h1');
+  var linkEl = node.querySelector('.issue-link');
+  var contentEl = document.querySelector('#issue-content');
 
   var name = titleEl.innerText;
   var link = linkEl.href;
@@ -30,7 +30,7 @@ function createButton(node) {
 
   state.on('popup:created', function() {
     var popupEl = state.popup.render().el;
-    var position = getPosition(contentEl, buttonEl);
+    var position = getPosition(node, buttonEl);
 
     if (position.direction != null)
       state.popup.content.direction = position.direction;
