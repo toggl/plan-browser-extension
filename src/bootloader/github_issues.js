@@ -14,8 +14,10 @@ function createObserver() {
 
 function createButton(title) {
   var name = title.innerText;
+  var link = title.href;
   
   var state = new ButtonState({
+    link: link,
     task: { name: name }
   });
 

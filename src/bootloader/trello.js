@@ -33,8 +33,10 @@ function createButton(node) {
 
   var name = titleEl.querySelector('.window-title-text').innerText;
   var date = findDate(dueDateEl.innerText);
+  var link = location.href;
 
   var state = new ButtonState({
+    link: link,
     task: { name: name, end_date: date }
   });
 

@@ -115,15 +115,16 @@ var TaskView = View.extend(FormMixin, {
       estimated_hours: this.estimate.value
     });
 
-    this.accounts
-      .get(this.user.value.account)
-      .tasks.add(this.model);
+    var account = this.accounts.get(this.user.value.account)
+    account.tasks.add(this.model);
 
     this.showLoader();
     var self = this;
 
     this.model.save()
       .then(function() {
+        self.hub.trigger('task:created', self.model, account);
+        
         self.hideLoader();
         self.showOverlay()
           .then(function() { self.closePopup() });
