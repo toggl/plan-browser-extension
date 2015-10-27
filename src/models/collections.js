@@ -1,5 +1,5 @@
-var TaskLinkCollection = require('../models/task_link_collection');
+var TaskSourceCollection = require('../models/task_source_collection');
 
 module.exports = {
-  taskLinks: new TaskLinkCollection()
+  taskSources: new TaskSourceCollection()
 };

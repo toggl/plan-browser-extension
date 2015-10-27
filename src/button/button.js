@@ -47,12 +47,12 @@ var ButtonState = State.extend({
   },
 
   handleButtonClick: function() {
-    var taskLink = collections.taskLinks.find({
+    var taskSource = collections.taskSources.find({
       source_link: this.link
     });
 
-    if (taskLink != null) {
-      this.hub.trigger('task:open', taskLink.task_id, taskLink.account_id);
+    if (taskSource != null) {
+      this.hub.trigger('task:open', taskSource.task_id, taskSource.account_id);
     } else {
       this.hub.trigger('popup:open');
     }
@@ -64,7 +64,7 @@ var ButtonState = State.extend({
   },
 
   handleTaskCreated: function(task, account) {
-    collections.taskLinks.create({
+    collections.taskSources.create({
       task_id: task.id,
       account_id: account.id,
       source_link: this.link
@@ -107,7 +107,7 @@ var ButtonState = State.extend({
 ButtonState.initialize = function() {
   return Promise.all([
     api.auth.load(),
-    collections.taskLinks.fetch()
+    collections.taskSources.fetch()
   ]);
 };
 
