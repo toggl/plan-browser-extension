@@ -28,6 +28,7 @@ var ButtonState = State.extend({
   initialize: function() {
     this.listenTo(this.hub, 'popup:open', this.createPopup);
     this.listenTo(this.hub, 'popup:close', this.destroyPopup);
+    this.listenTo(this.hub, 'button:clicked', this.handleButtonClick);
 
     this.button = new ShadowView({
       name: 'tw-button',
@@ -38,6 +39,10 @@ var ButtonState = State.extend({
     });
 
     ButtonState.setLoaded();
+  },
+
+  handleButtonClick: function() {
+    this.hub.trigger('popup:open');
   },
 
   createPopup: function() {
