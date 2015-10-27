@@ -1,9 +1,12 @@
+var moment = require('moment');
 var HashMap = require('hashmap');
 var offset = require('document-offset');
 var ButtonState = require('../button/button');
 var observer = require('../utils/observer');
 
 var buttons = new HashMap();
+
+var DATE_RE = /(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{1,2}), (\d{4})/;
  
 function createObserver() {
   observer.create('.milestone')
@@ -12,16 +15,27 @@ function createObserver() {
     .start();
 }
 
-function createButton(milestone) {
-  var title = milestone.querySelector('h4');
-  var name = title.querySelector('a').innerText;
+function findDate(title) {
+  var matches = DATE_RE.exec(title);
+  if (matches == null) return;
+
+  var m = moment(matches[0], 'MMM DD, YYYY');
+  if (!m.isValid()) return;
+
+  return m.toDate();
+}
+
+function createButton(element) {
+  var titleEl = element.querySelector('h4');
+  var name = titleEl.querySelector('a').innerText;
+  var date = findDate(titleEl.innerText);
   
   var state = new ButtonState({
-    task: { name: name }
+    task: { name: name, end_date: date }
   });
 
   var buttonEl = state.button.render().el;
-  title.appendChild(buttonEl);
+  titleEl.appendChild(buttonEl);
 
   state.on('popup:created', function() {
     var popupEl = state.popup.render().el;
@@ -34,7 +48,7 @@ function createButton(milestone) {
     document.body.appendChild(popupEl);
   });
 
-  buttons.set(title, state);
+  buttons.set(element, state);
 }
 
 function removeButton(node) {

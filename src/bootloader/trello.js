@@ -1,9 +1,12 @@
+var moment = require('moment');
 var HashMap = require('hashmap');
 var offset = require('document-offset');
 var ButtonState = require('../button/button.js');
 var observer = require('../utils/observer');
 
 var buttons = new HashMap();
+
+var DATE_RE = /(\d{1,2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)( (\d{4}))?/;
 
 function createObserver() {
   observer.create('.card-detail-window')
@@ -12,15 +15,27 @@ function createObserver() {
     .start();
 }
 
+function findDate(meta) {
+  var matches = DATE_RE.exec(meta);
+  if (matches == null) return;
+
+  var m = moment(matches[0], 'DD MMM YYYY');
+  if (!m.isValid()) return;
+
+  return m.toDate();
+}
+
 function createButton(node) {
   var titleEl = node.querySelector('.window-title');
   var currentListEl = node.querySelector('.js-current-list');
+  var dueDateEl = node.querySelector('.js-card-detail-due-date-badge');
   var overlayEl = document.querySelector('.window-overlay');
 
   var name = titleEl.querySelector('.window-title-text').innerText;
+  var date = findDate(dueDateEl.innerText);
 
   var state = new ButtonState({
-    task: { name: name }
+    task: { name: name, end_date: date }
   });
 
   var buttonEl = state.button.render().el;
