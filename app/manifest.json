@@ -41,6 +41,11 @@
       "matches": ["https://*.atlassian.com/*", "https://*.atlassian.net/*"],
       "js": ["scripts/content_jira.js"],
       "css": ["styles/global.css", "styles/jira.css"]
+    },
+    {
+      "matches": ["https://*.bitbucket.org/*"],
+      "js": ["scripts/content_bitbucket.js"],
+      "css": ["styles/global.css", "styles/bitbucket.css"]
     }
   ],
   "web_accessible_resources": [
