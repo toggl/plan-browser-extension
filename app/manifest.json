@@ -51,6 +51,11 @@
       "matches": ["https://*.podio.com/*"],
       "js": ["scripts/content_podio.js"],
       "css": ["styles/global.css", "styles/podio.css"]
+    },
+    {
+      "matches": ["https://*.asana.com/*"],
+      "js": ["scripts/content_asana.js"],
+      "css": ["styles/global.css", "styles/asana.css"]
     }
   ],
   "web_accessible_resources": [
