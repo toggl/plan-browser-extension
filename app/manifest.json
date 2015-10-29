@@ -46,6 +46,11 @@
       "matches": ["https://*.bitbucket.org/*"],
       "js": ["scripts/content_bitbucket.js"],
       "css": ["styles/global.css", "styles/bitbucket.css"]
+    },
+    {
+      "matches": ["https://*.podio.com/*"],
+      "js": ["scripts/content_podio.js"],
+      "css": ["styles/global.css", "styles/podio.css"]
     }
   ],
   "web_accessible_resources": [

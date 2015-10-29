@@ -9,6 +9,7 @@
     "ampersand-view": "^7.3.0",
     "ampersand-view-switcher": "^2.0.0",
     "document-offset": "^1.0.4",
+    "domify": "^1.4.0",
     "hashmap": "^2.0.3",
     "is-email": "^0.1.1",
     "lodash.difference": "^3.2.1",

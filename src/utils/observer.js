@@ -1,7 +1,8 @@
 var difference = require('lodash.difference');
 
-function Observer(selector) {
+function Observer(selector, element) {
   this.selector = selector;
+  this.element = element != null ? element : document;
   this.mutationHandlers = [];
   this.seenElements = [];
 
@@ -42,10 +43,18 @@ Observer.prototype.onRemoved = function(callback) {
 };
 
 Observer.prototype.start = function() {
-  this.observer.observe(document, { childList: true, subtree: true });
+  this.observer.observe(this.element, { childList: true, subtree: true });
   this.onMutation();
+
+  return this;
 };
 
-exports.create = function(selector) {
-  return new Observer(selector);
+Observer.prototype.stop = function() {
+  this.observer.disconnect();
+
+  return this;
+};
+
+exports.create = function(selector, element) {
+  return new Observer(selector, element);
 };
