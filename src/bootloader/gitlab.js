@@ -7,10 +7,10 @@ var observer = require('../utils/observer');
 var buttons = new HashMap();
 
 var DATE_RE = /(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{1,2}), (\d{4})/;
- 
+
 function createObserver() {
-  observer.create('.milestone')
-    .onAdded(createButton)
+  observer.create('[data-page="projects:milestones:index"] .milestone')
+    .onAdded(createMilestoneIndexButton)
     .onRemoved(removeButton)
     .start();
 }
@@ -25,17 +25,18 @@ function findDate(title) {
   return m.toDate();
 }
 
-function createButton(element) {
-  var titleEl = element.querySelector('h4');
+function createMilestoneIndexButton(element) {
+  var titleEl = element.querySelector('.col-sm-6, h4');
   var linkEl = titleEl.querySelector('a');
 
   var name = linkEl.innerText;
-  var date = findDate(titleEl.innerText);
+  var date = findDate(element.innerText);
   var link = linkEl.href;
-  
+
   var state = new ButtonState({
+    task: {name: name, end_date: date},
     link: link,
-    task: { name: name, end_date: date }
+    type: 'modal'
   });
 
   var buttonEl = state.button.render().el;
@@ -43,12 +44,7 @@ function createButton(element) {
 
   state.on('popup:created', function() {
     var popupEl = state.popup.render().el;
-    var position = offset(buttonEl);
-
-    popupEl.style.position = 'absolute';
-    popupEl.style.left = position.left + 'px';
-    popupEl.style.top = position.top + 'px';
-
+    state.popup.content.direction = 'center';
     document.body.appendChild(popupEl);
   });
 
@@ -59,7 +55,7 @@ function removeButton(node) {
   var button = buttons.get(node);
   if (button != null) button.remove();
 }
- 
+
 function handleError(error) {
   console.error(error);
 }
