@@ -10,7 +10,12 @@ var DATE_RE = /(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{1,2}), (\d{
 
 function createObserver() {
   observer.create('[data-page="projects:milestones:index"] .milestone')
-    .onAdded(createMilestoneIndexButton)
+    .onAdded(createButton.bind(null, createMilestoneIndexButton))
+    .onRemoved(removeButton)
+    .start();
+
+  observer.create('[data-page="projects:issues:index"] .issue')
+    .onAdded(createButton.bind(null, createIssueIndexButton))
     .onRemoved(removeButton)
     .start();
 }
@@ -29,18 +34,40 @@ function createMilestoneIndexButton(element) {
   var titleEl = element.querySelector('.col-sm-6, h4');
   var linkEl = titleEl.querySelector('a');
 
-  var name = linkEl.innerText;
-  var date = findDate(element.innerText);
-  var link = linkEl.href;
+  return {
+    task: {
+      name: linkEl.innerText,
+      end_date: findDate(element.innerText)
+    },
+    link: linkEl.href,
+    container: titleEl
+  };
+}
+
+function createIssueIndexButton(element) {
+  var titleEl = element.querySelector('.issue-title');
+  var linkEl = titleEl.querySelector('a');
+
+  return {
+    task: {
+      name: linkEl.innerText
+    },
+    link: linkEl.href,
+    container: titleEl
+  };
+}
+
+function createButton(callback, element) {
+  var config = callback(element);
 
   var state = new ButtonState({
-    task: {name: name, end_date: date},
-    link: link,
+    task: config.task,
+    link: config.link,
     type: 'modal'
   });
 
   var buttonEl = state.button.render().el;
-  titleEl.appendChild(buttonEl);
+  config.container.appendChild(buttonEl);
 
   state.on('popup:created', function() {
     var popupEl = state.popup.render().el;
