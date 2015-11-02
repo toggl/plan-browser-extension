@@ -10,5 +10,9 @@
   "jira": {
     "scripts": ["scripts/content_jira.js"],
     "styles": ["styles/global.css", "styles/jira.css"]
+  },
+  "bitbucket": {
+    "scripts": ["scripts/content_bitbucket.js"],
+    "styles": ["styles/global.css", "styles/bitbucket.css"]
   }
 }
