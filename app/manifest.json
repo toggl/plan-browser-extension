@@ -13,8 +13,7 @@
     "storage",
     "identity",
     "contextMenus",
-    "https://teamweek.com/",
-    "http://gitlab.websupport.sk/"
+    "https://teamweek.com/"
   ],
   "optional_permissions": [
     "http://*/",
