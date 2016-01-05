@@ -2,6 +2,7 @@ var domify = require('domify');
 var moment = require('moment');
 var HashMap = require('hashmap');
 var offset = require('document-offset');
+var find = require('lodash.find');
 var ButtonState = require('../button/button');
 var observer = require('../utils/observer');
 
@@ -46,13 +47,33 @@ function findDate(deadline) {
   return m.toDate();
 }
 
-function createButton(element) {
-  var titleEl = element.querySelector('#deliverable-title .value, #title .value');
-  var deadlineEl = element.querySelector('#deadline .value');
-  var actionsEl = document.body.querySelector('.item-topbar-actions ul');
+function findTitleEl(element) {
+  var textFields = element.querySelectorAll('.small-text-field');
+  if (textFields.length == 0) return null;
 
-  var name = titleEl.innerText;
-  var date = findDate(deadlineEl.innerText);
+  var firstField = textFields[0];
+  var titleField = find(textFields, function(element) {
+    return /title/i.exec(element.className);
+  });
+
+  return titleField || firstField;
+}
+
+function findDeadlineEl(element) {
+  var dateFields = element.querySelectorAll('.date-field');
+  return (dateFields.length > 0) ? dateFields[0] : null;
+}
+
+function findValueEl(element) {
+  return element.querySelector('.value');
+}
+
+function createButton(element) {
+  var titleEl = findTitleEl(element);
+  var deadlineEl = findDeadlineEl(element);
+
+  var name = titleEl ? findValueEl(titleEl).innerText : undefined;
+  var date = deadlineEl ? findDate(findValueEl(deadlineEl).innerText) : undefined;
   var link = location.href;
   
   var state = new ButtonState({
@@ -60,6 +81,7 @@ function createButton(element) {
     link: link
   });
 
+  var actionsEl = document.body.querySelector('.item-topbar-actions ul');
   var itemEl = domify('<li class="float-left teamweek"></li>');
   var buttonEl = state.button.render().el;
 
