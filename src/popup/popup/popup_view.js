@@ -19,6 +19,7 @@ var PopupView = View.extend({
 
   initialize: function() {
     this.listenTo(this.hub, 'popup:update', this.updateContentView);
+    this.listenTo(this.hub, 'popup:close', this.closePopup);
     this.listenTo(this.hub, 'error:show', this.showError);
     this.listenTo(this.hub, 'error:hide', this.hideError);
   },
@@ -43,6 +44,12 @@ var PopupView = View.extend({
       new AuthView({ hub: this.hub });
     
     this.switcher.set(content);
+  },
+
+  closePopup: function() {
+    chrome.windows.getCurrent(function(window) {
+      chrome.windows.remove(window.id);
+    });
   },
 
   showError: function(error) {
