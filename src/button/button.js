@@ -2,6 +2,7 @@ var Promise = require('bluebird');
 var State = require('ampersand-state');
 var ShadowView = require('./views/shadow/shadow_view');
 var ButtonView = require('./views/button/button_view');
+var TaskModel = require('../models/task_model');
 var collections = require('../models/collections');
 var analytics = require('../utils/analytics');
 
@@ -63,9 +64,11 @@ var ButtonState = State.extend({
   },
 
   createPopup: function(event) {
+    var model = new TaskModel(this.task);
+
     chrome.runtime.sendMessage({
       type: 'open_popup',
-      params: this.task,
+      params: model.serialize(),
       anchor: this.anchor,
       screen: {
         width: window.outerWidth,
