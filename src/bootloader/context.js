@@ -8,13 +8,7 @@ function createButton() {
   
   var state = new ButtonState({
     task: { name: title },
-    type: 'modal'
-  });
-
-  state.on('popup:created', function() {
-    var popupEl = state.popup.render().el;
-    state.popup.content.direction = 'center';
-    document.body.appendChild(popupEl);
+    anchor: 'screen'
   });
 
   state.createPopup();

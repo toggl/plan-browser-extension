@@ -78,7 +78,8 @@ function createButton(element) {
   
   var state = new ButtonState({
     task: {name: name, end_date: date},
-    link: link
+    link: link,
+    anchor: 'element'
   });
 
   var actionsEl = document.body.querySelector('.item-topbar-actions ul');
@@ -87,20 +88,6 @@ function createButton(element) {
 
   itemEl.appendChild(buttonEl);
   actionsEl.insertBefore(itemEl, actionsEl.firstChild);
-
-  state.on('popup:created', function() {
-    var popupEl = state.popup.render().el;
-
-    var position = offset(buttonEl);
-    position.right = window.innerWidth - buttonEl.clientWidth - position.left;
-
-    state.popup.content.direction = 'left';
-    popupEl.style.position = 'fixed';
-    popupEl.style.right = position.right + 'px';
-    popupEl.style.top = position.top + 'px';
-
-    document.body.appendChild(popupEl);
-  });
 
   buttons.set(element, state);
 }

@@ -1,6 +1,5 @@
 var moment = require('moment');
 var HashMap = require('hashmap');
-var offset = require('document-offset');
 var ButtonState = require('../button/button');
 var observer = require('../utils/observer');
 
@@ -36,22 +35,12 @@ function createButton(element) {
   
   var state = new ButtonState({
     link: link,
-    task: { name: name, end_date: date }
+    task: { name: name, end_date: date },
+    anchor: 'element'
   });
 
   var buttonEl = state.button.render().el;
   titleEl.appendChild(buttonEl);
-
-  state.on('popup:created', function() {
-    var popupEl = state.popup.render().el;
-    var position = offset(buttonEl);
-
-    popupEl.style.position = 'absolute';
-    popupEl.style.left = position.left + 'px';
-    popupEl.style.top = position.top + 'px';
-
-    document.body.appendChild(popupEl);
-  });
 
   buttons.set(element, state);
 }
