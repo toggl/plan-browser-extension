@@ -56,6 +56,11 @@
       "matches": ["https://*.asana.com/*"],
       "js": ["scripts/content_asana.js"],
       "css": ["styles/global.css", "styles/asana.css"]
+    },
+    {
+      "matches": ["https://calendar.google.com/calendar/*"],
+      "js": ["scripts/content_gcalendar.js"],
+      "css": ["styles/global.css", "styles/gcalendar.css"]
     }
   ],
   "web_accessible_resources": [
