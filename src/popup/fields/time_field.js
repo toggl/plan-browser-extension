@@ -40,7 +40,7 @@ var TimeField = View.extend({
 
   bindings: {
     formatted: {
-      type: 'value',
+      type: function(el, value) {el.value = value},
       hook: 'control'
     },
     showTimepicker: {
