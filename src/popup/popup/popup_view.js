@@ -5,6 +5,7 @@ var TaskView = require('../task/task_view');
 var AuthView = require('../auth/auth_view');
 var LoaderView = require('../loader/loader_view');
 var ErrorView = require('../error/error_view');
+var collections = require('../../models/collections');
 
 var PopupView = View.extend({
 
@@ -12,6 +13,7 @@ var PopupView = View.extend({
 
   props: {
     hub: 'object',
+    link: 'string',
     task: 'state',
     loader: 'state',
     error: 'state'
@@ -22,6 +24,7 @@ var PopupView = View.extend({
     this.listenTo(this.hub, 'popup:close', this.closePopup);
     this.listenTo(this.hub, 'error:show', this.showError);
     this.listenTo(this.hub, 'error:hide', this.hideError);
+    this.listenTo(this.hub, 'task:created', this.saveTaskSource);
   },
 
   render: function() {
@@ -63,6 +66,16 @@ var PopupView = View.extend({
 
   hideError: function() {
     this.error.remove();
+  },
+
+  saveTaskSource: function(task, account) {
+    if (this.link == null) return;
+
+    collections.taskSources.create({
+      task_id: task.id,
+      account_id: account.id,
+      source_link: this.link
+    });
   }
 
 });

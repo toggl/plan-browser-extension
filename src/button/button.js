@@ -65,10 +65,11 @@ var ButtonState = State.extend({
 
   createPopup: function(event) {
     var model = new TaskModel(this.task);
+    var params = Object.assign({link: this.link}, model.serialize());
 
     chrome.runtime.sendMessage({
       type: 'open_popup',
-      params: model.serialize(),
+      params: params,
       anchor: this.anchor,
       screen: {
         width: window.outerWidth,

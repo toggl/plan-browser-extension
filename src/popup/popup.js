@@ -1,14 +1,22 @@
 var qs = require('querystring');
+var Promise = require('promise');
 var Events = require('ampersand-events');
 var PopupView = require('./popup/popup_view');
 var api = require('../api/api');
 var TaskModel = require('../models/task_model');
+var collections = require('../models/collections');
 
-function createTask() {
+function parseQuery() {
   var query = location.search.substr(1);
-  var attrs = qs.parse(query);
+  return qs.parse(query);
+}
 
-  return new TaskModel(attrs, {parse: true});
+function createTask(query) {
+  return new TaskModel({
+    name: query.name,
+    start_date: query.start_date,
+    end_date: query.end_date
+  }, {parse: true});
 }
 
 function createHub() {
@@ -16,9 +24,12 @@ function createHub() {
 }
 
 function createView() {
+  var query = parseQuery();
+
   return new PopupView({
     hub: createHub(),
-    task: createTask()
+    task: createTask(query),
+    link: query.link
   });
 }
 
@@ -27,7 +38,14 @@ function renderView(view) {
   document.body.appendChild(view.el);
 }
 
-api.auth.load().then(function() {
+function initialize() {
+  return Promise.all([
+    api.auth.load(),
+    collections.taskSources.fetch()
+  ]);
+}
+
+initialize().then(function() {
   var view = createView();
   renderView(view);  
 });
