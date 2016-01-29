@@ -15,7 +15,9 @@ function createTask(query) {
   return new TaskModel({
     name: query.name,
     start_date: query.start_date,
-    end_date: query.end_date
+    end_date: query.end_date,
+    start_time: query.start_time,
+    end_time: query.end_time
   }, {parse: true});
 }
 
