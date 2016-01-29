@@ -46,7 +46,11 @@ gulp.task('build:js', function() {
     .pipe(plugins.browserify(configure))
     .pipe(gulp.dest('app/scripts'));
 
-  return merge(bootloaders, backgrounds, options);
+  var popup = gulp.src('src/popup/popup.js')
+    .pipe(plugins.browserify(configure))
+    .pipe(gulp.dest('app/scripts'));
+
+  return merge(bootloaders, backgrounds, options, popup);
 });
 
 gulp.task('build:less', function() {
