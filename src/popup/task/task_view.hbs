@@ -1,6 +1,8 @@
 <div class="task-popup">
   <div class="popup__title">Add to Teamweek</div>
 
+  <div class="popup__errors" data-hook="errors"></div>
+
   <form data-hook="form">
     <div class="popup__form form">
       <div class="form__row">
@@ -11,7 +13,6 @@
           <input type="text" name="name" id="tw-form-{{cid}}-name" placeholder="Enter name..."
             data-hook="input-name" tabindex="1">
         </div>
-        <div class="form__errors" data-hook="errors-name"></div>
       </div>
       
       <div class="form__row">
@@ -22,7 +23,6 @@
           <select name="user" id="tw-form-{{cid}}-user" class="user-select"
             data-hook="select-user" tabindex="2"></select>
         </div>
-        <div class="form__errors" data-hook="errors-user"></div>
       </div>
 
       <div class="form__row">
@@ -33,7 +33,6 @@
           <select name="project" id="tw-form-{{cid}}-project" class="project-select"
             data-hook="select-project" tabindex="3"></select>
         </div>
-        <div class="form__errors" data-hook="errors-project"></div>
       </div>
 
       <div class="form__row">
@@ -47,7 +46,6 @@
             <div class="estimate-input__suffix" data-hook="suffix">hours</div>
           </div>
         </div>
-        <div class="form__errors" data-hook="errors-estimate"></div>
       </div>
       
       <div class="form__row">
@@ -68,7 +66,6 @@
               class="time-input__control" placeholder="Set time..." data-hook="control" tabindex="6">
           </div>
         </div>
-        <div class="form__errors" data-hook="errors-start"></div>
       </div>
       
       <div class="form__row">
@@ -89,7 +86,6 @@
               class="time-input__control" placeholder="Set time..." data-hook="control" tabindex="8">
           </div>
         </div>
-        <div class="form__errors" data-hook="errors-end"></div>
       </div>
     </div>
 

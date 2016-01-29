@@ -18,7 +18,7 @@ function createButton(element) {
   var state = new ButtonState({
     task: {},
     link: location.href,
-    type: 'modal'
+    anchor: 'screen'
   });
 
   var titleObserver = observer
@@ -39,12 +39,6 @@ function createButton(element) {
       actionsEl.insertBefore(itemEl, actionsEl.firstChild);
     })
     .start();
-
-  state.on('popup:created', function() {
-    var popupEl = state.popup.render().el;
-    state.popup.content.direction = 'center';
-    document.body.appendChild(popupEl);
-  });
 
   buttons.set(element, {
     state: state,

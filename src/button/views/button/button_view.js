@@ -19,7 +19,7 @@ var ButtonView = View.extend({
 
   onClick: function(event) {
     event.preventDefault();
-    this.hub.trigger('button:clicked');
+    this.hub.trigger('button:clicked', event);
   }
 
 });

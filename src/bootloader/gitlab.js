@@ -63,18 +63,12 @@ function createButton(callback, element) {
   var state = new ButtonState({
     task: config.task,
     link: config.link,
-    type: 'modal'
+    anchor: 'screen'
   });
 
   var buttonEl = state.button.render().el;
   config.container.appendChild(buttonEl);
-
-  state.on('popup:created', function() {
-    var popupEl = state.popup.render().el;
-    state.popup.content.direction = 'center';
-    document.body.appendChild(popupEl);
-  });
-
+  
   buttons.set(element, state);
 }
 

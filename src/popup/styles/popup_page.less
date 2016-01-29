@@ -1,56 +1,20 @@
-@import "modules/pikaday.less";
+@import "fonts.less";
+@import "pikaday.less";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
 
 .popup {
-  width: 400px;
-
+  width: 100%;
   background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-  font-family: 'Teamweek Button Avenir Next';
+  font-family: 'Avenir Next';
   line-height: initial;
   -webkit-font-smoothing: initial;
-}
-
-.popup--right,
-.popup--left {
-  position: relative;
-  top: -15px;
-
-  &:after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 17px;
-    z-index: 0;
-    width: 20px;
-    height: 20px;
-
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-    transform: rotate(45deg);
-  }
-}
-
-.popup--right {
-  left: 40px;
-
-  &:after {
-    left: -10px;
-  }
-}
-
-.popup--left {
-  right: 40px;
-
-  &:after {
-    right: -10px;
-  }
-}
-
-.popup--center {
-  position: fixed;
-  top: 100px;
-  left: 50%;
-  margin-left: -200px;
 }
 
 .popup__title {
@@ -342,9 +306,18 @@
 .time-input__timepicker,
 .date-input__datepicker {
   position: absolute;
-  left: 0; top: 100%;
-  margin-top: 10px;
+  bottom: 100%;
+  margin-bottom: 10px;
   z-index: 2;
+}
+
+.time-input__timepicker {
+  right: 0px;
+}
+
+.date-input__datepicker {
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .timepicker {
@@ -364,13 +337,23 @@
 .timepicker__arrow,
 .datepicker__arrow {
   position: absolute;
-  left: 10px; top: -5px;
+  bottom: -5px;
+  
   width: 10px; height: 10px;
   z-index: 0;
 
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
   transform: rotate(45deg);
+}
+
+.timepicker__arrow {
+  right: 10px;
+}
+
+.datepicker__arrow {
+  left: 50%;
+  margin-left: -5px
 }
 
 .timepicker__content,
@@ -424,5 +407,24 @@
 
   .estimate-input--empty & {
     color: #999;
+  }
+}
+
+.form-errors {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 10px;
+  transform: translateY(-100%);
+  transition: 0.1s transform linear;
+
+  background-color: #ed3921;
+  text-align: center;
+  color: white;
+
+  &--visible {
+    transform: translateY(0);
   }
 }

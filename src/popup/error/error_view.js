@@ -5,7 +5,7 @@ var ErrorView = View.extend({
   template: require('./error_view.hbs'),
 
   props: {
-    hub: 'state',
+    hub: 'object',
     error: 'object'
   },
 

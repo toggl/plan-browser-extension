@@ -1,10 +1,10 @@
 var Promise = require('bluebird');
 var moment = require('moment');
 var View = require('ampersand-view');
-var AccountCollection = require('../../../models/account_collection');
-var TaskModel = require('../../../models/task_model');
+var AccountCollection = require('../../models/account_collection');
+var TaskModel = require('../../models/task_model');
 
-var FormMixin = require('../form/form_mixin');
+var FormErrors = require('../form/form_errors');
 var TextField = require('../fields/text_field');
 var UserField = require('../fields/user_field');
 var ProjectField = require('../fields/project_field');
@@ -12,12 +12,12 @@ var EstimateField = require('../fields/estimate_field');
 var DateField = require('../fields/date_field');
 var TimeField = require('../fields/time_field');
 
-var TaskView = View.extend(FormMixin, {
+var TaskView = View.extend({
 
   template: require('./task_view.hbs'),
 
   props: {
-    hub: 'state',
+    hub: 'object',
     user: 'state',
     project: 'state',
     overlay: 'boolean'
@@ -33,7 +33,8 @@ var TaskView = View.extend(FormMixin, {
       return new UserField({ el: el, collection: this.accounts, parent: this });
     } },
     project: { hook: 'select-project', constructor: ProjectField },
-    estimate: { hook: 'input-estimate', constructor: EstimateField }
+    estimate: { hook: 'input-estimate', constructor: EstimateField },
+    errors: { hook: 'errors', constructor: FormErrors }
   },
 
   collections: {
@@ -141,43 +142,41 @@ var TaskView = View.extend(FormMixin, {
   },
 
   validate: function() {
-    var valid = true;
-
-    this.clearErrors();
+    this.errors.clearErrors();
 
     if (!this.name.isFilled) {
-      this.addError('name', 'Task name cannot be empty');
-      valid = false;
+      this.errors.addError('Task name cannot be empty');
+      return false;
     }
 
     if (!this.user.isFilled) {
-      this.addError('user', 'User cannot be empty');
-      valid = false;
+      this.errors.addError('User cannot be empty');
+      return false;
     }
 
     if (this.user.hasUser) {
       if (!this.start_date.isFilled) {
-        this.addError('start', 'Start date cannot be empty');
-        valid = false;
+        this.errors.addError('Start date cannot be empty');
+        return false;
       }
 
       if (!this.end_date.isFilled) {
-        this.addError('end', 'End date cannot be empty');
-        valid = false;
+        this.errors.addError('End date cannot be empty');
+        return false;
       }
 
       if (moment(this.end_date.value).isBefore(this.start_date.value, 'day')) {
-        this.addError('end', 'End date cannot be before start date');
-        valid = false;
+        this.errors.addError('End date cannot be before start date');
+        return false;
       }
     }
 
     if (this.estimate.isFilled && !this.estimate.isValid) {
-      this.addError('estimate', 'Daily estimate is not valid');
-      valid = false;
+      this.errors.addError('Daily estimate is not valid');
+      return false;
     }
 
-    return valid;
+    return true;
   },
 
   focusNameField: function() {

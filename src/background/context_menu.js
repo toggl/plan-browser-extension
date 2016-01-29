@@ -1,10 +1,6 @@
 var permissions = require('../utils/permissions');
-
-function getDomain(url) {
-  var anchor = document.createElement('a');
-  anchor.href = url;
-  return anchor.hostname;
-}
+var TaskModel = require('../models/task_model');
+var analytics = require('../utils/analytics');
 
 chrome.contextMenus.create({
   id: 'context-add',
@@ -13,10 +9,22 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
-  var domain = getDomain(info.pageUrl);
+  var model = new TaskModel({name: info.selectionText});
+  var params = model.serialize();
 
-  permissions.request(['tabs'], domain).then(() => {
-    chrome.tabs.insertCSS(tab.id, {file: 'styles/global.css'});
-    chrome.tabs.executeScript(tab.id, {file: 'scripts/content_context.js'});
+  chrome.windows.getCurrent(function(current) {
+    chrome.runtime.sendMessage({
+      type: 'open_popup',
+      params: params,
+      anchor: 'window',
+      window: {
+        width: current.width,
+        height: current.height,
+        x: current.left,
+        y: current.top
+      }
+    });
   });
+
+  analytics.track('context', 'click');
 });

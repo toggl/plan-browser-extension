@@ -1,40 +1,30 @@
 var View = require('ampersand-view');
 var ViewSwitcher = require('ampersand-view-switcher');
-var api = require('../../../api/api');
+var api = require('../../api/api');
 var TaskView = require('../task/task_view');
 var AuthView = require('../auth/auth_view');
 var LoaderView = require('../loader/loader_view');
 var ErrorView = require('../error/error_view');
+var collections = require('../../models/collections');
 
 var PopupView = View.extend({
 
   template: require('./popup_view.hbs'),
 
   props: {
-    hub: 'state',
+    hub: 'object',
+    link: 'string',
     task: 'state',
     loader: 'state',
-    error: 'state',
-    direction: {
-      type: 'string',
-      values: ['left', 'right', 'center'],
-      default: 'right'
-    }
-  },
-
-  bindings: {
-    direction: {
-      type: function(el, value, previous) {
-        if (previous) el.classList.remove('popup--' + previous);
-        if (value) el.classList.add('popup--' + value);
-      }
-    }
+    error: 'state'
   },
 
   initialize: function() {
-    this.listenTo(this.hub, 'popup:show:task', this.updateContentView);
+    this.listenTo(this.hub, 'popup:update', this.updateContentView);
+    this.listenTo(this.hub, 'popup:close', this.closePopup);
     this.listenTo(this.hub, 'error:show', this.showError);
     this.listenTo(this.hub, 'error:hide', this.hideError);
+    this.listenTo(this.hub, 'task:created', this.saveTaskSource);
   },
 
   render: function() {
@@ -47,6 +37,8 @@ var PopupView = View.extend({
     this.registerSubview(this.switcher);
 
     this.updateContentView();
+
+    return this;
   },
 
   updateContentView: function() {
@@ -55,6 +47,12 @@ var PopupView = View.extend({
       new AuthView({ hub: this.hub });
     
     this.switcher.set(content);
+  },
+
+  closePopup: function() {
+    chrome.windows.getCurrent(function(window) {
+      chrome.windows.remove(window.id);
+    });
   },
 
   showError: function(error) {
@@ -68,6 +66,16 @@ var PopupView = View.extend({
 
   hideError: function() {
     this.error.remove();
+  },
+
+  saveTaskSource: function(task, account) {
+    if (this.link == null) return;
+
+    collections.taskSources.create({
+      task_id: task.id,
+      account_id: account.id,
+      source_link: this.link
+    });
   }
 
 });

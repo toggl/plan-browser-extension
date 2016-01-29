@@ -24,7 +24,11 @@ gulp.task('watch:js', function() {
     .pipe(plugins.watchify(configure))
     .pipe(gulp.dest('app/scripts'));
 
-  return merge(bootloaders, backgrounds, options);
+  var popup = gulp.src('src/popup/popup.js')
+    .pipe(plugins.watchify(configure))
+    .pipe(gulp.dest('app/scripts'));
+
+  return merge(bootloaders, backgrounds, options, popup);
 });
 
 gulp.task('build:js', function() {
@@ -46,7 +50,11 @@ gulp.task('build:js', function() {
 });
 
 gulp.task('build:less', function() {
-  var styles = ['src/button/styles/*.less', 'src/options/options.less'];
+  var styles = [
+    'src/button/styles/*.less',
+    'src/options/options.less',
+    'src/popup/styles/popup_page.less'
+  ];
 
   return gulp.src(styles)
     .pipe(plugins.less())
@@ -54,6 +62,11 @@ gulp.task('build:less', function() {
 });
 
 gulp.task('watch:less', ['build:less'], function() {
-  var styles = ['src/button/styles/*.less', 'src/options/options.less'];
+  var styles = [
+    'src/button/styles/*.less',
+    'src/options/options.less',
+    'src/popup/styles/popup_page.less'
+  ];
+  
   gulp.watch(styles, ['build:less']);
 });

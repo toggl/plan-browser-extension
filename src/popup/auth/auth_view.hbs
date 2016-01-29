@@ -1,6 +1,8 @@
 <div class="auth-popup">
   <div class="popup__title">Sign in to Teamweek</div>
 
+  <div class="popup__errors" data-hook="errors"></div>
+
   <form data-hook="form">
     <div class="popup__form form">
         <div class="form__row">
@@ -11,7 +13,6 @@
             <input type="text" name="email" id="tw-form-{{cid}}-email" placeholder="Enter e-mail..."
               data-hook="input-email" autofocus>
           </div>
-          <div class="form__errors" data-hook="errors-email"></div>
         </div>
         
         <div class="form__row">
@@ -22,7 +23,6 @@
             <input type="password" name="password" id="tw-form-{{cid}}-password" placeholder="Enter password..."
               data-hook="input-password">
           </div>
-          <div class="form__errors" data-hook="errors-password"></div>
         </div>
     </div>
 

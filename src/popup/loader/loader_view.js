@@ -5,7 +5,7 @@ var LoaderView = View.extend({
   template: require('./loader_view.hbs'),
 
   props: {
-    hub: 'state',
+    hub: 'object',
     visible: 'boolean'
   },
 

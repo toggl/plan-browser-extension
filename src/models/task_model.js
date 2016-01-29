@@ -18,6 +18,13 @@ var TaskModel = Model.extend({
     estimated_hours: 'number'
   },
 
+  parse: function(attrs) {
+    return Object.assign({}, attrs, {
+      start_date: attrs.start_date ? moment(attrs.start_date, 'YYYY-MM-DD').toDate() : undefined,
+      end_date: attrs.end_date ? moment(attrs.end_date, 'YYYY-MM-DD').toDate() : undefined
+    });
+  },
+
   serialize: function() {
     var res = Model.prototype.serialize.call(this);
 

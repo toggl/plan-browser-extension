@@ -1,9 +1,7 @@
 var Promise = require('bluebird');
 var State = require('ampersand-state');
-var api = require ('../api/api');
 var ShadowView = require('./views/shadow/shadow_view');
 var ButtonView = require('./views/button/button_view');
-var PopupView = require('./views/popup/popup_view');
 var TaskModel = require('../models/task_model');
 var collections = require('../models/collections');
 var analytics = require('../utils/analytics');
@@ -15,12 +13,11 @@ var ButtonState = State.extend({
   props: {
     link: 'string',
     button: 'state',
-    popup: 'state',
     task: 'object',
-    layout: {
+    anchor: {
       type: 'string',
-      values: ['popup', 'modal'],
-      default: 'popup'
+      values: ['element', 'screen'],
+      default: 'screen'
     }
   },
 
@@ -30,10 +27,8 @@ var ButtonState = State.extend({
 
   initialize: function() {
     this.listenTo(this.hub, 'popup:open', this.createPopup);
-    this.listenTo(this.hub, 'popup:close', this.destroyPopup);
     this.listenTo(this.hub, 'button:clicked', this.handleButtonClick);
     this.listenTo(this.hub, 'task:open', this.handleTaskOpen);
-    this.listenTo(this.hub, 'task:created', this.handleTaskCreated);
 
     this.button = new ShadowView({
       name: 'tw-button',
@@ -46,9 +41,9 @@ var ButtonState = State.extend({
     ButtonState.setLoaded();
   },
 
-  handleButtonClick: function() {
+  handleButtonClick: function(event) {
     if (this.link == null) {
-      this.hub.trigger('popup:open');
+      this.hub.trigger('popup:open', event);
       return;
     }
     
@@ -59,7 +54,7 @@ var ButtonState = State.extend({
     if (taskSource != null) {
       this.hub.trigger('task:open', taskSource.task_id, taskSource.account_id);
     } else {
-      this.hub.trigger('popup:open');
+      this.hub.trigger('popup:open', event);
     }
   },
 
@@ -68,50 +63,35 @@ var ButtonState = State.extend({
     window.open(url, '_blank');
   },
 
-  handleTaskCreated: function(task, account) {
-    collections.taskSources.create({
-      task_id: task.id,
-      account_id: account.id,
-      source_link: this.link
+  createPopup: function(event) {
+    var model = new TaskModel(this.task);
+    var params = Object.assign({link: this.link}, model.serialize());
+
+    chrome.runtime.sendMessage({
+      type: 'open_popup',
+      params: params,
+      anchor: this.anchor,
+      screen: {
+        width: window.outerWidth,
+        height: window.outerHeight
+      },
+      element: event ? {
+        x: event.screenX,
+        y: event.screenY
+      } : null
     });
-  },
-
-  createPopup: function() {
-    var task = new TaskModel(this.task);
-    var name = (this.layout == 'popup') ? 'tw-popup' : 'tw-modal';
-
-    this.popup = new ShadowView({
-      name: name,
-      style: require('../../app/styles/popup.css'),
-      content: new PopupView({
-        hub: this.hub,
-        task: task
-      })
-    });
-
-    this.trigger('popup:created');
 
     analytics.track('button', 'click');
   },
 
-  destroyPopup: function() {
-    this.popup.remove();
-    this.popup = null;
-    
-    this.trigger('popup:destroyed');
-  },
-
   remove: function() {
     this.button.remove();
-    if (this.popup != null) this.popup.remove();
-    if (this.overlay != null) this.overlay.remove();
   }
 
 });
 
 ButtonState.initialize = function() {
   return Promise.all([
-    api.auth.load(),
     collections.taskSources.fetch()
   ]);
 };
