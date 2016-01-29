@@ -409,3 +409,22 @@ body {
     color: #999;
   }
 }
+
+.form-errors {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 10px;
+  transform: translateY(-100%);
+  transition: 0.1s transform linear;
+
+  background-color: #ed3921;
+  text-align: center;
+  color: white;
+
+  &--visible {
+    transform: translateY(0);
+  }
+}

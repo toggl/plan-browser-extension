@@ -1,11 +1,11 @@
 var View = require('ampersand-view');
 var api = require('../../api/api');
 
-var FormMixin = require('../form/form_mixin');
+var FormErrors = require('../form/form_errors');
 var TextField = require('../fields/text_field');
 var EmailField = require('../fields/email_field');
 
-var AuthView = View.extend(FormMixin, {
+var AuthView = View.extend({
 
   template: require('./auth_view.hbs'),
 
@@ -16,6 +16,7 @@ var AuthView = View.extend(FormMixin, {
   subviews: {
     email: { hook: 'input-email', constructor: EmailField },
     password: { hook: 'input-password', constructor: TextField },
+    errors: { hook: 'errors', constructor: FormErrors }
   },
 
   events: {
@@ -59,26 +60,24 @@ var AuthView = View.extend(FormMixin, {
   },
 
   validate: function() {
-    var valid = true;
-
-    this.clearErrors();
+    this.errors.clearErrors();
 
     if (!this.email.isFilled) {
-      this.addError('email', 'E-mail cannot be empty');
-      valid = false;
+      this.errors.addError('E-mail cannot be empty');
+      return false;
     }
 
     if (!this.email.isEmail) {
-      this.addError('email', 'E-mail is invalid');
-      valid = false;
+      this.errors.addError('E-mail is invalid');
+      return false;
     }
 
     if (!this.password.isFilled) {
-      this.addError('password', 'Password cannot be empty');
-      valid = false;
+      this.errors.addError('Password cannot be empty');
+      return false;
     }
 
-    return valid;
+    return true;
   }
 
 });
