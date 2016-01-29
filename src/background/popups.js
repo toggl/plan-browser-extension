@@ -36,6 +36,11 @@ function calculatePosition(data) {
         ? data.element.y - POPUP_HEIGHT + BUTTON_SIZE
         : data.element.y
     };
+  } else if (data.anchor == 'window') {
+    return {
+      x: data.window.x + (data.window.width - POPUP_WIDTH) / 2,
+      y: data.window.y + (data.window.height - POPUP_HEIGHT) / 2
+    };
   }
 }
 
