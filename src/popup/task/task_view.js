@@ -74,7 +74,9 @@ var TaskView = View.extend({
 
     this.name.value = this.model.name;
     this.start_date.value = this.model.start_date;
-    this.end_date.value = this.model.end_date
+    this.end_date.value = this.model.end_date;
+    this.start_time.value = this.model.start_time;
+    this.end_time.value = this.model.end_time;
 
     this.hub.trigger('loader:show');
 
