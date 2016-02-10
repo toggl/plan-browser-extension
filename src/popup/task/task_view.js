@@ -70,6 +70,13 @@ var TaskView = View.extend({
   render: function() {
     this.renderWithTemplate(this);
 
+    [
+      this.name, this.start_date, this.end_date, this.start_time, this.end_time,
+      this.user, this.project, this.estimate
+    ].forEach(function(field) {
+      this.listenTo(field, 'change:value', this.hideErrors);
+    }, this);
+
     this.listenTo(this.user, 'change:value', this.onUserSelected);
 
     this.name.value = this.model.name;
@@ -141,6 +148,10 @@ var TaskView = View.extend({
     event.preventDefault();
     event.stopPropagation();
     this.hub.trigger('popup:close');
+  },
+
+  hideErrors: function() {
+    this.errors.clearErrors()
   },
 
   validate: function() {
