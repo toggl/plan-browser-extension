@@ -50,7 +50,8 @@ function createIssueIndexButton(element) {
 
   return {
     task: {
-      name: linkEl.innerText
+      name: linkEl.innerText,
+      notes: 'Added from GitLab: ' + linkEl.href
     },
     link: linkEl.href,
     container: titleEl

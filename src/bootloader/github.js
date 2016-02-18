@@ -35,7 +35,11 @@ function createButton(element) {
   
   var state = new ButtonState({
     link: link,
-    task: { name: name, end_date: date },
+    task: {
+      name: name,
+      end_date: date,
+      notes: 'Added from GitHub: ' + link
+    },
     anchor: 'element'
   });
 

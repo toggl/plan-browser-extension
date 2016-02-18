@@ -16,7 +16,9 @@ function createObserver() {
 
 function createButton(element) {
   var state = new ButtonState({
-    task: {},
+    task: {
+      notes: 'Added from Asana: ' + location.href
+    },
     link: location.href,
     anchor: 'screen'
   });

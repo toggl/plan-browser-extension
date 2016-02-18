@@ -21,7 +21,10 @@ function createButton(node) {
 
   var state = new ButtonState({
     link: link,
-    task: { name: name },
+    task: {
+      name: name,
+      notes: 'Added from JIRA: ' + link
+    },
     anchor: 'element'
   });
 

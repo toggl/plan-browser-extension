@@ -18,7 +18,10 @@ function createButton(element) {
   var link = location.href;
   
   var state = new ButtonState({
-    task: {name: name},
+    task: {
+      name: name,
+      notes: 'Added from Bitbucket: ' + location.href
+    },
     link: link,
     anchor: 'screen'
   });

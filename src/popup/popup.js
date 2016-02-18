@@ -17,7 +17,8 @@ function createTask(query) {
     start_date: query.start_date,
     end_date: query.end_date,
     start_time: query.start_time,
-    end_time: query.end_time
+    end_time: query.end_time,
+    notes: query.notes
   }, {parse: true});
 }
 

@@ -15,7 +15,8 @@ var TaskModel = Model.extend({
     end_date: ['date', false, function() { return new Date(); }],
     start_time: 'string',
     end_time: 'string',
-    estimated_hours: 'number'
+    estimated_hours: 'number',
+    notes: 'string'
   },
 
   parse: function(attrs) {

@@ -77,7 +77,11 @@ function createButton(element) {
   var link = location.href;
   
   var state = new ButtonState({
-    task: {name: name, end_date: date},
+    task: {
+      name: name,
+      end_date: date,
+      notes: 'Added from Podio: ' + link
+    },
     link: link,
     anchor: 'element'
   });

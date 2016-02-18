@@ -17,7 +17,10 @@ function createButton(title) {
   
   var state = new ButtonState({
     link: link,
-    task: { name: name },
+    task: {
+      name: name,
+      notes: 'Added from GitHub: ' + link
+    },
     anchor: 'element'
   });
 
