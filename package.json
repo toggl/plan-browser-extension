@@ -9,6 +9,7 @@
     "ampersand-state": "^4.5.4",
     "ampersand-view": "^7.3.0",
     "ampersand-view-switcher": "^2.0.0",
+    "bluebird": "^3.3.4",
     "document-offset": "^1.0.4",
     "domify": "^1.4.0",
     "hashmap": "^2.0.3",
