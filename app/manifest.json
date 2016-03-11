@@ -64,7 +64,7 @@
     },
     {
       "matches": ["https://*.bitrix24.com/*"],
-      "js": ["scripts/content_bitrix24-gantt.js"],
+      "js": ["scripts/content_bitrix24.js"],
       "css": ["styles/global.css", "styles/bitrix24-gantt.css"]
     }
   ],
