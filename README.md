@@ -4,7 +4,7 @@
 You need to have node.js and npm installed. That's it.
 
 ## Building
-We use Gulp as a build system, Browserify to compile our JS files and LESS for stylesheets. 
+We use Gulp as a build system, Browserify to compile our JS files and LESS for stylesheets.
 
 To build scripts and styles, run `npm run-script build`. To watch for changes in scripts and styles run `npm run-script watch`.
 
@@ -59,6 +59,28 @@ Then we find the element in which the button element will be inserted and insert
 Finally, we call `return button`. This is so that the script can keep track of all buttons on the page so that it can remove them when needed.
 
 The second function is called with the value we have returned from the first function. In this case, we simply remove the button from the page.
+
+### Include your domain in the manifest
+
+Open the `/app/manifest.json`, go to the `content_scripts` section and add the following:
+```json
+{
+  "matches": ["https://*.[domain_name.com]/*"],
+  "js": ["scripts/content_[your script name].js"],
+  "css": ["styles/global.css"]
+}
+```
+This entry is what makes the extension use your script.
+
+In case you notice the button doesn't quite fit the container you can define a stylesheet with less. Create a .less file in the `src/button/styles` with a suitable name. To reference the file include the route in the css property of your domain's section of the manifest file, it would look something like:
+```json
+{
+  "matches": ["https://*.[domain_name.com]/*"],
+  "js": ["scripts/content_[your script name].js"],
+  "css": ["styles/global.css", "styles/[your stylesheet name].css"]
+}
+```
+
 
 ### Test the integration
 
