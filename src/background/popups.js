@@ -1,7 +1,7 @@
 var qs = require('querystring');
 
 var POPUP_WIDTH = 400;
-var POPUP_HEIGHT = 365;
+var POPUP_HEIGHT = 400;
 var BUTTON_MARGIN = 20;
 var BUTTON_SIZE = 20;
 
