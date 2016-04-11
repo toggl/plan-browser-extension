@@ -1,6 +1,5 @@
 var Promise = require('bluebird');
 var State = require('ampersand-state');
-var ShadowView = require('./views/shadow/shadow_view');
 var ButtonView = require('./views/button/button_view');
 var TaskModel = require('../models/task_model');
 var collections = require('../models/collections');
@@ -18,6 +17,13 @@ var ButtonState = State.extend({
       type: 'string',
       values: ['element', 'screen'],
       default: 'screen'
+    },
+    view: {
+      type: 'any',
+      required: true,
+      default: function() {
+        return ButtonView;
+      }
     }
   },
 
@@ -30,13 +36,7 @@ var ButtonState = State.extend({
     this.listenTo(this.hub, 'button:clicked', this.handleButtonClick);
     this.listenTo(this.hub, 'task:open', this.handleTaskOpen);
 
-    this.button = new ShadowView({
-      name: 'tw-button',
-      style: require('../../app/styles/button.css'),
-      content: new ButtonView({
-        hub: this.hub
-      })
-    });
+    this.button = new this.view({hub: this.hub});
 
     ButtonState.setLoaded();
   },

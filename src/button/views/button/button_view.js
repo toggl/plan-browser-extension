@@ -1,6 +1,8 @@
 var View = require('ampersand-view');
+var ShadowView = require('../shadow/shadow_view');
+var style = require('../../../../app/styles/button.css');
 
-var ButtonView = View.extend({
+var ContentView = View.extend({
 
   template: require('./button_view.hbs'),
 
@@ -22,6 +24,29 @@ var ButtonView = View.extend({
     this.hub.trigger('button:clicked', event);
   }
 
+});
+
+var ButtonView = View.extend({
+  props: {
+    hub: 'state',
+    view: 'state'
+  },
+
+  render: function() {
+    var content = new ContentView(this.attributes);
+
+    this.view = new ShadowView({
+      name: 'tw-button',
+      style: style,
+      content: content
+    });
+
+    this.registerSubview(this.view);
+    this.view.render();
+
+    this.el = this.view.el;
+    return this.view;
+  }
 });
 
 module.exports = ButtonView;
