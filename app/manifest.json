@@ -66,6 +66,11 @@
       "matches": ["https://*.bitrix24.com/*"],
       "js": ["scripts/content_bitrix24.js"],
       "css": ["styles/global.css", "styles/bitrix24-gantt.css"]
+    },
+    {
+      "matches": ["https://*.fuseboardapp.com/*"],
+      "js": ["scripts/content_fuseboardapp.js"],
+      "css": ["styles/global.css", "styles/fuseboardapp.css"]
     }
   ],
   "web_accessible_resources": [
