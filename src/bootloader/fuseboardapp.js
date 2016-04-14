@@ -13,7 +13,6 @@ twb.observe('ul#tasklists ul.tasks li, #deal-list tr .summary, #ticket-list tr .
   let container = bubble.querySelector('h6');
   twb.prepend(button, container);
   return button;
-
 }, (button) => {
   twb.remove(button);
 });
@@ -30,7 +29,6 @@ twb.observe('ul.deals li, ul.projects li, ul.tickets li', (bubble) => {
   let container = bubble.querySelector('.board-snapshot-icons');
   twb.append(button, container);
   return button;
-
 }, (button) => {
   twb.remove(button);
 });
