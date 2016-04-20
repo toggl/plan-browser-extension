@@ -1,6 +1,7 @@
 var permissions = require('../utils/permissions');
 var TaskModel = require('../models/task_model');
 var analytics = require('../utils/analytics');
+var openPopupWindow = require('./util/popup_window').open;
 
 chrome.contextMenus.create({
   id: 'context-add',
@@ -13,8 +14,7 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
   var params = model.serialize();
 
   chrome.windows.getCurrent(function(current) {
-    chrome.runtime.sendMessage({
-      type: 'open_popup',
+    openPopupWindow({
       params: params,
       anchor: 'window',
       window: {
