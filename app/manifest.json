@@ -71,6 +71,11 @@
       "matches": ["https://*.fuseboardapp.com/*"],
       "js": ["scripts/content_fuseboardapp.js"],
       "css": ["styles/global.css", "styles/fuseboardapp.css"]
+    },
+    {
+      "matches": ["https://*.tickspot.com/*"],
+      "js": ["scripts/content_tick.js"],
+      "css": ["styles/global.css", "styles/tick.css"]
     }
   ],
   "web_accessible_resources": [
