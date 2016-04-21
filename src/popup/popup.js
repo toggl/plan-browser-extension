@@ -39,6 +39,7 @@ function createView() {
 function renderView(view) {
   view.render();
   document.body.appendChild(view.el);
+  view.resizeWindow();
 }
 
 function initialize() {

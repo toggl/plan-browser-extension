@@ -20,7 +20,7 @@ var PopupView = View.extend({
   },
 
   initialize: function() {
-    this.listenTo(this.hub, 'popup:update', this.updateContentView);
+    this.listenTo(this.hub, 'popup:update', this.updatePopup);
     this.listenTo(this.hub, 'popup:close', this.closePopup);
     this.listenTo(this.hub, 'error:show', this.showError);
     this.listenTo(this.hub, 'error:hide', this.hideError);
@@ -47,6 +47,11 @@ var PopupView = View.extend({
       new AuthView({ hub: this.hub });
     
     this.switcher.set(content);
+  },
+
+  updatePopup: function() {
+    this.updateContentView();
+    this.resizeWindow();
   },
 
   closePopup: function() {
@@ -76,6 +81,11 @@ var PopupView = View.extend({
       account_id: account.id,
       source_link: this.link
     });
+  },
+
+  resizeWindow: function() {
+    var dy = document.body.offsetHeight - window.innerHeight;
+    window.resizeBy(0, dy);
   }
 
 });
