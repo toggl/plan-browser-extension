@@ -7,6 +7,17 @@ var CustomDomainsView = View.extend({
 
   template: require('./custom_domains.hbs'),
 
+  props: {
+    form: 'state'
+  },
+
+  bindings: {
+    'form.error': {
+      type: 'text',
+      hook: 'error'
+    }
+  },
+
   initialize: function() {
     this.collection = new CustomDomainCollection()
     this.collection.fetch();
