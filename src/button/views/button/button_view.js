@@ -43,9 +43,9 @@ var ButtonView = View.extend({
 
     this.registerSubview(this.view);
     this.view.render();
-
     this.el = this.view.el;
-    return this.view;
+    
+    return this;
   }
 });
 

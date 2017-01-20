@@ -45,6 +45,17 @@ exports.append = function(state, container) {
 exports.prepend = function(state, container) {
   let el = state.button.render().el;
   container.insertBefore(el, container.firstChild);
+};
+
+exports.appendOrReplace = function(state, container) {
+  let previousEl = container.querySelector('.tw-button');
+  let nextEl = state.button.render().el;
+
+  if (previousEl) {
+    container.replaceChild(nextEl, previousEl);
+  } else {
+    container.appendChild(nextEl);
+  }
 }
 
 exports.remove = function(state) {
