@@ -76,6 +76,11 @@
       "matches": ["https://*.tickspot.com/*"],
       "js": ["scripts/content_tick.js"],
       "css": ["styles/global.css", "styles/tick.css"]
+    },
+    {
+      "matches": ["https://*.zendesk.com/*"],
+      "js": ["scripts/content_zendesk.js"],
+      "css": ["styles/global.css", "styles/zendesk.css"]
     }
   ],
   "web_accessible_resources": [

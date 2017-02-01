@@ -47,6 +47,13 @@ exports.prepend = function(state, container) {
   container.insertBefore(el, container.firstChild);
 };
 
+exports.insert = function(state, previous) {
+  let el = state.button.render().el;
+  let container = previous.parentNode;
+  let next = previous.nextSibling;
+  container.insertBefore(el, next);
+};
+
 exports.appendOrReplace = function(state, container) {
   let previousEl = container.querySelector('.tw-button');
   let nextEl = state.button.render().el;
