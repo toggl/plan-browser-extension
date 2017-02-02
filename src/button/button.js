@@ -12,7 +12,7 @@ var ButtonState = State.extend({
   props: {
     link: 'string',
     button: 'state',
-    task: 'object',
+    task: 'any',
     anchor: {
       type: 'string',
       values: ['element', 'screen'],
@@ -46,7 +46,7 @@ var ButtonState = State.extend({
       this.hub.trigger('popup:open', event);
       return;
     }
-    
+
     var taskSource = collections.taskSources.find({
       source_link: this.link
     });
@@ -64,8 +64,7 @@ var ButtonState = State.extend({
   },
 
   createPopup: function(event) {
-    var model = new TaskModel(this.task);
-    var params = Object.assign({link: this.link}, model.serialize());
+    var params = this.getTaskParams();
 
     chrome.runtime.sendMessage({
       type: 'open_popup',
@@ -82,6 +81,22 @@ var ButtonState = State.extend({
     });
 
     analytics.track('button', 'click');
+  },
+
+  getTaskParams: function() {
+    var taskParams;
+
+    if (typeof this.task === 'function') {
+      taskParams = this.task.call(null);
+    } else if (typeof this.task === 'object') {
+      taskParams = this.task;
+    } else {
+      taskParams = {};
+    }
+
+    var model = new TaskModel(taskParams);
+
+    return Object.assign({link: this.link}, model.serialize());
   },
 
   remove: function() {
