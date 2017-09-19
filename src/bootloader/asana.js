@@ -6,9 +6,9 @@ var ButtonState = require('../button/button');
 var observer = require('../utils/observer');
 
 var buttons = new HashMap();
- 
+
 function createObserver() {
-  observer.create('.details-pane-body')
+  observer.create('#right_pane_container')
     .onAdded(createButton)
     .onRemoved(removeButton)
     .start();
@@ -24,7 +24,7 @@ function createButton(element) {
   });
 
   var titleObserver = observer
-    .create('#details_property_sheet_title', element)
+    .create('.SingleTaskTitleRow-taskName textarea', element)
     .onAdded(function(titleEl) {
       var name = titleEl.value;
       state.task.name = name;
@@ -32,13 +32,13 @@ function createButton(element) {
     .start();
 
   var actionsObserver = observer
-    .create('.reskinToolbarViewsWithShortcuts', element)
+    .create('.SingleTaskPaneToolbar', element)
     .onAdded(function(actionsEl) {
-      var itemEl = domify('<div class="circularButtonView circularButtonView--default circularButtonView--onWhiteBackground circularButtonView--active"></div>');
+      var itemEl = domify('<div class="circularButtonView circularButtonView--default circularButtonView--onWhiteBackground circularButtonView--active SingleTaskPaneToolbar-button"></div>');
       var buttonEl = state.button.render().el;
 
       itemEl.appendChild(buttonEl);
-      actionsEl.insertBefore(itemEl, actionsEl.firstChild);
+      actionsEl.insertBefore(itemEl, actionsEl.children[2]);
     })
     .start();
 
@@ -58,7 +58,7 @@ function removeButton(node) {
     button.actions.stop();
   }
 }
- 
+
 function handleError(error) {
   console.error(error);
 }
