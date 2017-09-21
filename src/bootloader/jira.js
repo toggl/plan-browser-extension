@@ -14,10 +14,8 @@ function createObserver() {
 
 function createButton(node) {
   var state = new ButtonState({
-    task: {
-      notes: 'Added from JIRA: ' + location.href
-    },
-    link: location.href,
+    task: {},
+    link: null,
     anchor: 'screen'
   });
 
@@ -26,6 +24,10 @@ function createButton(node) {
     .onAdded(function(titleEl) {
       var name = titleEl.innerText;
       state.task.name = name;
+
+      var link = document.querySelector('#issuekey-val a').href;
+      state.task.notes = 'Added from JIRA: ' + link;
+      state.link = link;
 
       var buttonEl = state.button.render().el;
       titleEl.appendChild(buttonEl);
