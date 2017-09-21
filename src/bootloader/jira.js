@@ -6,37 +6,47 @@ var observer = require('../utils/observer');
 var buttons = new HashMap();
 
 function createObserver() {
-  observer.create('.issue-header-content')
+  observer.create('#ghx-detail-view')
     .onAdded(createButton)
     .onRemoved(removeButton)
     .start();
 }
 
 function createButton(node) {
-  var titleEl = node.querySelector('h1');
-  var linkEl = node.querySelector('.issue-link');
-
-  var name = titleEl.innerText;
-  var link = linkEl.href;
-
   var state = new ButtonState({
-    link: link,
-    task: {
-      name: name,
-      notes: 'Added from JIRA: ' + link
-    },
-    anchor: 'element'
+    task: {},
+    link: null,
+    anchor: 'screen'
   });
 
-  var buttonEl = state.button.render().el;
-  titleEl.appendChild(buttonEl);
+  var titleObserver = observer
+    .create('#summary-val', node)
+    .onAdded(function(titleEl) {
+      var name = titleEl.innerText;
+      state.task.name = name;
 
-  buttons.set(node, state);
+      var link = document.querySelector('#issuekey-val a').href;
+      state.task.notes = 'Added from JIRA: ' + link;
+      state.link = link;
+
+      var buttonEl = state.button.render().el;
+      titleEl.appendChild(buttonEl);
+    })
+    .start();
+
+  buttons.set(node, {
+    state: state,
+    title: titleObserver,
+  });
 }
 
 function removeButton(node) {
   var button = buttons.get(node);
-  if (button != null) button.remove();
+
+  if (button != null) {
+    button.state.remove();
+    button.title.stop();
+  }
 }
 
 function handleError(error) {
