@@ -42,6 +42,7 @@
   },
   "scripts": {
     "build": "gulp build:js build:less",
-    "watch": "gulp watch:js watch:less"
+    "watch": "gulp watch:js watch:less",
+    "release": "rm -f ~/Downloads/tw-button.zip && zip -r ~/Downloads/tw-button.zip app/*"
   }
 }
