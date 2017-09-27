@@ -6,7 +6,7 @@ var observer = require('../utils/observer');
 var buttons = new HashMap();
 
 function createObserver() {
-  observer.create('#ghx-detail-view')
+  observer.create('#ghx-detail-view, #issue-content')
     .onAdded(createButton)
     .onRemoved(removeButton)
     .start();
@@ -25,7 +25,7 @@ function createButton(node) {
       var name = titleEl.innerText;
       state.task.name = name;
 
-      var link = document.querySelector('#issuekey-val a').href;
+      var link = document.querySelector('#key-val, #issuekey-val a').href;
       state.task.notes = 'Added from JIRA: ' + link;
       state.link = link;
 
