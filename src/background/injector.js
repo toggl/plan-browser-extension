@@ -7,9 +7,8 @@ const injector = {
 
     this.collection = new CustomDomainCollection();
 
-    this.collection.on('add', (model) => this.addNavigationListener(model));
-    this
-      .collection.on('remove', (model) => this.removeNavigationListener(model));
+    this.collection.on('add', model => this.addNavigationListener(model));
+    this.collection.on('remove', model => this.removeNavigationListener(model));
 
     this.collection.enableAutoSync();
     this.collection.fetch();

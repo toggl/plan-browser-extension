@@ -12,7 +12,7 @@ const EstimateField = View.extend({
     isFilled: {
       deps: ['raw'],
       fn() {
-        return !!this.raw && this.raw.length > 0;
+        return this.raw && this.raw.length > 0;
       }
     },
     inputLength: {

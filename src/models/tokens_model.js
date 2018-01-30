@@ -17,7 +17,7 @@ const TokensModel = Model.extend({
     has_auth_tokens: {
       deps: ['access_token', 'refresh_token'],
       fn() {
-        return !!this.access_token && !!this.refresh_token;
+        return this.access_token && this.refresh_token;
       }
     }
   },
