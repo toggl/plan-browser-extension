@@ -1,19 +1,16 @@
-var Promise = require('bluebird');
-var moment = require('moment');
-var View = require('ampersand-view');
-var AccountCollection = require('../../models/account_collection');
-var TaskModel = require('../../models/task_model');
+const Promise = require('bluebird');
+const moment = require('moment');
+const View = require('ampersand-view');
+const AccountCollection = require('../../models/account_collection');
+const FormErrors = require('../form/form_errors');
+const TextField = require('../fields/text_field');
+const UserField = require('../fields/user_field');
+const ProjectField = require('../fields/project_field');
+const EstimateField = require('../fields/estimate_field');
+const DateField = require('../fields/date_field');
+const TimeField = require('../fields/time_field');
 
-var FormErrors = require('../form/form_errors');
-var TextField = require('../fields/text_field');
-var UserField = require('../fields/user_field');
-var ProjectField = require('../fields/project_field');
-var EstimateField = require('../fields/estimate_field');
-var DateField = require('../fields/date_field');
-var TimeField = require('../fields/time_field');
-
-var TaskView = View.extend({
-
+const TaskView = View.extend({
   template: require('./task_view.hbs'),
 
   props: {
@@ -29,8 +26,8 @@ var TaskView = View.extend({
     end_date: { hook: 'input-end-date', constructor: DateField },
     start_time: { hook: 'input-start-time', constructor: TimeField },
     end_time: { hook: 'input-end-time', constructor: TimeField },
-    user: { hook: 'select-user', prepareView: function(el) {
-      return new UserField({ el: el, collection: this.accounts, parent: this });
+    user: { hook: 'select-user', prepareView(el) {
+      return new UserField({el, collection: this.accounts, parent: this});
     } },
     project: { hook: 'select-project', constructor: ProjectField },
     estimate: { hook: 'input-estimate', constructor: EstimateField },
@@ -67,13 +64,13 @@ var TaskView = View.extend({
     }
   },
 
-  render: function() {
+  render() {
     this.renderWithTemplate(this);
 
     [
       this.name, this.start_date, this.end_date, this.start_time, this.end_time,
       this.user, this.project, this.estimate
-    ].forEach(function(field) {
+    ].forEach(field => {
       this.listenTo(field, 'change:value', this.hideErrors);
     }, this);
 
@@ -87,32 +84,32 @@ var TaskView = View.extend({
 
     this.hub.trigger('loader:show');
 
-    var self = this;
-
     this.accounts.fetchEverything()
-      .then(function() {
-        self.user.render();
-        self.hub.trigger('loader:hide');
-        self.focusNameField();
-      }, function(error) {
-        self.hub.trigger('loader:hide');
-        self.hub.trigger('error:show', error);
+      .then(() => {
+        this.user.render();
+        this.hub.trigger('loader:hide');
+        this.focusNameField();
+      }, error => {
+        this.hub.trigger('loader:hide');
+        this.hub.trigger('error:show', error);
       });
 
     return this;
   },
 
-  onUserSelected: function() {
-    var account = this.user.value.account;
-    var projects = this.accounts.get(account).projects;
+  onUserSelected() {
+    const account = this.user.value.account;
+    const projects = this.accounts.get(account).projects;
     this.project.collection = projects;
   },
 
-  onSubmit: function(event) {
+  onSubmit(event) {
     event.preventDefault();
     event.stopPropagation();
 
-    if (!this.validate()) return;
+    if (!this.validate()) {
+      return;
+    }
 
     this.model.set({
       name: this.name.value,
@@ -125,36 +122,34 @@ var TaskView = View.extend({
       estimated_hours: this.estimate.value
     });
 
-    var account = this.accounts.get(this.user.value.account)
+    const account = this.accounts.get(this.user.value.account);
     account.tasks.add(this.model);
 
     this.showLoader();
-    var self = this;
 
     this.model.save()
-      .then(function() {
-        self.hub.trigger('task:created', self.model, account);
-        
-        self.hideLoader();
-        self.showOverlay()
-          .then(function() { self.closePopup() });
-      }, function(error) {
-        self.hideLoader();
-        self.showError(error);
+      .then(() => {
+        this.hub.trigger('task:created', this.model, account);
+
+        this.hideLoader();
+        this.showOverlay().then(() => this.closePopup());
+      }, error => {
+        this.hideLoader();
+        this.showError(error);
       });
   },
 
-  onCancel: function(event) {
+  onCancel(event) {
     event.preventDefault();
     event.stopPropagation();
     this.hub.trigger('popup:close');
   },
 
-  hideErrors: function() {
-    this.errors.clearErrors()
+  hideErrors() {
+    this.errors.clearErrors();
   },
 
-  validate: function() {
+  validate() {
     this.errors.clearErrors();
 
     if (!this.name.isFilled) {
@@ -192,35 +187,32 @@ var TaskView = View.extend({
     return true;
   },
 
-  focusNameField: function() {
+  focusNameField() {
     this.name.focus();
   },
 
-  showLoader: function() {
+  showLoader() {
     this.hub.trigger('loader:show');
   },
 
-  hideLoader: function() {
+  hideLoader() {
     this.hub.trigger('loader:hide');
   },
 
-  showOverlay: function() {
-    var self = this;
-
-    return new Promise(function(resolve, reject) {
-      self.overlay = true;
+  showOverlay() {
+    return new Promise(resolve => {
+      this.overlay = true;
       setTimeout(resolve, 2000);
     });
   },
 
-  closePopup: function() {
+  closePopup() {
     this.hub.trigger('popup:close');
   },
 
-  showError: function(error) {
+  showError(error) {
     this.hub.trigger('error:show', error);
   }
-
 });
 
 module.exports = TaskView;

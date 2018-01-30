@@ -1,14 +1,11 @@
-var Promise = require('bluebird');
-var State = require('ampersand-state');
-var request = require('superagent');
-var url = require('url');
+const Promise = require('bluebird');
+const State = require('ampersand-state');
+const request = require('superagent');
+const config = require('../api/config');
+const OAuthState = require('./oauth_state');
+const TokensModel = require('./tokens_model');
 
-var config = require('../api/config');
-var OAuthState = require('./oauth_state');
-var TokensModel = require('./tokens_model');
-
-var AuthenticationState = State.extend({
-
+const AuthenticationState = State.extend({
   props: {
     // Property for storing the promise during a token refresh
     refresh_promise: 'object'
@@ -25,13 +22,13 @@ var AuthenticationState = State.extend({
     // Proxy for the tokens.has_auth_tokens property
     authenticated: {
       deps: ['tokens.has_auth_tokens'],
-      fn: function() {
+      fn() {
         return this.tokens.has_auth_tokens;
       }
     }
   },
 
-  initialize: function() {
+  initialize() {
     // Initialize client ID and secret
     this.oauth.set({
       id: '9c782f95e771811bdedb77dc12e6be98ca286ea8',
@@ -45,7 +42,7 @@ var AuthenticationState = State.extend({
    *
    * @return Promise
    */
-  load: function() {
+  load() {
     return this.tokens.fetch();
   },
 
@@ -55,7 +52,7 @@ var AuthenticationState = State.extend({
    * @param credentials Object with username and password keys
    * @return Promise
    */
-  authenticate: function(credentials) {
+  authenticate(credentials) {
     return this.fetchTokens(credentials);
   },
 
@@ -64,7 +61,7 @@ var AuthenticationState = State.extend({
    *
    * @return Promise
    */
-  revoke: function() {
+  revoke() {
     return this.tokens.clear().destroy();
   },
 
@@ -74,15 +71,13 @@ var AuthenticationState = State.extend({
    * @param credentials Object with username and password keys
    * @return Promise
    */
-  fetchTokens: function(credentials) {
-    var self = this;
-
-    return new Promise(function(resolve, reject) {
+  fetchTokens(credentials) {
+    return new Promise((resolve, reject) => {
       // Create a request that will return access and refresh tokens
       request
         .post(config.api.host + '/api/v3/authenticate/token')
         // Use base64'd client ID and secret for authorization
-        .set('Authorization', 'Basic ' + self.oauth.token)
+        .set('Authorization', 'Basic ' + this.oauth.token)
         // Send credentials in form data
         .type('form').send({
           grant_type: 'password',
@@ -90,14 +85,14 @@ var AuthenticationState = State.extend({
           password: credentials.password
         })
         // Send the request
-        .end(function(error, response) {
+        .end((error, response) => {
           // If there is no response, we assume that the network is down
-          if (response == null) {
+          if (!response) {
             reject({ message: 'network_error' });
 
           // If everything is fine, we save the tokens to local storage
           } else if (response.ok) {
-            resolve(self.tokens.save(response.body));
+            resolve(this.tokens.save(response.body));
 
           // If the credentials are invalid, return an error
           } else if (response.clientError) {
@@ -116,44 +111,43 @@ var AuthenticationState = State.extend({
    *
    * @return Promise
    */
-  refreshTokens: function() {
-    var self = this;
-
+  refreshTokens() {
     // Check if the tokens are not being refreshed already
-    if (this.refresh_promise == null) {
-      this.refresh_promise = new Promise(function(resolve, reject) {
+    if (!this.refresh_promise) {
+      this.refresh_promise = new Promise((resolve, reject) => {
         // Create a request that will fetch new tokens
         request
           .post(config.api.host + '/api/v3/authenticate/token')
           // Use base64'd client ID and secret for authorization
-          .set('Authorization', 'Basic ' + self.oauth.token)
+          .set('Authorization', 'Basic ' + this.oauth.token)
           // Send refresh token in form data
           .type('form').send({
-            refresh_token: self.tokens.refresh_token,
+            refresh_token: this.tokens.refresh_token,
             grant_type: 'refresh_token'
           })
-          .end(function(error, response) {
+          .end((error, response) => {
             // Refresh is finished, another can start
-            self.refresh_promise = null;
-            
+            this.refresh_promise = null;
+
             // If there is no response, we assume that the network is down
-            if (response == null) {
+            if (!response) {
               reject({ message: 'network_error' });
 
             // If everything is fine, we save the tokens to local storage
             } else if (response.ok) {
-              var result = self.tokens.set(response.body).save();
+              const result = this.tokens.set(response.body).save();
               resolve(result);
             // If the refresh token is invalid, we clear tokens, remove them
             // from local storage and return an error
             } else if (response.clientError) {
               // tokens.destroy() will return a resolved promise, so we need to
               // reject it with the refresh denied error
-              var result = self.tokens.clear().destroy().then(function() {
+              const result = this.tokens.clear().destroy().then(() => {
                 return Promise.reject({ message: 'refresh_denied' });
               });
 
-              // if the result promise is rejected, this promise will be rejected too
+              // if the result promise is rejected,
+              // this promise will be rejected too
               resolve(result);
 
             // If something weird happens, return an error

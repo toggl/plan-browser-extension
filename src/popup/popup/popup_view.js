@@ -1,14 +1,13 @@
-var View = require('ampersand-view');
-var ViewSwitcher = require('ampersand-view-switcher');
-var api = require('../../api/api');
-var TaskView = require('../task/task_view');
-var AuthView = require('../auth/auth_view');
-var LoaderView = require('../loader/loader_view');
-var ErrorView = require('../error/error_view');
-var collections = require('../../models/collections');
+const View = require('ampersand-view');
+const ViewSwitcher = require('ampersand-view-switcher');
+const api = require('../../api/api');
+const TaskView = require('../task/task_view');
+const AuthView = require('../auth/auth_view');
+const LoaderView = require('../loader/loader_view');
+const ErrorView = require('../error/error_view');
+const collections = require('../../models/collections');
 
-var PopupView = View.extend({
-
+const PopupView = View.extend({
   template: require('./popup_view.hbs'),
 
   props: {
@@ -19,7 +18,7 @@ var PopupView = View.extend({
     error: 'state'
   },
 
-  initialize: function() {
+  initialize() {
     this.listenTo(this.hub, 'popup:update', this.updatePopup);
     this.listenTo(this.hub, 'popup:close', this.closePopup);
     this.listenTo(this.hub, 'error:show', this.showError);
@@ -27,7 +26,7 @@ var PopupView = View.extend({
     this.listenTo(this.hub, 'task:created', this.saveTaskSource);
   },
 
-  render: function() {
+  render() {
     this.renderWithTemplate();
 
     this.loader = new LoaderView({ hub: this.hub });
@@ -41,40 +40,42 @@ var PopupView = View.extend({
     return this;
   },
 
-  updateContentView: function() {
-    var content = api.auth.authenticated ?
+  updateContentView() {
+    const content = api.auth.authenticated ?
       new TaskView({ hub: this.hub, model: this.task }) :
       new AuthView({ hub: this.hub });
-    
+
     this.switcher.set(content);
   },
 
-  updatePopup: function() {
+  updatePopup() {
     this.updateContentView();
     this.resizeWindow();
   },
 
-  closePopup: function() {
+  closePopup() {
     chrome.windows.getCurrent(function(window) {
       chrome.windows.remove(window.id);
     });
   },
 
-  showError: function(error) {
-    if (error.message == 'refresh_denied') {
+  showError(error) {
+    if (error.message === 'refresh_denied') {
       this.updateContentView();
     } else {
-      this.error = new ErrorView({ hub: this.hub, error: error });
+      this.error = new ErrorView({ hub: this.hub, error });
       this.renderSubview(this.error);
     }
   },
 
-  hideError: function() {
+  hideError() {
     this.error.remove();
   },
 
-  saveTaskSource: function(task, account) {
-    if (this.link == null) return;
+  saveTaskSource(task, account) {
+    if (!this.link) {
+      return;
+    }
 
     collections.taskSources.create({
       task_id: task.id,
@@ -83,11 +84,10 @@ var PopupView = View.extend({
     });
   },
 
-  resizeWindow: function() {
-    var dy = document.body.offsetHeight - window.innerHeight;
+  resizeWindow() {
+    const dy = document.body.offsetHeight - window.innerHeight;
     window.resizeBy(0, dy);
   }
-
 });
 
 module.exports = PopupView;

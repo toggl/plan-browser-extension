@@ -1,13 +1,13 @@
-var qs = require('querystring');
-var Promise = require('promise');
-var Events = require('ampersand-events');
-var PopupView = require('./popup/popup_view');
-var api = require('../api/api');
-var TaskModel = require('../models/task_model');
-var collections = require('../models/collections');
+const qs = require('querystring');
+const Promise = require('promise');
+const Events = require('ampersand-events');
+const PopupView = require('./popup/popup_view');
+const api = require('../api/api');
+const TaskModel = require('../models/task_model');
+const collections = require('../models/collections');
 
 function parseQuery() {
-  var query = location.search.substr(1);
+  const query = location.search.substr(1);
   return qs.parse(query);
 }
 
@@ -23,11 +23,11 @@ function createTask(query) {
 }
 
 function createHub() {
-  return Events.createEmitter()
+  return Events.createEmitter();
 }
 
 function createView() {
-  var query = parseQuery();
+  const query = parseQuery();
 
   return new PopupView({
     hub: createHub(),
@@ -50,6 +50,6 @@ function initialize() {
 }
 
 initialize().then(function() {
-  var view = createView();
-  renderView(view);  
+  const view = createView();
+  renderView(view);
 });

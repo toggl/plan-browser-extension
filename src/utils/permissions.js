@@ -1,9 +1,9 @@
-var Promise = require('bluebird');
+const Promise = require('bluebird');
 
 exports.request = function(permissions, domain) {
   return new Promise(function(resolve, reject) {
     chrome.permissions.request({
-      permissions: permissions,
+      permissions,
       origins: [
         'http://' + domain + '/*',
         'https://' + domain + '/*'
@@ -19,7 +19,7 @@ exports.request = function(permissions, domain) {
 };
 
 exports.contains = function(domain) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
     chrome.permissions.contains({
       origins: [
         'http://' + domain + '/',

@@ -1,11 +1,10 @@
-var moment = require('moment');
-var HashMap = require('hashmap');
-var offset = require('document-offset');
-var AmpersandView = require('ampersand-view');
-var ButtonState = require('../button/button.js');
-var observer = require('../utils/observer');
+const moment = require('moment');
+const HashMap = require('hashmap');
+const AmpersandView = require('ampersand-view');
+const ButtonState = require('../button/button.js');
+const observer = require('../utils/observer');
 
-var TrelloButtonView = AmpersandView.extend({
+const TrelloButtonView = AmpersandView.extend({
   template: require('./trello.hbs'),
 
   props: {
@@ -15,21 +14,21 @@ var TrelloButtonView = AmpersandView.extend({
   events: {
     'click': 'onClick'
   },
-  
-  render: function() {
+
+  render() {
     this.renderWithTemplate();
     return this;
   },
 
-  onClick: function(event) {
+  onClick(event) {
     event.preventDefault();
     this.hub.trigger('button:clicked', event);
   }
 });
 
-var buttons = new HashMap();
+const buttons = new HashMap();
 
-var DATE_RE = /(\d{1,2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)( (\d{4}))?/;
+const DATE_RE = /(\d{1,2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)( (\d{4}))?/;
 
 function createObserver() {
   observer.create('.card-detail-window')
@@ -39,27 +38,31 @@ function createObserver() {
 }
 
 function findDate(meta) {
-  var matches = DATE_RE.exec(meta);
-  if (matches == null) return;
+  const matches = DATE_RE.exec(meta);
+  if (!matches) {
+    return;
+  }
 
-  var m = moment(matches[0], 'DD MMM YYYY');
-  if (!m.isValid()) return;
+  const m = moment(matches[0], 'DD MMM YYYY');
+  if (!m.isValid()) {
+    return;
+  }
 
   return m.toDate();
 }
 
 function createButton(node) {
-  var titleEl = node.querySelector('.window-title h2');
-  var dueDateEl = node.querySelector('.js-card-detail-due-date-badge');
+  const titleEl = node.querySelector('.window-title h2');
+  const dueDateEl = node.querySelector('.js-card-detail-due-date-badge');
 
-  var name = titleEl.innerText;
-  var date = findDate(dueDateEl.innerText);
-  var link = location.href;
+  const name = titleEl.innerText;
+  const date = findDate(dueDateEl.innerText);
+  const link = location.href;
 
-  var state = new ButtonState({
-    link: link,
+  const state = new ButtonState({
+    link,
     task: {
-      name: name,
+      name,
       end_date: date,
       notes: 'Added from Trello: ' + link
     },
@@ -67,16 +70,18 @@ function createButton(node) {
     view: TrelloButtonView
   });
 
-  var buttonEl = state.button.render().el;
-  var actionsEl = node.querySelector('.window-module.other-actions > div');
+  const buttonEl = state.button.render().el;
+  const actionsEl = node.querySelector('.window-module.other-actions > div');
   actionsEl.insertBefore(buttonEl, actionsEl.firstChild);
 
   buttons.set(node, state);
 }
 
 function removeButton(node) {
-  var button = buttons.get(node);
-  if (button != null) button.remove();
+  const button = buttons.get(node);
+  if (button) {
+    button.remove();
+  }
 }
 
 function handleError(error) {

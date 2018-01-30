@@ -1,8 +1,7 @@
-var View = require('ampersand-view');
-var StyleView = require('../style/style_view');
+const View = require('ampersand-view');
+const StyleView = require('../style/style_view');
 
-var ShadowView = View.extend({
-
+const ShadowView = View.extend({
   template: require('./shadow_view.hbs'),
 
   props: {
@@ -18,26 +17,25 @@ var ShadowView = View.extend({
     'keypress': 'stopPropagation'
   },
 
-  render: function() {
+  render() {
     this.renderWithTemplate();
     this.shadow = this.el.createShadowRoot();
 
-    if (this.style != null) {
-      var style = new StyleView({ style: this.style });
+    if (this.style) {
+      const style = new StyleView({ style: this.style });
       this.renderSubview(style, this.shadow);
     }
 
-    if (this.content != null) {
+    if (this.content) {
       this.renderSubview(this.content, this.shadow);
     }
 
     return this;
   },
 
-  stopPropagation: function(event) {
+  stopPropagation(event) {
     event.stopPropagation();
   }
-
 });
 
 module.exports = ShadowView;

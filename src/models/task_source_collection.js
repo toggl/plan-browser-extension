@@ -1,12 +1,11 @@
-var RestCollection = require('ampersand-rest-collection');
-var TaskSourceModel = require('./task_source_model');
-var sync = require('../api/local_sync');
+const RestCollection = require('ampersand-rest-collection');
+const TaskSourceModel = require('./task_source_model');
+const sync = require('../api/local_sync');
 
-var TaskSourceCollection = RestCollection.extend({
-
+const TaskSourceCollection = RestCollection.extend({
   model: TaskSourceModel,
-  sync: sync('task_sources')
 
+  sync: sync('task_sources')
 });
 
 module.exports = TaskSourceCollection;

@@ -1,9 +1,8 @@
-var HashMap = require('hashmap');
-var offset = require('document-offset');
-var ButtonState = require('../button/button.js');
-var observer = require('../utils/observer');
+const HashMap = require('hashmap');
+const ButtonState = require('../button/button.js');
+const observer = require('../utils/observer');
 
-var buttons = new HashMap();
+const buttons = new HashMap();
 
 function createObserver() {
   observer.create('#ghx-detail-view, #issue-content')
@@ -13,37 +12,37 @@ function createObserver() {
 }
 
 function createButton(node) {
-  var state = new ButtonState({
+  const state = new ButtonState({
     task: {},
     link: null,
     anchor: 'screen'
   });
 
-  var titleObserver = observer
+  const titleObserver = observer
     .create('#summary-val', node)
     .onAdded(function(titleEl) {
-      var name = titleEl.innerText;
+      const name = titleEl.innerText;
       state.task.name = name;
 
-      var link = document.querySelector('#key-val, #issuekey-val a').href;
+      const link = document.querySelector('#key-val, #issuekey-val a').href;
       state.task.notes = 'Added from JIRA: ' + link;
       state.link = link;
 
-      var buttonEl = state.button.render().el;
+      const buttonEl = state.button.render().el;
       titleEl.appendChild(buttonEl);
     })
     .start();
 
   buttons.set(node, {
-    state: state,
+    state,
     title: titleObserver,
   });
 }
 
 function removeButton(node) {
-  var button = buttons.get(node);
+  const button = buttons.get(node);
 
-  if (button != null) {
+  if (button) {
     button.state.remove();
     button.title.stop();
   }

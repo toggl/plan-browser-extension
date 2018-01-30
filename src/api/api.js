@@ -1,3 +1,3 @@
-var AuthenticationState = require('../models/authentication_state');
+const AuthenticationState = require('../models/authentication_state');
 
 exports.auth = new AuthenticationState();

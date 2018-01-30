@@ -1,9 +1,9 @@
-var HashMap = require('hashmap');
-var ButtonState = require('../button/button');
-var observer = require('../utils/observer');
+const HashMap = require('hashmap');
+const ButtonState = require('../button/button');
+const observer = require('../utils/observer');
 
-var buttons = new HashMap();
- 
+const buttons = new HashMap();
+
 function createObserver() {
   observer.create('#issue-view')
     .onAdded(createButton)
@@ -12,31 +12,33 @@ function createObserver() {
 }
 
 function createButton(element) {
-  var titleEl = element.querySelector('#issue-title');
+  const titleEl = element.querySelector('#issue-title');
 
-  var name = titleEl.innerText;
-  var link = location.href;
-  
-  var state = new ButtonState({
+  const name = titleEl.innerText;
+  const link = location.href;
+
+  const state = new ButtonState({
     task: {
-      name: name,
+      name,
       notes: 'Added from Bitbucket: ' + location.href
     },
-    link: link,
+    link,
     anchor: 'screen'
   });
 
-  var buttonEl = state.button.render().el;
+  const buttonEl = state.button.render().el;
   titleEl.appendChild(buttonEl);
 
   buttons.set(element, state);
 }
 
 function removeButton(node) {
-  var button = buttons.get(node);
-  if (button != null) button.remove();
+  const button = buttons.get(node);
+  if (button) {
+    button.remove();
+  }
 }
- 
+
 function handleError(error) {
   console.error(error);
 }

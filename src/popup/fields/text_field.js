@@ -1,7 +1,6 @@
-var View = require('ampersand-view');
+const View = require('ampersand-view');
 
-var TextField = View.extend({
-
+const TextField = View.extend({
   props: {
     value: 'string'
   },
@@ -9,8 +8,8 @@ var TextField = View.extend({
   derived: {
     isFilled: {
       deps: ['value'],
-      fn: function() {
-        return this.value != null && this.value.length > 0;
+      fn() {
+        return !!this.value && this.value.length > 0;
       }
     }
   },
@@ -23,19 +22,18 @@ var TextField = View.extend({
     value: { type: 'value' }
   },
 
-  onChange: function(event) {
+  onChange() {
     this.value = this.el.value;
   },
 
-  focus: function() {
+  focus() {
     this.el.setSelectionRange(0, this.value.length);
     this.el.focus();
   },
 
-  render: function() {
+  render() {
     return this;
   }
-
 });
 
 module.exports = TextField;

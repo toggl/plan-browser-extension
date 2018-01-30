@@ -1,18 +1,16 @@
-var View = require('ampersand-view');
+const View = require('ampersand-view');
 
-var StyleView = View.extend({
-
+const StyleView = View.extend({
   template: require('./style_view.hbs'),
 
   props: {
     style: 'string'
   },
 
-  render: function() {
+  render() {
     this.renderWithTemplate(this);
     return this;
   }
-
 });
 
 module.exports = StyleView;

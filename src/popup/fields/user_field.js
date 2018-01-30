@@ -1,13 +1,12 @@
-var View = require('ampersand-view');
-var FilteredCollection = require('ampersand-filtered-subcollection');
-var Handlebars = require('hbsfy/runtime');
+const View = require('ampersand-view');
+const FilteredCollection = require('ampersand-filtered-subcollection');
+const Handlebars = require('hbsfy/runtime');
 
 Handlebars.registerHelper('user_list_value', function(options) {
   return JSON.stringify(options.hash);
 });
 
-var UserField = View.extend({
-
+const UserField = View.extend({
   template: require('./user_field_default.hbs'),
 
   props: {
@@ -17,26 +16,26 @@ var UserField = View.extend({
   derived: {
     formatted: {
       deps: ['value'],
-      fn: function() {
+      fn() {
         return JSON.stringify(this.value);
       }
     },
     isFilled: {
       deps: ['hasAccount'],
-      fn: function() {
+      fn() {
         return this.hasAccount;
       }
     },
     hasAccount: {
       deps: ['value'],
-      fn: function() {
-        return this.value != null && this.value.account != null;
+      fn() {
+        return !!this.value && !!this.value.account;
       }
     },
     hasUser: {
       deps: ['value'],
-      fn: function() {
-        return this.value != null && this.value.user != null;
+      fn() {
+        return !!this.value && !!this.value.user;
       }
     }
   },
@@ -49,38 +48,35 @@ var UserField = View.extend({
     formatted: { type: 'value' }
   },
 
-  onChange: function(event) {
+  onChange() {
     this.value = JSON.parse(this.el.value);
   },
 
-  render: function() {
+  render() {
     this.el.innerHTML = this.template(this);
     this.renderCollection(this.collection, UserGroup, this.el);
     return this;
   }
-
 });
 
-var UserGroup = View.extend({
-
+const UserGroup = View.extend({
   template: require('./user_field_group.hbs'),
 
   props: {
     users: 'object'
   },
 
-  initialize: function() {
+  initialize() {
     this.users = new FilteredCollection(this.model.users, {
       where: { active: true },
       comparator: 'name'
     });
   },
 
-  render: function() {
+  render() {
     this.renderWithTemplate();
     return this;
   }
-
 });
 
 module.exports = UserField;

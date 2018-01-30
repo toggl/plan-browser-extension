@@ -1,25 +1,25 @@
-var CustomDomainCollection = require('../models/custom_domain_collection');
-var assets = require('./injected_assets.json');
+const CustomDomainCollection = require('../models/custom_domain_collection');
+const assets = require('./injected_assets.json');
 
-var injector = {
-
-  initialize: function() {
+const injector = {
+  initialize() {
     this.listeners = {};
 
     this.collection = new CustomDomainCollection();
 
     this.collection.on('add', (model) => this.addNavigationListener(model));
-    this.collection.on('remove', (model) => this.removeNavigationListener(model));
-    
+    this
+      .collection.on('remove', (model) => this.removeNavigationListener(model));
+
     this.collection.enableAutoSync();
     this.collection.fetch();
   },
 
-  addNavigationListener: function(model) {
-    var listener = (details) => {
+  addNavigationListener(model) {
+    const listener = (details) => {
       this.injectTab(details.tabId, model.service);
     };
-    
+
     this.listeners[model.id] = listener;
 
     chrome.webNavigation.onCompleted.addListener(listener, {
@@ -27,22 +27,21 @@ var injector = {
     });
   },
 
-  removeNavigationListener: function(model) {
-    var listener = this.listeners[model.id];
+  removeNavigationListener(model) {
+    const listener = this.listeners[model.id];
     chrome.webNavigation.onCompleted.removeListener(listener);
     delete this.listeners[model.id];
   },
 
-  injectTab: function(tab, service) {
+  injectTab(tab, service) {
     assets[service].scripts.forEach(file => {
-      chrome.tabs.executeScript(tab, {file: file});
+      chrome.tabs.executeScript(tab, {file});
     });
 
     assets[service].styles.forEach(file => {
-      chrome.tabs.insertCSS(tab, {file: file});
+      chrome.tabs.insertCSS(tab, {file});
     });
   }
-
 };
 
 injector.initialize();

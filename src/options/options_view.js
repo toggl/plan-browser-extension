@@ -1,9 +1,8 @@
-var View = require('ampersand-view');
-var api = require('../api/api');
-var CustomDomainsView = require('./custom_domains/custom_domains');
+const View = require('ampersand-view');
+const api = require('../api/api');
+const CustomDomainsView = require('./custom_domains/custom_domains');
 
-var OptionsView = View.extend({
-
+const OptionsView = View.extend({
   template: require('./options_view.hbs'),
 
   events: {
@@ -16,24 +15,18 @@ var OptionsView = View.extend({
       constructor: CustomDomainsView
     }
   },
-  
-  render: function() {
+
+  render() {
     this.renderWithTemplate({
       isAuthenticated: api.auth.authenticated
     });
-    
+
     return this;
   },
 
-  onLogout: function(event) {
-    var self = this;
-
-    api.auth.revoke()
-      .then(function() {
-        self.render();
-      });
+  onLogout() {
+    api.auth.revoke().then(() => this.render());
   }
-
 });
 
 module.exports = OptionsView;

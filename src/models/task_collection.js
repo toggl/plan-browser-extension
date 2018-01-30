@@ -1,18 +1,16 @@
-var RestCollection = require('ampersand-rest-collection');
-var TaskModel = require('./task_model');
-var config = require('../api/config');
-var sync = require('../api/api_sync');
+const RestCollection = require('ampersand-rest-collection');
+const TaskModel = require('./task_model');
+const config = require('../api/config');
+const sync = require('../api/api_sync');
 
-var TaskCollection = RestCollection.extend({
-
+const TaskCollection = RestCollection.extend({
   model: TaskModel,
 
-  url: function() {
+  url() {
     return config.api.host + '/api/v3/' + this.parent.id + '/tasks';
   },
 
-  sync: sync
-
+  sync
 });
 
 module.exports = TaskCollection;

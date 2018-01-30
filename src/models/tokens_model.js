@@ -1,9 +1,8 @@
-var Model = require('ampersand-model');
-var storage = require('../utils/storage');
+const Model = require('ampersand-model');
+const storage = require('../utils/storage');
 
 /** Model for storing OAuth access and refresh tokens in local storage */
-var TokensModel = Model.extend({
-
+const TokensModel = Model.extend({
   props: {
     /** ID, is always "tokens" **/
     id: ['string', true, 'tokens'],
@@ -17,8 +16,8 @@ var TokensModel = Model.extend({
     /** Whether the access and refresh tokens are set */
     has_auth_tokens: {
       deps: ['access_token', 'refresh_token'],
-      fn: function() {
-        return this.access_token != null && this.refresh_token != null;
+      fn() {
+        return !!this.access_token && !!this.refresh_token;
       }
     }
   },
@@ -32,17 +31,17 @@ var TokensModel = Model.extend({
    * @param options Options such as success and error handlers
    * @return Promise
    */
-  sync: function(method, model, options) {
+  sync(method, model, options) {
     // Fetch the model from local storage
-    if (method == 'read') {
+    if (method === 'read') {
       return storage.get(model.id).then(function(data) {
         // Local storage API always returns data as an object
         options.success(data[model.id]);
       });
     }
 
-    if (method == 'update' || method == 'create') {
-      var data = {};
+    if (method === 'update' || method === 'create') {
+      const data = {};
       data[model.id] = model.toJSON();
 
       return storage.set(data).then(function() {
@@ -50,13 +49,12 @@ var TokensModel = Model.extend({
       });
     }
 
-    if (method == 'delete') {
+    if (method === 'delete') {
       return storage.remove(model.id).then(function() {
         options.success();
       });
     }
   }
-
 });
 
 module.exports = TokensModel;

@@ -1,9 +1,8 @@
-var moment = require('moment');
-var View = require('ampersand-view');
-var TimepickerView = require('../timepicker/timepicker_view.js');
+const moment = require('moment');
+const View = require('ampersand-view');
+const TimepickerView = require('../timepicker/timepicker_view.js');
 
-var TimeField = View.extend({
-
+const TimeField = View.extend({
   props: {
     value: 'string',
     hasFocus: 'boolean',
@@ -14,20 +13,20 @@ var TimeField = View.extend({
   derived: {
     formatted: {
       deps: ['value'],
-      fn: function() {
-        return this.value != null ? moment(this.value, 'HH:mm').format('LT') : null;
+      fn() {
+        return this.value ? moment(this.value, 'HH:mm').format('LT') : null;
       }
     },
     showTimepicker: {
       deps: ['hasFocus', 'pickedTime'],
-      fn: function() {
+      fn() {
         return this.hasFocus && !this.pickedTime;
       }
     },
     isFilled: {
       deps: ['value'],
-      fn: function() {
-        return this.value != null;
+      fn() {
+        return !!this.value;
       }
     }
   },
@@ -40,7 +39,9 @@ var TimeField = View.extend({
 
   bindings: {
     formatted: {
-      type: function(el, value) {el.value = value},
+      type(el, value) {
+        el.value = value;
+      },
       hook: 'control'
     },
     showTimepicker: {
@@ -49,22 +50,22 @@ var TimeField = View.extend({
     }
   },
 
-  onChange: function(event) {
-    var m = moment(this.queryByHook('control').value, 'LT');
+  onChange() {
+    const m = moment(this.queryByHook('control').value, 'LT');
     this.value = m.isValid() ? m.format('HH:mm') : null;
   },
 
-  onFocus: function(event) {
+  onFocus() {
     this.hasFocus = true;
     this.pickedTime = false;
     this.timepicker.scroll();
   },
 
-  onBlur: function(event) {
+  onBlur() {
     this.hasFocus = false;
   },
 
-  render: function() {
+  render() {
     this.timepicker = new TimepickerView();
     this.listenTo(this.timepicker, 'select', this.onTimePicked);
     this.renderSubview(this.timepicker, this.queryByHook('timepicker'));
@@ -72,11 +73,10 @@ var TimeField = View.extend({
     return this;
   },
 
-  onTimePicked: function(time) {
+  onTimePicked(time) {
     this.value = time;
     this.pickedTime = true;
   }
-
 });
 
 module.exports = TimeField;

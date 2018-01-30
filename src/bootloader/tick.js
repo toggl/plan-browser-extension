@@ -1,4 +1,3 @@
-'use strict';
 const twb = require('../utils/content');
 
 twb.observe('#projects .task', (task) => {

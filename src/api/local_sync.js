@@ -1,12 +1,11 @@
-var Promise = require('bluebird');
-var storage = require('../utils/storage');
-var find = require('lodash.find');
-var uuid = require('uuid');
+const storage = require('../utils/storage');
+const find = require('lodash.find');
+const uuid = require('uuid');
 
 module.exports = function(namespace) {
-  var store = {
-    get: function() {
-      var items = {};
+  const store = {
+    get() {
+      const items = {};
       items[namespace] = [];
 
       return storage.get(items)
@@ -15,75 +14,65 @@ module.exports = function(namespace) {
         });
     },
 
-    set: function(models) {
-      var data = {};
+    set: models => {
+      const data = {};
       data[namespace] = models;
       return storage.set(data);
     },
 
-    serialize: function(model) {
+    serialize(model) {
       return model.toJSON();
     },
 
-    all: function() {
+    all() {
       return this.get();
     },
 
-    find: function(model) {
+    find(model) {
       return this.get()
-        .then(function(models) {
+        .then(models => {
           return find(models, {id: model.id});
         });
     },
 
-    create: function(model) {
-      var self = this;
-
+    create(model) {
       model.id = uuid.v4();
 
       return this.get()
-        .then(function(models) {
-          var serialized = self.serialize(model);
+        .then(models => {
+          const serialized = this.serialize(model);
           models.push(serialized);
 
-          return self.set(models);
+          return this.set(models);
         })
-        .then(function() {
-          return model;
-        });
+        .then(() => model);
     },
 
-    update: function(model) {
-      var self = this;
-
+    update(model) {
       return this.get()
-        .then(function(models) {
-          var serialized = self.serialize(model);
-          var previous = find(models, {id: model.id});
-          var index = models.indexOf(previous);
+        .then(models => {
+          const serialized = this.serialize(model);
+          const previous = find(models, {id: model.id});
+          const index = models.indexOf(previous);
           models.splice(index, 1, serialized);
-          return self.set(models);
+          return this.set(models);
         })
-        .then(function() {
-          return model;
-        });
+        .then(() => model);
     },
 
-    destroy: function(model) {
-      var self = this;
-
+    destroy(model) {
       return this.get()
-        .then(function(models) {
-          var previous = find(models, {id: model.id});
-          var index = models.indexOf(previous);
+        .then(models => {
+          const previous = find(models, {id: model.id});
+          const index = models.indexOf(previous);
           models.splice(index, 1);
-          return self.set(models);
+          return this.set(models);
         });
     }
   };
 
   return function sync(method, model, options) {
-    var promise;
+    let promise;
 
     switch (method) {
       case 'read':

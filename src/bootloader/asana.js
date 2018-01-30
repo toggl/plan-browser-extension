@@ -1,11 +1,9 @@
-var domify = require('domify');
-var moment = require('moment');
-var HashMap = require('hashmap');
-var offset = require('document-offset');
-var ButtonState = require('../button/button');
-var observer = require('../utils/observer');
+const domify = require('domify');
+const HashMap = require('hashmap');
+const ButtonState = require('../button/button');
+const observer = require('../utils/observer');
 
-var buttons = new HashMap();
+const buttons = new HashMap();
 
 function createObserver() {
   observer.create('#right_pane_container')
@@ -15,7 +13,7 @@ function createObserver() {
 }
 
 function createButton(element) {
-  var state = new ButtonState({
+  const state = new ButtonState({
     task: {
       notes: 'Added from Asana: ' + location.href
     },
@@ -23,19 +21,19 @@ function createButton(element) {
     anchor: 'screen'
   });
 
-  var titleObserver = observer
+  const titleObserver = observer
     .create('.SingleTaskTitleRow-taskName textarea', element)
     .onAdded(function(titleEl) {
-      var name = titleEl.value;
+      const name = titleEl.value;
       state.task.name = name;
     })
     .start();
 
-  var actionsObserver = observer
+  const actionsObserver = observer
     .create('.SingleTaskPaneToolbar', element)
     .onAdded(function(actionsEl) {
-      var itemEl = domify('<div class="circularButtonView circularButtonView--default circularButtonView--onWhiteBackground circularButtonView--active SingleTaskPaneToolbar-button"></div>');
-      var buttonEl = state.button.render().el;
+      const itemEl = domify('<div class="circularButtonView circularButtonView--default circularButtonView--onWhiteBackground circularButtonView--active SingleTaskPaneToolbar-button"></div>');
+      const buttonEl = state.button.render().el;
 
       itemEl.appendChild(buttonEl);
       actionsEl.insertBefore(itemEl, actionsEl.children[2]);
@@ -43,16 +41,16 @@ function createButton(element) {
     .start();
 
   buttons.set(element, {
-    state: state,
+    state,
     title: titleObserver,
     actions: actionsObserver
   });
 }
 
 function removeButton(node) {
-  var button = buttons.get(node);
+  const button = buttons.get(node);
 
-  if (button != null) {
+  if (button) {
     button.state.remove();
     button.title.stop();
     button.actions.stop();

@@ -1,11 +1,10 @@
-var Model = require('ampersand-model');
-var UserCollection = require('./user_collection');
-var ProjectCollection = require('./project_collection');
-var TaskCollection = require('./task_collection');
-var sync = require('../api/api_sync');
+const Model = require('ampersand-model');
+const UserCollection = require('./user_collection');
+const ProjectCollection = require('./project_collection');
+const TaskCollection = require('./task_collection');
+const sync = require('../api/api_sync');
 
-var AccountModel = Model.extend({
-
+const AccountModel = Model.extend({
   props: {
     id: 'number',
     name: 'string'
@@ -17,8 +16,7 @@ var AccountModel = Model.extend({
     tasks: TaskCollection
   },
 
-  sync: sync
-
+  sync
 });
 
 module.exports = AccountModel;
