@@ -1,5 +1,8 @@
 <div class="task-popup">
-  <div class="popup__title">Add to Teamweek</div>
+  <div class="row row--align-center">
+    <div class="popup__title row--grow">Add to Teamweek</div>
+    <div class="popup__account" id="tw-form-{{cid}}-account" data-hook="select-account"></div>
+  </div>
 
   <div class="popup__errors" data-hook="errors"></div>
 
@@ -14,14 +17,12 @@
             data-hook="input-name" tabindex="1">
         </div>
       </div>
-      
+
       <div class="form__row">
         <div class="form__label">
           <label for="tw-form-{{cid}}-user">User</label>
         </div>
-        <div class="form__control">
-          <select name="user" id="tw-form-{{cid}}-user" class="user-select"
-            data-hook="select-user" tabindex="2"></select>
+        <div class="form__control" id="tw-form-{{cid}}-user" data-hook="select-user">
         </div>
       </div>
 
@@ -47,7 +48,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="form__row">
         <div class="form__label">
           <label for="tw-form-{{cid}}-start-date">Start</label>
@@ -67,7 +68,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="form__row">
         <div class="form__label">
           <label for="tw-form-{{cid}}-end-date">End</label>

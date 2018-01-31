@@ -9,6 +9,7 @@ const ProjectField = require('../fields/project_field');
 const EstimateField = require('../fields/estimate_field');
 const DateField = require('../fields/date_field');
 const TimeField = require('../fields/time_field');
+const AccountField = require('../fields/account_field');
 
 const TaskView = View.extend({
   template: require('./task_view.hbs'),
@@ -27,11 +28,14 @@ const TaskView = View.extend({
     start_time: { hook: 'input-start-time', constructor: TimeField },
     end_time: { hook: 'input-end-time', constructor: TimeField },
     user: { hook: 'select-user', prepareView(el) {
-      return new UserField({el, collection: this.accounts, parent: this});
-    } },
+      return new UserField({el, parent: this});
+    }},
     project: { hook: 'select-project', constructor: ProjectField },
     estimate: { hook: 'input-estimate', constructor: EstimateField },
-    errors: { hook: 'errors', constructor: FormErrors }
+    errors: { hook: 'errors', constructor: FormErrors },
+    account: { hook: 'select-account', prepareView(el) {
+      return new AccountField({el, accounts: this.accounts, parent: this});
+    }},
   },
 
   collections: {
@@ -69,12 +73,13 @@ const TaskView = View.extend({
 
     [
       this.name, this.start_date, this.end_date, this.start_time, this.end_time,
-      this.user, this.project, this.estimate
+      this.user, this.project, this.estimate, this.account
     ].forEach(field => {
       this.listenTo(field, 'change:value', this.hideErrors);
     }, this);
 
     this.listenTo(this.user, 'change:value', this.onUserSelected);
+    this.listenTo(this.account, 'change:value', this.onAccountSelected);
 
     this.name.value = this.model.name;
     this.start_date.value = this.model.start_date;
@@ -86,7 +91,10 @@ const TaskView = View.extend({
 
     this.accounts.fetchEverything()
       .then(() => {
-        this.user.render();
+        const account = this.accounts.at(0);
+        this.account.switchAccount(account);
+        this.user.switchAccount(account);
+
         this.hub.trigger('loader:hide');
         this.focusNameField();
       }, error => {
@@ -98,9 +106,15 @@ const TaskView = View.extend({
   },
 
   onUserSelected() {
-    const account = this.user.value.account;
-    const projects = this.accounts.get(account).projects;
-    this.project.collection = projects;
+
+  },
+
+  onAccountSelected() {
+    const accountId = this.account.value;
+    const account = this.accounts.get(accountId);
+
+    this.user.switchAccount(account);
+    this.project.collection = account.projects;
   },
 
   onSubmit(event) {
@@ -110,10 +124,19 @@ const TaskView = View.extend({
     if (!this.validate()) {
       return;
     }
-
+    console.log(({
+      name: this.name.value,
+      user_id: this.user.value,
+      project_id: this.project.value,
+      start_date: this.start_date.value,
+      end_date: this.end_date.value,
+      start_time: this.start_time.value,
+      end_time: this.end_time.value,
+      estimated_hours: this.estimate.value
+    }));
     this.model.set({
       name: this.name.value,
-      user_id: this.user.value.user,
+      user_id: this.user.value,
       project_id: this.project.value,
       start_date: this.start_date.value,
       end_date: this.end_date.value,
@@ -122,7 +145,7 @@ const TaskView = View.extend({
       estimated_hours: this.estimate.value
     });
 
-    const account = this.accounts.get(this.user.value.account);
+    const account = this.accounts.get(this.account.value);
     account.tasks.add(this.model);
 
     this.showLoader();

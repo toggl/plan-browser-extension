@@ -1,0 +1,9 @@
+<select name="user" class="user-select" tabindex="2" data-hook="select">
+  <option value="-1" disabled selected>Choose...</option>
+
+  <option value="-2">Add to backlog</option>
+
+  {{#each users.models}}
+  <option value="{{id}}">{{name}}</option>
+  {{/each}}
+</select>
