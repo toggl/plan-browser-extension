@@ -1,7 +1,6 @@
-var permissions = require('../utils/permissions');
-var TaskModel = require('../models/task_model');
-var analytics = require('../utils/analytics');
-var openPopupWindow = require('./util/popup_window').open;
+const TaskModel = require('../models/task_model');
+const analytics = require('../utils/analytics');
+const openPopupWindow = require('./util/popup_window').open;
 
 chrome.contextMenus.create({
   id: 'context-add',
@@ -9,13 +8,13 @@ chrome.contextMenus.create({
   contexts: ['selection']
 });
 
-chrome.contextMenus.onClicked.addListener(function(info, tab) {
-  var model = new TaskModel({name: info.selectionText});
-  var params = model.serialize();
+chrome.contextMenus.onClicked.addListener(function(info) {
+  const model = new TaskModel({name: info.selectionText});
+  const params = model.serialize();
 
   chrome.windows.getCurrent(function(current) {
     openPopupWindow({
-      params: params,
+      params,
       anchor: 'window',
       window: {
         width: current.width,

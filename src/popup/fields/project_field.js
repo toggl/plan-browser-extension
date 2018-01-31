@@ -1,7 +1,6 @@
-var View = require('ampersand-view');
+const View = require('ampersand-view');
 
-var ProjectField = View.extend({
-
+const ProjectField = View.extend({
   template: require('./project_field_default.hbs'),
 
   props: {
@@ -12,8 +11,8 @@ var ProjectField = View.extend({
   derived: {
     isFilled: {
       deps: ['value'],
-      fn: function() {
-        return this.value != null;
+      fn() {
+        return !!this.value;
       }
     }
   },
@@ -26,11 +25,11 @@ var ProjectField = View.extend({
     value: { type: 'value' }
   },
 
-  initialize: function() {
+  initialize() {
     this.listenTo(this, 'change:collection', this.onCollection);
   },
 
-  onChange: function(event) {
+  onChange() {
     if (this.el.value.length > 0) {
       this.value = Number(this.el.value);
     } else {
@@ -38,27 +37,24 @@ var ProjectField = View.extend({
     }
   },
 
-  onCollection: function() {
-    this.isActive = this.collection != null;
+  onCollection() {
+    this.isActive = !!this.collection;
     this.render();
   },
 
-  render: function() {
+  render() {
     this.el.innerHTML = this.template(this);
 
     if (this.isActive) {
       this.renderCollection(this.collection, ProjectOption, this.el);
     }
-    
+
     return this;
   }
-
 });
 
-var ProjectOption = View.extend({
-
+const ProjectOption = View.extend({
   template: require('./project_field_option.hbs')
-
 });
 
 module.exports = ProjectField;

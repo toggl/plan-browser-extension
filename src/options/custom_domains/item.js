@@ -1,15 +1,14 @@
-var View = require('ampersand-view');
-var permissions = require('../../utils/permissions');
-var services = require('./services.json');
+const View = require('ampersand-view');
+const permissions = require('../../utils/permissions');
+const services = require('./services.json');
 
-var ItemView = View.extend({
-
+const ItemView = View.extend({
   template: require('./item.hbs'),
 
   derived: {
     service: {
       deps: ['model.service'],
-      fn: function() {
+      fn() {
         return services[this.model.service];
       }
     }
@@ -30,20 +29,9 @@ var ItemView = View.extend({
     'click [data-hook=remove]': 'onRemove'
   },
 
-  render: function() {
-    this.renderWithTemplate();
-    return this;
-  },
-
-  onRemove: function() {
-    var self = this;
-
-    permissions.remove(this.model.domain)
-      .then(function() {
-        return self.model.destroy();
-      });
+  onRemove() {
+    permissions.remove(this.model.domain).then(() => this.model.destroy());
   }
-
 });
 
 module.exports = ItemView;

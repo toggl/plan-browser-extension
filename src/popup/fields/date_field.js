@@ -1,9 +1,8 @@
-var moment = require('moment');
-var View = require('ampersand-view');
-var DatepickerView = require('../datepicker/datepicker_view.js');
+const moment = require('moment');
+const View = require('ampersand-view');
+const DatepickerView = require('../datepicker/datepicker_view.js');
 
-var DateField = View.extend({
-
+const DateField = View.extend({
   props: {
     value: 'date',
     hasFocus: 'boolean',
@@ -14,19 +13,19 @@ var DateField = View.extend({
   derived: {
     formatted: {
       deps: ['value'],
-      fn: function() {
-        return this.value != null ? moment(this.value).format('L') : null;
+      fn() {
+        return this.value ? moment(this.value).format('L') : null;
       }
     },
     isFilled: {
       deps: ['value'],
-      fn: function() {
-        return this.value != null;
+      fn() {
+        return !!this.value;
       }
     },
     showDatepicker: {
       deps: ['hasFocus', 'pickedDate'],
-      fn: function() {
+      fn() {
         return this.hasFocus && !this.pickedDate;
       }
     }
@@ -40,7 +39,9 @@ var DateField = View.extend({
 
   bindings: {
     formatted: {
-      type: function(el, value) {el.value = value},
+      type(el, value) {
+        el.value = value;
+      },
       hook: 'control'
     },
     showDatepicker: {
@@ -49,21 +50,21 @@ var DateField = View.extend({
     }
   },
 
-  onChange: function(event) {
-    var m = moment(event.target.value);
+  onChange(event) {
+    const m = moment(event.target.value);
     this.value = m.isValid() ? m.toDate() : null;
   },
 
-  onFocus: function() {
+  onFocus() {
     this.hasFocus = true;
     this.pickedDate = false;
   },
 
-  onBlur: function() {
+  onBlur() {
     this.hasFocus = false;
   },
 
-  render: function() {
+  render() {
     this.datepicker = new DatepickerView();
     this.listenTo(this.datepicker, 'select', this.onDatePicked);
     this.renderSubview(this.datepicker, this.queryByHook('datepicker'));
@@ -71,11 +72,10 @@ var DateField = View.extend({
     return this;
   },
 
-  onDatePicked: function(date) {
+  onDatePicked(date) {
     this.value = date;
     this.pickedDate = true;
   }
-
 });
 
 module.exports = DateField;

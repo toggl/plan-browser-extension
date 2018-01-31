@@ -1,18 +1,16 @@
-var RestCollection = require('ampersand-rest-collection');
-var ProjectModel = require('./project_model');
-var config = require('../api/config');
-var sync = require('../api/api_sync');
+const RestCollection = require('ampersand-rest-collection');
+const ProjectModel = require('./project_model');
+const config = require('../api/config');
+const sync = require('../api/api_sync');
 
-var ProjectCollection = RestCollection.extend({
-
+const ProjectCollection = RestCollection.extend({
   model: ProjectModel,
 
-  url: function() {
+  url() {
     return config.api.host + '/api/v3/' + this.parent.id + '/projects';
   },
 
-  sync: sync
-
+  sync
 });
 
 module.exports = ProjectCollection;

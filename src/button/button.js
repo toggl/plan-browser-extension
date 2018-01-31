@@ -1,14 +1,13 @@
-var Promise = require('bluebird');
-var State = require('ampersand-state');
-var ButtonView = require('./views/button/button_view');
-var TaskModel = require('../models/task_model');
-var collections = require('../models/collections');
-var analytics = require('../utils/analytics');
+const Promise = require('bluebird');
+const State = require('ampersand-state');
+const ButtonView = require('./views/button/button_view');
+const TaskModel = require('../models/task_model');
+const collections = require('../models/collections');
+const analytics = require('../utils/analytics');
 
-var HubState = State.extend({});
+const HubState = State.extend({});
 
-var ButtonState = State.extend({
-
+const ButtonState = State.extend({
   props: {
     link: 'string',
     button: 'state',
@@ -21,7 +20,7 @@ var ButtonState = State.extend({
     view: {
       type: 'any',
       required: true,
-      default: function() {
+      default() {
         return ButtonView;
       }
     }
@@ -31,7 +30,7 @@ var ButtonState = State.extend({
     hub: HubState
   },
 
-  initialize: function() {
+  initialize() {
     this.listenTo(this.hub, 'popup:open', this.createPopup);
     this.listenTo(this.hub, 'button:clicked', this.handleButtonClick);
     this.listenTo(this.hub, 'task:open', this.handleTaskOpen);
@@ -41,34 +40,34 @@ var ButtonState = State.extend({
     ButtonState.setLoaded();
   },
 
-  handleButtonClick: function(event) {
-    if (this.link == null) {
+  handleButtonClick(event) {
+    if (!this.link) {
       this.hub.trigger('popup:open', event);
       return;
     }
 
-    var taskSource = collections.taskSources.find({
+    const taskSource = collections.taskSources.find({
       source_link: this.link
     });
 
-    if (taskSource != null) {
+    if (taskSource) {
       this.hub.trigger('task:open', taskSource.task_id, taskSource.account_id);
     } else {
       this.hub.trigger('popup:open', event);
     }
   },
 
-  handleTaskOpen: function(task, account) {
-    var url = `https://app.teamweek.com/#timeline/task/${account}/${task}`;
+  handleTaskOpen(task, account) {
+    const url = `https://app.teamweek.com/#timeline/task/${account}/${task}`;
     window.open(url, '_blank');
   },
 
-  createPopup: function(event) {
-    var params = this.getTaskParams();
+  createPopup(event) {
+    const params = this.getTaskParams();
 
     chrome.runtime.sendMessage({
       type: 'open_popup',
-      params: params,
+      params,
       anchor: this.anchor,
       screen: {
         width: window.outerWidth,
@@ -83,8 +82,8 @@ var ButtonState = State.extend({
     analytics.track('button', 'click');
   },
 
-  getTaskParams: function() {
-    var taskParams;
+  getTaskParams() {
+    let taskParams;
 
     if (typeof this.task === 'function') {
       taskParams = this.task.call(null);
@@ -94,12 +93,12 @@ var ButtonState = State.extend({
       taskParams = {};
     }
 
-    var model = new TaskModel(taskParams);
+    const model = new TaskModel(taskParams);
 
     return Object.assign({link: this.link}, model.serialize());
   },
 
-  remove: function() {
+  remove() {
     this.button.remove();
   }
 

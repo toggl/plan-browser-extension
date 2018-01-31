@@ -1,18 +1,18 @@
-var difference = require('lodash.difference');
+const difference = require('lodash.difference');
 
 function Observer(selector, element) {
   this.selector = selector;
-  this.element = element != null ? element : document;
+  this.element = element ? element : document;
   this.mutationHandlers = [];
   this.seenElements = [];
 
-  var onMutation = this.onMutation.bind(this);
+  const onMutation = this.onMutation.bind(this);
   this.observer = new MutationObserver(onMutation);
 }
 
 Observer.prototype.onMutation = function() {
-  var oldSeenElements = this.seenElements;
-  var newSeenElements = this.findMatchingElements();
+  const oldSeenElements = this.seenElements;
+  const newSeenElements = this.findMatchingElements();
 
   this.mutationHandlers.forEach(function(handler) {
     handler(oldSeenElements, newSeenElements);
@@ -22,7 +22,7 @@ Observer.prototype.onMutation = function() {
 };
 
 Observer.prototype.findMatchingElements = function() {
-  var elements = document.querySelectorAll(this.selector);
+  const elements = document.querySelectorAll(this.selector);
   return Array.prototype.slice.call(elements);
 };
 

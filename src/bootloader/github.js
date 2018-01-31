@@ -1,12 +1,12 @@
-var moment = require('moment');
-var HashMap = require('hashmap');
-var ButtonState = require('../button/button');
-var observer = require('../utils/observer');
+const moment = require('moment');
+const HashMap = require('hashmap');
+const ButtonState = require('../button/button');
+const observer = require('../utils/observer');
 
-var buttons = new HashMap();
+const buttons = new HashMap();
 
-var DATE_RE = /(January|February|March|April|May|June|July|August|September|October|November|December) (\d{1,2}), (\d{4})/;
- 
+const DATE_RE = /(January|February|March|April|May|June|July|August|September|October|November|December) (\d{1,2}), (\d{4})/;
+
 function createObserver() {
   observer.create('.milestone')
     .onAdded(createButton)
@@ -15,45 +15,51 @@ function createObserver() {
 }
 
 function findDate(meta) {
-  var matches = DATE_RE.exec(meta);
-  if (matches == null) return;
+  const matches = DATE_RE.exec(meta);
+  if (!matches) {
+    return;
+  }
 
-  var m = moment(matches[0], 'MMMM DD, YYYY');
-  if (!m.isValid()) return;
+  const m = moment(matches[0], 'MMMM DD, YYYY');
+  if (!m.isValid()) {
+    return;
+  }
 
   return m.toDate();
 }
 
 function createButton(element) {
-  var titleEl = element.querySelector('.milestone-title-link');
-  var metaEl = element.querySelector('.milestone-meta');
-  var linkEl = titleEl.querySelector('a');
+  const titleEl = element.querySelector('.milestone-title-link');
+  const metaEl = element.querySelector('.milestone-meta');
+  const linkEl = titleEl.querySelector('a');
 
-  var name = titleEl.querySelector('a').innerText;
-  var date = findDate(metaEl.innerText);
-  var link = linkEl.href;
-  
-  var state = new ButtonState({
-    link: link,
+  const name = titleEl.querySelector('a').innerText;
+  const date = findDate(metaEl.innerText);
+  const link = linkEl.href;
+
+  const state = new ButtonState({
+    link,
     task: {
-      name: name,
+      name,
       end_date: date,
       notes: 'Added from GitHub: ' + link
     },
     anchor: 'element'
   });
 
-  var buttonEl = state.button.render().el;
+  const buttonEl = state.button.render().el;
   titleEl.appendChild(buttonEl);
 
   buttons.set(element, state);
 }
 
 function removeButton(node) {
-  var button = buttons.get(node);
-  if (button != null) button.remove();
+  const button = buttons.get(node);
+  if (button) {
+    button.remove();
+  }
 }
- 
+
 function handleError(error) {
   console.error(error);
 }

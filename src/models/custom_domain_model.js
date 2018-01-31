@@ -1,8 +1,7 @@
-var Model = require('ampersand-model');
-var sync = require('../api/local_sync');
+const Model = require('ampersand-model');
+const sync = require('../api/local_sync');
 
-var CustomDomainModel = Model.extend({
-
+const CustomDomainModel = Model.extend({
   props: {
     id: 'string',
     domain: 'string',
@@ -10,7 +9,6 @@ var CustomDomainModel = Model.extend({
   },
 
   sync: sync('custom_domains')
-
 });
 
 module.exports = CustomDomainModel;

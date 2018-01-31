@@ -1,16 +1,15 @@
-var domify = require('domify');
-var moment = require('moment');
-var HashMap = require('hashmap');
-var offset = require('document-offset');
-var find = require('lodash.find');
-var ButtonState = require('../button/button');
-var observer = require('../utils/observer');
+const domify = require('domify');
+const moment = require('moment');
+const HashMap = require('hashmap');
+const find = require('lodash.find');
+const ButtonState = require('../button/button');
+const observer = require('../utils/observer');
 
-var buttons = new HashMap();
-var observers = new HashMap();
+const buttons = new HashMap();
+const observers = new HashMap();
 
-var DATE_RE = /(\d{1,2}) (January|February|March|April|May|June|July|August|September|October|November|December) (\d{4})/;
- 
+const DATE_RE = /(\d{1,2}) (January|February|March|April|May|June|July|August|September|October|November|December) (\d{4})/;
+
 function createOverlayObserver() {
   observer.create('.item-overlay')
     .onAdded(createContentObserver)
@@ -19,7 +18,7 @@ function createOverlayObserver() {
 }
 
 function createContentObserver(element) {
-  var o = observer.create('.app-item-id', element)
+  const o = observer.create('.app-item-id', element)
     .onAdded(function() {
       createButton(element);
     })
@@ -29,30 +28,38 @@ function createContentObserver(element) {
 }
 
 function removeContentObserver(element) {
-  var o = observers.get(element);
-  if (o != null) o.stop();
+  const o = observers.get(element);
+  if (o) {
+    o.stop();
+  }
 
   removeButton(element);
 }
 
 function findDate(deadline) {
   deadline = deadline.replace(/\s+/g, ' ');
-  
-  var matches = DATE_RE.exec(deadline);
-  if (matches == null) return;
 
-  var m = moment(matches[0], 'DD MMMM YYYY');
-  if (!m.isValid()) return;
+  const matches = DATE_RE.exec(deadline);
+  if (!matches) {
+    return;
+  }
+
+  const m = moment(matches[0], 'DD MMMM YYYY');
+  if (!m.isValid()) {
+    return;
+  }
 
   return m.toDate();
 }
 
 function findTitleEl(element) {
-  var textFields = element.querySelectorAll('.small-text-field');
-  if (textFields.length == 0) return null;
+  const textFields = element.querySelectorAll('.small-text-field');
+  if (textFields.length === 0) {
+    return null;
+  }
 
-  var firstField = textFields[0];
-  var titleField = find(textFields, function(element) {
+  const firstField = textFields[0];
+  const titleField = find(textFields, function(element) {
     return /title/i.exec(element.className);
   });
 
@@ -60,7 +67,7 @@ function findTitleEl(element) {
 }
 
 function findDeadlineEl(element) {
-  var dateFields = element.querySelectorAll('.date-field');
+  const dateFields = element.querySelectorAll('.date-field');
   return (dateFields.length > 0) ? dateFields[0] : null;
 }
 
@@ -69,26 +76,28 @@ function findValueEl(element) {
 }
 
 function createButton(element) {
-  var titleEl = findTitleEl(element);
-  var deadlineEl = findDeadlineEl(element);
+  const titleEl = findTitleEl(element);
+  const deadlineEl = findDeadlineEl(element);
 
-  var name = titleEl ? findValueEl(titleEl).innerText : undefined;
-  var date = deadlineEl ? findDate(findValueEl(deadlineEl).innerText) : undefined;
-  var link = location.href;
-  
-  var state = new ButtonState({
+  const name = titleEl ? findValueEl(titleEl).innerText : undefined;
+  const date = deadlineEl
+    ? findDate(findValueEl(deadlineEl).innerText)
+    : undefined;
+  const link = location.href;
+
+  const state = new ButtonState({
     task: {
-      name: name,
+      name,
       end_date: date,
       notes: 'Added from Podio: ' + link
     },
-    link: link,
+    link,
     anchor: 'element'
   });
 
-  var actionsEl = document.body.querySelector('.item-topbar-actions ul');
-  var itemEl = domify('<li class="float-left teamweek"></li>');
-  var buttonEl = state.button.render().el;
+  const actionsEl = document.body.querySelector('.item-topbar-actions ul');
+  const itemEl = domify('<li class="float-left teamweek"></li>');
+  const buttonEl = state.button.render().el;
 
   itemEl.appendChild(buttonEl);
   actionsEl.insertBefore(itemEl, actionsEl.firstChild);
@@ -97,10 +106,12 @@ function createButton(element) {
 }
 
 function removeButton(node) {
-  var button = buttons.get(node);
-  if (button != null) button.remove();
+  const button = buttons.get(node);
+  if (button) {
+    button.remove();
+  }
 }
- 
+
 function handleError(error) {
   console.error(error);
 }

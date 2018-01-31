@@ -1,7 +1,6 @@
-var View = require('ampersand-view');
+const View = require('ampersand-view');
 
-var ErrorView = View.extend({
-
+const ErrorView = View.extend({
   template: require('./error_view.hbs'),
 
   props: {
@@ -37,10 +36,10 @@ var ErrorView = View.extend({
     }
   },
 
-  render: function() {
-    var code = this.error.message;
+  render() {
+    const code = this.error.message;
 
-    var data = this.messages[code] != null ?
+    const data = this.messages[code] ?
       this.messages[code] :
       this.messages.default;
 
@@ -49,16 +48,15 @@ var ErrorView = View.extend({
     return this;
   },
 
-  onBack: function(event) {
+  onBack(event) {
     event.preventDefault();
     this.hub.trigger('error:hide');
   },
 
-  onClose: function(event) {
+  onClose(event) {
     event.preventDefault();
     this.hub.trigger('popup:close');
   }
-
 });
 
 module.exports = ErrorView;

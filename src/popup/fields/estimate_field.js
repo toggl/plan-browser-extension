@@ -1,8 +1,7 @@
-var View = require('ampersand-view');
-var isEmpty = require('lodash.isempty');
+const View = require('ampersand-view');
+const isEmpty = require('lodash.isempty');
 
-var EstimateField = View.extend({
-
+const EstimateField = View.extend({
   props: {
     value: 'number',
     raw: 'string',
@@ -12,19 +11,19 @@ var EstimateField = View.extend({
   derived: {
     isFilled: {
       deps: ['raw'],
-      fn: function() {
-        return this.raw != null && this.raw.length > 0;
+      fn() {
+        return this.raw && this.raw.length > 0;
       }
     },
     inputLength: {
       deps: ['raw'],
-      fn: function() {
+      fn() {
         return !isEmpty(this.raw) ? this.raw.length : 1;
       }
     },
     lengthClass: {
       deps: ['inputLength'],
-      fn: function() {
+      fn() {
         return 'estimate-input--length-' + this.inputLength;
       }
     }
@@ -41,25 +40,26 @@ var EstimateField = View.extend({
     lengthClass: { type: 'class' }
   },
 
-  initialize: function() {
-    if (this.value != null) this.raw = String(this.value);
+  initialize() {
+    if (this.value) {
+      this.raw = String(this.value);
+    }
   },
 
-  onInput: function(event) {
+  onInput(event) {
     this.raw = event.target.value;
   },
 
-  onChange: function(event) {
-    var value = parseInt(this.raw, 10);
+  onChange() {
+    const value = parseInt(this.raw, 10);
 
     this.isValid = !isNaN(value);
     this.value = this.isValid ? value : null;
   },
 
-  render: function() {
+  render() {
     return this;
   }
-
 });
 
 module.exports = EstimateField;

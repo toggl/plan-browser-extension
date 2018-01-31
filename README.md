@@ -124,3 +124,10 @@ Append or prepend the button to the element.
 **twb.remove(button)**
 
 Removes the button from the page.
+
+# Linting
+
+If you are using Atom make sure you have installed these packages:
+* [linter](https://atom.io/packages/linter)
+* [linter-eslint](https://atom.io/packages/linter-eslint)
+* [linter-less](https://atom.io/packages/linter-less)

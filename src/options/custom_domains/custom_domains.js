@@ -1,10 +1,9 @@
-var View = require('ampersand-view');
-var CustomDomainCollection = require('../../models/custom_domain_collection');
-var ItemView = require('./item');
-var FormView = require('./form');
+const View = require('ampersand-view');
+const CustomDomainCollection = require('../../models/custom_domain_collection');
+const ItemView = require('./item');
+const FormView = require('./form');
 
-var CustomDomainsView = View.extend({
-
+const CustomDomainsView = View.extend({
   template: require('./custom_domains.hbs'),
 
   props: {
@@ -18,25 +17,24 @@ var CustomDomainsView = View.extend({
     }
   },
 
-  initialize: function() {
-    this.collection = new CustomDomainCollection()
+  initialize() {
+    this.collection = new CustomDomainCollection();
     this.collection.fetch();
 
     this.form = new FormView({collection: this.collection});
   },
 
-  render: function() {
+  render() {
     this.renderWithTemplate();
 
-    var body = this.query('tbody');
+    const body = this.query('tbody');
     this.renderCollection(this.collection, ItemView, body);
 
-    var footer = this.query('tfoot');
+    const footer = this.query('tfoot');
     this.renderSubview(this.form, footer);
 
     return this;
   }
-
 });
 
 module.exports = CustomDomainsView;

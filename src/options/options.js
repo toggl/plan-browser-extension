@@ -1,12 +1,12 @@
-var OptionsView = require('./options_view.js');
-var api = require('../api/api');
+const OptionsView = require('./options_view.js');
+const api = require('../api/api');
 
 function initialize() {
   return api.auth.load();
 }
 
 function render() {
-  var options = new OptionsView().render();
+  const options = new OptionsView().render();
   document.body.appendChild(options.el);
 }
 

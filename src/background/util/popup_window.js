@@ -1,16 +1,16 @@
-var qs = require('querystring');
+const qs = require('querystring');
 
-var POPUP_WIDTH = 400;
-var POPUP_HEIGHT = 400;
-var BUTTON_MARGIN = 20;
-var BUTTON_SIZE = 20;
+const POPUP_WIDTH = 400;
+const POPUP_HEIGHT = 400;
+const BUTTON_MARGIN = 20;
+const BUTTON_SIZE = 20;
 
 function openPopupWindow(data) {
-  var position = calculatePosition(data);
-  var url = createURL(data.params);
+  const position = calculatePosition(data);
+  const url = createURL(data.params);
 
   chrome.windows.create({
-    url: url,
+    url,
     left: Math.round(position.x),
     top: Math.round(position.y),
     width: POPUP_WIDTH,
@@ -20,12 +20,12 @@ function openPopupWindow(data) {
 }
 
 function calculatePosition(data) {
-  if (data.anchor == 'screen') {
+  if (data.anchor === 'screen') {
     return {
       x: (data.screen.width - POPUP_WIDTH) / 2,
       y: (data.screen.height - POPUP_HEIGHT) / 2
     };
-  } else if (data.anchor == 'element') {
+  } else if (data.anchor === 'element') {
     return {
       x: (data.element.x > (data.screen.width / 2))
         ? data.element.x - POPUP_WIDTH - BUTTON_MARGIN
@@ -34,7 +34,7 @@ function calculatePosition(data) {
         ? data.element.y - POPUP_HEIGHT + BUTTON_SIZE
         : data.element.y
     };
-  } else if (data.anchor == 'window') {
+  } else if (data.anchor === 'window') {
     return {
       x: data.window.x + (data.window.width - POPUP_WIDTH) / 2,
       y: data.window.y + (data.window.height - POPUP_HEIGHT) / 2
@@ -43,7 +43,7 @@ function calculatePosition(data) {
 }
 
 function createURL(params) {
-  var query = qs.stringify(params);
+  const query = qs.stringify(params);
   return chrome.extension.getURL('popup.html?' + query);
 }
 

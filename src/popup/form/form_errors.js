@@ -1,7 +1,6 @@
-var View = require('ampersand-view');
+const View = require('ampersand-view');
 
-var FormErrors = View.extend({
-
+const FormErrors = View.extend({
   template: require('./form_errors.hbs'),
 
   props: {
@@ -12,8 +11,10 @@ var FormErrors = View.extend({
   derived: {
     firstError: {
       deps: ['errors'],
-      fn: function() {
-        if (this.errors == null) return null;
+      fn() {
+        if (!this.errors) {
+          return null;
+        }
         return this.errors.length > 0 ? this.errors[0] : null;
       }
     }
@@ -30,20 +31,19 @@ var FormErrors = View.extend({
     }
   },
 
-  render: function() {
+  render() {
     this.renderWithTemplate();
   },
 
-  addError: function(error) {
+  addError(error) {
     this.errors = this.errors.concat(error);
     this.isVisible = true;
   },
 
-  clearErrors: function() {
+  clearErrors() {
     this.isVisible = false;
     this.errors = [];
   }
-
 });
 
 module.exports = FormErrors;

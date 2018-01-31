@@ -1,9 +1,9 @@
-var HashMap = require('hashmap');
-var ButtonState = require('../button/button');
-var observer = require('../utils/observer');
-var content = require('../utils/content');
+const HashMap = require('hashmap');
+const ButtonState = require('../button/button');
+const observer = require('../utils/observer');
+const content = require('../utils/content');
 
-var buttons = new HashMap();
+const buttons = new HashMap();
 
 function createObserver() {
   observer.create('.js-issue-title, .js-issue-row .h4')
@@ -13,13 +13,13 @@ function createObserver() {
 }
 
 function createButton(title) {
-  var name = title.innerText;
-  var link = title.href;
+  const name = title.innerText;
+  const link = title.href;
 
-  var state = new ButtonState({
-    link: link,
+  const state = new ButtonState({
+    link,
     task: {
-      name: name,
+      name,
       notes: 'Added from GitHub: ' + link
     },
     anchor: 'element'
@@ -31,8 +31,10 @@ function createButton(title) {
 }
 
 function removeButton(node) {
-  var button = buttons.get(node);
-  if (button != null) button.remove();
+  const button = buttons.get(node);
+  if (button) {
+    button.remove();
+  }
 }
 
 function handleError(error) {

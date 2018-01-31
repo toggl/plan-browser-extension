@@ -1,12 +1,10 @@
-var View = require('ampersand-view');
-var api = require('../../api/api');
+const View = require('ampersand-view');
+const api = require('../../api/api');
+const FormErrors = require('../form/form_errors');
+const TextField = require('../fields/text_field');
+const EmailField = require('../fields/email_field');
 
-var FormErrors = require('../form/form_errors');
-var TextField = require('../fields/text_field');
-var EmailField = require('../fields/email_field');
-
-var AuthView = View.extend({
-
+const AuthView = View.extend({
   template: require('./auth_view.hbs'),
 
   props: {
@@ -24,23 +22,25 @@ var AuthView = View.extend({
     'click [data-hook=button-cancel]': 'onCancel'
   },
 
-  render: function() {
+  render() {
     this.renderWithTemplate(this);
     return this;
   },
 
-  onSubmit: function(event) {
+  onSubmit(event) {
     event.preventDefault();
     event.stopPropagation();
 
-    if (!this.validate()) return;
+    if (!this.validate()) {
+      return;
+    }
 
-    var credentials = {
+    const credentials = {
       username: this.email.value,
       password: this.password.value
     };
 
-    var hub = this.hub;
+    const hub = this.hub;
     hub.trigger('loader:show');
 
     api.auth.authenticate(credentials).then(function() {
@@ -52,14 +52,14 @@ var AuthView = View.extend({
     });
   },
 
-  onCancel: function(event) {
+  onCancel(event) {
     event.preventDefault();
     event.stopPropagation();
-    
+
     this.hub.trigger('popup:close');
   },
 
-  validate: function() {
+  validate() {
     this.errors.clearErrors();
 
     if (!this.email.isFilled) {
@@ -79,7 +79,6 @@ var AuthView = View.extend({
 
     return true;
   }
-
 });
 
 module.exports = AuthView;

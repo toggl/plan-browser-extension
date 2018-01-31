@@ -1,9 +1,7 @@
-var moment = require('moment');
-var View = require('ampersand-view');
-var Pikaday = require('pikaday');
+const View = require('ampersand-view');
+const Pikaday = require('pikaday');
 
-var DatepickerView = View.extend({
-
+const DatepickerView = View.extend({
   template: require('./datepicker_view.hbs'),
 
   props: {
@@ -15,7 +13,7 @@ var DatepickerView = View.extend({
     'mousedown': 'onMousedown'
   },
 
-  render: function() {
+  render() {
     this.renderWithTemplate();
 
     this.pikaday = new Pikaday({
@@ -24,25 +22,24 @@ var DatepickerView = View.extend({
       setDefaultDate: true
     });
 
-    var contentEl = this.queryByHook('datepicker-content')
+    const contentEl = this.queryByHook('datepicker-content');
     contentEl.appendChild(this.pikaday.el);
 
     return this;
   },
 
-  onMousedown: function(event) {
+  onMousedown(event) {
     event.preventDefault();
   },
 
-  onSelect: function() {
+  onSelect() {
     this.trigger('select', this.pikaday.getDate());
   },
 
-  remove: function() {
+  remove() {
     View.prototype.remove.call(this);
     this.pikaday.destroy();
   }
-
 });
 
 module.exports = DatepickerView;

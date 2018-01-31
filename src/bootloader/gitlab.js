@@ -1,12 +1,11 @@
-var moment = require('moment');
-var HashMap = require('hashmap');
-var offset = require('document-offset');
-var ButtonState = require('../button/button');
-var observer = require('../utils/observer');
+const moment = require('moment');
+const HashMap = require('hashmap');
+const ButtonState = require('../button/button');
+const observer = require('../utils/observer');
 
-var buttons = new HashMap();
+const buttons = new HashMap();
 
-var DATE_RE = /(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{1,2}), (\d{4})/;
+const DATE_RE = /(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{1,2}), (\d{4})/;
 
 function createObserver() {
   observer.create('[data-page="projects:milestones:index"] .milestone')
@@ -21,18 +20,22 @@ function createObserver() {
 }
 
 function findDate(title) {
-  var matches = DATE_RE.exec(title);
-  if (matches == null) return;
+  const matches = DATE_RE.exec(title);
+  if (!matches) {
+    return;
+  }
 
-  var m = moment(matches[0], 'MMM DD, YYYY');
-  if (!m.isValid()) return;
+  const m = moment(matches[0], 'MMM DD, YYYY');
+  if (!m.isValid()) {
+    return;
+  }
 
   return m.toDate();
 }
 
 function createMilestoneIndexButton(element) {
-  var titleEl = element.querySelector('.col-sm-6, h4');
-  var linkEl = titleEl.querySelector('a');
+  const titleEl = element.querySelector('.col-sm-6, h4');
+  const linkEl = titleEl.querySelector('a');
 
   return {
     task: {
@@ -45,8 +48,8 @@ function createMilestoneIndexButton(element) {
 }
 
 function createIssueIndexButton(element) {
-  var titleEl = element.querySelector('.issue-title');
-  var linkEl = titleEl.querySelector('a');
+  const titleEl = element.querySelector('.issue-title');
+  const linkEl = titleEl.querySelector('a');
 
   return {
     task: {
@@ -59,23 +62,25 @@ function createIssueIndexButton(element) {
 }
 
 function createButton(callback, element) {
-  var config = callback(element);
+  const config = callback(element);
 
-  var state = new ButtonState({
+  const state = new ButtonState({
     task: config.task,
     link: config.link,
     anchor: 'screen'
   });
 
-  var buttonEl = state.button.render().el;
+  const buttonEl = state.button.render().el;
   config.container.appendChild(buttonEl);
-  
+
   buttons.set(element, state);
 }
 
 function removeButton(node) {
-  var button = buttons.get(node);
-  if (button != null) button.remove();
+  const button = buttons.get(node);
+  if (button) {
+    button.remove();
+  }
 }
 
 function handleError(error) {

@@ -1,8 +1,7 @@
-var Model = require('ampersand-model');
-var sync = require('../api/local_sync');
+const Model = require('ampersand-model');
+const sync = require('../api/local_sync');
 
-var TaskSourceModel = Model.extend({
-
+const TaskSourceModel = Model.extend({
   props: {
     task_id: 'number',
     account_id: 'number',
@@ -10,7 +9,6 @@ var TaskSourceModel = Model.extend({
   },
 
   sync: sync('task_sources')
-
 });
 
 module.exports = TaskSourceModel;
