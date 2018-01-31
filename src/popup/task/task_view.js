@@ -10,6 +10,7 @@ const EstimateField = require('../fields/estimate_field');
 const DateField = require('../fields/date_field');
 const TimeField = require('../fields/time_field');
 const AccountField = require('../fields/account_field');
+const fetchPreferences = require('../../utils/preferences');
 
 const TaskView = View.extend({
   template: require('./task_view.hbs'),
@@ -89,9 +90,12 @@ const TaskView = View.extend({
 
     this.hub.trigger('loader:show');
 
-    this.accounts.fetchEverything()
-      .then(() => {
-        const account = this.accounts.at(0);
+    this
+      .accounts
+      .fetchEverything()
+      .then(fetchPreferences)
+      .then(preferences => {
+        const account = this.accounts.get(preferences.selected_account_id);
         this.account.switchAccount(account);
         this.user.switchAccount(account);
 
@@ -124,16 +128,7 @@ const TaskView = View.extend({
     if (!this.validate()) {
       return;
     }
-    console.log(({
-      name: this.name.value,
-      user_id: this.user.value,
-      project_id: this.project.value,
-      start_date: this.start_date.value,
-      end_date: this.end_date.value,
-      start_time: this.start_time.value,
-      end_time: this.end_time.value,
-      estimated_hours: this.estimate.value
-    }));
+
     this.model.set({
       name: this.name.value,
       user_id: this.user.value,

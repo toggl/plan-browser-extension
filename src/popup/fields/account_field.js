@@ -1,5 +1,10 @@
 const View = require('ampersand-view');
 const FilteredCollection = require('ampersand-filtered-subcollection');
+const Handlebars = require('hbsfy/runtime');
+
+Handlebars.registerHelper('is_selected', function(a, b) {
+  return a === b ? 'selected' : '';
+});
 
 const AccountField = View.extend({
   template: require('./account_field.hbs'),
