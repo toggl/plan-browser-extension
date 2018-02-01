@@ -1,5 +1,7 @@
-<select name="account" class="account-select" data-hook="select" tabindex="2">
-  {{#each sortedAccounts.models}}
-  <option value="{{id}}" {{is_selected id ../value}}>{{name}}</option>
-  {{/each}}
-</select>
+<div class="popup__account">
+  <select name="account" class="account-select" data-hook="select" tabindex="1">
+    {{#each sortedAccounts.models}}
+    <option value="{{id}}" {{is_selected id ../value}}>{{name}}</option>
+    {{/each}}
+  </select>
+</div>

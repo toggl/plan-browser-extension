@@ -29,7 +29,7 @@ const UserField = View.extend({
   },
 
   onChange() {
-    this.value = JSON.parse(this.queryByHook('select').value);
+    this.value = parseInt(this.queryByHook('select').value, 10);
   },
 
   switchAccount(account) {
@@ -37,13 +37,8 @@ const UserField = View.extend({
       where: { active: true },
       comparator: 'name'
     });
-
+    this.value = null;
     this.render();
-  },
-
-  render() {
-    this.el.innerHTML = this.template(this);
-    return this;
   }
 });
 

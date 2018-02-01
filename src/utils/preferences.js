@@ -29,3 +29,12 @@ module.exports = () => new Promise((resolve, reject) =>
         .then(() => resolve(preferences), reject);
     }, reject)
 );
+
+module.exports.set = exports.set = data => new Promise((resolve, reject) =>
+  storage
+    .get('preferences')
+    .then(({preferences}) => {
+      preferences = Object.assign({}, preferences, data);
+      return storage.set({preferences});
+    }, reject)
+);

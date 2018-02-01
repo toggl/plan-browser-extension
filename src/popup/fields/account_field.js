@@ -1,10 +1,6 @@
 const View = require('ampersand-view');
 const FilteredCollection = require('ampersand-filtered-subcollection');
-const Handlebars = require('hbsfy/runtime');
-
-Handlebars.registerHelper('is_selected', function(a, b) {
-  return a === b ? 'selected' : '';
-});
+const preferences = require('../../utils/preferences');
 
 const AccountField = View.extend({
   template: require('./account_field.hbs'),
@@ -20,7 +16,8 @@ const AccountField = View.extend({
   },
 
   onChange() {
-    this.value = JSON.parse(this.queryByHook('select').value);
+    this.value = parseInt(this.queryByHook('select').value, 10);
+    preferences.set({selected_account_id: this.value});
   },
 
   switchAccount(account) {
@@ -28,14 +25,10 @@ const AccountField = View.extend({
     this.render();
   },
 
-  render() {
+  initialize() {
     this.sortedAccounts = new FilteredCollection(this.accounts, {
       comparator: 'name'
     });
-
-    this.el.innerHTML = this.template(this);
-
-    return this;
   }
 });
 

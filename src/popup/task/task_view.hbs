@@ -1,7 +1,7 @@
 <div class="task-popup">
   <div class="row row--align-center">
     <div class="popup__title row--grow">Add to Teamweek</div>
-    <div class="popup__account" id="tw-form-{{cid}}-account" data-hook="select-account"></div>
+    <div id="tw-form-{{cid}}-account" data-hook="select-account"></div>
   </div>
 
   <div class="popup__errors" data-hook="errors"></div>
@@ -14,7 +14,7 @@
         </div>
         <div class="form__control">
           <input type="text" name="name" id="tw-form-{{cid}}-name" placeholder="Enter name..."
-            data-hook="input-name" tabindex="1">
+            data-hook="input-name" tabindex="2">
         </div>
       </div>
 
@@ -22,8 +22,7 @@
         <div class="form__label">
           <label for="tw-form-{{cid}}-user">User</label>
         </div>
-        <div class="form__control" id="tw-form-{{cid}}-user" data-hook="select-user">
-        </div>
+        <div id="tw-form-{{cid}}-user" data-hook="select-user"></div>
       </div>
 
       <div class="form__row">
@@ -32,7 +31,7 @@
         </div>
         <div class="form__control">
           <select name="project" id="tw-form-{{cid}}-project" class="project-select"
-            data-hook="select-project" tabindex="3"></select>
+            data-hook="select-project" tabindex="4"></select>
         </div>
       </div>
 
@@ -43,7 +42,7 @@
         <div class="form__control">
           <div class="estimate-input" data-hook="input-estimate">
             <input type="text" name="estimate" id="tw-form-{{cid}}-estimate" placeholder="0"
-              class="estimate-input__control" data-hook="control" tabindex="4">
+              class="estimate-input__control" data-hook="control" tabindex="5">
             <div class="estimate-input__suffix" data-hook="suffix">hours</div>
           </div>
         </div>
@@ -56,7 +55,7 @@
         <div class="form__control form__control--datepicker">
           <div class="date-input" data-hook="input-start-date">
             <input type="text" name="start_date" id="tw-form-{{cid}}-start-date"
-              data-hook="control" tabindex="5">
+              data-hook="control" tabindex="6">
             <div class="date-input__datepicker" data-hook="datepicker"></div>
           </div>
         </div>
@@ -64,7 +63,7 @@
           <div class="time-input" data-hook="input-start-time">
             <div class="time-input__timepicker" data-hook="timepicker"></div>
             <input type="text" name="start_time" id="tw-form-{{cid}}-start-time"
-              class="time-input__control" placeholder="Set time..." data-hook="control" tabindex="6">
+              class="time-input__control" placeholder="Set time..." data-hook="control" tabindex="7">
           </div>
         </div>
       </div>
@@ -76,7 +75,7 @@
         <div class="form__control form__control--datepicker">
           <div class="date-input" data-hook="input-end-date">
             <input type="text" name="end_date" id="tw-form-{{cid}}-end-date"
-              data-hook="control" tabindex="7">
+              data-hook="control" tabindex="8">
             <div class="date-input__datepicker" data-hook="datepicker"></div>
           </div>
         </div>
@@ -84,15 +83,15 @@
           <div class="time-input" data-hook="input-end-time">
             <div class="time-input__timepicker" data-hook="timepicker"></div>
             <input type="text" name="end_time" id="tw-form-{{cid}}-end-time"
-              class="time-input__control" placeholder="Set time..." data-hook="control" tabindex="8">
+              class="time-input__control" placeholder="Set time..." data-hook="control" tabindex="9">
           </div>
         </div>
       </div>
     </div>
 
     <div class="popup__buttons">
-      <input type="submit" value="Add" class="button button--submit popup__button" data-hook="button-submit" tabindex="9">
-      <input type="button" value="Cancel" class="button button--cancel popup__button" data-hook="button-cancel" tabindex="10">
+      <input type="submit" value="Add" class="button button--submit popup__button" data-hook="button-submit" tabindex="10">
+      <input type="button" value="Cancel" class="button button--cancel popup__button" data-hook="button-cancel" tabindex="11">
     </div>
   </form>
 

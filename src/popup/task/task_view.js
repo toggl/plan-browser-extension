@@ -114,10 +114,9 @@ const TaskView = View.extend({
   },
 
   onAccountSelected() {
-    const accountId = this.account.value;
-    const account = this.accounts.get(accountId);
-
+    const account = this.accounts.get(this.account.value);
     this.user.switchAccount(account);
+    this.project.value = null;
     this.project.collection = account.projects;
   },
 
@@ -140,6 +139,9 @@ const TaskView = View.extend({
       estimated_hours: this.estimate.value
     });
 
+    if (this.model.collection) {
+      this.model.collection.remove(this.model);
+    }
     const account = this.accounts.get(this.account.value);
     account.tasks.add(this.model);
 
