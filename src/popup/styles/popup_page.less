@@ -49,6 +49,26 @@ body {
   color: #666;
 }
 
+.popup__account {
+  select {
+    padding: 6px;
+    margin-right: 20px;
+    box-sizing: border-box;
+
+    -webkit-appearance: none;
+    border-radius: 0;
+    border: none;
+    background-color: transparent;
+    font-size: 16px;
+    font-family: inherit;
+    background-color: #ebebeb;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
 .form__row {
   position: relative;
   display: flex;
@@ -426,5 +446,54 @@ body {
 
   &--visible {
     transform: translateY(0);
+  }
+}
+
+.row {
+  display: flex;
+  box-sizing: border-box;
+
+  &--grow {
+    flex-grow: 1;
+  }
+
+  &--justify-left {
+    justify-content: flex-start;
+  }
+
+  &--justify-right {
+    justify-content: flex-end;
+  }
+
+  &--justify-center {
+    justify-content: center;
+  }
+
+  &--justify-space {
+    justify-content: space-between;
+  }
+
+  &--align-center {
+    align-items: center;
+  }
+
+  &--align-baseline {
+    align-items: baseline;
+  }
+
+  &--align-stretch {
+    align-items: stretch;
+  }
+
+  &--align-end {
+    align-items: flex-end;
+  }
+
+  &--align-start {
+    align-items: flex-start;
+  }
+
+  &--vertical {
+    flex-direction: column;
   }
 }

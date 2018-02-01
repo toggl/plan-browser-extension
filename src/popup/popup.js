@@ -5,6 +5,7 @@ const PopupView = require('./popup/popup_view');
 const api = require('../api/api');
 const TaskModel = require('../models/task_model');
 const collections = require('../models/collections');
+require('./utils/handlebars_helpers');
 
 function parseQuery() {
   const query = location.search.substr(1);

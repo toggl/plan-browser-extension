@@ -9,6 +9,8 @@ const ProjectField = require('../fields/project_field');
 const EstimateField = require('../fields/estimate_field');
 const DateField = require('../fields/date_field');
 const TimeField = require('../fields/time_field');
+const AccountField = require('../fields/account_field');
+const fetchPreferences = require('../../utils/preferences');
 
 const TaskView = View.extend({
   template: require('./task_view.hbs'),
@@ -27,11 +29,14 @@ const TaskView = View.extend({
     start_time: { hook: 'input-start-time', constructor: TimeField },
     end_time: { hook: 'input-end-time', constructor: TimeField },
     user: { hook: 'select-user', prepareView(el) {
-      return new UserField({el, collection: this.accounts, parent: this});
-    } },
+      return new UserField({el, parent: this});
+    }},
     project: { hook: 'select-project', constructor: ProjectField },
     estimate: { hook: 'input-estimate', constructor: EstimateField },
-    errors: { hook: 'errors', constructor: FormErrors }
+    errors: { hook: 'errors', constructor: FormErrors },
+    account: { hook: 'select-account', prepareView(el) {
+      return new AccountField({el, accounts: this.accounts, parent: this});
+    }},
   },
 
   collections: {
@@ -69,12 +74,13 @@ const TaskView = View.extend({
 
     [
       this.name, this.start_date, this.end_date, this.start_time, this.end_time,
-      this.user, this.project, this.estimate
+      this.user, this.project, this.estimate, this.account
     ].forEach(field => {
       this.listenTo(field, 'change:value', this.hideErrors);
     }, this);
 
     this.listenTo(this.user, 'change:value', this.onUserSelected);
+    this.listenTo(this.account, 'change:value', this.onAccountSelected);
 
     this.name.value = this.model.name;
     this.start_date.value = this.model.start_date;
@@ -84,9 +90,15 @@ const TaskView = View.extend({
 
     this.hub.trigger('loader:show');
 
-    this.accounts.fetchEverything()
-      .then(() => {
-        this.user.render();
+    this
+      .accounts
+      .fetchEverything()
+      .then(fetchPreferences)
+      .then(preferences => {
+        const account = this.accounts.get(preferences.selected_account_id);
+        this.account.switchAccount(account);
+        this.user.switchAccount(account);
+
         this.hub.trigger('loader:hide');
         this.focusNameField();
       }, error => {
@@ -98,9 +110,14 @@ const TaskView = View.extend({
   },
 
   onUserSelected() {
-    const account = this.user.value.account;
-    const projects = this.accounts.get(account).projects;
-    this.project.collection = projects;
+
+  },
+
+  onAccountSelected() {
+    const account = this.accounts.get(this.account.value);
+    this.user.switchAccount(account);
+    this.project.value = null;
+    this.project.collection = account.projects;
   },
 
   onSubmit(event) {
@@ -113,7 +130,7 @@ const TaskView = View.extend({
 
     this.model.set({
       name: this.name.value,
-      user_id: this.user.value.user,
+      user_id: this.user.value,
       project_id: this.project.value,
       start_date: this.start_date.value,
       end_date: this.end_date.value,
@@ -122,7 +139,10 @@ const TaskView = View.extend({
       estimated_hours: this.estimate.value
     });
 
-    const account = this.accounts.get(this.user.value.account);
+    if (this.model.collection) {
+      this.model.collection.remove(this.model);
+    }
+    const account = this.accounts.get(this.account.value);
     account.tasks.add(this.model);
 
     this.showLoader();
