@@ -1,13 +1,22 @@
 const moment = require('moment');
 const View = require('ampersand-view');
 const TimepickerView = require('../timepicker/timepicker_view.js');
+const TextField = require('../controls/input');
+
+const template = `<div class="time-input">
+  <div data-hook=input></div>
+  <div class="time-input__timepicker" data-hook=timepicker></div>
+</div>`;
 
 const TimeField = View.extend({
+  template,
+
   props: {
     value: 'string',
     hasFocus: 'boolean',
     pickedTime: 'boolean',
-    timepicker: 'state'
+    timepicker: 'state',
+    inputOpts: 'object',
   },
 
   derived: {
@@ -31,18 +40,12 @@ const TimeField = View.extend({
     }
   },
 
-  events: {
-    'change [data-hook=control]': 'onChange',
-    'focus [data-hook=control]': 'onFocus',
-    'blur [data-hook=control]': 'onBlur'
-  },
-
   bindings: {
     formatted: {
       type(el, value) {
         el.value = value;
       },
-      hook: 'control'
+      hook: 'input'
     },
     showTimepicker: {
       type: 'toggle',
@@ -50,8 +53,24 @@ const TimeField = View.extend({
     }
   },
 
+  initialize() {
+    if (this.value) {
+      this.raw = String(this.value);
+    }
+
+    this.timepicker = new TimepickerView();
+    this.listenTo(this.timepicker, 'select', this.onTimePicked);
+
+    this.input = new TextField(Object.assign({}, this.inputOpts, {
+      placeholder: 'Set time...',
+    }));
+    this.listenTo(this.input, 'change', this.onChange);
+    this.listenTo(this.input, 'focus', this.onFocus);
+    this.listenTo(this.input, 'blur', this.onBlur);
+  },
+
   onChange() {
-    const m = moment(this.queryByHook('control').value, 'LT');
+    const m = moment(this.input.value, 'LT');
     this.value = m.isValid() ? m.format('HH:mm') : null;
   },
 
@@ -66,10 +85,9 @@ const TimeField = View.extend({
   },
 
   render() {
-    this.timepicker = new TimepickerView();
-    this.listenTo(this.timepicker, 'select', this.onTimePicked);
+    this.renderWithTemplate(this);
+    this.renderSubview(this.input, this.queryByHook('input'));
     this.renderSubview(this.timepicker, this.queryByHook('timepicker'));
-
     return this;
   },
 

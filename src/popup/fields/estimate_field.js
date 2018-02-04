@@ -1,11 +1,15 @@
 const View = require('ampersand-view');
 const isEmpty = require('lodash.isempty');
+const TextField = require('../controls/input');
 
 const EstimateField = View.extend({
+  template: '<div></div>',
+
   props: {
     value: 'number',
     raw: 'string',
-    isValid: 'boolean'
+    isValid: 'boolean',
+    inputOpts: 'object',
   },
 
   derived: {
@@ -29,13 +33,8 @@ const EstimateField = View.extend({
     }
   },
 
-  events: {
-    'change [data-hook=control]': 'onChange',
-    'input [data-hook=control]': 'onInput'
-  },
-
   bindings: {
-    raw: { type: 'value', hook: 'control' },
+    raw: { type: 'value' },
     isFilled: { type: 'booleanClass', no: 'estimate-input--empty' },
     lengthClass: { type: 'class' }
   },
@@ -44,6 +43,15 @@ const EstimateField = View.extend({
     if (this.value) {
       this.raw = String(this.value);
     }
+
+    this.input = new TextField(Object.assign({}, this.inputOpts, {
+      placeholder: '0',
+      name: 'estimate',
+      label: 'Daily estimate'
+    }));
+
+    this.listenTo(this.input, 'change', this.onChange);
+    this.listenTo(this.input, 'input', this.onInput);
   },
 
   onInput(event) {
@@ -58,8 +66,10 @@ const EstimateField = View.extend({
   },
 
   render() {
+    this.renderWithTemplate(this);
+    this.renderSubview(this.input);
     return this;
-  }
+  },
 });
 
 module.exports = EstimateField;

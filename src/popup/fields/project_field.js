@@ -1,11 +1,12 @@
 const View = require('ampersand-view');
+const SelectField = require('../controls/select');
 
-const ProjectField = View.extend({
-  template: require('./project_field_default.hbs'),
+module.exports = View.extend({
+  template: '<div></div>',
 
   props: {
     value: 'number',
-    isActive: 'boolean'
+    selectOpts: 'object',
   },
 
   derived: {
@@ -17,10 +18,6 @@ const ProjectField = View.extend({
     }
   },
 
-  events: {
-    'change': 'onChange'
-  },
-
   bindings: {
     value: { type: 'value' }
   },
@@ -29,32 +26,30 @@ const ProjectField = View.extend({
     this.listenTo(this, 'change:collection', this.onCollection);
   },
 
-  onChange() {
-    if (this.el.value.length > 0) {
-      this.value = Number(this.el.value);
-    } else {
-      this.value = null;
-    }
-  },
-
   onCollection() {
-    this.isActive = !!this.collection;
     this.render();
+    this.renderSubview(this.createInput()); // todo
   },
 
-  render() {
-    this.el.innerHTML = this.template(this);
+  onChange() {
+    this.value = parseInt(this.queryByHook('select').value, 10);
+  },
 
-    if (this.isActive) {
-      this.renderCollection(this.collection, ProjectOption, this.el);
-    }
+  createInput() {
+    const options = this
+      .collection
+      .map(project => `<option value=${project.id}>${project.name}</option>`)
+      .join('');
 
-    return this;
-  }
+    return new SelectField(Object.assign({}, this.selectOpts, {
+      label: 'Project',
+      name: 'project',
+      placeholder: 'Choose project...',
+      options,
+      validations: [{
+        run: value => !!value,
+        message: '*Choose a user',
+      }],
+    }));
+  },
 });
-
-const ProjectOption = View.extend({
-  template: require('./project_field_option.hbs')
-});
-
-module.exports = ProjectField;

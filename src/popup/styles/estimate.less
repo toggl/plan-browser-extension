@@ -1,0 +1,35 @@
+.estimate-input {
+  position: relative;
+}
+
+.estimate-input__control {
+  position: relative;
+  z-index: 2;
+  line-height: 20px;
+}
+
+.estimate-lengths(@n, @i: 1) when (@i =< @n) {
+  .estimate-input--length-@{i} & {
+    display: block;
+    left: 12px + @i * 9px;
+  }
+
+  .estimate-lengths(@n, (@i + 1));
+}
+
+.estimate-input__suffix {
+  display: none;
+  z-index: 1;
+
+  position: absolute;
+  transform: translateY(-50%);
+  top: 50%;
+
+  font-size: 16px;
+
+  .estimate-lengths(8);
+
+  .estimate-input--empty & {
+    color: #999;
+  }
+}

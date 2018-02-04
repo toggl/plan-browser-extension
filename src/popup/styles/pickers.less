@@ -1,0 +1,91 @@
+.time-input,
+.date-input {
+  position: relative;
+}
+
+.time-input,
+.date-input {
+  input {
+    position: relative;
+    z-index: 0;
+  }
+}
+
+.time-input__placeholder {
+  position: relative;
+  z-index: 1;
+
+  font-size: 14px;
+  color: #999;
+}
+
+.time-input__timepicker,
+.date-input__datepicker {
+  position: absolute;
+  bottom: 100%;
+  margin-bottom: 10px;
+  z-index: 2;
+}
+
+.time-input__timepicker {
+  right: 0px;
+}
+
+.date-input__datepicker {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.timepicker {
+  max-height: 180px;
+  overflow-x: auto;
+  width: 100px;
+
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  background-color: white;
+}
+
+.datepicker {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  background-color: white;
+}
+
+.timepicker__arrow,
+.datepicker__arrow {
+  position: absolute;
+  bottom: -5px;
+
+  width: 10px; height: 10px;
+  z-index: 0;
+
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  transform: rotate(45deg);
+}
+
+.timepicker__arrow {
+  right: 10px;
+}
+
+.datepicker__arrow {
+  left: 50%;
+  margin-left: -5px
+}
+
+.timepicker__content,
+.datepicker__content {
+  position: relative;
+  z-index: 1;
+
+  background-color: white;
+}
+
+.timepicker__item {
+  padding: 6px 12px;
+  border-bottom: 1px solid #e6e6e6;
+  cursor: pointer;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}

@@ -3,7 +3,6 @@ const moment = require('moment');
 const View = require('ampersand-view');
 const AccountCollection = require('../../models/account_collection');
 const FormErrors = require('../form/form_errors');
-const TextField = require('../fields/text_field');
 const UserField = require('../fields/user_field');
 const ProjectField = require('../fields/project_field');
 const EstimateField = require('../fields/estimate_field');
@@ -11,6 +10,7 @@ const DateField = require('../fields/date_field');
 const TimeField = require('../fields/time_field');
 const AccountField = require('../fields/account_field');
 const fetchPreferences = require('../../utils/preferences');
+const TextField = require('../controls/input');
 
 const TaskView = View.extend({
   template: require('./task_view.hbs'),
@@ -23,20 +23,119 @@ const TaskView = View.extend({
   },
 
   subviews: {
-    name: { hook: 'input-name', constructor: TextField },
-    start_date: { hook: 'input-start-date', constructor: DateField },
-    end_date: { hook: 'input-end-date', constructor: DateField },
-    start_time: { hook: 'input-start-time', constructor: TimeField },
-    end_time: { hook: 'input-end-time', constructor: TimeField },
-    user: { hook: 'select-user', prepareView(el) {
-      return new UserField({el, parent: this});
-    }},
-    project: { hook: 'select-project', constructor: ProjectField },
-    estimate: { hook: 'input-estimate', constructor: EstimateField },
-    errors: { hook: 'errors', constructor: FormErrors },
     account: { hook: 'select-account', prepareView(el) {
-      return new AccountField({el, accounts: this.accounts, parent: this});
+      return new AccountField({
+        el,
+        accounts: this.accounts,
+        parent: this,
+        selectOpts: {
+          tabIndex: 1,
+        }
+      });
     }},
+    name: {
+      hook: 'input-name',
+      prepareView(el) {
+        return new TextField({
+          el,
+          name: 'name',
+          label: 'Name',
+          placeholder: 'Type here...',
+          value: '',
+          tabIndex: 2,
+          validations: [{
+            run: value => value.length > 0,
+            message: '*Name cannot be empty',
+          }]
+        });
+      }
+    },
+    user: {
+      hook: 'select-user',
+      prepareView(el) {
+        return new UserField({
+          el,
+          selectOpts: {
+            tabIndex: 3,
+          }
+        });
+      }
+    },
+    project: {
+      hook: 'select-project',
+      prepareView(el) {
+        return new ProjectField({
+          el,
+          selectOpts: {
+            tabIndex: 4,
+          }
+        });
+      }
+    },
+    estimate: {
+      hook: 'input-estimate',
+      prepareView(el) {
+        return new EstimateField({
+          el,
+          inputOpts: {
+            tabIndex: 5,
+          }
+        });
+      }
+    },
+    start_time: {
+      hook: 'input-start-time',
+      prepareView(el) {
+        return new TimeField({
+          el,
+          inputOpts: {
+            tabIndex: 6,
+            name: 'start-time',
+            label: 'Start Time'
+          }
+        });
+      }
+    },
+    end_time: {
+      hook: 'input-end-time',
+      prepareView(el) {
+        return new TimeField({
+          el,
+          inputOpts: {
+            tabIndex: 7,
+            name: 'end-time',
+            label: 'End Time'
+          }
+        });
+      }
+    },
+    start_date: {
+      hook: 'input-start-date',
+      prepareView(el) {
+        return new DateField({
+          el,
+          inputOpts: {
+            tabIndex: 8,
+            name: 'start-date',
+            label: 'Start Date'
+          }
+        });
+      }
+    },
+    end_date: {
+      hook: 'input-end-date',
+      prepareView(el) {
+        return new DateField({
+          el,
+          inputOpts: {
+            tabIndex: 9,
+            name: 'end-date',
+            label: 'End Date'
+          }
+        });
+      }
+    },
+    errors: { hook: 'errors', constructor: FormErrors },
   },
 
   collections: {
@@ -73,8 +172,15 @@ const TaskView = View.extend({
     this.renderWithTemplate(this);
 
     [
-      this.name, this.start_date, this.end_date, this.start_time, this.end_time,
-      this.user, this.project, this.estimate, this.account
+      this.name,
+      this.start_date,
+      this.end_date,
+      this.start_time,
+      this.end_time,
+      this.user,
+      this.project,
+      this.estimate,
+      this.account
     ].forEach(field => {
       this.listenTo(field, 'change:value', this.hideErrors);
     }, this);
@@ -129,7 +235,7 @@ const TaskView = View.extend({
     }
 
     this.model.set({
-      name: this.name.value,
+      name: this.name.input.value,
       user_id: this.user.value,
       project_id: this.project.value,
       start_date: this.start_date.value,
