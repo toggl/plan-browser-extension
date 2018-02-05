@@ -1,5 +1,4 @@
 @import "variables.less";
-@import "fonts.less";
 @import "pikaday.less";
 @import "form.less";
 @import "row.less";
@@ -12,32 +11,35 @@
 
 body {
   margin: 0;
+  background-color: #F8F8F8;
 }
 
 .popup {
   width: 100%;
-  background-color: white;
-  font-family: Bau, sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   line-height: initial;
   -webkit-font-smoothing: initial;
 }
 
+.popup__inner {
+  background: white;
+  padding-bottom: 10px;
+}
+
 .popup__title {
   margin: 3px;
-  padding: 12px 18px;
-
+  padding: 12px 10px;
   font-size: 16px;
-  color: #1dbf11;
 }
 
 .popup__buttons {
-  margin: 3px;
+  padding: 10px;
   display: flex;
   flex-direction: row-reverse;
 }
 
 .popup__button {
-  margin-left: 3px;
+  margin-left: 10px;
 }
 
 .popup__copy {
@@ -69,11 +71,21 @@ body {
   }
 }
 
+.popup__content {
+  position: relative;
+  z-index: 1;
+
+  &:before, &:after {
+    content: "";
+    display: table;
+  }
+}
+
 .form {
   & > .row {
     margin-bottom: 5px;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
 
     & > .column {
       flex: 1;
@@ -177,15 +189,19 @@ body {
 
 .button {
   display: inline-block;
-  line-height: 40px;
-  height: 40px;
-
+  line-height: 34px;
+  height: 34px;
+  width: 100px;
+  padding: 0;
+  font-size: 13px;
+  border-radius: 2px;
   font-size: 14px;
   text-decoration: none;
   font-family: inherit;
   background: none;
   cursor: pointer;
   border: none;
+  transition: opacity .15s ease-in-out,background-color .15s ease-in-out,color .15s ease-in-out;
 
   &:active, &:focus {
     outline: none;
@@ -193,31 +209,22 @@ body {
 }
 
 .button--cancel {
-  padding: 0 30px;
+  border: 1px solid #e6e6e6;
+  background: #f8f8f8;
+  color: rgba(0, 0, 0, 0.35);
 
-  color: #999;
-  border-radius: 3px;
-
-  &:hover, &:focus {
-    color: #666;
-  }
-
-  &:focus {
-    background-color: #ebebeb;
+  &:hover, &:focus, &:active {
+    background: #fff;
+    opacity: .75;
   }
 }
 
 .button--submit {
-  padding: 0 40px;
-
   color: white;
-  background-color: lighten(#1dbf11, 5%);
-  box-shadow: inset 0px -2px 0px 0px rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
+  background-color: #0DEA9C;
 
   &:hover, &:focus, &:active {
-    background-color: #1dbf11;
-    box-shadow: none;
+    opacity: .75;
   }
 }
 
@@ -227,18 +234,6 @@ body {
 
   &:hover {
     color: #1dbf11;
-  }
-}
-
-.popup__content {
-  position: relative;
-  z-index: 1;
-
-  background-color: white;
-
-  &:before, &:after {
-    content: "";
-    display: table;
   }
 }
 

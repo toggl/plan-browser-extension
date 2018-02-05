@@ -1,12 +1,12 @@
-<div class="task-popup">
-  <div class="row row--align-center">
-    <div class="popup__title row--grow">Add to Teamweek</div>
-    <div id="tw-form-{{cid}}-account" data-hook="select-account"></div>
-  </div>
+<form class="task-popup" data-hook="form">
+  <div class="popup__inner">
+    <div class="row row--align-center">
+      <div class="popup__title row--grow">Add New Task</div>
+      <div id="tw-form-{{cid}}-account" data-hook="select-account"></div>
+    </div>
 
-  <div class="popup__errors" data-hook="errors"></div>
+    <div class="popup__errors" data-hook="errors"></div>
 
-  <form data-hook="form">
     <div class="popup__form form">
       <div class="row row--align-center">
         <div class="column">
@@ -50,14 +50,14 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="popup__buttons">
-      <input type="submit" value="Add" class="button button--submit popup__button" data-hook="button-submit" tabindex="10">
-      <input type="button" value="Cancel" class="button button--cancel popup__button" data-hook="button-cancel" tabindex="11">
-    </div>
-  </form>
+  <div class="popup__buttons">
+    <button type="submit" class="button button--submit popup__button" data-hook="button-submit" tabindex="10">Add</button>
+    <button type="button" class="button button--cancel popup__button" data-hook="button-cancel" tabindex="11">Cancel</button>
+  </div>
 
   <div class="task-popup__overlay" data-hook="done-overlay">
     <div class="task-popup__done">Done!</div>
   </div>
-</div>
+</form>
