@@ -22,6 +22,10 @@ module.exports = View.extend({
     value: { type: 'value' }
   },
 
+  events: {
+    'change select': 'onChange'
+  },
+  
   initialize() {
     this.listenTo(this, 'change:collection', this.onCollection);
   },

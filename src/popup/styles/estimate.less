@@ -1,35 +1,83 @@
-.estimate-input {
-  position: relative;
-}
+.estimate-field {
+  display: flex;
+  align-items: center;
+  flex: 1;
 
-.estimate-input__control {
-  position: relative;
-  z-index: 2;
-  line-height: 20px;
-}
-
-.estimate-lengths(@n, @i: 1) when (@i =< @n) {
-  .estimate-input--length-@{i} & {
-    display: block;
-    left: 12px + @i * 9px;
+  &__container {
+    background-color: #f8f8f8;
+    border: 1px solid #e5e5e5;
+    padding-left: 6px;
+    border-radius: 2px;
+    font-size: 13px;
   }
 
-  .estimate-lengths(@n, (@i + 1));
-}
+  &__control-label {
+    padding-left: 3px;
+    padding-right: 3px;
+  }
 
-.estimate-input__suffix {
-  display: none;
-  z-index: 1;
+  &__placeholder {
+    color: #757575
+  }
 
-  position: absolute;
-  transform: translateY(-50%);
-  top: 50%;
+  &__input-wrapper {
+    height: 32px;
+    border-radius: 4px;
 
-  font-size: 16px;
+    & > div {
+      height: 100%;
+    }
 
-  .estimate-lengths(8);
+    &--active {
+      border-color: @color-tertiary;
+    }
+  }
 
-  .estimate-input--empty & {
-    color: #999;
+  &__input {
+    border: none;
+    border-radius: 0;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    width: 15px;
+    background: transparent;
+    outline: none;
+
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+  }
+
+  &__label {
+    padding-right: 5px;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__button {
+    @include hover(0.5, 0.3);
+    padding: 10px 5px;
+    background-position: center;
+    height: 8px;
+    width: 8px;
+    box-sizing: content-box;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    &__plus {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg' fill='%230096ff'%3E%3Ctitle%3EShape%3C/title%3E%3Cpath d='M5 0H3v3H0v2h3v3h2V5h3V3H5z'/%3E%3C/svg%3E");
+    }
+    &__minus {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='2' viewBox='0 0 8 2' xmlns='http://www.w3.org/2000/svg' fill='%230096ff'%3E%3Ctitle%3ERectangle-path%3C/title%3E%3Cpath d='M0 0h8v2H0z'/%3E%3C/svg%3E");
+    }
+    &:last-child {
+      padding-right: 10px;
+    }
   }
 }

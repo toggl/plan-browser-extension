@@ -185,7 +185,6 @@ const TaskView = View.extend({
       this.listenTo(field, 'change:value', this.hideErrors);
     }, this);
 
-    this.listenTo(this.user, 'change:value', this.onUserSelected);
     this.listenTo(this.account, 'change:value', this.onAccountSelected);
 
     this.name.value = this.model.name;
@@ -215,10 +214,6 @@ const TaskView = View.extend({
     return this;
   },
 
-  onUserSelected() {
-
-  },
-
   onAccountSelected() {
     const account = this.accounts.get(this.account.value);
     this.user.switchAccount(account);
@@ -242,7 +237,7 @@ const TaskView = View.extend({
       end_date: this.end_date.value,
       start_time: this.start_time.value,
       end_time: this.end_time.value,
-      estimated_hours: this.estimate.value
+      estimated_minutes: this.estimate.value
     });
 
     if (this.model.collection) {
@@ -303,11 +298,6 @@ const TaskView = View.extend({
         this.errors.addError('End date cannot be before start date');
         return false;
       }
-    }
-
-    if (this.estimate.isFilled && !this.estimate.isValid) {
-      this.errors.addError('Daily estimate is not valid');
-      return false;
     }
 
     return true;

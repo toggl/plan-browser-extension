@@ -14,7 +14,7 @@ const TaskModel = Model.extend({
     end_date: ['date', false, () => new Date()],
     start_time: 'string',
     end_time: 'string',
-    estimated_hours: 'number',
+    estimated_minutes: 'number',
     notes: 'string'
   },
 

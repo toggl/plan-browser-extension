@@ -92,7 +92,7 @@ const TimeField = View.extend({
   },
 
   onTimePicked(time) {
-    this.value = time;
+    this.input.value = time;
     this.pickedTime = true;
   }
 });
