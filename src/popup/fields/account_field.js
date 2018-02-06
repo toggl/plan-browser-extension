@@ -46,6 +46,7 @@ const AccountField = View.extend({
   },
 
   events: {
+    'click': 'onClick',
     'click [data-hook=signout]': 'onSignout',
     'click [data-hook=change-workspace]': 'onChangeWorkspace',
     'click .account-field-popup__workspace': 'onChange',
@@ -54,6 +55,14 @@ const AccountField = View.extend({
 
   onShow() {
     this.showing = true;
+  },
+
+  onHide() {
+    this.showing = false;
+  },
+
+  onClick(event) {
+    event.stopPropagation();
   },
 
   onChange(event) {
@@ -79,6 +88,8 @@ const AccountField = View.extend({
     this.sortedAccounts = new FilteredCollection(this.accounts, {
       comparator: 'name'
     });
+
+    window.onclick = () => this.onHide();
   },
 
   render() {
@@ -86,8 +97,8 @@ const AccountField = View.extend({
 
     const menu = this.queryByHook('menu');
     const popup = this.queryByHook('popup');
-    popup.style.top = `${menu.offsetTop + 10}px`;
-    popup.style.left = `${menu.offsetLeft - 220}px`;
+    popup.style.top = `${menu.offsetTop + 30}px`;
+    popup.style.left = `${menu.offsetLeft - 215}px`;
   }
 });
 
