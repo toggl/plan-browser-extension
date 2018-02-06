@@ -1,6 +1,7 @@
 const View = require('ampersand-view');
 const FilteredCollection = require('ampersand-filtered-subcollection');
 const preferences = require('../../utils/preferences');
+const api = require('../../api/api');
 
 const AccountField = View.extend({
   template: require('./account_field.hbs'),
@@ -81,7 +82,10 @@ const AccountField = View.extend({
   },
 
   onSignout() {
-
+    api.auth.revoke().then(() => {
+      this.onHide();
+      window.location.reload();
+    });
   },
 
   initialize() {
