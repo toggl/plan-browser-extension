@@ -98,7 +98,7 @@ const AccountField = View.extend({
     const menu = this.queryByHook('menu');
     const popup = this.queryByHook('popup');
     popup.style.top = `${menu.offsetTop + 30}px`;
-    popup.style.left = `${menu.offsetLeft - 215}px`;
+    popup.style.right = '6.5px';
   }
 });
 
