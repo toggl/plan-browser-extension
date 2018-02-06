@@ -1,0 +1,68 @@
+.account-field-popup {
+  position: fixed;
+  z-index: 200;
+  box-shadow: 0 10px 40px 0 rgba(0,0,0,.2);
+  background: #fff;
+  border-radius: 2px;
+  width: 230px;
+  display: none;
+
+  &--active {
+    display: block;
+  }
+
+  &__arrow {
+    top: 0;
+    left: 50%;
+    margin-top: -5px;
+    margin-left: -7px;
+  }
+
+  &__menu {
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  &__item {
+    height: 44px;
+    background-color: #3367FF;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    cursor: pointer;
+  }
+
+  &__workspaces {
+    display: none;
+
+    &--active {
+      display: block;
+    }
+  }
+
+  &__workspace-label {
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    background-color: #0041FF;
+  }
+
+  &__workspace {
+    cursor: pointer;
+  }
+
+  &__signout {
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    background-color: white;
+    color: #fd85a6;
+  }
+
+  &--color-muted {
+    color: rgba(255, 255, 255, .5);
+  }
+
+  &__change-workspace {
+    cursor: pointer;
+  }
+}

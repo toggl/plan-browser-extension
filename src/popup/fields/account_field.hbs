@@ -1,7 +1,24 @@
 <div class="popup__account">
-  <select name="account" class="account-select" data-hook="select" tabindex="1">
-    {{#each sortedAccounts.models}}
-    <option value="{{id}}" {{is_selected id ../value}}>{{name}}</option>
-    {{/each}}
-  </select>
+  <div data-hook='menu' class='account-field-popup__menu'>...</div>
+
+  <div class="account-field-popup" data-hook="popup">
+    <div class="account-field-popup__arrow"></div>
+    <div class='account-field-popup__item account-field-popup__workspace-label row--justify-space'>
+      <div>
+        <span class='account-field-popup--color-muted'>Workspace:</span>
+        <span data-hook='workspace'></span>
+      </div>
+      <div>
+        <span class='account-field-popup--color-muted account-field-popup__change-workspace' data-hook="change-workspace">Change</span>
+      </div>
+    </div>
+
+    <div class='account-field-popup__workspaces' data-hook='workspaces'>
+      {{{accountsString}}}
+    </div>
+
+    <div class='account-field-popup__item account-field-popup__signout' data-hook='signout'>
+      Sign Out
+    </div>
+  </div>
 </div>

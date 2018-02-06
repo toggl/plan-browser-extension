@@ -9,15 +9,57 @@ const AccountField = View.extend({
     value: 'number',
     accounts: 'collection',
     sortedAccounts: 'object',
+    showingWorkspaces: ['boolean', true, false],
+    showing: ['boolean', false, false],
+  },
+
+  bindings: {
+    'workspace.name': {
+      type: 'text',
+      hook: 'workspace'
+    },
+    showingWorkspaces: {
+      type: 'booleanClass',
+      hook: 'workspaces',
+      name: 'account-field-popup__workspaces--active'
+    },
+    showing: {
+      type: 'booleanClass',
+      hook: 'popup',
+      name: 'account-field-popup--active'
+    },
+  },
+
+  derived: {
+    workspace: {
+      deps: ['value'],
+      fn() {
+        return this.accounts.get(this.value);
+      }
+    },
+    accountsString: {
+      deps: ['value', 'sortedAccounts.models.length'],
+      fn() {
+        return this.sortedAccounts.map(account => `<div class='account-field-popup__item account-field-popup__workspace' data-workspace='${account.id}'>${account.name}</div>`).join('');
+      }
+    }
   },
 
   events: {
-    'change select': 'onChange'
+    'click [data-hook=signout]': 'onSignout',
+    'click [data-hook=change-workspace]': 'onChangeWorkspace',
+    'click .account-field-popup__workspace': 'onChange',
+    'click [data-hook=menu]': 'onShow',
   },
 
-  onChange() {
-    this.value = parseInt(this.queryByHook('select').value, 10);
+  onShow() {
+    this.showing = true;
+  },
+
+  onChange(event) {
+    this.value = parseInt(event.target.dataset.workspace, 10);
     preferences.set({selected_account_id: this.value});
+    this.showingWorkspaces = false;
   },
 
   switchAccount(account) {
@@ -25,10 +67,27 @@ const AccountField = View.extend({
     this.render();
   },
 
+  onChangeWorkspace() {
+    this.showingWorkspaces = true;
+  },
+
+  onSignout() {
+
+  },
+
   initialize() {
     this.sortedAccounts = new FilteredCollection(this.accounts, {
       comparator: 'name'
     });
+  },
+
+  render() {
+    this.renderWithTemplate(this);
+
+    const menu = this.queryByHook('menu');
+    const popup = this.queryByHook('popup');
+    popup.style.top = `${menu.offsetTop + 10}px`;
+    popup.style.left = `${menu.offsetLeft - 220}px`;
   }
 });
 
