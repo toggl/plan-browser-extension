@@ -1,6 +1,6 @@
 const View = require('ampersand-view');
 const FilteredCollection = require('ampersand-filtered-subcollection');
-const SelectField = require('../controls/select');
+const SelectField = require('../fields/select');
 
 module.exports = View.extend({
   template: '<div></div>',

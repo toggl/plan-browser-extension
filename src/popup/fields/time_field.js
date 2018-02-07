@@ -1,7 +1,7 @@
 const moment = require('moment');
 const View = require('ampersand-view');
 const TimepickerView = require('../timepicker/timepicker_view.js');
-const TextField = require('../controls/input');
+const TextField = require('../fields/input');
 
 const template = `<div class="time-input">
   <div data-hook=input></div>

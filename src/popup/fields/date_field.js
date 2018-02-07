@@ -1,7 +1,7 @@
 const moment = require('moment');
 const View = require('ampersand-view');
 const DatepickerView = require('../datepicker/datepicker_view.js');
-const TextField = require('../controls/input');
+const TextField = require('../fields/input');
 
 const template = `<div class="date-input">
   <div data-hook=input></div>

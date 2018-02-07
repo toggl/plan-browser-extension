@@ -10,7 +10,7 @@ const DateField = require('../fields/date_field');
 const TimeField = require('../fields/time_field');
 const AccountField = require('../fields/account_field');
 const fetchPreferences = require('../../utils/preferences');
-const TextField = require('../controls/input');
+const TextField = require('../fields/input');
 
 const TaskView = View.extend({
   template: require('./task_view.hbs'),

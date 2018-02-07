@@ -5,6 +5,7 @@
 @import "pickers.less";
 @import "estimate-field.less";
 @import "account-field.less";
+@import "error.less";
 
 * {
   box-sizing: border-box;
@@ -270,31 +271,6 @@ body {
   100% { transform: rotate(360deg) }
 }
 
-.error {
-  position: absolute;
-  left: 0; right: 0;
-  top: 0; bottom: 0;
-  padding: 30px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  text-align: center;
-  background-color: #ffffff;
-}
-
-.error__message {
-  a {
-    color: #1dbf11;
-    text-decoration: none;
-  }
-}
-
-.error__buttons {
-  display: flex;
-  justify-content: center;
-}
-
 .task-popup__overlay {
   position: absolute;
   left: 0; right: 0;
@@ -327,11 +303,15 @@ body {
   transform: translateY(-100%);
   transition: 0.1s transform linear;
 
-  background-color: #ed3921;
+  background-color: #fb0046;
   text-align: center;
   color: white;
 
   &--visible {
     transform: translateY(0);
   }
+}
+
+.text--color-new-error {
+  color: @color-danger;
 }

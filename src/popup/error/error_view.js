@@ -10,7 +10,6 @@ const ErrorView = View.extend({
 
   events: {
     'click [data-hook=button-back]': 'onBack',
-    'click [data-hook=button-close]': 'onClose'
   },
 
   messages: {
