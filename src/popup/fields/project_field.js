@@ -1,5 +1,5 @@
 const View = require('ampersand-view');
-const SelectField = require('../fields/select');
+const SelectField = require('../fields/searchable_select_field/field');
 
 module.exports = View.extend({
   template: '<div></div>',
@@ -22,38 +22,37 @@ module.exports = View.extend({
     value: { type: 'value' }
   },
 
-  events: {
-    'change select': 'onChange'
-  },
-  
   initialize() {
     this.listenTo(this, 'change:collection', this.onCollection);
   },
 
   onCollection() {
+    this.select = this.createInput();
+    this.listenTo(this.select, 'change:value', this.onChange);
+
     this.render();
-    this.renderSubview(this.createInput()); // todo
+    this.renderSubview(this.select); // todo
   },
 
-  onChange() {
-    this.value = parseInt(this.queryByHook('select').value, 10);
+  onChange(el, val) {
+    this.value = this.collection.find(item => item.name === val).id;
   },
 
   createInput() {
-    const options = this
-      .collection
-      .map(project => `<option value=${project.id}>${project.name}</option>`)
-      .join('');
-
     return new SelectField(Object.assign({}, this.selectOpts, {
+      items: this.collection.models,
       label: 'Project',
-      name: 'project',
-      placeholder: 'Choose project...',
-      options,
-      validations: [{
-        run: value => !!value,
-        message: '*Choose a user',
-      }],
+      getItemTemplate: this.getItemTemplate
     }));
   },
+
+  getItemTemplate({original, string}) {
+    const tmpl = `
+      <div class="row row--align-center pointer hover" data-value="${original.name}" data-hook="select" data-select-row data-visible>
+        <div class="searchable-select-dropdown__color-circle circle-color--${original.color_id}"></div>
+        <div class="searchable-select-dropdown__select">${string}</div>
+      </div>
+    `;
+    return {tmpl};
+  }
 });

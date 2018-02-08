@@ -3,9 +3,11 @@
 @import "form.less";
 @import "row.less";
 @import "pickers.less";
-@import "estimate-field.less";
-@import "account-field.less";
+@import "estimate_field.less";
+@import "account_field.less";
+@import "searchable_select_field.less";
 @import "error.less";
+@import "for.less";
 
 * {
   box-sizing: border-box;
@@ -14,6 +16,11 @@
 body {
   margin: 0;
   background-color: #F8F8F8;
+  font-size: 13px;
+}
+
+input {
+  font-size: inherit;
 }
 
 .popup {
@@ -315,3 +322,9 @@ body {
 .text--color-new-error {
   color: @color-danger;
 }
+
+.for(@colors, {
+  .circle-color--@{i} {
+    background-color: @value;
+  }
+});

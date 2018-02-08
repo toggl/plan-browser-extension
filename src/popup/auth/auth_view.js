@@ -2,7 +2,6 @@ const View = require('ampersand-view');
 const api = require('../../api/api');
 const FormErrors = require('../form/form_errors');
 const TextField = require('../fields/input');
-const isEmail = require('is-email');
 
 const AuthView = View.extend({
   template: require('./auth_view.hbs'),
@@ -21,12 +20,9 @@ const AuthView = View.extend({
           label: 'Email',
           placeholder: 'Type here...',
           value: '',
-          tabIndex: 2,
+          tabIndex: 1,
           validations: [{
             run: value => value.length > 0,
-            message: '*Email cannot be empty',
-          }, {
-            run: value => isEmail(value),
             message: '*Email cannot be empty',
           }]
         });
@@ -41,6 +37,7 @@ const AuthView = View.extend({
           label: 'Password',
           placeholder: 'Minimum 8 characters...',
           value: '',
+          type: 'password',
           tabIndex: 2,
           validations: [{
             run: value => value.length > 0,
