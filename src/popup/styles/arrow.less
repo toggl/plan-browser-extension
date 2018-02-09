@@ -1,0 +1,41 @@
+// https://css-tricks.com/snippets/css/css-triangle/
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-color: @color-link;
+  border-width: 4px;
+
+  &--up {
+    border-bottom-style: solid;
+  }
+
+  &--down {
+    border-top-style: solid;
+  }
+
+  &--left {
+    border-right-style: solid;
+  }
+
+  &--right {
+    border-left-style: solid;
+  }
+
+  &--up,
+  &--down {
+    border-left-style: solid;
+    border-left-color: transparent;
+    border-right-style: solid;
+    border-right-color: transparent;
+  }
+
+  &--left,
+  &--right {
+    border-top-style: solid;
+    border-top-color: transparent;
+    border-bottom-style: solid;
+    border-bottom-color: transparent;
+  }
+
+}

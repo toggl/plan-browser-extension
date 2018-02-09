@@ -8,6 +8,7 @@
 @import "searchable_select_field.less";
 @import "error.less";
 @import "for.less";
+@import "arrow.less";
 
 * {
   box-sizing: border-box;
@@ -96,14 +97,27 @@ input {
     margin-left: 10px;
     margin-right: 10px;
 
+    .column--pad {
+      margin-right: 5px;
+    }
+
     & > .column {
       flex: 1;
-      padding-right: 5px;
 
       &:last-child {
         padding-right: 0;
       }
     }
+  }
+
+  .column {
+    position: relative;
+  }
+
+  .arrow {
+    position: absolute;
+    top: 16px;
+    right: 7px;
   }
 }
 
@@ -112,7 +126,6 @@ input {
   display: flex;
   height: 45px;
   align-items: center;
-
   border-bottom: 1px solid #e6e6e6;
 
   &:last-child {
@@ -230,7 +243,7 @@ input {
 
 .button--submit {
   color: white;
-  background-color: #0DEA9C;
+  background-color: #0dea9c;
 
   &:hover, &:focus, &:active {
     opacity: .75;
@@ -239,10 +252,10 @@ input {
 
 .button--text {
   padding: 0 30px;
-  color: ligten(#1dbf11, 5%);
+  color: ligten(@color-secondary, 5%);
 
   &:hover {
-    color: #1dbf11;
+    color: @color-secondary;
   }
 }
 
@@ -297,7 +310,7 @@ input {
 .task-popup__done {
   font-weight: 500;
   font-size: 16px;
-  color: #1dbf11;
+  color: @color-secondary;
 }
 
 .form-errors {
