@@ -62,7 +62,7 @@ const TimeField = View.extend({
     this.listenTo(this.timepicker, 'select', this.onTimePicked);
 
     this.input = new TextField(Object.assign({}, this.inputOpts, {
-      placeholder: 'Set time...',
+      placeholder: '--',
     }));
     this.listenTo(this.input, 'change', this.onChange);
     this.listenTo(this.input, 'focus', this.onFocus);

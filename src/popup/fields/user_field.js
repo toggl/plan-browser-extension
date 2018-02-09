@@ -32,10 +32,18 @@ module.exports = View.extend({
 
   createInput() {
     return new SelectField(Object.assign({}, this.selectOpts, {
-      items: this.users.models,
+      items: this.users ? this.users.models : [],
       label: 'User',
       getItemTemplate: this.getItemTemplate
     }));
+  },
+
+  render() {
+    this.select = this.createInput();
+    this.listenTo(this.select, 'change:value', this.onChange);
+
+    this.renderWithTemplate(this);
+    this.renderSubview(this.select);
   },
 
   switchAccount(account) {
@@ -44,11 +52,8 @@ module.exports = View.extend({
       comparator: 'name'
     });
     this.value = null;
-    this.render();
 
-    this.select = this.createInput();
-    this.listenTo(this.select, 'change:value', this.onChange);
-    this.renderSubview(this.select);
+    this.render();
   },
 
   getItemTemplate({original, string}) {

@@ -121,59 +121,8 @@ input {
   }
 }
 
-.form__row {
-  position: relative;
-  display: flex;
-  height: 45px;
-  align-items: center;
-  border-bottom: 1px solid #e6e6e6;
-
-  &:last-child {
-    border-bottom-style: none;
-  }
-}
-
-.form__label {
-  flex-grow: 0;
-  flex-shrink: 0;
-  width: 130px;
-  padding: 0 12px 0 18px;
-  box-sizing: border-box;
-
-  font-size: 14px;
-  color: #999;
-}
-
-.form__control {
-  flex-grow: 1;
-  padding-right: 6px;
-}
-
-.form__control--timepicker {
-  width: 100px;
-}
-
-.form__control input,
-.form__control select {
-  width: 100%;
-  padding: 6px;
-  box-sizing: border-box;
-
-  -webkit-appearance: none;
-  border-style: none;
-  border-radius: 0;
-  background-color: transparent;
-  font-size: 16px;
-  font-family: inherit;
-
-  &:focus {
-    outline: none;
-    background-color: #ebebeb;
-  }
-}
-
-.form__control input::-webkit-input-placeholder {
-  color: #999;
+input::-webkit-input-placeholder {
+  color: @color-text-light;
 }
 
 .user-select--empty,
@@ -207,6 +156,25 @@ input {
 
 .form__errors:empty {
   display: none;
+}
+
+.form-errors {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 10px;
+  transform: translateY(-100%);
+  transition: 0.1s transform linear;
+
+  background-color: #fb0046;
+  text-align: center;
+  color: white;
+
+  &--visible {
+    transform: translateY(0);
+  }
 }
 
 .button {
@@ -311,25 +279,6 @@ input {
   font-weight: 500;
   font-size: 16px;
   color: @color-secondary;
-}
-
-.form-errors {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  padding: 10px;
-  transform: translateY(-100%);
-  transition: 0.1s transform linear;
-
-  background-color: #fb0046;
-  text-align: center;
-  color: white;
-
-  &--visible {
-    transform: translateY(0);
-  }
 }
 
 .text--color-new-error {

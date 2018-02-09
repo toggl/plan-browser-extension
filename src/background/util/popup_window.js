@@ -1,6 +1,6 @@
 const qs = require('querystring');
 
-const POPUP_WIDTH = 400;
+const POPUP_WIDTH = 500;
 const POPUP_HEIGHT = 400;
 const BUTTON_MARGIN = 20;
 const BUTTON_SIZE = 20;

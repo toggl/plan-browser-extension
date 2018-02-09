@@ -27,11 +27,15 @@ module.exports = View.extend({
   },
 
   onCollection() {
+    this.render();
+  },
+
+  render() {
     this.select = this.createInput();
     this.listenTo(this.select, 'change:value', this.onChange);
 
-    this.render();
-    this.renderSubview(this.select); // todo
+    this.renderWithTemplate(this);
+    this.renderSubview(this.select);
   },
 
   onChange(el, val) {
@@ -40,7 +44,7 @@ module.exports = View.extend({
 
   createInput() {
     return new SelectField(Object.assign({}, this.selectOpts, {
-      items: this.collection.models,
+      items: this.collection ? this.collection.models : [],
       label: 'Project',
       getItemTemplate: this.getItemTemplate
     }));

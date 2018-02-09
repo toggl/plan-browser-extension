@@ -1,6 +1,7 @@
 .time-input,
 .date-input {
   position: relative;
+  color: @color-text-light;
 }
 
 .time-input,
@@ -14,26 +15,26 @@
 .time-input__placeholder {
   position: relative;
   z-index: 1;
-
   font-size: 14px;
   color: #999;
+}
+
+.time-input__timepicker {
+  left: 50%;
+  top: -80px;
+}
+
+.date-input__datepicker {
+  bottom: 100%;
+  margin-bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .time-input__timepicker,
 .date-input__datepicker {
   position: absolute;
-  bottom: 100%;
-  margin-bottom: 10px;
   z-index: 2;
-}
-
-.time-input__timepicker {
-  right: 0px;
-}
-
-.date-input__datepicker {
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 .timepicker {
@@ -64,7 +65,8 @@
 }
 
 .timepicker__arrow {
-  right: 10px;
+  bottom: 80px;
+  left: -5px;
 }
 
 .datepicker__arrow {
@@ -76,13 +78,11 @@
 .datepicker__content {
   position: relative;
   z-index: 1;
-
   background-color: white;
 }
 
 .timepicker__item {
   padding: 6px 12px;
-  border-bottom: 1px solid #e6e6e6;
   cursor: pointer;
 
   &:last-child {

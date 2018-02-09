@@ -78,7 +78,7 @@ const DateField = View.extend({
     this.listenTo(this.datepicker, 'select', this.onDatePicked);
 
     this.input = new TextField(Object.assign({}, this.inputOpts, {
-      placeholder: 'Set date...',
+      placeholder: '--',
     }));
     this.listenTo(this.input, 'change', this.onChange);
     this.listenTo(this.input, 'focus', this.onFocus);
