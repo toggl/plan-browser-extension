@@ -51,11 +51,6 @@ const ErrorView = View.extend({
     event.preventDefault();
     this.hub.trigger('error:hide');
   },
-
-  onClose(event) {
-    event.preventDefault();
-    this.hub.trigger('popup:close');
-  }
 });
 
 module.exports = ErrorView;
