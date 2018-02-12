@@ -207,7 +207,7 @@ module.exports = View.extend({
   onAddClicked(event) {
     event.stopImmediatePropagation();
     this.hours++;
-    this.updateValue();
+    this.validateHoursInput();
   },
 
   onSubtractClicked(event) {
@@ -216,7 +216,7 @@ module.exports = View.extend({
       return;
     }
     this.hours--;
-    this.updateValue();
+    this.validateHoursInput();
   },
 
   roundNumber(number) {
