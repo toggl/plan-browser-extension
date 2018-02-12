@@ -5,15 +5,13 @@ const observer = require('../utils/observer');
 const buttons = new HashMap();
 
 function createObserver() {
-  observer.create('#issue-view')
+  observer.create('#issue-title, .issue-list--title a')
     .onAdded(createButton)
     .onRemoved(removeButton)
     .start();
 }
 
-function createButton(element) {
-  const titleEl = element.querySelector('#issue-title');
-
+function createButton(titleEl) {
   const name = titleEl.innerText;
   const link = location.href;
 
@@ -29,7 +27,7 @@ function createButton(element) {
   const buttonEl = state.button.render().el;
   titleEl.appendChild(buttonEl);
 
-  buttons.set(element, state);
+  buttons.set(titleEl, state);
 }
 
 function removeButton(node) {
