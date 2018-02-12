@@ -5,7 +5,7 @@ const ProjectModel = Model.extend({
   props: {
     id: 'number',
     name: 'string',
-    color_id: 'number',
+    color: 'number',
   },
 
   sync

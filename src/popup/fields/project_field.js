@@ -53,7 +53,7 @@ module.exports = View.extend({
   getItemTemplate({original, string}) {
     const tmpl = `
       <div class="row row--align-center pointer hover" data-value="${original.name}" data-hook="select" data-select-row data-visible>
-        <div class="searchable-select-dropdown__color-circle circle-color--${original.color_id}"></div>
+        <div class="searchable-select-dropdown__color-circle circle-color--${original.color}"></div>
         <div class="searchable-select-dropdown__select">${string}</div>
       </div>
     `;
