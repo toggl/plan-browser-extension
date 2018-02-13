@@ -86,7 +86,7 @@ const PopupView = View.extend({
     });
   },
 
-  resizeWindow(dy = document.body.offsetHeight - window.innerHeight) {
+  resizeWindow(dy = document.body.offsetHeight - window.innerHeight + 5) {
     window.resizeBy(0, dy);
   }
 });
