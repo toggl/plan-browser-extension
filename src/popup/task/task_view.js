@@ -237,15 +237,27 @@ const TaskView = View.extend({
       end_date: this.end_date.value,
       start_time: this.start_time.value,
       end_time: this.end_time.value,
-      estimated_minutes: this.estimate.value
+      estimated_minutes: this.estimate.value,
     });
 
+    //
     if (this.model.collection) {
       this.model.collection.remove(this.model);
     }
     const account = this.accounts.get(this.account.value);
     account.tasks.add(this.model);
 
+    // set task color
+    if (this.project.value) {
+      const project = account.projects.get(this.project.value);
+      if (project) {
+        this.model.set({
+          color: project.color,
+        });
+      }
+    }
+
+    // save
     this.showLoader();
 
     this.model.save()

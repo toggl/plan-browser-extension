@@ -15,7 +15,8 @@ const TaskModel = Model.extend({
     start_time: 'string',
     end_time: 'string',
     estimated_minutes: 'number',
-    notes: 'string'
+    notes: 'string',
+    color: 'number',
   },
 
   parse(attrs) {
