@@ -78,7 +78,7 @@ const AccountField = View.extend({
   },
 
   onChangeWorkspace() {
-    this.showingWorkspaces = true;
+    this.showingWorkspaces = !this.showingWorkspaces;
   },
 
   onSignout() {
