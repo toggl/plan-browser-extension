@@ -238,6 +238,7 @@ const TaskView = View.extend({
       start_time: this.start_time.value,
       end_time: this.end_time.value,
       estimated_minutes: this.estimate.value,
+      color: 21,
     });
 
     //
