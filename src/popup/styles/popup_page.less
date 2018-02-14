@@ -260,7 +260,7 @@ input::-webkit-input-placeholder {
 }
 
 .task-popup__overlay {
-  position: absolute;
+  position: fixed;
   left: 0; right: 0;
   top: 0; bottom: 0;
   display: flex;
@@ -276,9 +276,38 @@ input::-webkit-input-placeholder {
 }
 
 .task-popup__done {
-  font-weight: 500;
-  font-size: 16px;
-  color: @color-secondary;
+  text-align: center;
+
+  &-image {
+    display: inline-block;
+    width: 244px;
+    height: 187px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform: translateX(30px);
+    background-image: url('/images/success_illustration.png');
+    @media @mq-retina {
+      background-image: url('/images/success_illustration@2x.png');
+    }
+  }
+
+  h1,
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
+  h1 {
+    transform: translateY(-30px);
+    font-size: 16px;
+    font-weight: normal;
+  }
+
+  p {
+    transform: translateY(-20px);
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.35);
+  }
 }
 
 .text--color-new-error {
