@@ -282,7 +282,6 @@ const TaskView = View.extend({
       start_time: this.start_time.value,
       end_time: this.end_time.value,
       estimated_minutes: this.estimate.value,
-      color: 21,
     });
 
     //
@@ -292,14 +291,11 @@ const TaskView = View.extend({
 
     this.workspace.tasks.add(this.model);
 
-    // set task color
-    if (this.project.value) {
-      const project = this.workspace.projects.get(this.project.value);
-      if (project) {
-        this.model.set({
-          color: project.color,
-        });
-      }
+    // default task color
+    if (!this.project.value) {
+      this.model.set({
+        color: 21,
+      });
     }
 
     // save
