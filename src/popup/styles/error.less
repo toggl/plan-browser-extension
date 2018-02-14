@@ -25,11 +25,10 @@
     width: 167px;
     height: 148px;
     background-size: contain;
-    background-image: url('/images/empty-yellow.png');
     background-repeat: no-repeat;
-
-    @media only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-      background-image: url('/images/empty-yellow@2x.png');
+    background-image: url('/images/empty_yellow.png');
+    @media @mq-retina {
+      background-image: url('/images/empty_yellow@2x.png');
     }
   }
 }
