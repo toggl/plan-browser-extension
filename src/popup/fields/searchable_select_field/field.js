@@ -16,14 +16,14 @@ module.exports = View.extend({
 
   derived: {
     placeholder: {
-      deps: ['isFocused'],
+      deps: ['isFocused', 'isEditable'],
       fn() {
         if (this.isFocused) {
           return 'Search...';
         } else if (this.isEditable) {
           return 'Choose...';
         } else {
-          return 'No entities matched';
+          return '--';
         }
       }
     }
@@ -55,7 +55,7 @@ module.exports = View.extend({
       },
       {
         type: 'booleanAttribute',
-        name: 'readonly',
+        name: 'disabled',
         selector: 'input',
         invert: true
       },
@@ -78,10 +78,6 @@ module.exports = View.extend({
   },
 
   onFocus() {
-    if (!this.isEditable) {
-      return;
-    }
-
     this.isFocused = true;
 
     this.dropdown.update(this.getInputValue());

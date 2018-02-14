@@ -216,6 +216,10 @@ input::-webkit-input-placeholder {
   &:hover, &:focus, &:active {
     opacity: .75;
   }
+
+  &[disabled] {
+    opacity: .2;
+  }
 }
 
 .button--text {
@@ -259,54 +263,74 @@ input::-webkit-input-placeholder {
   100% { transform: rotate(360deg) }
 }
 
-.task-popup__overlay {
-  position: fixed;
-  left: 0; right: 0;
-  top: 0; bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
+.task-popup {
+  &--disabled {
 
-  background-color: white;
-}
+  }
 
-.task-popup__overlay--hidden {
-  display: none;
-}
+  &__readonly-label {
+    background: lighten(@color-primary, 45%);
+    border-radius: 100px;
+    height: 16px;
+    width: 139px;
+    font-size: 11px;
+    font-weight: 800;
+    color: @color-primary;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.task-popup__done {
-  text-align: center;
+  &__overlay {
+    position: fixed;
+    left: 0; right: 0;
+    top: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
 
-  &-image {
-    display: inline-block;
-    width: 244px;
-    height: 187px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    transform: translateX(30px);
-    background-image: url('/images/success_illustration.png');
-    @media @mq-retina {
-      background-image: url('/images/success_illustration@2x.png');
+    background-color: white;
+
+    &--hidden {
+      display: none;
     }
   }
 
-  h1,
-  p {
-    margin: 0;
-    padding: 0;
-  }
+  &__done {
+  text-align: center;
 
-  h1 {
-    transform: translateY(-30px);
-    font-size: 16px;
-    font-weight: normal;
-  }
+    &-image {
+      display: inline-block;
+      width: 244px;
+      height: 187px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      transform: translateX(30px);
+      background-image: url('/images/success_illustration.png');
+      @media @mq-retina {
+        background-image: url('/images/success_illustration@2x.png');
+      }
+    }
 
-  p {
-    transform: translateY(-20px);
-    font-size: 13px;
-    color: rgba(0, 0, 0, 0.35);
+    h1,
+    p {
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      transform: translateY(-30px);
+      font-size: 16px;
+      font-weight: normal;
+    }
+
+    p {
+      transform: translateY(-20px);
+      font-size: 13px;
+      color: rgba(0, 0, 0, 0.35);
+    }
   }
 }
 

@@ -17,6 +17,7 @@ const DateField = View.extend({
     pickedDate: 'boolean',
     datepicker: 'state',
     inputOpts: 'object',
+    disabled: 'boolean',
   },
 
   derived: {
@@ -50,6 +51,11 @@ const DateField = View.extend({
     showDatepicker: {
       type: 'toggle',
       hook: 'datepicker'
+    },
+    disabled: {
+      hook: 'input',
+      name: 'disabled',
+      type: 'booleanAttribute',
     }
   },
 

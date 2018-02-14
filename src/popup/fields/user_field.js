@@ -9,6 +9,7 @@ module.exports = View.extend({
     value: 'number',
     users: 'object',
     selectOpts: 'object',
+    disabled: 'boolean',
   },
 
   derived: {
@@ -30,6 +31,10 @@ module.exports = View.extend({
     this.value = this.users.models.find(item => item.name === val).id;
   },
 
+  onChangeDisableState() {
+    this.select.isEditable = !this.disabled;
+  },
+
   createInput() {
     return new SelectField(Object.assign({}, this.selectOpts, {
       items: this.users ? this.users.models : [],
@@ -41,6 +46,7 @@ module.exports = View.extend({
   render() {
     this.select = this.createInput();
     this.listenTo(this.select, 'change:value', this.onChange);
+    this.listenTo(this, 'change:disabled', this.onChangeDisableState);
 
     this.renderWithTemplate(this);
     this.renderSubview(this.select);

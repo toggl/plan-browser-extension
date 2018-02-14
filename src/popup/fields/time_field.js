@@ -17,6 +17,7 @@ const TimeField = View.extend({
     pickedTime: 'boolean',
     timepicker: 'state',
     inputOpts: 'object',
+    disabled: 'boolean',
   },
 
   derived: {
@@ -50,6 +51,11 @@ const TimeField = View.extend({
     showTimepicker: {
       type: 'toggle',
       hook: 'timepicker'
+    },
+    disabled: {
+      hook: 'input',
+      name: 'disabled',
+      type: 'booleanAttribute',
     }
   },
 

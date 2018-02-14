@@ -7,6 +7,7 @@ module.exports = View.extend({
   props: {
     value: 'number',
     selectOpts: 'object',
+    disabled: 'boolean',
   },
 
   derived: {
@@ -26,6 +27,10 @@ module.exports = View.extend({
     this.listenTo(this, 'change:collection', this.onCollection);
   },
 
+  onChangeDisableState() {
+    this.select.isEditable = !this.disabled;
+  },
+
   onCollection() {
     this.render();
   },
@@ -33,6 +38,7 @@ module.exports = View.extend({
   render() {
     this.select = this.createInput();
     this.listenTo(this.select, 'change:value', this.onChange);
+    this.listenTo(this, 'change:disabled', this.onChangeDisableState);
 
     this.renderWithTemplate(this);
     this.renderSubview(this.select);

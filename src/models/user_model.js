@@ -8,6 +8,7 @@ const UserModel = Model.extend({
     active: 'boolean',
     weight: 'number',
     picture_url: 'string',
+    role: 'string',
   },
 
   sync

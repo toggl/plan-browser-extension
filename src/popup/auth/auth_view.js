@@ -1,7 +1,10 @@
+const Promise = require('bluebird');
 const View = require('ampersand-view');
 const api = require('../../api/api');
 const FormErrors = require('../form/form_errors');
 const TextField = require('../fields/input');
+const {clear: clearMe} = require('../../utils/me');
+const {clear: clearPreferences} = require('../../utils/preferences');
 
 const AuthView = View.extend({
   template: require('./auth_view.hbs'),
@@ -76,13 +79,17 @@ const AuthView = View.extend({
     const hub = this.hub;
     hub.trigger('loader:show');
 
-    api.auth.authenticate(credentials).then(function() {
-      hub.trigger('loader:hide');
-      hub.trigger('popup:update');
-    }, function(error) {
-      hub.trigger('loader:hide');
-      hub.trigger('error:show', error);
-    });
+    Promise.all([
+      clearPreferences(),
+      clearMe(),
+      api.auth.authenticate(credentials).then(function() {
+        hub.trigger('loader:hide');
+        hub.trigger('popup:update');
+      }, function(error) {
+        hub.trigger('loader:hide');
+        hub.trigger('error:show', error);
+      })
+    ]);
   },
 
   onCancel(event) {

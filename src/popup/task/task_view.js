@@ -9,6 +9,7 @@ const EstimateField = require('../fields/estimate_field');
 const DateField = require('../fields/date_field');
 const TimeField = require('../fields/time_field');
 const AccountField = require('../fields/account_field');
+const fetchMe = require('../../utils/me');
 const fetchPreferences = require('../../utils/preferences');
 const TextField = require('../fields/input');
 
@@ -19,7 +20,9 @@ const TaskView = View.extend({
     hub: 'object',
     user: 'state',
     project: 'state',
-    overlay: 'boolean'
+    overlay: 'boolean',
+    workspace: 'state',
+    me: 'object',
   },
 
   subviews: {
@@ -147,6 +150,21 @@ const TaskView = View.extend({
     'click [data-hook=button-cancel]': 'onCancel'
   },
 
+  derived: {
+    accountIsReadonly: {
+      deps: ['workspace.id', 'me.id'],
+      fn() {
+        if (!(this.workspace && this.me)) {
+          return true;
+        }
+
+        const {id} = this.me;
+        const {role} = this.workspace.users.get(id);
+        return role === 'readonly';
+      }
+    }
+  },
+
   bindings: {
     'user.isFilled': {
       type: 'booleanClass',
@@ -165,7 +183,22 @@ const TaskView = View.extend({
       hook: 'done-overlay',
       yes: 'task-popup__overlay--visible',
       no: 'task-popup__overlay--hidden'
-    }
+    },
+    accountIsReadonly: [
+      {
+        type: 'booleanClass',
+        yes: 'task-popup--disabled'
+      },
+      {
+        type: 'booleanAttribute',
+        selector: '.button--submit',
+        name: 'disabled',
+      },
+      {
+        type: 'toggle',
+        hook: 'readonly-label',
+      }
+    ],
   },
 
   render() {
@@ -195,14 +228,16 @@ const TaskView = View.extend({
 
     this.hub.trigger('loader:show');
 
-    this
-      .accounts
-      .fetchEverything()
-      .then(fetchPreferences)
-      .then(preferences => {
-        const account = this.accounts.get(preferences.selected_account_id);
-        this.account.switchAccount(account);
-        this.user.switchAccount(account);
+    Promise.all([
+      fetchPreferences(),
+      fetchMe(),
+      this.accounts.fetchEverything(),
+    ]).then(([preferences, me]) => {
+        this.me = me;
+
+        this
+          .account
+          .switchAccount(this.accounts.get(preferences.selected_account_id));
 
         this.hub.trigger('loader:hide');
         this.focusNameField();
@@ -215,10 +250,19 @@ const TaskView = View.extend({
   },
 
   onAccountSelected() {
-    const account = this.accounts.get(this.account.value);
-    this.user.switchAccount(account);
+    this.workspace = this.accounts.get(this.account.value);
+    this.user.switchAccount(this.workspace);
     this.project.value = null;
-    this.project.collection = account.projects;
+    this.project.collection = this.workspace.projects;
+
+    this.name.input.disabled = this.accountIsReadonly;
+    this.user.disabled = this.accountIsReadonly;
+    this.project.disabled = this.accountIsReadonly;
+    this.start_date.disabled = this.accountIsReadonly;
+    this.end_date.disabled = this.accountIsReadonly;
+    this.start_time.disabled = this.accountIsReadonly;
+    this.end_time.disabled = this.accountIsReadonly;
+    this.estimate.disabled = this.accountIsReadonly;
   },
 
   onSubmit(event) {
@@ -245,12 +289,12 @@ const TaskView = View.extend({
     if (this.model.collection) {
       this.model.collection.remove(this.model);
     }
-    const account = this.accounts.get(this.account.value);
-    account.tasks.add(this.model);
+
+    this.workspace.tasks.add(this.model);
 
     // set task color
     if (this.project.value) {
-      const project = account.projects.get(this.project.value);
+      const project = this.workspace.projects.get(this.project.value);
       if (project) {
         this.model.set({
           color: project.color,
@@ -263,7 +307,7 @@ const TaskView = View.extend({
 
     this.model.save()
       .then(() => {
-        this.hub.trigger('task:created', this.model, account);
+        this.hub.trigger('task:created', this.model, this.workspace);
 
         this.hideLoader();
         this.showOverlay().then(() => this.closePopup());

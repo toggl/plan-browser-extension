@@ -5,7 +5,7 @@ const storage = require('./storage');
 
 const fetchPreferences = () => new Promise((resolve, reject) => {
   const opts = {
-    url: `${config.api.host}/api/v3/me/preferences`,
+    url: `${config.api.host}/api/v3/me`,
     error: reject,
     success: resolve
   };
@@ -15,28 +15,28 @@ const fetchPreferences = () => new Promise((resolve, reject) => {
 
 module.exports = () => new Promise((resolve, reject) =>
   storage
-    .get('preferences')
-    .then(({preferences}) => {
-      if (preferences) {
-        return resolve(preferences);
+    .get('me')
+    .then(({me}) => {
+      if (me) {
+        return resolve(me);
       }
 
       fetchPreferences()
         .then(data => {
-          preferences = data;
-          return storage.set({preferences});
+          me = data;
+          return storage.set({me});
         }, reject)
-        .then(() => resolve(preferences), reject);
+        .then(() => resolve(me), reject);
     }, reject)
 );
 
 module.exports.set = exports.set = data => new Promise((resolve, reject) =>
   storage
-    .get('preferences')
-    .then(({preferences}) => {
-      preferences = Object.assign({}, preferences, data);
-      return storage.set({preferences});
+    .get('me')
+    .then(({me}) => {
+      me = Object.assign({}, me, data);
+      return storage.set({me});
     }, reject)
 );
 
-module.exports.clear = exports.clear = () => storage.remove('preferences');
+module.exports.clear = exports.clear = () => storage.remove('me');
