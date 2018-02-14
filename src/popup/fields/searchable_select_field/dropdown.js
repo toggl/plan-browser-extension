@@ -135,9 +135,9 @@ module.exports = View.extend({
       const row = iterable[index];
       if (index === this.selected) {
         element = row;
-        row.classList.add('row--bg-medium');
+        row.classList.add('searchable-select-dropdown__item--active');
       } else {
-        row.classList.remove('row--bg-medium');
+        row.classList.remove('searchable-select-dropdown__item--active');
       }
     }
 
