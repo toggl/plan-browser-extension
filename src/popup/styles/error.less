@@ -1,0 +1,34 @@
+.error {
+  position: absolute;
+  left: 0; right: 0;
+  top: 0; bottom: 0;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 13px;
+  text-align: center;
+  background-color: #ffffff;
+
+  &__message {
+    color: rgba(0, 0, 0, .35);
+    font-weight: 600;
+
+    a {
+      color: @color-danger;
+      text-decoration: none;
+    }
+  }
+
+  &__image {
+    display: inline-block;
+    width: 167px;
+    height: 148px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('/images/empty_yellow.png');
+    @media @mq-retina {
+      background-image: url('/images/empty_yellow@2x.png');
+    }
+  }
+}

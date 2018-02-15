@@ -3,14 +3,15 @@ const moment = require('moment');
 const View = require('ampersand-view');
 const AccountCollection = require('../../models/account_collection');
 const FormErrors = require('../form/form_errors');
-const TextField = require('../fields/text_field');
 const UserField = require('../fields/user_field');
 const ProjectField = require('../fields/project_field');
 const EstimateField = require('../fields/estimate_field');
 const DateField = require('../fields/date_field');
 const TimeField = require('../fields/time_field');
 const AccountField = require('../fields/account_field');
+const fetchMe = require('../../utils/me');
 const fetchPreferences = require('../../utils/preferences');
+const TextField = require('../fields/input');
 
 const TaskView = View.extend({
   template: require('./task_view.hbs'),
@@ -19,24 +20,125 @@ const TaskView = View.extend({
     hub: 'object',
     user: 'state',
     project: 'state',
-    overlay: 'boolean'
+    overlay: 'boolean',
+    workspace: 'state',
+    me: 'object',
   },
 
   subviews: {
-    name: { hook: 'input-name', constructor: TextField },
-    start_date: { hook: 'input-start-date', constructor: DateField },
-    end_date: { hook: 'input-end-date', constructor: DateField },
-    start_time: { hook: 'input-start-time', constructor: TimeField },
-    end_time: { hook: 'input-end-time', constructor: TimeField },
-    user: { hook: 'select-user', prepareView(el) {
-      return new UserField({el, parent: this});
-    }},
-    project: { hook: 'select-project', constructor: ProjectField },
-    estimate: { hook: 'input-estimate', constructor: EstimateField },
-    errors: { hook: 'errors', constructor: FormErrors },
     account: { hook: 'select-account', prepareView(el) {
-      return new AccountField({el, accounts: this.accounts, parent: this});
+      return new AccountField({
+        el,
+        accounts: this.accounts,
+        parent: this,
+        selectOpts: {
+          tabIndex: 1,
+        }
+      });
     }},
+    name: {
+      hook: 'input-name',
+      prepareView(el) {
+        return new TextField({
+          el,
+          name: 'name',
+          label: 'Name',
+          placeholder: 'Type here...',
+          value: '',
+          tabIndex: 2,
+          validations: [{
+            run: value => value.length > 0,
+            message: '*Name cannot be empty',
+          }]
+        });
+      }
+    },
+    user: {
+      hook: 'select-user',
+      prepareView(el) {
+        return new UserField({
+          el,
+          selectOpts: {
+            tabIndex: 3,
+          }
+        });
+      }
+    },
+    project: {
+      hook: 'select-project',
+      prepareView(el) {
+        return new ProjectField({
+          el,
+          selectOpts: {
+            tabIndex: 4,
+          }
+        });
+      }
+    },
+    estimate: {
+      hook: 'input-estimate',
+      prepareView(el) {
+        return new EstimateField({
+          el,
+          inputOpts: {
+            tabIndex: 5,
+          }
+        });
+      }
+    },
+    start_time: {
+      hook: 'input-start-time',
+      prepareView(el) {
+        return new TimeField({
+          el,
+          inputOpts: {
+            tabIndex: 6,
+            name: 'start-time',
+            label: 'Start Time'
+          }
+        });
+      }
+    },
+    end_time: {
+      hook: 'input-end-time',
+      prepareView(el) {
+        return new TimeField({
+          el,
+          inputOpts: {
+            tabIndex: 7,
+            name: 'end-time',
+            label: 'End Time'
+          }
+        });
+      }
+    },
+    start_date: {
+      hook: 'input-start-date',
+      prepareView(el) {
+        return new DateField({
+          el,
+          inputOpts: {
+            tabIndex: 8,
+            name: 'start-date',
+            label: 'Start Date'
+          }
+        });
+      }
+    },
+    end_date: {
+      hook: 'input-end-date',
+      prepareView(el) {
+        return new DateField({
+          el,
+          inputOpts: {
+            tabIndex: 9,
+            name: 'end-date',
+            label: 'End Date'
+          }
+        });
+      }
+    },
+    errors: { hook: 'errors', constructor: FormErrors },
   },
 
   collections: {
@@ -46,6 +148,21 @@ const TaskView = View.extend({
   events: {
     'submit [data-hook=form]': 'onSubmit',
     'click [data-hook=button-cancel]': 'onCancel'
+  },
+
+  derived: {
+    accountIsReadonly: {
+      deps: ['workspace.id', 'me.id'],
+      fn() {
+        if (!(this.workspace && this.me)) {
+          return true;
+        }
+
+        const {id} = this.me;
+        const {role} = this.workspace.users.get(id);
+        return role === 'readonly';
+      }
+    }
   },
 
   bindings: {
@@ -66,20 +183,41 @@ const TaskView = View.extend({
       hook: 'done-overlay',
       yes: 'task-popup__overlay--visible',
       no: 'task-popup__overlay--hidden'
-    }
+    },
+    accountIsReadonly: [
+      {
+        type: 'booleanClass',
+        yes: 'task-popup--disabled'
+      },
+      {
+        type: 'booleanAttribute',
+        selector: '.button--submit',
+        name: 'disabled',
+      },
+      {
+        type: 'toggle',
+        hook: 'readonly-label',
+      }
+    ],
   },
 
   render() {
     this.renderWithTemplate(this);
 
     [
-      this.name, this.start_date, this.end_date, this.start_time, this.end_time,
-      this.user, this.project, this.estimate, this.account
+      this.name,
+      this.start_date,
+      this.end_date,
+      this.start_time,
+      this.end_time,
+      this.user,
+      this.project,
+      this.estimate,
+      this.account
     ].forEach(field => {
       this.listenTo(field, 'change:value', this.hideErrors);
     }, this);
 
-    this.listenTo(this.user, 'change:value', this.onUserSelected);
     this.listenTo(this.account, 'change:value', this.onAccountSelected);
 
     this.name.value = this.model.name;
@@ -90,14 +228,16 @@ const TaskView = View.extend({
 
     this.hub.trigger('loader:show');
 
-    this
-      .accounts
-      .fetchEverything()
-      .then(fetchPreferences)
-      .then(preferences => {
-        const account = this.accounts.get(preferences.selected_account_id);
-        this.account.switchAccount(account);
-        this.user.switchAccount(account);
+    Promise.all([
+      fetchPreferences(),
+      fetchMe(),
+      this.accounts.fetchEverything(),
+    ]).then(([preferences, me]) => {
+        this.me = me;
+
+        this
+          .account
+          .switchAccount(this.accounts.get(preferences.selected_account_id));
 
         this.hub.trigger('loader:hide');
         this.focusNameField();
@@ -109,15 +249,20 @@ const TaskView = View.extend({
     return this;
   },
 
-  onUserSelected() {
-
-  },
-
   onAccountSelected() {
-    const account = this.accounts.get(this.account.value);
-    this.user.switchAccount(account);
+    this.workspace = this.accounts.get(this.account.value);
+    this.user.switchAccount(this.workspace);
     this.project.value = null;
-    this.project.collection = account.projects;
+    this.project.collection = this.workspace.projects;
+
+    this.name.input.disabled = this.accountIsReadonly;
+    this.user.disabled = this.accountIsReadonly;
+    this.project.disabled = this.accountIsReadonly;
+    this.start_date.disabled = this.accountIsReadonly;
+    this.end_date.disabled = this.accountIsReadonly;
+    this.start_time.disabled = this.accountIsReadonly;
+    this.end_time.disabled = this.accountIsReadonly;
+    this.estimate.disabled = this.accountIsReadonly;
   },
 
   onSubmit(event) {
@@ -129,27 +274,36 @@ const TaskView = View.extend({
     }
 
     this.model.set({
-      name: this.name.value,
+      name: this.name.input.value,
       user_id: this.user.value,
       project_id: this.project.value,
       start_date: this.start_date.value,
       end_date: this.end_date.value,
       start_time: this.start_time.value,
       end_time: this.end_time.value,
-      estimated_hours: this.estimate.value
+      estimated_minutes: this.estimate.value,
     });
 
+    //
     if (this.model.collection) {
       this.model.collection.remove(this.model);
     }
-    const account = this.accounts.get(this.account.value);
-    account.tasks.add(this.model);
 
+    this.workspace.tasks.add(this.model);
+
+    // default task color
+    if (!this.project.value) {
+      this.model.set({
+        color: 21,
+      });
+    }
+
+    // save
     this.showLoader();
 
     this.model.save()
       .then(() => {
-        this.hub.trigger('task:created', this.model, account);
+        this.hub.trigger('task:created', this.model, this.workspace);
 
         this.hideLoader();
         this.showOverlay().then(() => this.closePopup());
@@ -197,11 +351,6 @@ const TaskView = View.extend({
         this.errors.addError('End date cannot be before start date');
         return false;
       }
-    }
-
-    if (this.estimate.isFilled && !this.estimate.isValid) {
-      this.errors.addError('Daily estimate is not valid');
-      return false;
     }
 
     return true;

@@ -56,7 +56,7 @@ gulp.task('build:less', function() {
   const styles = [
     'src/button/styles/*.less',
     'src/options/options.less',
-    'src/popup/styles/popup_page.less'
+    'src/popup/styles/popup_page.less',
   ];
 
   return gulp.src(styles)
@@ -68,7 +68,7 @@ gulp.task('watch:less', ['build:less'], function() {
   const styles = [
     'src/button/styles/*.less',
     'src/options/options.less',
-    'src/popup/styles/popup_page.less'
+    'src/popup/styles/*.less',
   ];
 
   gulp.watch(styles, ['build:less']);

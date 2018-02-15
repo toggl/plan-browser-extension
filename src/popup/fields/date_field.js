@@ -1,13 +1,23 @@
 const moment = require('moment');
 const View = require('ampersand-view');
 const DatepickerView = require('../datepicker/datepicker_view.js');
+const TextField = require('../fields/input');
+
+const template = `<div class="date-input">
+  <div data-hook=input></div>
+  <div class="date-input__datepicker" data-hook=datepicker></div>
+</div>`;
 
 const DateField = View.extend({
+  template,
+
   props: {
     value: 'date',
     hasFocus: 'boolean',
     pickedDate: 'boolean',
-    datepicker: 'state'
+    datepicker: 'state',
+    inputOpts: 'object',
+    disabled: 'boolean',
   },
 
   derived: {
@@ -31,28 +41,29 @@ const DateField = View.extend({
     }
   },
 
-  events: {
-    'change [data-hook=control]': 'onChange',
-    'focus [data-hook=control]': 'onFocus',
-    'blur [data-hook=control]': 'onBlur'
-  },
-
   bindings: {
     formatted: {
       type(el, value) {
         el.value = value;
       },
-      hook: 'control'
+      hook: 'input'
     },
     showDatepicker: {
       type: 'toggle',
       hook: 'datepicker'
+    },
+    disabled: {
+      hook: 'input',
+      name: 'disabled',
+      type: 'booleanAttribute',
     }
   },
 
   onChange(event) {
-    const m = moment(event.target.value);
-    this.value = m.isValid() ? m.toDate() : null;
+    if (event.target) {
+      const m = moment(event.target.value);
+      this.value = m.isValid() ? m.toDate() : null;
+    }
   },
 
   onFocus() {
@@ -64,11 +75,26 @@ const DateField = View.extend({
     this.hasFocus = false;
   },
 
-  render() {
+  initialize() {
+    if (this.value) {
+      this.raw = String(this.value);
+    }
+
     this.datepicker = new DatepickerView();
     this.listenTo(this.datepicker, 'select', this.onDatePicked);
-    this.renderSubview(this.datepicker, this.queryByHook('datepicker'));
 
+    this.input = new TextField(Object.assign({}, this.inputOpts, {
+      placeholder: '--',
+    }));
+    this.listenTo(this.input, 'change', this.onChange);
+    this.listenTo(this.input, 'focus', this.onFocus);
+    this.listenTo(this.input, 'blur', this.onBlur);
+  },
+
+  render() {
+    this.renderWithTemplate(this);
+    this.renderSubview(this.datepicker, this.queryByHook('datepicker'));
+    this.renderSubview(this.input, this.queryByHook('input'));
     return this;
   },
 

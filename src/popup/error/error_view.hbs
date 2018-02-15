@@ -1,4 +1,8 @@
 <div class="error">
+  <div class="row--center">
+    <div class="error__image"></div>
+  </div>
+
   <div class="error__message">
     {{#if message}}
       <p>{{message}}</p>
@@ -11,8 +15,6 @@
       </p>
     {{/if}}
   </div>
-  <div class="error__buttons">
-    <a href="#" class="button button--cancel" data-hook="button-close">Close</a>
-    <a href="#" class="button button--text" data-hook="button-back">Back</a>
-  </div>
+
+  <a href="#" data-hook="button-back">Try Again</a>
 </div>

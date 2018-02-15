@@ -1,8 +1,10 @@
+const Promise = require('bluebird');
 const View = require('ampersand-view');
 const api = require('../../api/api');
 const FormErrors = require('../form/form_errors');
-const TextField = require('../fields/text_field');
-const EmailField = require('../fields/email_field');
+const TextField = require('../fields/input');
+const {clear: clearMe} = require('../../utils/me');
+const {clear: clearPreferences} = require('../../utils/preferences');
 
 const AuthView = View.extend({
   template: require('./auth_view.hbs'),
@@ -12,8 +14,41 @@ const AuthView = View.extend({
   },
 
   subviews: {
-    email: { hook: 'input-email', constructor: EmailField },
-    password: { hook: 'input-password', constructor: TextField },
+    email: {
+      hook: 'input-email',
+      prepareView(el) {
+        return new TextField({
+          el,
+          name: 'email',
+          label: 'Email',
+          placeholder: 'Type here...',
+          value: '',
+          tabIndex: 1,
+          validations: [{
+            run: value => value.length > 0,
+            message: '*Email cannot be empty',
+          }]
+        });
+      }
+    },
+    password: {
+      hook: 'input-password',
+      prepareView(el) {
+        return new TextField({
+          el,
+          name: 'password',
+          label: 'Password',
+          placeholder: 'Minimum 8 characters...',
+          value: '',
+          type: 'password',
+          tabIndex: 2,
+          validations: [{
+            run: value => value.length > 0,
+            message: '*Password cannot be empty',
+          }]
+        });
+      }
+    },
     errors: { hook: 'errors', constructor: FormErrors }
   },
 
@@ -24,6 +59,7 @@ const AuthView = View.extend({
 
   render() {
     this.renderWithTemplate(this);
+    this.email.focus();
     return this;
   },
 
@@ -43,13 +79,17 @@ const AuthView = View.extend({
     const hub = this.hub;
     hub.trigger('loader:show');
 
-    api.auth.authenticate(credentials).then(function() {
-      hub.trigger('loader:hide');
-      hub.trigger('popup:update');
-    }, function(error) {
-      hub.trigger('loader:hide');
-      hub.trigger('error:show', error);
-    });
+    Promise.all([
+      clearPreferences(),
+      clearMe(),
+      api.auth.authenticate(credentials).then(function() {
+        hub.trigger('loader:hide');
+        hub.trigger('popup:update');
+      }, function(error) {
+        hub.trigger('loader:hide');
+        hub.trigger('error:show', error);
+      })
+    ]);
   },
 
   onCancel(event) {
@@ -64,11 +104,6 @@ const AuthView = View.extend({
 
     if (!this.email.isFilled) {
       this.errors.addError('E-mail cannot be empty');
-      return false;
-    }
-
-    if (!this.email.isEmail) {
-      this.errors.addError('E-mail is invalid');
       return false;
     }
 

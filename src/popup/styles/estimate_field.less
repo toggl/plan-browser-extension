@@ -1,0 +1,82 @@
+.estimate-field {
+  display: flex;
+  align-items: center;
+  flex: 1;
+
+  &__container {
+    background-color: #f8f8f8;
+    border: 1px solid #e5e5e5;
+    padding-left: 6px;
+    border-radius: 2px;
+    font-size: 13px;
+  }
+
+  &__control-label {
+    padding: 0 3px !important;
+  }
+
+  &__placeholder {
+    color: @color-text-light
+  }
+
+  &__input-wrapper {
+    height: 32px;
+    border-radius: 4px;
+
+    & > div {
+      height: 100%;
+    }
+
+    &--active {
+      border-color: @color-primary;
+    }
+  }
+
+  &__input {
+    border: none;
+    border-radius: 0;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    width: 15px;
+    background: transparent;
+    outline: none;
+
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+  }
+
+  &__label {
+    padding-right: 5px;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__button {
+    @include hover(0.5, 0.3);
+    padding: 10px 5px;
+    background-position: center;
+    height: 8px;
+    width: 8px;
+    box-sizing: content-box;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    &__plus {
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3c?xml version='1.0' encoding='UTF-8'?%3e%3csvg width='8px' height='8px' viewBox='0 0 8 8' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cg id='Artboard' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3e%3cg id='plus' fill='%230041FF' fill-rule='nonzero'%3e%3cpolygon id='Shape-Copy' points='5 0 3 0 3 3 0 3 0 5 3 5 3 8 5 8 5 5 8 5 8 3 5 3'%3e%3c/polygon%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
+    }
+    &__minus {
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3c?xml version='1.0' encoding='UTF-8'?%3e%3csvg width='8px' height='2px' viewBox='0 0 8 2' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cg id='Artboard' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3e%3cg id='minus' fill='%230041FF' fill-rule='nonzero'%3e%3crect id='Rectangle-path-Copy' x='0' y='0' width='8' height='2'%3e%3c/rect%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
+    }
+    &:last-child {
+      padding-right: 10px;
+    }
+  }
+}

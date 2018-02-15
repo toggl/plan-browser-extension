@@ -65,11 +65,13 @@ const PopupView = View.extend({
     } else {
       this.error = new ErrorView({ hub: this.hub, error });
       this.renderSubview(this.error);
+      this.resizeWindow(280 < window.innerHeight ? 0 : 100);
     }
   },
 
   hideError() {
     this.error.remove();
+    this.resizeWindow();
   },
 
   saveTaskSource(task, account) {
@@ -84,8 +86,7 @@ const PopupView = View.extend({
     });
   },
 
-  resizeWindow() {
-    const dy = document.body.offsetHeight - window.innerHeight;
+  resizeWindow(dy = document.body.offsetHeight - window.innerHeight + 5) {
     window.resizeBy(0, dy);
   }
 });

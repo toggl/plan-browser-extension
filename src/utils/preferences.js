@@ -6,8 +6,8 @@ const storage = require('./storage');
 const fetchPreferences = () => new Promise((resolve, reject) => {
   const opts = {
     url: `${config.api.host}/api/v3/me/preferences`,
-    error: err => reject(err),
-    success: response => resolve(response)
+    error: reject,
+    success: resolve
   };
 
   sync('read', {}, opts);
@@ -38,3 +38,5 @@ module.exports.set = exports.set = data => new Promise((resolve, reject) =>
       return storage.set({preferences});
     }, reject)
 );
+
+module.exports.clear = exports.clear = () => storage.remove('preferences');
