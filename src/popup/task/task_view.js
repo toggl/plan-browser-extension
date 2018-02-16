@@ -155,7 +155,7 @@ const TaskView = View.extend({
       deps: ['workspace.id', 'me.id'],
       fn() {
         if (!(this.workspace && this.me)) {
-          return true;
+          return false;
         }
 
         const {id} = this.me;
