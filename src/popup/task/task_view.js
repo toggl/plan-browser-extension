@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 const moment = require('moment');
 const View = require('ampersand-view');
+const find = require('lodash.find');
 const AccountCollection = require('../../models/account_collection');
 const FormErrors = require('../form/form_errors');
 const UserField = require('../fields/user_field');
@@ -10,7 +11,6 @@ const DateField = require('../fields/date_field');
 const TimeField = require('../fields/time_field');
 const AccountField = require('../fields/account_field');
 const fetchMe = require('../../utils/me');
-const fetchPreferences = require('../../utils/preferences');
 const TextField = require('../fields/input');
 
 const TaskView = View.extend({
@@ -228,16 +228,24 @@ const TaskView = View.extend({
 
     this.hub.trigger('loader:show');
 
-    Promise.all([
-      fetchPreferences(),
-      fetchMe(),
-      this.accounts.fetchEverything(),
-    ]).then(([preferences, me]) => {
+    fetchMe().then(me => {
         this.me = me;
+        this.me.workspaces = this.me.workspaces || this.me.accounts;
+        this.me.workspaces = this.me.workspaces.filter(({active}) => active);
+        this.me.workspaces.map(workspace => this.accounts.add(workspace));
 
-        this
-          .account
-          .switchAccount(this.accounts.get(preferences.selected_account_id));
+        if (
+          !this.me.preferences.selected_account_id ||
+          !find(this.me.workspaces, {id: this.me.preferences.selected_account_id})
+        ) {
+          // todo(mitchel): add check for no workspaces
+          this.me.preferences.selected_account_id = this.me.workspaces[0].id;
+        }
+
+        return this.accounts.fetchEverything();
+      }).then(() => {
+        const account = this.accounts.get(this.me.preferences.selected_account_id);
+        this.account.switchAccount(account);
 
         this.hub.trigger('loader:hide');
         this.focusNameField();

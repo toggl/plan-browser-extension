@@ -4,7 +4,6 @@ const api = require('../../api/api');
 const FormErrors = require('../form/form_errors');
 const TextField = require('../fields/input');
 const {clear: clearMe} = require('../../utils/me');
-const {clear: clearPreferences} = require('../../utils/preferences');
 
 const AuthView = View.extend({
   template: require('./auth_view.hbs'),
@@ -80,7 +79,6 @@ const AuthView = View.extend({
     hub.trigger('loader:show');
 
     Promise.all([
-      clearPreferences(),
       clearMe(),
       api.auth.authenticate(credentials).then(function() {
         hub.trigger('loader:hide');
