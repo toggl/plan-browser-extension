@@ -12,13 +12,10 @@ const AccountCollection = RestCollection.extend({
   sync,
 
   fetchEverything() {
-    return this.fetch()
-      .then(() => {
-        return Promise.all([
-          this.fetchAllUsers(),
-          this.fetchAllProjects()
-        ]);
-      });
+    return Promise.all([
+      this.fetchAllUsers(),
+      this.fetchAllProjects()
+    ]);
   },
 
   fetchAllUsers() {

@@ -1,6 +1,6 @@
 const View = require('ampersand-view');
 const FilteredCollection = require('ampersand-filtered-subcollection');
-const preferences = require('../../utils/preferences');
+const {saveSelectedAccount} = require('../../utils/me');
 const api = require('../../api/api');
 
 const AccountField = View.extend({
@@ -68,7 +68,7 @@ const AccountField = View.extend({
 
   onChange(event) {
     this.value = parseInt(event.target.dataset.workspace, 10);
-    preferences.set({selected_account_id: this.value});
+    saveSelectedAccount(this.value);
     this.showingWorkspaces = false;
   },
 

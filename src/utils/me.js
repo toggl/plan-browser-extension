@@ -3,9 +3,9 @@ const config = require('../api/config');
 const sync = require('../api/api_sync');
 const storage = require('./storage');
 
-const fetchPreferences = () => new Promise((resolve, reject) => {
+const fetch = () => new Promise((resolve, reject) => {
   const opts = {
-    url: `${config.api.host}/api/v3/me`,
+    url: `${config.api.host}/timeline/v1/me`,
     error: reject,
     success: resolve
   };
@@ -17,20 +17,20 @@ module.exports = () => new Promise((resolve, reject) =>
   storage
     .get('me')
     .then(({me}) => {
-      if (me) {
-        return resolve(me);
-      }
-
-      fetchPreferences()
+      fetch()
         .then(data => {
+          const {selected_account_id} = me.preferences;
           me = data;
+          // use saved selected_account_id
+          me.preferences.selected_account_id
+            = selected_account_id || me.preferences.selected_account_id;
           return storage.set({me});
         }, reject)
         .then(() => resolve(me), reject);
     }, reject)
 );
 
-module.exports.set = exports.set = data => new Promise((resolve, reject) =>
+module.exports.set = data => new Promise((resolve, reject) =>
   storage
     .get('me')
     .then(({me}) => {
@@ -39,4 +39,13 @@ module.exports.set = exports.set = data => new Promise((resolve, reject) =>
     }, reject)
 );
 
-module.exports.clear = exports.clear = () => storage.remove('me');
+module.exports.saveSelectedAccount = id => new Promise((resolve, reject) =>
+  storage
+    .get('me')
+    .then(({me}) => {
+      me.preferences.selected_account_id = id;
+      return storage.set({me});
+    }, reject)
+);
+
+module.exports.clear = () => storage.remove('me');
