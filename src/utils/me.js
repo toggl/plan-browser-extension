@@ -19,11 +19,12 @@ module.exports = () => new Promise((resolve, reject) =>
     .then(({me}) => {
       fetch()
         .then(data => {
-          const {selected_account_id} = data.preferences;
+          let selectedAccountId = data.preferences.selected_account_id;
+          if (me && me.preferences && me.preferences.selected_account_id) {
+            selectedAccountId = me.preferences.selected_account_id;
+          }
           me = data;
-          // use saved selected_account_id
-          me.preferences.selected_account_id
-            = selected_account_id || me.preferences.selected_account_id;
+          me.preferences.selected_account_id = selectedAccountId;
           return storage.set({me});
         }, reject)
         .then(() => resolve(me), reject);
