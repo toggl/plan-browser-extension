@@ -28,8 +28,6 @@ const TrelloButtonView = AmpersandView.extend({
 
 const buttons = new HashMap();
 
-const DATE_RE = /(\d{1,2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)( (\d{4}))?/;
-
 function createObserver() {
   observer.create('.card-detail-window')
     .onAdded(createButton)
@@ -38,24 +36,46 @@ function createObserver() {
 }
 
 function findDate(meta) {
-  const matches = DATE_RE.exec(meta);
-  if (!matches) {
+  const m = meta.split(' at ');
+  if (!m.length) {
     return;
   }
 
-  const m = moment(matches[0], 'DD MMM YYYY');
-  if (!m.isValid()) {
-    return;
+  let date = m[0];
+  const time = m[1];
+  let dt = moment().startOf('day');
+
+  switch (date) {
+    case 'today':
+      break;
+    case 'yesterday':
+      dt = dt.add(-1, 'days');
+      break;
+    case 'tomorrow':
+      dt = dt.add(1, 'days');
+      break;
+    default:
+      if (!(/\w{4}$/.test(date))) {
+        date += ` ${moment().format('YYYY')}`;
+      }
+      dt = moment(date);
   }
 
-  return m.toDate();
+  const tm = /^(\d{1,2})\:(\d{1,2})\s/.exec(time);
+
+  if (tm) {
+    dt.add(parseInt(tm[1]), 'hours');
+    dt.add(parseInt(tm[2]), 'minutes');
+  }
+
+  return dt.toDate();
 }
 
 function createButton(node) {
-  const titleEl = node.querySelector('.window-title h2');
-  const dueDateEl = node.querySelector('.js-card-detail-due-date-badge');
+  const nameEl = node.querySelector('.window-title h2');
+  const dueDateEl = node.querySelector('.js-date-text');
 
-  const name = titleEl.innerText;
+  const name = nameEl.innerText;
   const date = findDate(dueDateEl.innerText);
   const link = location.href;
 
