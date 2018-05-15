@@ -43,6 +43,8 @@ module.exports = () => new Promise((resolve, reject) =>
 
           data.preferences.selected_account_id = selectedAccountId;
 
+          me = data;
+
           return storage.set({me: data});
         }, reject)
         .then(() => resolve(me), reject);

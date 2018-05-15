@@ -83,6 +83,7 @@ const AuthView = View.extend({
       api.auth.authenticate(credentials).then(function() {
         hub.trigger('loader:hide');
         hub.trigger('popup:update');
+        return null;
       }, function(error) {
         hub.trigger('loader:hide');
         hub.trigger('error:show', error);

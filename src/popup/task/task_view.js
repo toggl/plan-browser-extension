@@ -224,7 +224,8 @@ const TaskView = View.extend({
 
     this.hub.trigger('loader:show');
 
-    fetchMe().then(me => {
+    fetchMe()
+      .then(me => {
         this.me = me;
         this.me.workspaces.map(workspace => accounts.add(workspace));
         return accounts.fetchEverything();
