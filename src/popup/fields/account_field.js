@@ -2,13 +2,13 @@ const View = require('ampersand-view');
 const FilteredCollection = require('ampersand-filtered-subcollection');
 const {saveSelectedAccount} = require('../../utils/me');
 const api = require('../../api/api');
+const accounts = require('../../models/account_collection');
 
 const AccountField = View.extend({
   template: require('./account_field.hbs'),
 
   props: {
     value: 'number',
-    accounts: 'collection',
     sortedAccounts: 'object',
     showingWorkspaces: ['boolean', true, false],
     showing: ['boolean', false, false],
@@ -35,7 +35,7 @@ const AccountField = View.extend({
     workspace: {
       deps: ['value'],
       fn() {
-        return this.accounts.get(this.value);
+        return accounts.get(this.value);
       }
     },
     accountsString: {
@@ -89,7 +89,7 @@ const AccountField = View.extend({
   },
 
   initialize() {
-    this.sortedAccounts = new FilteredCollection(this.accounts, {
+    this.sortedAccounts = new FilteredCollection(accounts, {
       comparator: 'name'
     });
 

@@ -35,4 +35,4 @@ const AccountCollection = RestCollection.extend({
   }
 });
 
-module.exports = AccountCollection;
+module.exports = new AccountCollection();
