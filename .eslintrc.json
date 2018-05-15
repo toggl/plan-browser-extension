@@ -22,7 +22,7 @@
     "curly": "error",
     "no-var": "warn",
     "object-shorthand": "warn",
-    "no-restricted-globals": ["error", "event", "Promise"],
+    "no-restricted-globals": ["error", "event", "Promise", "find"],
     "brace-style": "warn",
     "no-eq-null": "warn",
     "no-restricted-syntax": ["error", "ForOfStatement"]

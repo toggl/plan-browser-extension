@@ -2,6 +2,8 @@ const Promise = require('bluebird');
 const config = require('../api/config');
 const sync = require('../api/api_sync');
 const storage = require('./storage');
+const updateCustomColorsCss = require('./custom_colors_css');
+const find = require('lodash.find');
 
 const fetch = () => new Promise((resolve, reject) => {
   const opts = {
@@ -19,13 +21,31 @@ module.exports = () => new Promise((resolve, reject) =>
     .then(({me}) => {
       fetch()
         .then(data => {
+          data.workspaces = data.workspaces || data.accounts;
+          data.workspaces = data.workspaces.filter(({active}) => active);
+          data.workspaces.forEach(w => {
+            w.customColors = w.custom_colors;
+            delete w.custom_colors;
+          });
+
           let selectedAccountId = data.preferences.selected_account_id;
           if (me && me.preferences && me.preferences.selected_account_id) {
             selectedAccountId = me.preferences.selected_account_id;
           }
+
+          if (
+            !selectedAccountId ||
+            !find(data.workspaces, {id: selectedAccountId})
+          ) {
+            // todo(mitchel): add check for no workspaces
+            selectedAccountId = data.workspaces[0].id;
+          }
+
+          data.preferences.selected_account_id = selectedAccountId;
+
           me = data;
-          me.preferences.selected_account_id = selectedAccountId;
-          return storage.set({me});
+
+          return storage.set({me: data});
         }, reject)
         .then(() => resolve(me), reject);
     }, reject)
@@ -45,6 +65,7 @@ module.exports.saveSelectedAccount = id => new Promise((resolve, reject) =>
     .get('me')
     .then(({me}) => {
       me.preferences.selected_account_id = id;
+      updateCustomColorsCss(id);
       return storage.set({me});
     }, reject)
 );

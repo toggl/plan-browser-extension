@@ -1,8 +1,7 @@
 const Promise = require('bluebird');
 const moment = require('moment');
 const View = require('ampersand-view');
-const find = require('lodash.find');
-const AccountCollection = require('../../models/account_collection');
+const accounts = require('../../models/account_collection');
 const FormErrors = require('../form/form_errors');
 const UserField = require('../fields/user_field');
 const ProjectField = require('../fields/project_field');
@@ -10,8 +9,10 @@ const EstimateField = require('../fields/estimate_field');
 const DateField = require('../fields/date_field');
 const TimeField = require('../fields/time_field');
 const AccountField = require('../fields/account_field');
-const fetchMe = require('../../utils/me');
 const TextField = require('../fields/input');
+const fetchMe = require('../../utils/me');
+const updateCustomColorsCss = require('../../utils/custom_colors_css');
+
 
 const TaskView = View.extend({
   template: require('./task_view.hbs'),
@@ -29,7 +30,6 @@ const TaskView = View.extend({
     account: { hook: 'select-account', prepareView(el) {
       return new AccountField({
         el,
-        accounts: this.accounts,
         parent: this,
         selectOpts: {
           tabIndex: 1,
@@ -141,10 +141,6 @@ const TaskView = View.extend({
     errors: { hook: 'errors', constructor: FormErrors },
   },
 
-  collections: {
-    accounts: AccountCollection
-  },
-
   events: {
     'submit [data-hook=form]': 'onSubmit',
     'click [data-hook=button-cancel]': 'onCancel'
@@ -228,24 +224,16 @@ const TaskView = View.extend({
 
     this.hub.trigger('loader:show');
 
-    fetchMe().then(me => {
+    fetchMe()
+      .then(me => {
         this.me = me;
-        this.me.workspaces = this.me.workspaces || this.me.accounts;
-        this.me.workspaces = this.me.workspaces.filter(({active}) => active);
-        this.me.workspaces.map(workspace => this.accounts.add(workspace));
-
-        if (
-          !this.me.preferences.selected_account_id ||
-          !find(this.me.workspaces, {id: this.me.preferences.selected_account_id})
-        ) {
-          // todo(mitchel): add check for no workspaces
-          this.me.preferences.selected_account_id = this.me.workspaces[0].id;
-        }
-
-        return this.accounts.fetchEverything();
+        this.me.workspaces.map(workspace => accounts.add(workspace));
+        return accounts.fetchEverything();
       }).then(() => {
-        const account = this.accounts.get(this.me.preferences.selected_account_id);
+        const selectedAccountId = this.me.preferences.selected_account_id;
+        const account = accounts.get(selectedAccountId);
         this.account.switchAccount(account);
+        updateCustomColorsCss(selectedAccountId);
 
         this.hub.trigger('loader:hide');
         this.focusNameField();
@@ -258,7 +246,7 @@ const TaskView = View.extend({
   },
 
   onAccountSelected() {
-    this.workspace = this.accounts.get(this.account.value);
+    this.workspace = accounts.get(this.account.value);
     this.user.switchAccount(this.workspace);
     this.project.value = null;
     this.project.collection = this.workspace.projects;
