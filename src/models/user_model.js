@@ -11,7 +11,12 @@ const UserModel = Model.extend({
     role: 'string',
   },
 
-  sync
+  sync,
+
+  parse(attrs) {
+    attrs.picture_url = attrs.picture_url || 'missing.png';
+    return attrs;
+  },
 });
 
 module.exports = UserModel;

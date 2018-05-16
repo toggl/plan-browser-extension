@@ -7,7 +7,7 @@ const UserCollection = RestCollection.extend({
   model: UserModel,
 
   url() {
-    return config.api.host + '/api/v3/' + this.parent.id + '/users';
+    return config.api.host + '/timeline/v1/' + this.parent.id + '/members';
   },
 
   sync
