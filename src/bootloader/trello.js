@@ -94,6 +94,9 @@ function createButton(node) {
   const actionsEl = node.querySelector('.window-module.other-actions > div');
   actionsEl.insertBefore(buttonEl, actionsEl.firstChild);
 
+  titleObserver(node, state);
+  dueDateObserver(node, state);
+
   buttons.set(node, state);
 }
 
@@ -106,6 +109,34 @@ function removeButton(node) {
 
 function handleError(error) {
   console.error(error);
+}
+
+function titleObserver(node, state) {
+  const nameInput = node.querySelector('.js-card-detail-title-input');
+  if (nameInput) {
+    nameInput.onblur = () => {
+      state.task.name = nameInput.value;
+    };
+  }
+}
+
+function dueDateObserver(node, state) {
+  const el = document.querySelector('.pop-over');
+  const o = new MutationObserver(() => {
+    setTimeout(() => {
+      if (!el.classList.contains('is-shown')) {
+        const card = document.querySelector('.js-card-detail-due-date');
+        if (card.classList.contains('hide')) {
+          state.task.end_date = null;
+          return;
+        }
+        const dueDateEl = node.querySelector('.js-date-text');
+        state.task.end_date = findDate(dueDateEl.innerText);
+      }
+    }, 300);
+  });
+
+  o.observe(el, {childList: true});
 }
 
 if (!ButtonState.isLoaded()) {
