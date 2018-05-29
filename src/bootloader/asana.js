@@ -22,17 +22,22 @@ function createButton(element) {
   });
 
   const titleObserver = observer
-    .create('.SingleTaskTitleRow-taskName textarea', element)
+    .create('.SingleTaskTitleRow-taskName textarea, .SingleTaskTitleInput textarea', element)
     .onAdded(function(titleEl) {
-      const name = titleEl.value;
-      state.task.name = name;
+      state.task.name = titleEl.value;
+      titleEl.onblur = () => {
+        state.task.name = titleEl.value;
+      };
     })
     .start();
 
   const actionsObserver = observer
-    .create('.SingleTaskPaneToolbar', element)
+    .create('.SingleTaskPaneToolbar, .SingleTaskPaneToolbarEasyCompletion', element)
     .onAdded(function(actionsEl) {
-      const itemEl = domify('<div class="circularButtonView circularButtonView--default circularButtonView--onWhiteBackground circularButtonView--active SingleTaskPaneToolbar-button"></div>');
+      const cls = document.querySelector('.SingleTaskPaneToolbarEasyCompletion')
+        ? 'CircularButton CircularButton--enabled CircularButton--medium CircularButton--borderless  SingleTaskPaneToolbarEasyCompletion-button'
+        : 'circularButtonView circularButtonView--default circularButtonView--onWhiteBackground circularButtonView--active SingleTaskPaneToolbar-button';
+      const itemEl = domify(`<div class="${cls}"></div>`);
       const buttonEl = state.button.render().el;
 
       itemEl.appendChild(buttonEl);
