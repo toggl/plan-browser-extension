@@ -67,13 +67,16 @@ module.exports = View.extend({
     ]
   },
 
-  render() {
-    this.renderWithTemplate(this);
+  initialize() {
     this.dropdown = new Dropdown({
       items: this.items,
       getItemTemplate: this.getItemTemplate,
     });
     this.listenTo(this.dropdown, 'select', this.onSelect);
+  },
+
+  render() {
+    this.renderWithTemplate(this);
     this.renderSubview(this.dropdown);
   },
 

@@ -67,10 +67,7 @@ module.exports = View.extend({
   },
 
   render() {
-    this.renderWithTemplate({
-      suggestions: this.suggestions,
-      value: this.value
-    });
+    this.renderWithTemplate();
   },
 
   show() {
