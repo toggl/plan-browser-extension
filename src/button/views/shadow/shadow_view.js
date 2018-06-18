@@ -19,7 +19,9 @@ const ShadowView = View.extend({
 
   render() {
     this.renderWithTemplate();
-    this.shadow = this.el.createShadowRoot();
+    this.shadow = this.el.createShadowRoot
+      ? this.el.createShadowRoot()
+      : this.el; // todo(mitchel): use https://github.com/webcomponents/shadydom
 
     if (this.style) {
       const style = new StyleView({ style: this.style });
