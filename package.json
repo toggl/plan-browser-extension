@@ -28,6 +28,8 @@
   },
   "devDependencies": {
     "eslint": "^3.5.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.1",
     "gulp": "^3.8.11",
     "gulp-browserify": "miscer/gulp-browserify#v1.0.1",
     "gulp-less": "^3.0.3",

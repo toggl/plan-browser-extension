@@ -25,11 +25,10 @@
     "no-restricted-globals": ["error", "event", "Promise", "find"],
     "brace-style": "warn",
     "no-eq-null": "warn",
-    "no-restricted-syntax": ["error", "ForOfStatement"]
+    "no-restricted-syntax": ["error", "ForOfStatement"],
+    "quotes": ["warn", "single"]
   },
-  "extends": [
-    "eslint:recommended"
-  ],
+  "extends": ["eslint:recommended"],
   "env": {
     "browser": true,
     "commonjs": true,

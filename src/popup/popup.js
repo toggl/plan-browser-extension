@@ -13,14 +13,17 @@ function parseQuery() {
 }
 
 function createTask(query) {
-  return new TaskModel({
-    name: query.name,
-    start_date: query.start_date,
-    end_date: query.end_date,
-    start_time: query.start_time,
-    end_time: query.end_time,
-    notes: query.notes
-  }, {parse: true});
+  return new TaskModel(
+    {
+      name: query.name || '',
+      start_date: query.start_date,
+      end_date: query.end_date,
+      start_time: query.start_time,
+      end_time: query.end_time,
+      notes: query.notes
+    },
+    { parse: true }
+  );
 }
 
 function createHub() {
@@ -44,10 +47,7 @@ function renderView(view) {
 }
 
 function initialize() {
-  return Promise.all([
-    api.auth.load(),
-    collections.taskSources.fetch()
-  ]);
+  return Promise.all([api.auth.load(), collections.taskSources.fetch()]);
 }
 
 initialize().then(function() {
