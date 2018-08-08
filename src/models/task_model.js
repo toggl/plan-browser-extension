@@ -10,13 +10,14 @@ const TaskModel = Model.extend({
     name: 'string',
     user_id: 'number',
     project_id: 'number',
+    project_segment_id: 'number',
     start_date: ['date', false, () => new Date()],
     end_date: ['date', false, () => new Date()],
     start_time: 'string',
     end_time: 'string',
     estimated_minutes: 'number',
     notes: 'string',
-    color: 'number',
+    color: 'number'
   },
 
   parse(attrs) {

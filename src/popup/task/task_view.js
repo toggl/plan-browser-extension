@@ -9,10 +9,10 @@ const EstimateField = require('../fields/estimate_field');
 const DateField = require('../fields/date_field');
 const TimeField = require('../fields/time_field');
 const AccountField = require('../fields/account_field');
+const SegmentField = require('../fields/segment_field');
 const TextField = require('../fields/input');
 const fetchMe = require('../../utils/me');
 const updateCustomColorsCss = require('../../utils/custom_colors_css');
-
 
 const TaskView = View.extend({
   template: require('./task_view.hbs'),
@@ -23,19 +23,22 @@ const TaskView = View.extend({
     project: 'state',
     overlay: 'boolean',
     workspace: 'state',
-    me: 'object',
+    me: 'object'
   },
 
   subviews: {
-    account: { hook: 'select-account', prepareView(el) {
-      return new AccountField({
-        el,
-        parent: this,
-        selectOpts: {
-          tabIndex: 1,
-        }
-      });
-    }},
+    account: {
+      hook: 'select-account',
+      prepareView(el) {
+        return new AccountField({
+          el,
+          parent: this,
+          selectOpts: {
+            tabIndex: 1
+          }
+        });
+      }
+    },
     name: {
       hook: 'input-name',
       prepareView(el) {
@@ -46,10 +49,12 @@ const TaskView = View.extend({
           placeholder: 'Type here...',
           value: '',
           tabIndex: 2,
-          validations: [{
-            run: value => value.length > 0,
-            message: '*Name cannot be empty',
-          }]
+          validations: [
+            {
+              run: value => value.length > 0,
+              message: '*Name cannot be empty'
+            }
+          ]
         });
       }
     },
@@ -59,7 +64,7 @@ const TaskView = View.extend({
         return new UserField({
           el,
           selectOpts: {
-            tabIndex: 3,
+            tabIndex: 3
           }
         });
       }
@@ -70,7 +75,18 @@ const TaskView = View.extend({
         return new ProjectField({
           el,
           selectOpts: {
-            tabIndex: 4,
+            tabIndex: 4
+          }
+        });
+      }
+    },
+    segment: {
+      hook: 'select-segment',
+      prepareView(el) {
+        return new SegmentField({
+          el,
+          selectOpts: {
+            tabIndex: 4
           }
         });
       }
@@ -81,7 +97,7 @@ const TaskView = View.extend({
         return new EstimateField({
           el,
           inputOpts: {
-            tabIndex: 5,
+            tabIndex: 5
           }
         });
       }
@@ -138,7 +154,7 @@ const TaskView = View.extend({
         });
       }
     },
-    errors: { hook: 'errors', constructor: FormErrors },
+    errors: { hook: 'errors', constructor: FormErrors }
   },
 
   events: {
@@ -154,8 +170,8 @@ const TaskView = View.extend({
           return false;
         }
 
-        const {id} = this.me;
-        const {role} = this.workspace.users.get(id);
+        const { id } = this.me;
+        const { role } = this.workspace.users.get(id);
         return role === 'readonly';
       }
     }
@@ -174,7 +190,7 @@ const TaskView = View.extend({
       yes: 'project-select--filled',
       no: 'project-select--empty'
     },
-    'overlay': {
+    overlay: {
       type: 'booleanClass',
       hook: 'done-overlay',
       yes: 'task-popup__overlay--visible',
@@ -188,13 +204,13 @@ const TaskView = View.extend({
       {
         type: 'booleanAttribute',
         selector: '.button--submit',
-        name: 'disabled',
+        name: 'disabled'
       },
       {
         type: 'toggle',
-        hook: 'readonly-label',
+        hook: 'readonly-label'
       }
-    ],
+    ]
   },
 
   render() {
@@ -208,6 +224,7 @@ const TaskView = View.extend({
       this.end_time,
       this.user,
       this.project,
+      this.segment,
       this.estimate,
       this.account
     ].forEach(field => {
@@ -215,6 +232,7 @@ const TaskView = View.extend({
     }, this);
 
     this.listenTo(this.account, 'change:value', this.onAccountSelected);
+    this.listenTo(this.project, 'change:value', this.onProjectSelected);
 
     this.name.value = this.model.name;
     this.start_date.value = this.model.start_date;
@@ -229,18 +247,22 @@ const TaskView = View.extend({
         this.me = me;
         this.me.workspaces.map(workspace => accounts.add(workspace));
         return accounts.fetchEverything();
-      }).then(() => {
-        const selectedAccountId = this.me.preferences.selected_account_id;
-        const account = accounts.get(selectedAccountId);
-        this.account.switchAccount(account);
-        updateCustomColorsCss(selectedAccountId);
+      })
+      .then(
+        () => {
+          const selectedAccountId = this.me.preferences.selected_account_id;
+          const account = accounts.get(selectedAccountId);
+          this.account.switchAccount(account);
+          updateCustomColorsCss(selectedAccountId);
 
-        this.hub.trigger('loader:hide');
-        this.focusNameField();
-      }, error => {
-        this.hub.trigger('loader:hide');
-        this.hub.trigger('error:show', error);
-      });
+          this.hub.trigger('loader:hide');
+          this.focusNameField();
+        },
+        error => {
+          this.hub.trigger('loader:hide');
+          this.hub.trigger('error:show', error);
+        }
+      );
 
     return this;
   },
@@ -251,14 +273,28 @@ const TaskView = View.extend({
     this.project.value = null;
     this.project.collection = this.workspace.projects;
 
+    // this.segment.collection = this.workspace.projects[0].segments;
+
     this.name.input.disabled = this.accountIsReadonly;
     this.user.disabled = this.accountIsReadonly;
     this.project.disabled = this.accountIsReadonly;
+    this.segment.disabled = this.accountIsReadonly;
     this.start_date.disabled = this.accountIsReadonly;
     this.end_date.disabled = this.accountIsReadonly;
     this.start_time.disabled = this.accountIsReadonly;
     this.end_time.disabled = this.accountIsReadonly;
     this.estimate.disabled = this.accountIsReadonly;
+  },
+
+  onProjectSelected() {
+    const projectId = this.project.value;
+    if (!projectId) {
+      return (this.segment.disabled = true);
+    }
+    const project = this.workspace.projects.get(projectId);
+    this.segment.value = project.segments.models[0].id;
+    this.segment.collection = project.segments;
+    this.segment.disabled = this.accountIsReadonly;
   },
 
   onSubmit(event) {
@@ -273,14 +309,14 @@ const TaskView = View.extend({
       name: this.name.input.value,
       user_id: this.user.value,
       project_id: this.project.value,
+      project_segment_id: this.segment.value,
       start_date: this.start_date.value,
       end_date: this.end_date.value,
       start_time: this.start_time.value,
       end_time: this.end_time.value,
-      estimated_minutes: this.estimate.value,
+      estimated_minutes: this.estimate.value
     });
 
-    //
     if (this.model.collection) {
       this.model.collection.remove(this.model);
     }
@@ -290,23 +326,25 @@ const TaskView = View.extend({
     // default task color
     if (!this.project.value) {
       this.model.set({
-        color: 21,
+        color: 21
       });
     }
 
     // save
     this.showLoader();
 
-    this.model.save()
-      .then(() => {
+    this.model.save().then(
+      () => {
         this.hub.trigger('task:created', this.model, this.workspace);
 
         this.hideLoader();
         this.showOverlay().then(() => this.closePopup());
-      }, error => {
+      },
+      error => {
         this.hideLoader();
         this.showError(error);
-      });
+      }
+    );
   },
 
   onCancel(event) {
@@ -324,11 +362,6 @@ const TaskView = View.extend({
 
     if (!this.name.isFilled) {
       this.errors.addError('Task name cannot be empty');
-      return false;
-    }
-
-    if (!this.user.isFilled) {
-      this.errors.addError('User cannot be empty');
       return false;
     }
 
