@@ -57,7 +57,9 @@
     width: 100%;
     outline: none;
 
-    &:focus { border-radius: 4px 4px 0 0; }
+    &:focus {
+      border-radius: 4px 4px 0 0;
+    }
 
     &.icon-chevron {
       background-position: right;
@@ -146,7 +148,8 @@
     max-height: 180px;
   }
 
-  &-project .searchable-select-dropdown__items {
+  &-project .searchable-select-dropdown__items,
+  &-segment .searchable-select-dropdown__items {
     max-height: 140px;
   }
 }
