@@ -1,6 +1,6 @@
 {
   "name": "Teamweek Button: Project Planning Calendar",
-  "version": "1.11.2",
+  "version": "1.11.3",
   "manifest_version": 2,
   "description": "Add tasks to Teamweek directly from Github, Trello, GitLab and JIRA",
   "short_name": "TW Button",
@@ -13,12 +13,7 @@
     "contextMenus",
     "https://teamweek.com/"
   ],
-  "optional_permissions": [
-    "http://*/",
-    "https://*/",
-    "tabs",
-    "webNavigation"
-  ],
+  "optional_permissions": ["http://*/", "https://*/", "tabs", "webNavigation"],
   "content_scripts": [
     {
       "matches": ["https://*.github.com/*"],
@@ -36,7 +31,11 @@
       "css": ["styles/global.css", "styles/gitlab.css"]
     },
     {
-      "matches": ["https://*.atlassian.com/*", "https://*.atlassian.net/*", "https://*.jira.com/*"],
+      "matches": [
+        "https://*.atlassian.com/*",
+        "https://*.atlassian.net/*",
+        "https://*.jira.com/*"
+      ],
       "js": ["scripts/content_jira.js"],
       "css": ["styles/global.css", "styles/jira.css"]
     },
@@ -81,10 +80,7 @@
       "css": ["styles/global.css", "styles/zendesk.css"]
     }
   ],
-  "web_accessible_resources": [
-    "styles/*",
-    "fonts/*"
-  ],
+  "web_accessible_resources": ["styles/*", "fonts/*"],
   "minimum_chrome_version": "35",
   "options_ui": {
     "page": "options.html",
