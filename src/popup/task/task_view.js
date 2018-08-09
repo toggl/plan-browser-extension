@@ -365,6 +365,11 @@ const TaskView = View.extend({
       return false;
     }
 
+    if (!this.user.isFilled) {
+      this.errors.addError('User cannot be empty');
+      return false;
+    }
+
     if (this.user.hasUser) {
       if (!this.start_date.isFilled) {
         this.errors.addError('Start date cannot be empty');
