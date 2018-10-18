@@ -6,7 +6,8 @@ const observer = require('../utils/observer');
 const buttons = new HashMap();
 
 function createObserver() {
-  observer.create('#right_pane_container')
+  observer
+    .create('#right_pane_container')
     .onAdded(createButton)
     .onRemoved(removeButton)
     .start();
@@ -22,17 +23,23 @@ function createButton(element) {
   });
 
   const titleObserver = observer
-    .create('.SingleTaskTitleRow-taskName textarea, .SingleTaskTitleInput textarea', element)
+    .create(
+      '.SingleTaskTitleRow-taskName textarea, .SingleTaskTitleInput textarea',
+      element
+    )
     .onAdded(function(titleEl) {
       state.task.name = titleEl.value;
-      titleEl.onblur = () => {
+      titleEl.addEventListener('blur', () => {
         state.task.name = titleEl.value;
-      };
+      });
     })
     .start();
 
   const actionsObserver = observer
-    .create('.SingleTaskPaneToolbar, .SingleTaskPaneToolbarEasyCompletion', element)
+    .create(
+      '.SingleTaskPaneToolbar, .SingleTaskPaneToolbarEasyCompletion',
+      element
+    )
     .onAdded(function(actionsEl) {
       const cls = document.querySelector('.SingleTaskPaneToolbarEasyCompletion')
         ? 'CircularButton CircularButton--enabled CircularButton--medium CircularButton--borderless  SingleTaskPaneToolbarEasyCompletion-button'

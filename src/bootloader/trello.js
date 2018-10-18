@@ -12,7 +12,7 @@ const TrelloButtonView = AmpersandView.extend({
   },
 
   events: {
-    'click': 'onClick'
+    click: 'onClick'
   },
 
   render() {
@@ -29,7 +29,8 @@ const TrelloButtonView = AmpersandView.extend({
 const buttons = new HashMap();
 
 function createObserver() {
-  observer.create('.card-detail-window')
+  observer
+    .create('.card-detail-window')
     .onAdded(createButton)
     .onRemoved(removeButton)
     .start();
@@ -55,7 +56,7 @@ function findDate(meta) {
       dt = dt.add(1, 'days');
       break;
     default:
-      if (!(/\w{4}$/.test(date))) {
+      if (!/\w{4}$/.test(date)) {
         date += ` ${moment().format('YYYY')}`;
       }
       dt = moment(date);
@@ -114,9 +115,9 @@ function handleError(error) {
 function titleObserver(node, state) {
   const nameInput = node.querySelector('.js-card-detail-title-input');
   if (nameInput) {
-    nameInput.onblur = () => {
+    nameInput.addEventListener('blur', () => {
       state.task.name = nameInput.value;
-    };
+    });
   }
 }
 
@@ -136,7 +137,7 @@ function dueDateObserver(node, state) {
     }, 300);
   });
 
-  o.observe(el, {childList: true});
+  o.observe(el, { childList: true });
 }
 
 if (!ButtonState.isLoaded()) {
