@@ -7,7 +7,7 @@ const buttons = new HashMap();
 
 function createObserver() {
   observer
-    .create('#right_pane_container')
+    .create('.Pane.PotListPage-detailsPane')
     .onAdded(createButton)
     .onRemoved(removeButton)
     .start();
