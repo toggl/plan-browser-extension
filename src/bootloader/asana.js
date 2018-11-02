@@ -29,9 +29,13 @@ function createButton(element) {
     )
     .onAdded(function(titleEl) {
       state.task.name = titleEl.value;
-      titleEl.addEventListener('blur', () => {
-        state.task.name = titleEl.value;
-      });
+      titleEl.addEventListener(
+        'change',
+        () => {
+          state.task.name = titleEl.value;
+        },
+        false
+      );
     })
     .start();
 

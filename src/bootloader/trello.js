@@ -115,9 +115,13 @@ function handleError(error) {
 function titleObserver(node, state) {
   const nameInput = node.querySelector('.js-card-detail-title-input');
   if (nameInput) {
-    nameInput.addEventListener('blur', () => {
-      state.task.name = nameInput.value;
-    });
+    nameInput.addEventListener(
+      'change',
+      () => {
+        state.task.name = nameInput.value;
+      },
+      false
+    );
   }
 }
 
