@@ -35,7 +35,7 @@ const ButtonState = State.extend({
     this.listenTo(this.hub, 'button:clicked', this.handleButtonClick);
     this.listenTo(this.hub, 'task:open', this.handleTaskOpen);
 
-    this.button = new this.view({hub: this.hub});
+    this.button = new this.view({ hub: this.hub });
 
     ButtonState.setLoaded();
   },
@@ -73,10 +73,12 @@ const ButtonState = State.extend({
         width: window.outerWidth,
         height: window.outerHeight
       },
-      element: event ? {
-        x: event.screenX,
-        y: event.screenY
-      } : null
+      element: event
+        ? {
+            x: event.screenX,
+            y: event.screenY
+          }
+        : null
     });
 
     analytics.track('button', 'click');
@@ -95,19 +97,16 @@ const ButtonState = State.extend({
 
     const model = new TaskModel(taskParams);
 
-    return Object.assign({link: this.link}, model.serialize());
+    return Object.assign({ link: this.link }, model.serialize());
   },
 
   remove() {
     this.button.remove();
   }
-
 });
 
 ButtonState.initialize = function() {
-  return Promise.all([
-    collections.taskSources.fetch()
-  ]);
+  return Promise.all([collections.taskSources.fetch()]);
 };
 
 ButtonState.isLoaded = function() {

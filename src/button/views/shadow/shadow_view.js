@@ -11,10 +11,10 @@ const ShadowView = View.extend({
   },
 
   events: {
-    'click': 'stopPropagation',
-    'keyup': 'stopPropagation',
-    'keydown': 'stopPropagation',
-    'keypress': 'stopPropagation'
+    click: 'stopPropagation',
+    keyup: 'stopPropagation',
+    keydown: 'stopPropagation',
+    keypress: 'stopPropagation'
   },
 
   render() {
