@@ -6,21 +6,21 @@ const buttons = new HashMap();
 
 function createObserver() {
   observer
-    .create('#ghx-detail-view, #issue-content')
+    .create('#ghx-detail-view, #issue-content, #jira-frontend, [role=dialog]')
     .onAdded(createButton)
     .onRemoved(removeButton)
     .start();
 }
 
 function createButton(node) {
-  if (node.id === 'issue-content') {
-    createButtonDetail(node);
+  if (document.querySelector('.command-bar')) {
+    createButtonOld(node);
   } else {
-    createButtonListing(node);
+    createButtonNew(node);
   }
 }
 
-function createButtonListing(node) {
+function createButtonNew(node) {
   const state = new ButtonState({
     task: {},
     link: null,
@@ -29,17 +29,15 @@ function createButtonListing(node) {
 
   let buttonEl;
   const actionsElSelector =
-    '#ghx-detail-view [spacing="comfortable"] > div > div > div:nth-child(2)';
+    '[spacing="comfortable"] > div > div > div:nth-child(2)';
 
   const titleObserver = observer
-    .create('#ghx-detail-view [spacing="comfortable"] h1', node)
+    .create('[spacing="comfortable"] h1', node)
     .onAdded(function(titleEl) {
       const name = titleEl.innerText;
       state.task.name = name;
 
-      const link = document.querySelector(
-        '#ghx-detail-view [spacing="comfortable"] a'
-      ).href;
+      const link = document.querySelector('[spacing="comfortable"] a').href;
       state.task.notes = 'Added from JIRA: ' + link;
       state.link = link;
 
@@ -65,7 +63,7 @@ function createButtonListing(node) {
   });
 }
 
-function createButtonDetail(node) {
+function createButtonOld(node) {
   const state = new ButtonState({
     task: {},
     link: null,
@@ -99,7 +97,9 @@ function removeButton(node) {
   if (button) {
     button.state.remove();
     button.title.stop();
-    button.actions.stop();
+    if (button.actions) {
+      button.actions.stop();
+    }
   }
 }
 
