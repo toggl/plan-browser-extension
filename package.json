@@ -48,8 +48,8 @@
   "scripts": {
     "build": "gulp build:js build:less",
     "watch": "gulp watch:js watch:less",
-    "release": "rm -f ~/Downloads/tw-button.zip && zip -r ~/Downloads/tw-button.zip app/*",
-    "source": "rm -f ~/Downloads/tw-button-source.zip && zip -r ~/Downloads/tw-button-source.zip app src package.json README.md Gulpfile.js",
+    "release": "rm -f ~/Downloads/tw-button.zip && cd app && zip -x *.DS_Store -r ~/Downloads/tw-button.zip .",
+    "source": "rm -f ~/Downloads/tw-button-source.zip && zip -x *.DS_Store -r ~/Downloads/tw-button-source.zip app src package.json README.md Gulpfile.js",
     "lint": "eslint src Gulpfile.js --quiet --cache",
     "precommit": "npm run lint"
   }
