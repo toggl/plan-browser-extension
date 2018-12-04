@@ -3,13 +3,14 @@ const View = require('ampersand-view');
 const api = require('../../api/api');
 const FormErrors = require('../form/form_errors');
 const TextField = require('../fields/input');
-const {clear: clearMe} = require('../../utils/me');
+const { clear: clearMe } = require('../../utils/me');
+const { triggerAchievementUseButton } = require('../../api/stash');
 
 const AuthView = View.extend({
   template: require('./auth_view.hbs'),
 
   props: {
-    hub: 'object'
+    hub: 'object',
   },
 
   subviews: {
@@ -23,12 +24,14 @@ const AuthView = View.extend({
           placeholder: 'Type here...',
           value: '',
           tabIndex: 1,
-          validations: [{
-            run: value => value.length > 0,
-            message: '*Email cannot be empty',
-          }]
+          validations: [
+            {
+              run: value => value.length > 0,
+              message: '*Email cannot be empty',
+            },
+          ],
         });
-      }
+      },
     },
     password: {
       hook: 'input-password',
@@ -41,19 +44,21 @@ const AuthView = View.extend({
           value: '',
           type: 'password',
           tabIndex: 2,
-          validations: [{
-            run: value => value.length > 0,
-            message: '*Password cannot be empty',
-          }]
+          validations: [
+            {
+              run: value => value.length > 0,
+              message: '*Password cannot be empty',
+            },
+          ],
         });
-      }
+      },
     },
-    errors: { hook: 'errors', constructor: FormErrors }
+    errors: { hook: 'errors', constructor: FormErrors },
   },
 
   events: {
     'submit [data-hook=form]': 'onSubmit',
-    'click [data-hook=button-cancel]': 'onCancel'
+    'click [data-hook=button-cancel]': 'onCancel',
   },
 
   render() {
@@ -72,7 +77,7 @@ const AuthView = View.extend({
 
     const credentials = {
       username: this.email.value,
-      password: this.password.value
+      password: this.password.value,
     };
 
     const hub = this.hub;
@@ -80,14 +85,19 @@ const AuthView = View.extend({
 
     Promise.all([
       clearMe(),
-      api.auth.authenticate(credentials).then(function() {
-        hub.trigger('loader:hide');
-        hub.trigger('popup:update');
-        return null;
-      }, function(error) {
-        hub.trigger('loader:hide');
-        hub.trigger('error:show', error);
-      })
+      api.auth.authenticate(credentials).then(
+        function() {
+          console.log(api.auth.tokens);
+          hub.trigger('loader:hide');
+          triggerAchievementUseButton();
+          hub.trigger('popup:update');
+          return null;
+        },
+        function(error) {
+          hub.trigger('loader:hide');
+          hub.trigger('error:show', error);
+        }
+      ),
     ]);
   },
 
@@ -112,7 +122,7 @@ const AuthView = View.extend({
     }
 
     return true;
-  }
+  },
 });
 
 module.exports = AuthView;
