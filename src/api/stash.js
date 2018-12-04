@@ -39,7 +39,7 @@ function triggerAchievement(achievementId) {
         request.send(
           _.merge(stash, {
             achievements: {
-              ..._.get(stash, 'achievements', []),
+              ..._.get(stash, 'achievements', {}),
               externalAchievements: _.concat(
                 _.get(stash, 'data.achievements.externalAchievements', []),
                 [achievementId]
