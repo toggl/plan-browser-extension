@@ -87,7 +87,6 @@ const AuthView = View.extend({
       clearMe(),
       api.auth.authenticate(credentials).then(
         function() {
-          console.log(api.auth.tokens);
           hub.trigger('loader:hide');
           triggerAchievementUseButton();
           hub.trigger('popup:update');

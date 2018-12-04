@@ -33,8 +33,6 @@ function triggerAchievement(achievementId) {
       const isAchieved = achievedAchievements.indexOf(achievementId) !== -1;
       const isRegistered = externalAchievements.indexOf(achievementId) !== -1;
 
-      console.log(isAchieved, isRegistered);
-
       if (!isAchieved && !isRegistered) {
         const request = superagent.post(`${config.api.host}/stash/v2/`);
 
