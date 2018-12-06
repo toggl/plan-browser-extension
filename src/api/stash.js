@@ -20,13 +20,14 @@ function getStash() {
 function triggerAchievement(achievementId) {
   function achievementFn() {
     return getStash().then(() => {
+      const { data } = stash;
       const achievedAchievements = _.get(
-        stash,
+        data,
         'data.achievements.achievedAchievements',
         []
       );
       const externalAchievements = _.get(
-        stash,
+        data,
         'data.achievements.externalAchievements',
         []
       );
@@ -37,11 +38,11 @@ function triggerAchievement(achievementId) {
         const request = superagent.post(`${config.api.host}/stash/v2/`);
 
         request.send(
-          _.merge(stash, {
+          _.merge(data, {
             achievements: {
-              ..._.get(stash, 'achievements', {}),
+              ..._.get(data, 'achievements', {}),
               externalAchievements: _.concat(
-                _.get(stash, 'data.achievements.externalAchievements', []),
+                _.get(data, 'data.achievements.externalAchievements', []),
                 [achievementId]
               ),
             },
