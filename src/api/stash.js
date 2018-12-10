@@ -42,7 +42,7 @@ function triggerAchievement(achievementId) {
             achievements: {
               ..._.get(data, 'achievements', {}),
               externalAchievements: _.concat(
-                _.get(data, 'data.achievements.externalAchievements', []),
+                _.get(data, 'achievements.externalAchievements', []),
                 [achievementId]
               ),
             },
