@@ -144,5 +144,5 @@ If you are using Atom make sure you have installed these packages:
 # Releasing
 
 - Bump `version` in app/version.json.
-- Run `npm run release` to generate zip file to upload to Chrome & Mozilla stores.
+- Run `npm run release` to generate zip file (in `./tmp`) to upload to Chrome & Mozilla stores.
 - And `npm run source` to get source archive required by Mozilla Addons store.
