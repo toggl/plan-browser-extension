@@ -156,5 +156,5 @@ This should open up Firefox with the extension installed for testing. The utilit
 # Releasing
 
 - Bump `version` in app/version.json.
-- Run `npm run release` to generate zip file to upload to Chrome & Mozilla stores.
+- Run `npm run release` to generate zip file (in `./tmp`) to upload to Chrome & Mozilla stores.
 - And `npm run source` to get source archive required by Mozilla Addons store.
