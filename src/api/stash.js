@@ -39,13 +39,12 @@ function triggerAchievement(achievementId) {
 
         request.send(
           _.merge(data, {
-            achievements: {
-              ..._.get(data, 'achievements', {}),
+            achievements: _.merge({}, _.get(data, 'achievements', {}), {
               externalAchievements: _.concat(
                 _.get(data, 'achievements.externalAchievements', []),
                 [achievementId]
               ),
-            },
+            }),
           })
         );
 
