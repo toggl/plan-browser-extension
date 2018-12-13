@@ -51,6 +51,7 @@
     "release": "mkdir -p tmp && rm -f tmp/tw-button.zip && cd app && zip -x *.DS_Store -r ../tmp/tw-button.zip .",
     "source": "mkdir -p tmp && rm -f tmp/tw-button-source.zip && zip -x *.DS_Store -r tmp/tw-button-source.zip app src package.json README.md Gulpfile.js",
     "lint": "eslint src Gulpfile.js --quiet --cache",
-    "precommit": "npm run lint"
+    "precommit": "npm run lint",
+    "firefox": "cd app && web-ext run"
   }
 }
