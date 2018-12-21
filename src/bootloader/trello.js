@@ -8,11 +8,11 @@ const TrelloButtonView = AmpersandView.extend({
   template: require('./trello.hbs'),
 
   props: {
-    hub: 'state'
+    hub: 'state',
   },
 
   events: {
-    click: 'onClick'
+    click: 'onClick',
   },
 
   render() {
@@ -23,7 +23,7 @@ const TrelloButtonView = AmpersandView.extend({
   onClick(event) {
     event.preventDefault();
     this.hub.trigger('button:clicked', event);
-  }
+  },
 });
 
 const buttons = new HashMap();
@@ -85,15 +85,20 @@ function createButton(node) {
     task: {
       name,
       end_date: date,
-      notes: 'Added from Trello: ' + link
+      notes: 'Added from Trello: ' + link,
     },
     anchor: 'screen',
-    view: TrelloButtonView
+    view: TrelloButtonView,
   });
 
   const buttonEl = state.button.render().el;
-  const actionsEl = node.querySelector('.window-module.other-actions > div');
-  actionsEl.insertBefore(buttonEl, actionsEl.firstChild);
+
+  setTimeout(() => {
+    const actionsEl = node
+      .querySelectorAll('.window-sidebar > .window-module')[1]
+      .querySelector('.u-clearfix');
+    actionsEl.insertBefore(buttonEl, actionsEl.firstChild);
+  }, 1000);
 
   titleObserver(node, state);
   dueDateObserver(node, state);

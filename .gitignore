@@ -5,3 +5,4 @@ node_modules
 Makefile
 package-lock.json
 .eslintcache
+tmp
