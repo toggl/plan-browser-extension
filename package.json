@@ -49,7 +49,7 @@
     "build": "gulp build:js build:less",
     "watch": "gulp watch:js watch:less",
     "release": "mkdir -p tmp && rm -f tmp/tw-button.zip && cd app && zip -x *.DS_Store -r ../tmp/tw-button.zip .",
-    "source": "mkdir -p tmp && rm -f tmp/tw-button-source.zip && zip -x *.DS_Store -r tmp/tw-button-source.zip app src package.json README.md Gulpfile.js",
+    "source": " rm -rf app/scripts app/styles && mkdir -p tmp && rm -f tmp/tw-button-source.zip && zip -x *.DS_Store -r tmp/tw-button-source.zip app src package.json README.md Gulpfile.js",
     "lint": "eslint src Gulpfile.js --quiet --cache",
     "precommit": "npm run lint",
     "firefox": "cd app && web-ext run"
