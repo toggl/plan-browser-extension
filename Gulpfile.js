@@ -94,7 +94,6 @@ gulp.task(
 function gulpBrowserify() {
   return tap(function(file) {
     file.contents = browserify(file.path, {
-      debug: true,
       transform: ['partialify', 'hbsfy'],
     }).bundle();
   });
