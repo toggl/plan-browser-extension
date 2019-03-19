@@ -49,6 +49,7 @@
   "scripts": {
     "build": "gulp build:js build:less",
     "watch": "gulp watch:js watch:less",
+    "tag": "npm run tag",
     "release": "gulp build:js build:less && mkdir -p tmp && rm -f tmp/tw-button.zip && cd app && zip -x *.DS_Store -r ../tmp/tw-button.zip .",
     "source": "npm run buildclean && mkdir -p tmp && rm -f tmp/tw-button-source.zip && zip -x *.DS_Store -r tmp/tw-button-source.zip app src package.json README.md Gulpfile.js",
     "lint": "eslint src Gulpfile.js --quiet --cache",
