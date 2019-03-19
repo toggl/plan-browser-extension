@@ -40,7 +40,7 @@ twb.observe(
 
     var button = twb.create({
       task: { name: title },
-      anchor: 'screen'
+      anchor: 'screen',
     });
 
     var container = bubble.querySelector('.eb-actions-right');
@@ -146,3 +146,4 @@ If you are using Atom make sure you have installed these packages:
 - Bump `version` in app/version.json.
 - Run `npm run release` to generate zip file (in `./tmp`) to upload to Chrome & Mozilla stores.
 - And `npm run source` to get source archive required by Mozilla Addons store.
+- Run `npm run tag` to tag and push tp Github
