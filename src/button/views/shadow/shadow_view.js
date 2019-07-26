@@ -7,21 +7,20 @@ const ShadowView = View.extend({
   props: {
     name: 'string',
     style: 'string',
-    content: 'state'
+    content: 'state',
   },
 
   events: {
     click: 'stopPropagation',
     keyup: 'stopPropagation',
     keydown: 'stopPropagation',
-    keypress: 'stopPropagation'
+    keypress: 'stopPropagation',
   },
 
   render() {
     this.renderWithTemplate();
-    this.shadow = this.el.createShadowRoot
-      ? this.el.createShadowRoot()
-      : this.el; // todo(mitchel): use https://github.com/webcomponents/shadydom
+
+    this.shadow = createShadowRoot(this.el);
 
     if (this.style) {
       const style = new StyleView({ style: this.style });
@@ -37,7 +36,17 @@ const ShadowView = View.extend({
 
   stopPropagation(event) {
     event.stopPropagation();
-  }
+  },
 });
 
 module.exports = ShadowView;
+
+function createShadowRoot(el) {
+  if (el.attachShadow) {
+    return el.attachShadow({ mode: 'open' });
+  }
+  if (el.createShadowRoot) {
+    return el.createShadowRoot();
+  }
+  return el; // todo(mitchel): use https://github.com/webcomponents/shadydom
+}

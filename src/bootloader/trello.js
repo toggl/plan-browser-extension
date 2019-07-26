@@ -3,6 +3,7 @@ const HashMap = require('hashmap');
 const AmpersandView = require('ampersand-view');
 const ButtonState = require('../button/button.js');
 const observer = require('../utils/observer');
+const { generateTaskNotes } = require('../utils/quill');
 
 const TrelloButtonView = AmpersandView.extend({
   template: require('./trello.hbs'),
@@ -43,6 +44,9 @@ function findDate(meta) {
   }
 
   let date = m[0];
+  if (!date) {
+    return;
+  }
   const time = m[1];
   let dt = moment().startOf('day');
 
@@ -85,7 +89,7 @@ function createButton(node) {
     task: {
       name,
       end_date: date,
-      notes: 'Added from Trello: ' + link,
+      notes: generateTaskNotes('Trello', link),
     },
     anchor: 'screen',
     view: TrelloButtonView,

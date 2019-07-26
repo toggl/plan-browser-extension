@@ -17,14 +17,14 @@ module.exports = View.extend({
       deps: ['hasUser'],
       fn() {
         return this.hasUser;
-      }
+      },
     },
     hasUser: {
       deps: ['value'],
       fn() {
         return !!this.value;
-      }
-    }
+      },
+    },
   },
 
   onChange(el, val) {
@@ -36,11 +36,13 @@ module.exports = View.extend({
   },
 
   createInput() {
-    return new SelectField(Object.assign({}, this.selectOpts, {
-      items: this.users ? this.users.models : [],
-      label: 'User',
-      getItemTemplate: this.getItemTemplate
-    }));
+    return new SelectField(
+      Object.assign({}, this.selectOpts, {
+        items: this.users ? this.users.models : [],
+        label: 'User',
+        getItemTemplate: this.getItemTemplate,
+      })
+    );
   },
 
   render() {
@@ -55,25 +57,30 @@ module.exports = View.extend({
   switchAccount(account) {
     this.users = new FilteredCollection(account.users, {
       where: { active: true },
-      comparator: 'name'
+      comparator: 'name',
     });
     this.value = null;
 
     this.render();
   },
 
-  getItemTemplate({original, string}) {
-    const idx = Math.floor(Math.random() * 40) + 1 ;
-    const avatar = -1 !== original.picture_url.search('missing.png')
-      ? `<div class="searchable-select-dropdown__color-circle circle-color--${idx}"></div>`
-      : `<img class="searchable-select-dropdown__color-circle" src="${original.picture_url}" />`;
+  getItemTemplate({ original, string }) {
+    const idx = Math.floor(Math.random() * 40) + 1;
+    const avatar =
+      -1 !== original.picture_url.search('missing.png')
+        ? `<div class="searchable-select-dropdown__color-circle circle-color--${idx}"></div>`
+        : `<img class="searchable-select-dropdown__color-circle" src="${
+            original.picture_url
+          }" />`;
 
     const tmpl = `
-      <div class="searchable-select-dropdown__item row row--align-center pointer hover" data-value="${original.name}" data-hook="select" data-select-row data-visible>
+      <div class="searchable-select-dropdown__item row row--align-center pointer hover" data-value="${
+        original.name
+      }" data-hook="select" data-select-row data-visible>
         ${avatar}
         <div class="searchable-select-dropdown__select">${string}</div>
       </div>
     `;
-    return {tmpl};
-  }
+    return { tmpl };
+  },
 });
