@@ -7,10 +7,10 @@ const ProjectCollection = RestCollection.extend({
   model: ProjectModel,
 
   url() {
-    return config.api.host + '/timeline/v1/' + this.parent.id + '/projects';
+    return config.api.host + '/api/v4/' + this.parent.id + '/projects';
   },
 
-  sync
+  sync,
 });
 
 module.exports = ProjectCollection;

@@ -7,7 +7,7 @@ const find = require('lodash.find');
 
 const fetch = () => new Promise((resolve, reject) => {
   const opts = {
-    url: `${config.api.host}/timeline/v1/me`,
+    url: `${config.api.host}/api/v4/me`,
     error: reject,
     success: resolve
   };

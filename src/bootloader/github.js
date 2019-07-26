@@ -2,13 +2,15 @@ const moment = require('moment');
 const HashMap = require('hashmap');
 const ButtonState = require('../button/button');
 const observer = require('../utils/observer');
+const { generateTaskNotes } = require('../utils/quill');
 
 const buttons = new HashMap();
 
 const DATE_RE = /(January|February|March|April|May|June|July|August|September|October|November|December) (\d{1,2}), (\d{4})/;
 
 function createObserver() {
-  observer.create('.milestone')
+  observer
+    .create('.milestone')
     .onAdded(createButton)
     .onRemoved(removeButton)
     .start();
@@ -42,9 +44,9 @@ function createButton(element) {
     task: {
       name,
       end_date: date,
-      notes: 'Added from GitHub: ' + link
+      notes: generateTaskNotes('GitHub', link),
     },
-    anchor: 'element'
+    anchor: 'element',
   });
 
   const buttonEl = state.button.render().el;
