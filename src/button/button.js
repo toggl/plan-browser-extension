@@ -15,19 +15,19 @@ const ButtonState = State.extend({
     anchor: {
       type: 'string',
       values: ['element', 'screen'],
-      default: 'screen'
+      default: 'screen',
     },
     view: {
       type: 'any',
       required: true,
       default() {
         return ButtonView;
-      }
-    }
+      },
+    },
   },
 
   children: {
-    hub: HubState
+    hub: HubState,
   },
 
   initialize() {
@@ -47,7 +47,7 @@ const ButtonState = State.extend({
     }
 
     const taskSource = collections.taskSources.find({
-      source_link: this.link
+      source_link: this.link,
     });
 
     if (taskSource) {
@@ -71,14 +71,14 @@ const ButtonState = State.extend({
       anchor: this.anchor,
       screen: {
         width: window.outerWidth,
-        height: window.outerHeight
+        height: window.outerHeight,
       },
       element: event
         ? {
             x: event.screenX,
-            y: event.screenY
+            y: event.screenY,
           }
-        : null
+        : null,
     });
 
     analytics.track('button', 'click');
@@ -102,7 +102,7 @@ const ButtonState = State.extend({
 
   remove() {
     this.button.remove();
-  }
+  },
 });
 
 ButtonState.initialize = function() {

@@ -1,6 +1,7 @@
 const HashMap = require('hashmap');
 const ButtonState = require('../button/button.js');
 const observer = require('../utils/observer');
+const { generateTaskNotes } = require('../utils/quill');
 
 const buttons = new HashMap();
 
@@ -24,7 +25,7 @@ function createButtonNew(node) {
   const state = new ButtonState({
     task: {},
     link: null,
-    anchor: 'screen'
+    anchor: 'screen',
   });
 
   let buttonEl;
@@ -38,7 +39,7 @@ function createButtonNew(node) {
       state.task.name = name;
 
       const link = document.querySelector('[spacing="comfortable"] a').href;
-      state.task.notes = 'Added from JIRA: ' + link;
+      state.task.notes = generateTaskNotes('JIRA', link);
       state.link = link;
 
       buttonEl = state.button.render().el;
@@ -59,7 +60,7 @@ function createButtonNew(node) {
   buttons.set(node, {
     state,
     title: titleObserver,
-    actions: actionsObserver
+    actions: actionsObserver,
   });
 }
 
@@ -67,7 +68,7 @@ function createButtonOld(node) {
   const state = new ButtonState({
     task: {},
     link: null,
-    anchor: 'screen'
+    anchor: 'screen',
   });
 
   const titleObserver = observer
@@ -77,7 +78,7 @@ function createButtonOld(node) {
       state.task.name = name;
 
       const link = document.querySelector('#key-val, #issuekey-val a').href;
-      state.task.notes = 'Added from JIRA: ' + link;
+      state.task.notes = generateTaskNotes('JIRA', link);
       state.link = link;
 
       const buttonEl = state.button.render().el;
@@ -87,7 +88,7 @@ function createButtonOld(node) {
 
   buttons.set(node, {
     state,
-    title: titleObserver
+    title: titleObserver,
   });
 }
 

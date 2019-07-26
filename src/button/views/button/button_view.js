@@ -6,11 +6,11 @@ const ContentView = View.extend({
   template: require('./button_view.hbs'),
 
   props: {
-    hub: 'state'
+    hub: 'state',
   },
 
   events: {
-    'click': 'onClick'
+    click: 'onClick',
   },
 
   render() {
@@ -21,13 +21,13 @@ const ContentView = View.extend({
   onClick(event) {
     event.preventDefault();
     this.hub.trigger('button:clicked', event);
-  }
+  },
 });
 
 const ButtonView = View.extend({
   props: {
     hub: 'state',
-    view: 'state'
+    view: 'state',
   },
 
   render() {
@@ -36,7 +36,7 @@ const ButtonView = View.extend({
     this.view = new ShadowView({
       name: 'tw-button',
       style,
-      content
+      content,
     });
 
     this.registerSubview(this.view);
@@ -44,7 +44,7 @@ const ButtonView = View.extend({
     this.el = this.view.el;
 
     return this;
-  }
+  },
 });
 
 module.exports = ButtonView;

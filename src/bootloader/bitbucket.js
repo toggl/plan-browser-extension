@@ -1,11 +1,13 @@
 const HashMap = require('hashmap');
 const ButtonState = require('../button/button');
 const observer = require('../utils/observer');
+const { generateTaskNotes } = require('../utils/quill');
 
 const buttons = new HashMap();
 
 function createObserver() {
-  observer.create('#issue-title, .issue-list--title a')
+  observer
+    .create('#issue-title, .issue-list--title a')
     .onAdded(createButton)
     .onRemoved(removeButton)
     .start();
@@ -18,10 +20,10 @@ function createButton(titleEl) {
   const state = new ButtonState({
     task: {
       name,
-      notes: 'Added from Bitbucket: ' + location.href
+      notes: generateTaskNotes('Bitbucket', location.href),
     },
     link,
-    anchor: 'screen'
+    anchor: 'screen',
   });
 
   const buttonEl = state.button.render().el;

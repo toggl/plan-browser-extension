@@ -23,7 +23,7 @@ const TaskView = View.extend({
     project: 'state',
     overlay: 'boolean',
     workspace: 'state',
-    me: 'object'
+    me: 'object',
   },
 
   subviews: {
@@ -34,10 +34,10 @@ const TaskView = View.extend({
           el,
           parent: this,
           selectOpts: {
-            tabIndex: 1
-          }
+            tabIndex: 1,
+          },
         });
-      }
+      },
     },
     name: {
       hook: 'input-name',
@@ -52,11 +52,11 @@ const TaskView = View.extend({
           validations: [
             {
               run: value => value.length > 0,
-              message: '*Name cannot be empty'
-            }
-          ]
+              message: '*Name cannot be empty',
+            },
+          ],
         });
-      }
+      },
     },
     user: {
       hook: 'select-user',
@@ -64,10 +64,10 @@ const TaskView = View.extend({
         return new UserField({
           el,
           selectOpts: {
-            tabIndex: 3
-          }
+            tabIndex: 3,
+          },
         });
-      }
+      },
     },
     project: {
       hook: 'select-project',
@@ -75,10 +75,10 @@ const TaskView = View.extend({
         return new ProjectField({
           el,
           selectOpts: {
-            tabIndex: 4
-          }
+            tabIndex: 4,
+          },
         });
-      }
+      },
     },
     segment: {
       hook: 'select-segment',
@@ -86,10 +86,10 @@ const TaskView = View.extend({
         return new SegmentField({
           el,
           selectOpts: {
-            tabIndex: 4
-          }
+            tabIndex: 4,
+          },
         });
-      }
+      },
     },
     estimate: {
       hook: 'input-estimate',
@@ -97,10 +97,10 @@ const TaskView = View.extend({
         return new EstimateField({
           el,
           inputOpts: {
-            tabIndex: 5
-          }
+            tabIndex: 5,
+          },
         });
-      }
+      },
     },
     start_time: {
       hook: 'input-start-time',
@@ -110,10 +110,10 @@ const TaskView = View.extend({
           inputOpts: {
             tabIndex: 6,
             name: 'start-time',
-            label: 'Start Time'
-          }
+            label: 'Start Time',
+          },
         });
-      }
+      },
     },
     end_time: {
       hook: 'input-end-time',
@@ -123,10 +123,10 @@ const TaskView = View.extend({
           inputOpts: {
             tabIndex: 7,
             name: 'end-time',
-            label: 'End Time'
-          }
+            label: 'End Time',
+          },
         });
-      }
+      },
     },
     start_date: {
       hook: 'input-start-date',
@@ -136,10 +136,10 @@ const TaskView = View.extend({
           inputOpts: {
             tabIndex: 8,
             name: 'start-date',
-            label: 'Start Date'
-          }
+            label: 'Start Date',
+          },
         });
-      }
+      },
     },
     end_date: {
       hook: 'input-end-date',
@@ -149,17 +149,17 @@ const TaskView = View.extend({
           inputOpts: {
             tabIndex: 9,
             name: 'end-date',
-            label: 'End Date'
-          }
+            label: 'End Date',
+          },
         });
-      }
+      },
     },
-    errors: { hook: 'errors', constructor: FormErrors }
+    errors: { hook: 'errors', constructor: FormErrors },
   },
 
   events: {
     'submit [data-hook=form]': 'onSubmit',
-    'click [data-hook=button-cancel]': 'onCancel'
+    'click [data-hook=button-cancel]': 'onCancel',
   },
 
   derived: {
@@ -173,8 +173,8 @@ const TaskView = View.extend({
         const { id } = this.me;
         const { role } = this.workspace.users.get(id);
         return role === 'readonly';
-      }
-    }
+      },
+    },
   },
 
   bindings: {
@@ -182,35 +182,35 @@ const TaskView = View.extend({
       type: 'booleanClass',
       hook: 'select-user',
       yes: 'user-select--filled',
-      no: 'user-select--empty'
+      no: 'user-select--empty',
     },
     'project.isFilled': {
       type: 'booleanClass',
       hook: 'select-project',
       yes: 'project-select--filled',
-      no: 'project-select--empty'
+      no: 'project-select--empty',
     },
     overlay: {
       type: 'booleanClass',
       hook: 'done-overlay',
       yes: 'task-popup__overlay--visible',
-      no: 'task-popup__overlay--hidden'
+      no: 'task-popup__overlay--hidden',
     },
     accountIsReadonly: [
       {
         type: 'booleanClass',
-        yes: 'task-popup--disabled'
+        yes: 'task-popup--disabled',
       },
       {
         type: 'booleanAttribute',
         selector: '.button--submit',
-        name: 'disabled'
+        name: 'disabled',
       },
       {
         type: 'toggle',
-        hook: 'readonly-label'
-      }
-    ]
+        hook: 'readonly-label',
+      },
+    ],
   },
 
   render() {
@@ -226,7 +226,7 @@ const TaskView = View.extend({
       this.project,
       this.segment,
       this.estimate,
-      this.account
+      this.account,
     ].forEach(field => {
       this.listenTo(field, 'change:value', this.hideErrors);
     }, this);
@@ -254,6 +254,8 @@ const TaskView = View.extend({
           const account = accounts.get(selectedAccountId);
           this.account.switchAccount(account);
           updateCustomColorsCss(selectedAccountId);
+
+          this.user.select.onSelect(this.me.name);
 
           this.hub.trigger('loader:hide');
           this.focusNameField();
@@ -314,7 +316,7 @@ const TaskView = View.extend({
       end_date: this.end_date.value,
       start_time: this.start_time.value,
       end_time: this.end_time.value,
-      estimated_minutes: this.estimate.value
+      estimated_minutes: this.estimate.value,
     });
 
     if (this.model.collection) {
@@ -326,7 +328,7 @@ const TaskView = View.extend({
     // default task color
     if (!this.project.value) {
       this.model.set({
-        color: 21
+        color: 21,
       });
     }
 
@@ -415,7 +417,7 @@ const TaskView = View.extend({
 
   showError(error) {
     this.hub.trigger('error:show', error);
-  }
+  },
 });
 
 module.exports = TaskView;

@@ -1,6 +1,6 @@
 {
   "name": "Teamweek Button: Project Planning Calendar",
-  "version": "1.11.15",
+  "version": "1.11.18",
   "manifest_version": 2,
   "author": "Teamweek <support@teamweek.com>",
   "description": "Add tasks to Teamweek directly from Github, Trello, GitLab and JIRA",

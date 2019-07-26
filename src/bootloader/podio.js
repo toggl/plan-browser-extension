@@ -4,6 +4,7 @@ const HashMap = require('hashmap');
 const find = require('lodash.find');
 const ButtonState = require('../button/button');
 const observer = require('../utils/observer');
+const { generateTaskNotes } = require('../utils/quill');
 
 const buttons = new HashMap();
 const observers = new HashMap();
@@ -101,7 +102,7 @@ class ProjectViewObserver extends Observer {
       task: {
         name,
         end_date: date,
-        notes: 'Added from Podio: ' + link,
+        notes: generateTaskNotes('Podio' + link),
       },
       link,
       anchor: 'element',
@@ -171,7 +172,7 @@ class TaskViewObserver extends Observer {
       task: {
         name,
         end_date: date,
-        notes: 'Added from Podio: ' + link,
+        notes: generateTaskNotes('Podio', link),
       },
       link,
       anchor: 'element',

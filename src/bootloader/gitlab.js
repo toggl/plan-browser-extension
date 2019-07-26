@@ -2,18 +2,21 @@ const moment = require('moment');
 const HashMap = require('hashmap');
 const ButtonState = require('../button/button');
 const observer = require('../utils/observer');
+const { generateTaskNotes } = require('../utils/quill');
 
 const buttons = new HashMap();
 
 const DATE_RE = /(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{1,2}), (\d{4})/;
 
 function createObserver() {
-  observer.create('[data-page="projects:milestones:index"] .milestone')
+  observer
+    .create('[data-page="projects:milestones:index"] .milestone')
     .onAdded(createButton.bind(null, createMilestoneIndexButton))
     .onRemoved(removeButton)
     .start();
 
-  observer.create('[data-page="projects:issues:index"] .issue')
+  observer
+    .create('[data-page="projects:issues:index"] .issue')
     .onAdded(createButton.bind(null, createIssueIndexButton))
     .onRemoved(removeButton)
     .start();
@@ -40,10 +43,10 @@ function createMilestoneIndexButton(element) {
   return {
     task: {
       name: linkEl.innerText,
-      end_date: findDate(element.innerText)
+      end_date: findDate(element.innerText),
     },
     link: linkEl.href,
-    container: titleEl
+    container: titleEl,
   };
 }
 
@@ -54,10 +57,10 @@ function createIssueIndexButton(element) {
   return {
     task: {
       name: linkEl.innerText,
-      notes: 'Added from GitLab: ' + linkEl.href
+      notes: generateTaskNotes('GitLab', linkEl.href),
     },
     link: linkEl.href,
-    container: titleEl
+    container: titleEl,
   };
 }
 
@@ -67,7 +70,7 @@ function createButton(callback, element) {
   const state = new ButtonState({
     task: config.task,
     link: config.link,
-    anchor: 'screen'
+    anchor: 'screen',
   });
 
   const buttonEl = state.button.render().el;
