@@ -62,7 +62,7 @@ function findDate(meta) {
       dt = moment(date);
   }
 
-  const tm = /^(\d{1,2})\:(\d{1,2})\s/.exec(time);
+  const tm = /^(\d{1,2}):(\d{1,2})\s/.exec(time);
 
   if (tm) {
     dt.add(parseInt(tm[1]), 'hours');
