@@ -33,9 +33,7 @@ const TaskView = View.extend({
         return new AccountField({
           el,
           parent: this,
-          selectOpts: {
-            tabIndex: 1,
-          },
+          selectOpts: {},
         });
       },
     },
@@ -48,7 +46,7 @@ const TaskView = View.extend({
           label: 'Name',
           placeholder: 'Type here...',
           value: '',
-          tabIndex: 2,
+          tabIndex: 1,
           validations: [
             {
               run: value => value.length > 0,
@@ -64,8 +62,17 @@ const TaskView = View.extend({
         return new UserField({
           el,
           selectOpts: {
-            tabIndex: 3,
+            tabIndex: 2,
           },
+        });
+      },
+    },
+    estimate: {
+      hook: 'input-estimate',
+      prepareView(el) {
+        return new EstimateField({
+          el,
+          tabIndex: 3,
         });
       },
     },
@@ -86,17 +93,6 @@ const TaskView = View.extend({
         return new SegmentField({
           el,
           selectOpts: {
-            tabIndex: 4,
-          },
-        });
-      },
-    },
-    estimate: {
-      hook: 'input-estimate',
-      prepareView(el) {
-        return new EstimateField({
-          el,
-          inputOpts: {
             tabIndex: 5,
           },
         });
@@ -255,7 +251,7 @@ const TaskView = View.extend({
           this.account.switchAccount(account);
           updateCustomColorsCss(selectedAccountId);
 
-          this.user.select.onSelect(this.me.name);
+          // this.user.select.onSelect(this.me.name);
 
           this.hub.trigger('loader:hide');
           this.focusNameField();
