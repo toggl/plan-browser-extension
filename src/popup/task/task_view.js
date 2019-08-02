@@ -251,7 +251,7 @@ const TaskView = View.extend({
           this.account.switchAccount(account);
           updateCustomColorsCss(selectedAccountId);
 
-          this.user.select.onSelect(this.me.name);
+          // this.user.select.onSelect(this.me.name);
 
           this.hub.trigger('loader:hide');
           this.focusNameField();
