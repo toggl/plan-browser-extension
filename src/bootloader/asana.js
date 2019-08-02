@@ -2,6 +2,7 @@ const domify = require('domify');
 const HashMap = require('hashmap');
 const ButtonState = require('../button/button');
 const observer = require('../utils/observer');
+const { generateTaskNotes } = require('../utils/quill');
 
 const buttons = new HashMap();
 
@@ -16,10 +17,10 @@ function createObserver() {
 function createButton(element) {
   const state = new ButtonState({
     task: {
-      notes: 'Added from Asana: ' + location.href
+      notes: generateTaskNotes('Asana', location.href),
     },
     link: location.href,
-    anchor: 'screen'
+    anchor: 'screen',
   });
 
   const titleObserver = observer
@@ -59,7 +60,7 @@ function createButton(element) {
   buttons.set(element, {
     state,
     title: titleObserver,
-    actions: actionsObserver
+    actions: actionsObserver,
   });
 }
 
