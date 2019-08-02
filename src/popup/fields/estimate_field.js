@@ -9,7 +9,8 @@ module.exports = View.extend({
     hours: ['number', false, 0],
     minutes: ['number', false, 0],
     disabled: 'boolean',
-    isEditing: 'boolean'
+    isEditing: 'boolean',
+    tabIndex: 'number',
   },
 
   events: {
@@ -20,7 +21,8 @@ module.exports = View.extend({
     'input [data-hook=estimate-field-input-hours]': 'validateHoursInput',
     'input [data-hook=estimate-field-input-minutes]': 'validateMinutesInput',
     'focus .estimate-field__input': 'onFocusInput',
-    'click': 'startEditing',
+    click: 'startEditing',
+    focus: 'startEditing',
   },
 
   derived: {
@@ -28,25 +30,25 @@ module.exports = View.extend({
       deps: ['value'],
       fn() {
         return !!this.value;
-      }
+      },
     },
     showEmpty: {
       deps: ['isEditing', 'hasValue'],
       fn() {
         return !this.isEditing && !this.hasValue;
-      }
+      },
     },
     showInput: {
       deps: ['isEditing', 'hasValue'],
       fn() {
         return this.isEditing;
-      }
+      },
     },
     showLabel: {
       deps: ['isEditing', 'hasValue'],
       fn() {
         return !this.isEditing && this.hasValue;
-      }
+      },
     },
     label: {
       deps: ['value', 'hours', 'minutes'],
@@ -57,13 +59,13 @@ module.exports = View.extend({
         const hours = `${this.hours}h`;
         const minutes = this.minutes ? `${this.minutes}m` : '';
         return [hours, minutes].join(' ');
-      }
+      },
     },
     isFilled: {
       deps: ['hasValue'],
       fn() {
         return this.hasValue;
-      }
+      },
     },
   },
 
@@ -75,7 +77,7 @@ module.exports = View.extend({
       {
         type: 'booleanClass',
         selector: '.estimate-field__input-wrapper',
-        yes: 'task-form__readonly'
+        yes: 'task-form__readonly',
       },
       {
         type: 'booleanClass',
@@ -85,7 +87,7 @@ module.exports = View.extend({
     isEditing: {
       type: 'booleanClass',
       selector: '.estimate-field__input-wrapper',
-      name: 'estimate-field__input-wrapper--active'
+      name: 'estimate-field__input-wrapper--active',
     },
     showEmpty: {
       type: 'toggle',
@@ -101,16 +103,27 @@ module.exports = View.extend({
     },
     label: {
       type: 'text',
-      hook: 'estimate-field-inactive'
+      hook: 'estimate-field-inactive',
     },
     hours: {
       type: 'value',
-      hook: 'estimate-field-input-hours'
+      hook: 'estimate-field-input-hours',
     },
     minutes: {
       type: 'value',
-      hook: 'estimate-field-input-minutes'
-    }
+      hook: 'estimate-field-input-minutes',
+    },
+    tabIndex: [
+      {
+        type: 'attribute',
+        name: 'tabindex',
+      },
+      {
+        type: 'attribute',
+        selector: 'input',
+        name: 'tabindex',
+      },
+    ],
   },
 
   initialize() {
@@ -135,7 +148,7 @@ module.exports = View.extend({
   },
 
   validateHoursInput() {
-    const el = this.queryByHook(`estimate-field-input-hours`);
+    const el = this.queryByHook('estimate-field-input-hours');
     if (!el.value) {
       return;
     }
@@ -160,7 +173,7 @@ module.exports = View.extend({
   },
 
   validateMinutesInput() {
-    const el = this.queryByHook(`estimate-field-input-minutes`);
+    const el = this.queryByHook('estimate-field-input-minutes');
     if (!el.value) {
       return;
     }
@@ -181,7 +194,7 @@ module.exports = View.extend({
   },
 
   onHoursUpdate() {
-    const el = this.queryByHook(`estimate-field-input-hours`);
+    const el = this.queryByHook('estimate-field-input-hours');
     this.hours = parseInt(el.value);
     if (isNaN(this.hours) || this.hours < 0) {
       this.hours = 0;
@@ -190,7 +203,7 @@ module.exports = View.extend({
   },
 
   onMinutesUpdate() {
-    const el = this.queryByHook(`estimate-field-input-minutes`);
+    const el = this.queryByHook('estimate-field-input-minutes');
     this.minutes = parseInt(el.value);
     if (isNaN(this.minutes) || this.minutes < 0) {
       this.minutes = 0;
@@ -241,5 +254,5 @@ module.exports = View.extend({
 
   isFocused(hook) {
     return this.queryByHook(hook) === document.activeElement;
-  }
+  },
 });

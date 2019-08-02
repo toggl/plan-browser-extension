@@ -11,7 +11,8 @@ module.exports = View.extend({
     isEditable: ['boolean', true, true],
     items: 'array',
     label: 'string',
-    getItemTemplate: 'any'
+    getItemTemplate: 'any',
+    tabIndex: 'number',
   },
 
   derived: {
@@ -25,8 +26,8 @@ module.exports = View.extend({
         } else {
           return '--';
         }
-      }
-    }
+      },
+    },
   },
 
   events: {
@@ -40,31 +41,36 @@ module.exports = View.extend({
   bindings: {
     isFocused: {
       type: 'booleanClass',
-      name: 'searchable-select-field--focus'
+      name: 'searchable-select-field--focus',
     },
     placeholder: {
       type: 'attribute',
       name: 'placeholder',
-      selector: 'input'
+      selector: 'input',
     },
     isEditable: [
       {
         type: 'booleanClass',
         selector: 'input',
-        name: 'icon-chevron'
+        name: 'icon-chevron',
       },
       {
         type: 'booleanAttribute',
         name: 'disabled',
         selector: 'input',
-        invert: true
+        invert: true,
       },
       {
         type: 'booleanClass',
         selector: '.searchable-select-field--controls',
         yes: 'row--bordered',
       },
-    ]
+    ],
+    tabIndex: {
+      type: 'attribute',
+      selector: 'input',
+      name: 'tabindex',
+    },
   },
 
   initialize() {
