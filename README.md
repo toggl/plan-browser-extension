@@ -155,7 +155,6 @@ This should open up Firefox with the extension installed for testing. The utilit
 
 # Releasing
 
-- Bump `version` in app/version.json.
+- Bump `version` in `app/manifest.json` and run `npm run tag` to tag and push to Github remote.
 - Run `npm run release` to generate zip file (in `./tmp`) to upload to Chrome & Mozilla stores.
 - And `npm run source` to get source archive required by Mozilla Addons store.
-- Update version in `app/manifest.json` and run `npm run tag` to tag and push to Github remote.

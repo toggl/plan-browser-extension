@@ -15,7 +15,7 @@ const PopupView = View.extend({
     link: 'string',
     task: 'state',
     loader: 'state',
-    error: 'state'
+    error: 'state',
   },
 
   initialize() {
@@ -41,9 +41,9 @@ const PopupView = View.extend({
   },
 
   updateContentView() {
-    const content = api.auth.authenticated ?
-      new TaskView({ hub: this.hub, model: this.task }) :
-      new AuthView({ hub: this.hub });
+    const content = api.auth.authenticated
+      ? new TaskView({ hub: this.hub, model: this.task })
+      : new AuthView({ hub: this.hub });
 
     this.switcher.set(content);
   },
@@ -82,13 +82,13 @@ const PopupView = View.extend({
     collections.taskSources.create({
       task_id: task.id,
       account_id: account.id,
-      source_link: this.link
+      source_link: this.link,
     });
   },
 
   resizeWindow(dy = document.body.offsetHeight - window.innerHeight + 5) {
     window.resizeBy(0, dy);
-  }
+  },
 });
 
 module.exports = PopupView;
