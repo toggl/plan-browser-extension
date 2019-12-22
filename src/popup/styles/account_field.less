@@ -1,7 +1,7 @@
 .account-field-popup {
   position: fixed;
   z-index: 200;
-  box-shadow: 0 10px 40px 0 rgba(0,0,0,.2);
+  box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.2);
   background: #fff;
   border-radius: 2px;
   width: 230px;
@@ -16,8 +16,8 @@
     right: 2%;
     margin-top: -5px;
     margin-left: -7px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, .07);
-    content: "";
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.07);
+    content: '';
     display: block;
     position: absolute;
     width: 14px;
@@ -27,7 +27,7 @@
     z-index: 10;
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
-    background-color: #0041FF;
+    background-color: @color-primary;
   }
 
   &__menu {
@@ -35,7 +35,7 @@
     padding: 11px;
 
     &-icon {
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3c?xml version='1.0' encoding='UTF-8'?%3e%3csvg width='15px' height='4px' viewBox='0 0 15 4' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cg id='Artboard' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3e%3cg id='options_icon_new' fill='%230041FF' fill-rule='nonzero'%3e%3cpath d='M7.75,-1.5 C6.783502,-1.5 6,-2.28350169 6,-3.25 C6,-4.21649831 6.783502,-5 7.75,-5 C8.716498,-5 9.5,-4.21649831 9.5,-3.25 C9.5,-2.28350169 8.716498,-1.5 7.75,-1.5 Z M7.75,3.75 C6.783502,3.75 6,2.9664983 6,2 C6,1.0335017 6.783502,0.25 7.75,0.25 C8.716498,0.25 9.5,1.0335017 9.5,2 C9.5,2.9664983 8.716498,3.75 7.75,3.75 Z M7.75,9 C6.783502,9 6,8.2164983 6,7.25 C6,6.2835017 6.783502,5.5 7.75,5.5 C8.716498,5.5 9.5,6.2835017 9.5,7.25 C9.5,8.2164983 8.716498,9 7.75,9 Z' id='Shape' transform='translate(7.750000, 2.000000) rotate(90.000000) translate(-7.750000, -2.000000) '%3e%3c/path%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3c?xml version='1.0' encoding='UTF-8'?%3e%3csvg width='15px' height='4px' viewBox='0 0 15 4' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cg id='Artboard' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3e%3cg id='options_icon_new' fill='%237A43F3' fill-rule='nonzero'%3e%3cpath d='M7.75,-1.5 C6.783502,-1.5 6,-2.28350169 6,-3.25 C6,-4.21649831 6.783502,-5 7.75,-5 C8.716498,-5 9.5,-4.21649831 9.5,-3.25 C9.5,-2.28350169 8.716498,-1.5 7.75,-1.5 Z M7.75,3.75 C6.783502,3.75 6,2.9664983 6,2 C6,1.0335017 6.783502,0.25 7.75,0.25 C8.716498,0.25 9.5,1.0335017 9.5,2 C9.5,2.9664983 8.716498,3.75 7.75,3.75 Z M7.75,9 C6.783502,9 6,8.2164983 6,7.25 C6,6.2835017 6.783502,5.5 7.75,5.5 C8.716498,5.5 9.5,6.2835017 9.5,7.25 C9.5,8.2164983 8.716498,9 7.75,9 Z' id='Shape' transform='translate(7.750000, 2.000000) rotate(90.000000) translate(-7.750000, -2.000000) '%3e%3c/path%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
       width: 15px;
       height: 3.5px;
     }
@@ -43,7 +43,7 @@
 
   &__item {
     height: 44px;
-    background-color: #3367FF;
+    background-color: #3367ff;
     color: white;
     display: flex;
     align-items: center;
@@ -64,7 +64,7 @@
   &__workspace-label {
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
-    background-color: #0041FF;
+    background-color: @color-primary;
   }
 
   &__workspace {
@@ -86,7 +86,7 @@
   }
 
   &--color-muted {
-    color: rgba(255, 255, 255, .5);
+    color: rgba(255, 255, 255, 0.5);
   }
 
   &__change-workspace {

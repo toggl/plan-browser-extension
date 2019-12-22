@@ -25,7 +25,7 @@ module.exports = View.extend({
     errorText: ['string', true, ''],
     infoText: ['string', true, ''],
     validations: ['array', true, () => []],
-    tabIndex: 'number'
+    tabIndex: 'number',
   },
 
   derived: {
@@ -33,22 +33,22 @@ module.exports = View.extend({
       deps: ['isValid', 'isDirty', 'errorText'],
       fn() {
         return this.errorText && !this.isValid && this.isDirty;
-      }
+      },
     },
 
     formattedLabel: {
       deps: ['label'],
       fn() {
-        return this.label ? `${this.label}: ` : '';
-      }
+        return this.label || '';
+      },
     },
 
     isFilled: {
       deps: ['value'],
       fn() {
         return this.value && this.value.length > 0;
-      }
-    }
+      },
+    },
   },
 
   bindings: {
@@ -58,15 +58,18 @@ module.exports = View.extend({
       name: 'name',
     },
 
-    id: [{
-      type: 'attribute',
-      hook: 'label',
-      name: 'for',
-    }, {
-      type: 'attribute',
-      hook: 'input',
-      name: 'id',
-    }],
+    id: [
+      {
+        type: 'attribute',
+        hook: 'label',
+        name: 'for',
+      },
+      {
+        type: 'attribute',
+        hook: 'input',
+        name: 'id',
+      },
+    ],
 
     type: {
       type: 'attribute',
@@ -103,30 +106,39 @@ module.exports = View.extend({
       hook: 'input',
     },
 
-    formattedLabel: [{
-      type: 'toggle',
-      hook: 'label'
-    }, {
-      type: 'text',
-      hook: 'label'
-    }],
+    formattedLabel: [
+      {
+        type: 'toggle',
+        hook: 'label',
+      },
+      {
+        type: 'text',
+        hook: 'label',
+      },
+    ],
 
-    errorText: [{
-      type: 'text',
-      hook: 'error-text',
-    }, {
-      type: 'toggle',
-      hook: 'info-text',
-      invert: true,
-    }],
+    errorText: [
+      {
+        type: 'text',
+        hook: 'error-text',
+      },
+      {
+        type: 'toggle',
+        hook: 'info-text',
+        invert: true,
+      },
+    ],
 
-    infoText: [{
-      type: 'text',
-      hook: 'info-text',
-    }, {
-      type: 'toggle',
-      hook: 'info-text',
-    }],
+    infoText: [
+      {
+        type: 'text',
+        hook: 'info-text',
+      },
+      {
+        type: 'toggle',
+        hook: 'info-text',
+      },
+    ],
 
     isActive: {
       type: 'booleanClass',
@@ -143,8 +155,8 @@ module.exports = View.extend({
     tabIndex: {
       type: 'attribute',
       hook: 'input',
-      name: 'tabindex'
-    }
+      name: 'tabindex',
+    },
   },
 
   events: {
@@ -159,7 +171,7 @@ module.exports = View.extend({
       this.input && this.input.focus();
     });
 
-    this.listenTo(this, 'error', (errorText) => {
+    this.listenTo(this, 'error', errorText => {
       this.isValid = false;
       this.errorText = errorText;
       this.isDirty = true;
@@ -175,7 +187,7 @@ module.exports = View.extend({
   render() {
     this.renderWithTemplate();
     this.cacheElements({
-      input: '[data-hook=input]'
+      input: '[data-hook=input]',
     });
   },
 
@@ -211,7 +223,7 @@ module.exports = View.extend({
       isValid = isValid && validation.run(value);
 
       if (!isValid) {
-        this.errorText = validation.message || "*Input is not valid";
+        this.errorText = validation.message || '*Input is not valid';
         this.isValid = false;
         return;
       }

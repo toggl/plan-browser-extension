@@ -1,8 +1,5 @@
 .control-group {
-  display: flex;
-  flex-direction: column;
   align-items: stretch;
-  flex: 1;
 }
 
 .control-group__control {
@@ -10,11 +7,9 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: @color-fill-light;
   height: 34px;
   border: 1px solid @color-border-light;
-  border-radius: 2px;
-  padding: 10px 0 10px 10px;
+  border-radius: 4px;
   font-size: 13px;
   transition: 0.15s ease-in-out border-color;
   height: 35px;
@@ -29,24 +24,29 @@
 }
 
 .control-group__label {
-  color: rgba(0, 0, 0, 0.35);
-  padding: 2px 5px 0 0;
+  color: #a6a6a6;
+  width: 100px;
 }
 
 .control-group__input {
   color: #000000;
   font-size: 13px;
-  height: 33px;
+  // font-weight: 500;
+  height: 32px;
   border: none;
   flex: 1;
   background-color: transparent;
-  padding: 0 10px 0 0;
-  border-radius: 2px;
+  padding: 0 8px;
   outline: none;
   min-width: 0;
+  border-radius: 4px;
 
-  &:-webkit-autofill {
+  &::-webkit-autofill {
     -webkit-box-shadow: 0 0 0 30px @color-fill-light inset;
+  }
+
+  &::placeholder {
+    color: #a6a6a6;
   }
 
   &[disabled] {

@@ -109,7 +109,7 @@ class ProjectViewObserver extends Observer {
     });
 
     const actionsEl = document.body.querySelector('.item-topbar-actions ul');
-    const itemEl = domify('<li class="float-left teamweek"></li>');
+    const itemEl = domify('<li class="float-left toggl-plan"></li>');
     const buttonEl = state.button.render().el;
 
     itemEl.appendChild(buttonEl);
@@ -178,7 +178,7 @@ class TaskViewObserver extends Observer {
       anchor: 'element',
     });
 
-    const itemEl = domify('<li class="float-left teamweek"></li>');
+    const itemEl = domify('<li class="float-left toggl-plan"></li>');
     const buttonEl = state.button.render().el;
 
     itemEl.appendChild(buttonEl);

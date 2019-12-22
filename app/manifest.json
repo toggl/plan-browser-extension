@@ -1,11 +1,11 @@
 {
-  "name": "Teamweek Button: Project Planning Calendar",
+  "name": "Toggl Plan Button: Project Planning Calendar",
   "version": "1.11.21",
   "manifest_version": 2,
-  "description": "Add tasks directly into Teamweek from your favourite web tools",
+  "description": "Add tasks directly into Toggl Plan from your favourite web tools",
   "short_name": "TW Button",
   "icons": {
-    "128": "images/icon_128.png"
+    "80": "images/icon_80.png"
   },
   "permissions": [
     "storage",
@@ -92,10 +92,11 @@
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
   "browser_action": {
     "default_icon": {
-      "16": "images/icon_16.png",
-      "48": "images/icon_48.png",
-      "128": "images/icon_128.png"
+      "20": "images/icon_20.png",
+      "40": "images/icon_40.png",
+      "60": "images/icon_60.png",
+      "80": "images/icon_80.png"
     },
-    "default_title": "Teamweek"
+    "default_title": "Toggl Plan"
   }
 }

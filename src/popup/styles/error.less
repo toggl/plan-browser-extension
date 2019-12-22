@@ -1,7 +1,9 @@
 .error {
   position: absolute;
-  left: 0; right: 0;
-  top: 0; bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   padding: 30px 20px;
   display: flex;
   flex-direction: column;
@@ -11,24 +13,22 @@
   background-color: #ffffff;
 
   &__message {
-    color: rgba(0, 0, 0, .35);
-    font-weight: 600;
+    color: #000000;
+  }
 
-    a {
-      color: @color-danger;
-      text-decoration: none;
-    }
+  a {
+    color: @color-primary;
   }
 
   &__image {
     display: inline-block;
-    width: 167px;
-    height: 148px;
+    width: 182.75px;
+    height: 112.5px;
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url('/images/empty_yellow.png');
+    background-image: url('/images/error.png');
     @media @mq-retina {
-      background-image: url('/images/empty_yellow@2x.png');
+      background-image: url('/images/error@2x.png');
     }
   }
 }
