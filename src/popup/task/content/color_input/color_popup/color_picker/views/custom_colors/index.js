@@ -25,8 +25,9 @@ export default View.extend({
   subviews: {
     colorInputView: {
       hook: 'color-input',
-      prepareView() {
+      prepareView(el) {
         return new TextInput({
+          el,
           name: 'color_input',
           placeholder: 'Type color...',
           value: '209133',

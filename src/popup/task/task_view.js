@@ -82,17 +82,15 @@ const TaskView = View.extend({
   },
 
   async initialize() {
-    try {
-      this.hub.trigger('loader:show');
+    this.hub.trigger('loader:show');
 
+    try {
       this.me = await fetchMe();
       this.me.workspaces.map(workspace => accounts.add(workspace));
 
       this.accountSwitcher.switchAccount(
         accounts.get(this.me.preferences.selected_account_id)
       );
-
-      this.hub.trigger('loader:hide');
     } catch (error) {
       console.log(error);
       this.hub.trigger('loader:hide');
@@ -121,7 +119,7 @@ const TaskView = View.extend({
     });
     this.renderSubview(this.content, this.queryByHook('content'));
 
-    // this.user.switchAccount(this.workspace);
+    this.hub.trigger('loader:hide');
   },
 
   onSubmit(event) {

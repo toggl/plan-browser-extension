@@ -39,8 +39,9 @@ export default View.extend({
   subviews: {
     sectionSwitchView: {
       hook: 'switch',
-      prepareView() {
+      prepareView(el) {
         return new SegmentedControl({
+          el,
           activeSegment: this.section,
           segments: SECTION_TYPES,
           themeColor: 'blue',
@@ -52,8 +53,9 @@ export default View.extend({
 
     presetColorsView: {
       hook: 'preset-colors',
-      prepareView() {
+      prepareView(el) {
         return new PresetColors({
+          el,
           selectedColorId: this.selectedColorId,
           workspace: this.workspace,
         });
@@ -62,8 +64,9 @@ export default View.extend({
 
     customColorsView: {
       hook: 'custom-colors',
-      prepareView() {
+      prepareView(el) {
         return new CustomColors({
+          el,
           selectedColorId: this.selectedColorId,
           workspace: this.workspace,
         });

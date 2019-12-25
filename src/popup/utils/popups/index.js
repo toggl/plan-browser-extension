@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import hub from 'src/popup/utils/hub';
-import positioningModule from './positioning';
-import popupsModalsStack from './popups_modals_stack';
+import positioningModule from '../positioning';
+import popupsModalsStack from '../popups_modals_stack';
 import PopupView from './popup';
 
 const extractAnchor = function(options = {}) {
@@ -185,14 +185,6 @@ const showPopup = function(options) {
       if (popups.length === 0) {
         hub.trigger('popups:close:last');
       }
-    });
-
-    popup.listenTo(content, 'onboard:show', () => {
-      popup.el.classList.add('popup--onboard');
-    });
-
-    popup.listenTo(content, 'onboard:hide', () => {
-      popup.el.classList.remove('popup--onboard');
     });
 
     popup.listenTo(hub, 'shortcut:submit', () => {

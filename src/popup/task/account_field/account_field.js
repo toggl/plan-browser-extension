@@ -4,6 +4,7 @@ import { saveSelectedAccount } from 'src/utils/me';
 import * as api from 'src/api/api';
 import accounts from 'src/models/account_collection';
 import template from './account_field.hbs';
+import './account_field.scss';
 
 const AccountField = View.extend({
   template,

@@ -6,13 +6,17 @@
 .pika-single {
   display: block;
   position: relative;
-  width: 250px;
-  padding: 8px;
+  box-sizing: border-box;
+  width: 370px;
+  padding: 15px;
+  font-weight: 600;
+  color: $color-text-light;
 }
 
 .pika-title {
   position: relative;
   text-align: center;
+  color: $color-link-new;
 }
 
 .pika-label {
@@ -22,10 +26,10 @@
   z-index: 9999;
   overflow: hidden;
   margin: 0;
-  padding: 5px 3px;
+  padding: 0 3px;
   font-size: 14px;
   line-height: 20px;
-  font-weight: 500;
+  font-weight: bold;
   background-color: #fff;
 }
 
@@ -50,7 +54,6 @@
   padding: 0;
   width: 20px;
   height: 30px;
-  /* hide text using text-indent trick, using width value (it's enough) */
   text-indent: 20px;
   white-space: nowrap;
   overflow: hidden;
@@ -58,34 +61,27 @@
   background-position: center center;
   background-repeat: no-repeat;
   background-size: 75% 75%;
-  opacity: .5;
-  *position: absolute;
-  *top: 0;
+  border-radius: 4px;
+  opacity: 0.3;
+  &:hover {
+    background-color: rgba($color-link-new, 0.3);
+  }
 }
 
-.pika-prev:hover,
-.pika-next:hover {
-  opacity: 1;
-}
-
-.pika-prev,
-.is-rtl .pika-next {
+.pika-prev {
   float: left;
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAUklEQVR42u3VMQoAIBADQf8Pgj+OD9hG2CtONJB2ymQkKe0HbwAP0xucDiQWARITIDEBEnMgMQ8S8+AqBIl6kKgHiXqQqAeJepBo/z38J/U0uAHlaBkBl9I4GwAAAABJRU5ErkJggg==');
-  *left: 0;
 }
 
-.pika-next,
-.is-rtl .pika-prev {
+.pika-next {
   float: right;
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=');
-  *right: 0;
 }
 
 .pika-prev.is-disabled,
 .pika-next.is-disabled {
   cursor: default;
-  opacity: .2;
+  opacity: 0.2;
 }
 
 .pika-select {
@@ -100,6 +96,10 @@
   border: 0;
 }
 
+.pika-table thead tr {
+  border-bottom: 1px solid $color-border-light;
+}
+
 .pika-table th,
 .pika-table td {
   width: 14.285714285714286%;
@@ -107,11 +107,18 @@
 }
 
 .pika-table th {
-  color: #999;
   font-size: 14px;
-  line-height: 25px;
-  font-weight: 500;
   text-align: center;
+  font-weight: 600;
+  padding: 15px 0;
+
+  abbr {
+    text-decoration: none;
+  }
+}
+
+.pika-table td {
+  padding: 6px;
 }
 
 .pika-button {
@@ -121,31 +128,27 @@
   border: 0;
   margin: 0;
   width: 100%;
-  padding: 4px 4px;
+  padding: 6px 5px;
   font-size: 14px;
   line-height: 15px;
   text-align: center;
   background: transparent;
-}
-
-.is-today .pika-button {
-  color: @color-secondary;
+  color: $color-text-light;
 }
 
 .pika-button:hover,
-.is-today .pika-button:hover,
 .is-selected .pika-button {
-  background: lighten(@color-secondary, 40%);
+  background: rgba($color-link-new, 0.1);
+  border-radius: 4px;
+  color: $color-link-new;
 }
 
 .is-selected .pika-button:hover {
-  background: @color-secondary;
-  color: #fff;
+  background: rgba($color-link-new, 0.3);
 }
 
 .is-disabled .pika-button {
   pointer-events: none;
   cursor: default;
-  color: #999;
-  opacity: .3;
+  opacity: 0.3;
 }

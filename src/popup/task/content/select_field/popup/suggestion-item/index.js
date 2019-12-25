@@ -29,11 +29,11 @@ export default View.extend({
   subviews: {
     icon: {
       hook: 'icon',
-      prepareView() {
+      prepareView(el) {
         const {
           model: { original: model },
         } = this;
-        return new this.parent.parent.parent.iconView({ model });
+        return new this.parent.parent.parent.iconView({ model, el });
       },
     },
   },

@@ -24,9 +24,10 @@ export default View.extend({
   subviews: {
     estimateField: {
       hook: 'estimate-input',
-      prepareView() {
+      prepareView(el) {
         const { disabled, task } = this;
         return new EstimateField({
+          el,
           disabled,
           value: task.estimated_minutes || 0,
         });

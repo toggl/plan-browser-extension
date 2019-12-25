@@ -6,7 +6,7 @@ const ProjectModel = Model.extend({
   props: {
     id: 'number',
     name: 'string',
-    color: 'number',
+    color_id: 'number',
   },
 
   collections: {

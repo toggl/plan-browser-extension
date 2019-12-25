@@ -62,9 +62,9 @@ export default View.extend({
   subviews: {
     icon: {
       hook: 'input-icon',
-      prepareView() {
+      prepareView(el) {
         const { selectedModel: model } = this;
-        return new this.iconView({ model });
+        return new this.iconView({ model, el });
       },
     },
   },
