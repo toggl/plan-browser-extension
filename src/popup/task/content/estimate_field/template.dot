@@ -1,0 +1,11 @@
+<div class="{{=it.css.container}} row row--align-center">
+  <div class="{{=it.css.label}} text--color-new-gray row row--align-center">
+    <span class="{{=it.css.icon}} {{=it.css.iconsvg}} icon icon-svg icon-svg--14" data-hook="heading-icon"></span>
+    Daily Estimate
+  </div>
+
+  <div class="{{=it.css.input}} task-form-estimate-field-container row row--align-center pointer task-form__field-input-container" tabindex="8" data-hook="input">
+    <div data-hook="estimate-input"></div>
+    <span class="task-form__readonly {{=it.css.readonly}} icon-svg"></span>
+  </div>
+</div>

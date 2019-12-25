@@ -1,13 +1,14 @@
-const Promise = require('bluebird');
-const View = require('ampersand-view');
-const api = require('../../api/api');
-const FormErrors = require('../form/form_errors');
-const TextField = require('../fields/input');
-const { clear: clearMe } = require('../../utils/me');
-const { triggerAchievementUseButton } = require('../../api/stash');
+import Promise from 'bluebird';
+import View from 'ampersand-view';
+import * as api from '../../api/api';
+import FormErrors from '../form/form_errors';
+import TextField from '../fields/input';
+import { clear as clearMe } from '../../utils/me';
+import { triggerAchievementUseButton } from 'src/api/stash';
+import template from './auth_view.hbs';
 
 const AuthView = View.extend({
-  template: require('./auth_view.hbs'),
+  template,
 
   props: {
     hub: 'object',
@@ -124,4 +125,4 @@ const AuthView = View.extend({
   },
 });
 
-module.exports = AuthView;
+export default AuthView;

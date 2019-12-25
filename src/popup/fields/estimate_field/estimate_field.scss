@@ -1,0 +1,95 @@
+.estimate-field-container {
+  flex: 1;
+
+  &:hover .estimate-field__buttons {
+    display: flex;
+  }
+}
+
+.estimate-field-container.prompt {
+  border: 1px solid #e5e5e5;
+
+  &.disabled {
+    border-color: $color-border-light-new;
+  }
+
+  .estimate-field__button__plus {
+    background-image: svg-load('./icons/plus.svg', fill=$color-new-link);
+  }
+
+  .estimate-field__button__minus {
+    background-image: svg-load('./icons/minus.svg', fill=$color-new-link);
+  }
+
+  .estimate-field {
+    width: auto;
+  }
+}
+
+.estimate-field {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  width: 100%;
+
+  &__input-wrapper {
+    height: 32px;
+
+    & > div {
+      height: 100%;
+    }
+
+    &--active {
+      border-color: $color-new-link;
+    }
+  }
+
+  &__input {
+    border: none;
+    border-radius: 0;
+    height: auto;
+    padding: 0 !important;
+    margin: 0;
+    width: 15px;
+    background: transparent;
+
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+  }
+
+  &__label {
+    padding-right: 5px;
+  }
+
+  &__buttons {
+    flex-direction: row;
+    display: none;
+  }
+
+  &__button {
+    @include hover(0.5, 0.3);
+    padding: 10px 5px;
+    background-position: center;
+    height: 8px;
+    width: 8px;
+    box-sizing: content-box;
+    cursor: pointer;
+    background-repeat: no-repeat;
+
+    &__plus {
+      background-image: svg-load('./icons/plus.svg', fill=black);
+    }
+    &__minus {
+      background-image: svg-load('./icons/minus.svg', fill=black);
+    }
+
+    &:last-child {
+      padding-right: 10px;
+    }
+  }
+}

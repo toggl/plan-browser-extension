@@ -1,0 +1,64 @@
+.task-form {
+  position: relative;
+  transition: transform 0.15s ease-in-out;
+  border-radius: 2px;
+  background-color: #ffffff;
+
+  .dynamic-input {
+    height: 32px;
+
+    &__input,
+    &__label {
+      cursor: pointer;
+      border-radius: 2px;
+      font-size: 13px;
+      padding: 0 8px;
+      height: 100%;
+
+      &:hover {
+        background: #f2f2f2;
+      }
+    }
+
+    .arrow {
+      display: none;
+    }
+  }
+
+  .estimate-field {
+    font-size: 13px;
+  }
+
+  .animated-checkbox {
+    background: white;
+  }
+
+  &__field-input-container {
+    width: 462px;
+
+    @media screen and (max-width: $task-form-small-desktop-breakpoint) {
+      width: 330px;
+    }
+  }
+
+  .task-form__field-input-container--readonly:hover {
+    background: #f2f2f2;
+    border-color: #f2f2f2;
+    border-radius: 2px;
+
+    .task-form__readonly {
+      display: block;
+    }
+  }
+}
+
+[tabindex] {
+  outline: none;
+}
+
+[contenteditable='true']:empty:before {
+  content: attr(placeholder);
+  display: block; /* For Firefox */
+  color: $color-new-gray;
+  font-weight: 500;
+}

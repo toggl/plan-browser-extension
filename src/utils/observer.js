@@ -1,4 +1,4 @@
-const difference = require('lodash.difference');
+import difference from 'lodash.difference';
 
 function Observer(selector, element) {
   this.selector = selector;
@@ -55,6 +55,6 @@ Observer.prototype.stop = function() {
   return this;
 };
 
-exports.create = function(selector, element) {
+export const create = function(selector, element) {
   return new Observer(selector, element);
 };

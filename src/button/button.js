@@ -1,9 +1,9 @@
-const Promise = require('bluebird');
-const State = require('ampersand-state');
-const ButtonView = require('./views/button/button_view');
-const TaskModel = require('../models/task_model');
-const collections = require('../models/collections');
-const analytics = require('../utils/analytics');
+import Promise from 'bluebird';
+import State from 'ampersand-state';
+import ButtonView from './views/button/button_view';
+import TaskModel from 'src/models/task_model';
+import * as collections from 'src/models/collections';
+import analytics from '../utils/analytics';
 
 const HubState = State.extend({});
 
@@ -97,7 +97,7 @@ const ButtonState = State.extend({
 
     const model = new TaskModel(taskParams);
 
-    return Object.assign({ link: this.link }, model.serialize());
+    return { ...{ link: this.link }, ...model.serialize() };
   },
 
   remove() {
@@ -117,4 +117,4 @@ ButtonState.setLoaded = function() {
   window['__tw-button'] = true;
 };
 
-module.exports = ButtonState;
+export default ButtonState;

@@ -1,7 +1,7 @@
-const Promise = require('bluebird');
-const result = require('lodash.result');
-const superagent = require('superagent');
-const api = require('./api');
+import Promise from 'bluebird';
+import result from 'lodash.result';
+import superagent from 'superagent';
+import * as api from './api';
 
 // Throw an error when a URL is needed, and none is supplied.
 const urlError = function() {
@@ -10,11 +10,11 @@ const urlError = function() {
 
 // Map from CRUD to HTTP for our default `Backbone.sync` implementation.
 const methodMap = {
-  'create': 'post',
-  'update': 'put',
-  'patch': 'patch',
-  'delete': 'del',
-  'read': 'get'
+  create: 'post',
+  update: 'put',
+  patch: 'patch',
+  delete: 'del',
+  read: 'get',
 };
 
 function sync(method, model, options) {
@@ -44,36 +44,39 @@ function sync(method, model, options) {
         if (options.error) {
           options.error(error);
         }
-        reject({message: 'network_error', error});
+        reject({ message: 'network_error', error });
 
-      // If the server wants us to authorize, we refresh the tokens
-      // If the tokens are not set, the refresh will fail
+        // If the server wants us to authorize, we refresh the tokens
+        // If the tokens are not set, the refresh will fail
       } else if (response.unauthorized) {
         // Refresh the tokens
-        const refresh = api.auth.refreshTokens().then(function() {
-          // If it is successful, try sending the sync request again
-          return sync(method, model, options);
-        }, function(error) {
-          // If it fails, call the error handler and pass the error along
-          if (options.error) {
-            options.error(error);
+        const refresh = api.auth.refreshTokens().then(
+          function() {
+            // If it is successful, try sending the sync request again
+            return sync(method, model, options);
+          },
+          function(error) {
+            // If it fails, call the error handler and pass the error along
+            if (options.error) {
+              options.error(error);
+            }
+            return Promise.reject(error);
           }
-          return Promise.reject(error);
-        });
+        );
 
         // Resolve with a promise,
         // so if the promise fails, this promise fails too
         resolve(refresh);
 
-      // If everything is fine,
-      // call success handler and resolve with the model instance
+        // If everything is fine,
+        // call success handler and resolve with the model instance
       } else if (response.ok) {
         if (options.success) {
           options.success(response.body);
         }
         resolve(model);
 
-      // If something weird happens, just say it is an unknown error
+        // If something weird happens, just say it is an unknown error
       } else {
         if (options.error) {
           options.error();
@@ -84,4 +87,4 @@ function sync(method, model, options) {
   });
 }
 
-module.exports = sync;
+export default sync;

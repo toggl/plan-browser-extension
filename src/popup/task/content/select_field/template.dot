@@ -1,0 +1,13 @@
+<div class="{{=it.css.container}} row row--align-center">
+  <div class="{{=it.css.label}} text--color-new-gray row row--align-center">
+    <span class="{{=it.css.icon}} {{=it.css.iconsvg}} icon icon-svg icon-svg--14" data-hook="heading-icon"></span>
+    <span data-hook="heading-label"></span>
+  </div>
+
+  <div data-hook="input" class="{{=it.css.input}} row row--align-center pointer task-form__field-input-container" tabindex="{{=it.tabIndex}}">
+    <span class="{{=it.css.input__icon}}" data-hook='input-icon'></span>
+    <span class="{{=it.css.input__label}} overflow-ellipsis whitespace-nowrap" data-hook='input-label'></span>
+    <span class="{{=it.css.input__label}} {{=it.css.input__placeholder}}" data-hook='input-placeholder'>Select or Add</span>
+    <span class="task-form__readonly {{=it.css.readonly}} icon-svg"></span>
+  </div>
+</div>

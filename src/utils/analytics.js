@@ -1,4 +1,4 @@
-exports.track = function(category, action) {
+export const track = function(category, action) {
   console.log(category, action);
 
   chrome.runtime.sendMessage({

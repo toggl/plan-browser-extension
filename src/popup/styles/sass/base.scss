@@ -1,0 +1,162 @@
+/* Common */
+
+.page-content {
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Fluid grid */
+
+.fluid {
+  @for $i from 1 through 7 {
+    &.pages#{$i} {
+      width: percentage($i);
+    }
+  }
+}
+
+.grid.scrollable {
+  .grid__axis-x {
+    overflow-x: auto;
+  }
+}
+
+/* Common */
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  color: #201a32;
+  background: white;
+  position: relative;
+  overflow-x: hidden;
+}
+input,
+textarea,
+select,
+.settings {
+  user-select: text !important;
+}
+body.dragged {
+  user-select: none;
+  * {
+    user-select: none;
+  }
+}
+a {
+  text-decoration: none;
+  color: #494b4a;
+  outline: 0;
+}
+
+form {
+  margin: 0;
+  padding: 0;
+}
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.hidden {
+  display: none !important;
+}
+.transparent {
+  opacity: 0 !important;
+}
+.invisible {
+  visibility: hidden !important;
+}
+.fade-out {
+  animation-duration: 0.5s !important;
+  animation-name: fadeOut !important;
+  animation-fill-mode: forwards !important;
+}
+
+/* borders */
+.no-border {
+  border: none;
+}
+.no-border * {
+  border: none;
+}
+
+.float-right {
+  float: right;
+}
+.float-left {
+  float: left;
+}
+
+::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: $color-text-light;
+}
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: $color-text-light;
+  opacity: 1;
+}
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: $color-text-light;
+  opacity: 1;
+}
+:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: $color-text-light;
+}
+
+.size-large {
+  width: 900px;
+}
+
+.text-dark {
+  color: $color-text-dark;
+}
+.text-medium {
+  color: $color-text-medium;
+}
+.text-light {
+  color: $color-text-light;
+}
+
+.pointer {
+  cursor: pointer;
+}
+.ew-resize {
+  cursor: ew-resize !important;
+}
+
+.block {
+  display: block !important;
+}
+.bg-white {
+  background: white !important;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+.overflow-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
+noscript {
+  font-size: $font-superhuge;
+  font-weight: bold;
+  color: $color-success;
+  display: block;
+  text-align: center;
+  margin-top: 2em;
+}

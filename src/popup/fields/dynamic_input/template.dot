@@ -1,0 +1,5 @@
+<div class="dynamic-input row row--align-center">
+  <input class="dynamic-input__input input--placeholder-light" data-hook="dynamic-input-control" autocomplete="off" />
+  <div class="dynamic-input__label" data-hook="dynamic-input-label"></div>
+  <div class='arrow arrow--down' data-hook='arrow'></div>
+</div>

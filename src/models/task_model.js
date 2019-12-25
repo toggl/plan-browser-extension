@@ -1,6 +1,6 @@
-const moment = require('moment');
-const Model = require('ampersand-model');
-const sync = require('../api/api_sync');
+import moment from 'moment';
+import Model from 'ampersand-model';
+import sync from '../api/api_sync';
 
 const TaskModel = Model.extend({
   sync,
@@ -17,18 +17,23 @@ const TaskModel = Model.extend({
     end_time: 'string',
     estimated_minutes: 'number',
     notes: 'string',
-    color: 'number'
+    color: 'number',
+    done: 'boolean',
+    workspace_members: ['array', true, () => []],
   },
 
   parse(attrs) {
-    return Object.assign({}, attrs, {
-      start_date: attrs.start_date
-        ? moment(attrs.start_date, 'YYYY-MM-DD').toDate()
-        : undefined,
-      end_date: attrs.end_date
-        ? moment(attrs.end_date, 'YYYY-MM-DD').toDate()
-        : undefined
-    });
+    return {
+      ...attrs,
+      ...{
+        start_date: attrs.start_date
+          ? moment(attrs.start_date, 'YYYY-MM-DD').toDate()
+          : undefined,
+        end_date: attrs.end_date
+          ? moment(attrs.end_date, 'YYYY-MM-DD').toDate()
+          : undefined,
+      },
+    };
   },
 
   serialize() {
@@ -42,7 +47,11 @@ const TaskModel = Model.extend({
     }
 
     return res;
-  }
+  },
+
+  assigned(user) {
+    return -1 !== this.workspace_members.indexOf(user.membership_id);
+  },
 });
 
-module.exports = TaskModel;
+export default TaskModel;

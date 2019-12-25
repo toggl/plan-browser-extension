@@ -1,0 +1,4 @@
+<div class="{{=it.css.container}} row row--align-center pointer hover">
+  <div class="{{=it.css.icon__wrap}}" data-hook='icon'></div>
+  <div class="{{=it.css.label}} overflow-ellipsis whitespace-nowrap hover" data-hook='label'></div>
+</div>

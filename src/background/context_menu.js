@@ -1,6 +1,6 @@
-const TaskModel = require('../models/task_model');
-const analytics = require('../utils/analytics');
-const openPopupWindow = require('./util/popup_window').open;
+import TaskModel from 'src/models/task_model';
+import analytics from 'src/utils/analytics';
+import { openPopupWindow } from 'src/background/util/popup_window';
 
 chrome.contextMenus.create({
   id: 'context-add',

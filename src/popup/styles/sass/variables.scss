@@ -1,0 +1,180 @@
+/* Font sizes */
+
+$font-superhuge: 50px;
+$font-extrahuge: 30px;
+$font-huge: 24px;
+$font-large: 18px;
+$font-big: 17px;
+$font-normal: 16px;
+$font-smally: 14px;
+$font-small: 13px;
+$font-tiny: 12px;
+$font-xsmall: 11px;
+$font-xxsmall: 10px;
+
+/* Base colors */
+
+$color-muted: #d2d2d2;
+$color-success: #1dbf11;
+$color-danger: #ed3921;
+$color-warning: #ff7e00;
+$color-alert: #fffbcc;
+$color-action: #0096ff;
+$color-link: #0068c0;
+$color-link-new: #0096ff;
+
+$color-new-success: #0dea9c;
+$color-new-link: #0041ff;
+$color-new-danger: #fb0046;
+$color-new-gray: #a6a6a6;
+$color-new-dark: #333e44;
+$color-dark: #21282c;
+$color-secondary: rgba($color-new-link, 0.1);
+
+$color-new-yellow: #fccb00;
+$color-new-orange: #ff9e15;
+$color-new-cyan: #00edff;
+
+/* Fill colors */
+
+$color-fill-dark: #4c4c4c;
+$color-fill-medium-dark: #999999;
+$color-fill-medium: #e6e6e6;
+$color-fill-medium-light: #f0f0f0;
+$color-fill-light: #f8f8f8;
+
+/* Text colors */
+
+$color-text-dark: #201a32;
+$color-text-medium: #666666;
+$color-text-light: #999999;
+$color-text-extra-light: #bebebe;
+
+/* Border colors */
+
+$color-border-light: #e6e6e6;
+$color-border-dark: #cccccc;
+$color-border-alert: #ffecb2;
+$color-border-light-new: #e5e5e5;
+
+/* Border Radius */
+$radius-none: 0;
+$radius-tiny: 2px;
+$radius-rounded: 9999px;
+
+/* Spacings */
+
+$spacing: 6px;
+
+$spacing-tiny: 3px;
+$spacing-smaller: 6px;
+$spacing-icon: 10px;
+$spacing-small: 20px;
+$spacing-medium: 24px;
+$spacing-unit: 3px;
+
+/* Bulk select colors */
+
+$bulk-base-color: $color-action;
+$bulk-light-color: #a4d165;
+
+/* Base colors */
+
+$colors: (
+  1: #311b92,
+  2: #673ab7,
+  3: #b39ddb,
+  4: #d1c4e9,
+  5: #ff3cae,
+  6: #9b1818,
+  7: #cd3633,
+  8: #f44336,
+  9: #ef9a9a,
+  10: #ff9800,
+  11: #d9480f,
+  12: #ffc672,
+  13: #e37403,
+  14: #ffcdd2,
+  15: #9ccf9e,
+  16: #006064,
+  17: #64b5f6,
+  18: #00acc1,
+  19: #4dd0e1,
+  20: #338636,
+  21: #96fc2c,
+  22: #fdd835,
+  23: #e9c424,
+  24: #fff9c4,
+  25: #038391,
+  26: #0d47a1,
+  27: #00fffe,
+  28: #1770c9,
+  29: #2196f3,
+  30: #9575cd,
+  31: #1b5e20,
+  32: #66bb6a,
+  33: #c8e6c9,
+  34: #b2ebf2,
+  35: #90a4ae,
+  36: #be950c,
+  37: #fffe50,
+  38: #fff176,
+  39: #ffe0b2,
+  40: #bbdefb,
+  41: #ff0000,
+  42: #cfd8dc,
+  43: #607d8b,
+  44: #455a64,
+  45: #263238,
+);
+
+$design-colors: (
+  'primary': $color-new-link,
+  'link': $color-new-link,
+  'success': $color-new-success,
+  'danger': $color-new-danger,
+  'gray': $color-new-gray,
+);
+
+/* Timeline */
+
+$timeline-reorder-speed: 0.08s;
+
+/* Task */
+
+$task-interaction-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.15);
+
+/* Shadows */
+
+$popup-shadow: 0 10px 60px 0 rgba(0, 0, 0, 0.25);
+$popup-arrow-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.07);
+
+/* Transitions */
+$transition-fast: 0.2s ease-in-out;
+
+/* Media queries */
+
+$mq-mobile: '(max-width: 500px)';
+$mq-desktop: '(min-width: 501px)';
+$mq-retina: 'only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)';
+
+/* CSS Arrow */
+
+$arrow-size: 4px;
+
+/* Modal */
+
+$modal-bg: rgb(248, 248, 248);
+
+/* Bakclog */
+
+$backlog-width: 416px;
+$backlog-padding: 16px;
+
+// Task form
+
+$task-form-small-desktop-breakpoint: 960px;
+
+// Auth page
+
+$auth-breakpoint: 860px;

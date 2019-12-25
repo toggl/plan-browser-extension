@@ -1,0 +1,16 @@
+<div class="switcher-tabs">
+  {{~ it.segments :segment }}
+    <div
+      class="switcher-tabs__tab {{! it.modifierClasses ? it.modifierClasses: ''}}"
+      data-hook="segment"
+      data-name="{{! segment.name }}">
+      {{! segment.label }}
+      {{? segment.tip}}
+        <div class="switcher-tabs__tab-tip">{{= segment.tip}}</div>
+      {{?}}
+    </div>
+    {{? it.isInline}}
+      <span class="switcher-tabs__separator"></span>
+    {{?}}
+  {{~}}
+</div>

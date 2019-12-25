@@ -1,0 +1,39 @@
+<div class="estimate-field-container row row--align-center " data-err="estimated_minutes">
+  <div class="spacing-1--inner-horizontal text--color-light" data-hook="prompt">{{=it.prompt}}</div>
+  <div class="estimate-field row row--align-center">
+    <div class="estimate-field__input-wrapper row--align-center column column--grow input--rounded">
+      <div data-hook="estimate-field-empty" class="row row--align-center">
+        <div class="column column--grow text--color-light">
+          Define...
+        </div>
+      </div>
+      <div data-hook="estimate-field-inactive" class="row row--align-center">
+      </div>
+      <div data-hook="estimate-field-active" class="row row--align-center">
+        <div class="column">
+          <input
+            class="estimate-field__input input input--font-14 input--text-dark"
+            name="estimate-hours"
+            type="number"
+            tabindex="8"
+            data-hook="estimate-field-input-hours" />
+        </div>
+        <div class="column estimate-field__label">h</div>
+        <div class="column">
+          <input
+            class="estimate-field__input input input--font-14 input--text-dark"
+            name="estimate-minutes"
+            type="number"
+            tabindex="8"
+            data-hook="estimate-field-input-minutes" />
+        </div>
+        <div class="column estimate-field__label">m</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="column estimate-field__buttons">
+    <div class="estimate-field__button estimate-field__button__minus" data-hook="estimate-field-subtract"></div>
+    <div class="estimate-field__button estimate-field__button__plus" data-hook="estimate-field-add"></div>
+  </div>
+</div>

@@ -1,0 +1,311 @@
+/* General typography */
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: $font-normal;
+  line-height: 1.25;
+  color: #000000;
+}
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+  Headings.
+
+  Styleguide 1.1
+*/
+
+h1 {
+  font-size: $font-huge * 1.5;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: $font-large;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: $font-big;
+  font-weight: bold;
+}
+
+h4 {
+  font-size: $font-normal;
+  font-weight: normal;
+  color: #acacac; /* Move under COLOR.SCSS */
+}
+
+h5 {
+  font-size: $font-tiny;
+  font-weight: normal;
+}
+
+/*
+  DEPRECATED. General font sizes.
+
+  .font-superhuge - Superhuge text = 50px.
+  .font-huge - Huge text = 24px.
+  .font-large - Large text = 18px.
+  .font-big - Big text = 16px.
+  .font-normal - Normal text = 14px.
+  .font-small - Small text = 13px.
+  .font-tiny - Too small text = 12px.
+
+  Styleguide 1.2
+*/
+
+.font-superhuge {
+  font-size: $font-superhuge;
+}
+.font-huge {
+  font-size: $font-huge;
+}
+.font-large {
+  font-size: $font-large;
+}
+.font-big {
+  font-size: $font-big;
+}
+.font-normal {
+  font-size: $font-normal;
+}
+.font-smally {
+  font-size: $font-smally;
+}
+.font-small {
+  font-size: $font-small;
+}
+.font-tiny {
+  font-size: $font-tiny;
+}
+.font-xsmall {
+  font-size: $font-xsmall;
+}
+.font-xxsmall {
+  font-size: $font-xxsmall;
+  line-height: 1.6;
+}
+
+/*
+  General font sizes.
+
+  .text-size-huge - Huge text = 20px.
+  .text-size-large - Large text = 18px.
+  .text-size-normal - Normal text = 16px.
+  .text-size-small - Small text = 14px.
+
+  Styleguide 1.2.1
+*/
+.text-size-huge {
+  font-size: 20px;
+}
+.text-size-large {
+  font-size: 18px;
+}
+.text-size-normal {
+  font-size: 16px;
+}
+.text-size-small {
+  font-size: 14px;
+}
+.text-size-puny {
+  font-size: 10px;
+}
+
+/*
+  General text colors.
+
+  .text-muted - Muted text.
+  .text-note - Note.
+  .text-success - Indicates positive text.
+  .text-danger - Indicates negative text.
+
+  Styleguide 1.3
+*/
+.text-muted {
+  color: $color-muted;
+}
+.text-note {
+  color: rgba(0, 0, 0, 0.3);
+}
+.text-success {
+  color: $color-success;
+}
+.text-danger {
+  color: $color-danger;
+}
+
+/*
+  Text alignment.
+
+  .text-left - Text is aligned left.
+  .text-center - Text is center aligned.
+  .text-right - Text is aligned right.
+
+  Styleguide 1.4
+*/
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+  justify-content: center;
+}
+.text-right {
+  text-align: right;
+}
+
+/*
+  Text styling.
+
+  .bold - Text is bold.
+  .line-through - Text is stroked.
+
+  Styleguide 1.5
+*/
+.bold {
+  font-weight: bold !important;
+}
+.line-through {
+  text-decoration: line-through !important;
+}
+
+/*
+  Paragraph.
+
+  .compact - Paragraph is compacted.
+
+  Styleguide 1.6
+*/
+p.compact {
+  margin: 0;
+  padding: 0.5em 0;
+}
+
+.single-line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  > span,
+  > a {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.text--bold {
+  font-weight: bold;
+}
+
+.text--medium {
+  font-weight: bold;
+}
+
+.text--size-40 {
+  font-size: 40px;
+}
+.text--size-28 {
+  font-size: 28px;
+}
+.text--size-11 {
+  font-size: 11px;
+}
+
+.text--size-12 {
+  font-size: 12px;
+}
+
+.text--weight-300 {
+  font-weight: 300;
+}
+.text--weight-400 {
+  font-weight: 400;
+}
+.text--weight-500 {
+  font-weight: 500;
+}
+.text--weight-600 {
+  font-weight: 600;
+}
+
+.text--color-dark {
+  color: $color-text-dark;
+}
+
+.text--color-light {
+  color: $color-text-light;
+}
+
+.text--color-success {
+  color: $color-success;
+}
+
+.text--color-new-link {
+  color: $color-new-link;
+}
+
+.text--color-link {
+  color: $color-link;
+}
+
+.text--color-link-new {
+  color: $color-link-new;
+}
+
+.text--color-new-link {
+  color: $color-new-link;
+}
+
+.text--color-new-light {
+  color: $color-new-gray;
+}
+
+.text--color-new-gray {
+  color: $color-new-gray;
+}
+
+.text--color-error {
+  color: $color-danger;
+}
+
+.text--color-new-danger,
+.text--color-new-error {
+  color: $color-new-danger;
+}
+
+.text--underlined {
+  text-decoration: underline !important;
+}
+
+.text--uppercased {
+  text-transform: uppercase;
+}
+
+.text--vertical-align-middle {
+  vertical-align: middle;
+}
+
+.text--parenthesed {
+  &:before {
+    content: '(';
+  }
+  &:after {
+    content: ')';
+  }
+}

@@ -1,7 +1,7 @@
-const RestCollection = require('ampersand-rest-collection');
-const ProjectModel = require('./project_model');
-const config = require('../api/config');
-const sync = require('../api/api_sync');
+import RestCollection from 'ampersand-rest-collection';
+import ProjectModel from './project_model';
+import config from '../api/config';
+import sync from '../api/api_sync';
 
 const ProjectCollection = RestCollection.extend({
   model: ProjectModel,
@@ -13,4 +13,4 @@ const ProjectCollection = RestCollection.extend({
   sync,
 });
 
-module.exports = ProjectCollection;
+export default ProjectCollection;

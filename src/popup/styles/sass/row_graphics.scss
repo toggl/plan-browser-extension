@@ -1,0 +1,146 @@
+.row--rounded {
+  border-radius: 4px;
+}
+
+.row--bg-light {
+  background-color: $color-fill-light;
+  &.row--hover:hover {
+    background-color: darken($color-fill-light, 5%);
+  }
+}
+
+.row--bg-medium {
+  background-color: $color-fill-medium;
+  &.row--hover:hover {
+    background-color: darken($color-fill-medium, 5%);
+  }
+}
+
+.row--bg-medium-light {
+  background-color: $color-fill-medium-light;
+  &.row--hover:hover {
+    background-color: darken($color-fill-medium-light, 5%);
+  }
+}
+
+.row--bg-dark {
+  background-color: $color-fill-dark;
+}
+
+.row--bg-alert {
+  background-color: $color-alert;
+}
+
+.row--bg-color {
+  color: white;
+}
+
+.row--bg-white {
+  background: white;
+}
+
+.row--clickable {
+  position: relative;
+  cursor: pointer;
+
+  &:hover .button--menu {
+    @extend .button--menu:hover;
+  }
+
+  &:hover .button--menu.button--active {
+    @extend .button--menu.button--active:hover;
+  }
+}
+
+.row--clickable-light:hover {
+  cursor: pointer;
+  background-color: $color-fill-light;
+}
+
+.row--bordered {
+  border: 1px solid $color-border-light-new;
+}
+
+.row--border-top {
+  border-top: 1px solid #eaeaea;
+}
+
+.row--border-top-new {
+  border-top: 1px solid $color-border-light-new;
+}
+
+.row--border-bottom {
+  border-bottom: 1px solid #eaeaea;
+}
+
+.row--border-bottom-new {
+  border-bottom: 1px solid $color-border-light-new;
+}
+
+.row-group--bordered {
+  border-bottom: 1px solid #eaeaea;
+}
+
+.row-group--new-bordered {
+  border-bottom: 1px solid $color-border-light-new;
+}
+
+.row-group--bordered,
+.row-group--separated {
+  > .row,
+  > .row-group {
+    border-top: 1px solid #eaeaea;
+  }
+}
+
+.row-group--new-bordered,
+.row-group--new-separated {
+  > .row,
+  > .row-group {
+    border-top: 1px solid $color-border-light-new;
+  }
+}
+
+.row-group--separated,
+.row-group--new-separated {
+  > .row:first-child,
+  > .row-group:first-child {
+    border-top: none;
+  }
+}
+
+.row-group--bg-light {
+  background-color: $color-fill-light;
+}
+
+.row-group--bg-medium {
+  background-color: $color-fill-medium;
+}
+
+.row-group--bg-dark {
+  background-color: $color-fill-dark;
+}
+
+.column--border-left {
+  border-left: 1px solid $color-border-light;
+}
+
+.column--border-right {
+  border-right: 1px solid $color-border-light;
+}
+
+.column--border-bottom-light {
+  border-bottom: 1px solid $color-border-light-new;
+}
+
+.column--separator-left:before {
+  content: ' ';
+  position: absolute;
+  box-sizing: border-box;
+  height: 24px;
+  width: 1px;
+  left: 0;
+  top: 50%;
+  margin-top: -12px;
+  border-left: 1px solid $color-border-light;
+}

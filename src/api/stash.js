@@ -1,15 +1,15 @@
-const _ = require('lodash');
-const Promise = require('bluebird');
-const superagent = require('superagent');
-const api = require('./api');
-const config = require('./config');
+import _ from 'lodash';
+import Promise from 'bluebird';
+import superagent from 'superagent';
+import * as api from './api';
+import config from './config';
 
 const stash = {
   loaded: false,
   data: null,
 };
 
-function getStash() {
+export function getStash() {
   const request = superagent.get(`${config.api.host}/stash/v2/`);
 
   request.set('Authorization', 'Bearer ' + api.auth.tokens.access_token);
@@ -71,9 +71,10 @@ function createRequestPromise(request, requestBuilder) {
       if (!response) {
         return reject({ message: 'network_error', error });
       } else if (response.unauthorized) {
-        return api.auth
-          .refreshTokens()
-          .then(() => requestBuilder(), error => reject(error));
+        return api.auth.refreshTokens().then(
+          () => requestBuilder(),
+          error => reject(error)
+        );
       } else if (response.ok) {
         return resolve(response.body);
       } else {
@@ -83,5 +84,4 @@ function createRequestPromise(request, requestBuilder) {
   });
 }
 
-exports.getStash = getStash;
-exports.triggerAchievementUseButton = triggerAchievement('use_tw_button');
+export const triggerAchievementUseButton = triggerAchievement('use_tw_button');

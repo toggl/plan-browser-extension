@@ -1,0 +1,24 @@
+<div class="color-picker__custom">
+  <div data-hook="picker-wrap">
+    <div class="row row--align-center color-picker__custom__picker" data-hook="picker"></div>
+    <div class="row spacing-4--outer-top">
+      <div class="font-small color-picker__custom__prefix">#</div>
+      <div class="color-picker__custom__input" data-hook="color-input"></div>
+      <div class="color-picker__custom__preview" data-hook="color-preview"></div>
+      <div class="hover text--underlined text--color-new-link font-tiny color-picker__custom__save-button" data-hook="save-button">Set</div>
+    </div>
+    <div class="row row--vertical color-picker__custom__list" data-hook="colors-list"></div>
+  </div>
+  <div class="row row--vertical row--align-center" data-hook="upsell-wrap">
+    <img src="/images/pallette.svg" />
+    <span class="text-center text--color-new-link font-big spacing-2--outer-bottom">
+      Premium Feature
+    </span>
+    <span class="text-center font-tiny">
+      Upgrade your billing plan in order to create your own colour palettes!
+    </span>
+    <button class="button-v2 button-v2--medium button-v2--link button-v2--100 spacing-5--outer-top spacing-3--outer-bottom" data-hook="upgrade-button">
+      Upgrade
+    </button>
+  </div>
+</div>

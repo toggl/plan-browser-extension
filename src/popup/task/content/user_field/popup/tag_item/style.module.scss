@@ -1,0 +1,19 @@
+.tag {
+  background: #f2f2f2;
+  height: 24px;
+  font-size: 13px;
+  padding: 8px 4px;
+  display: flex;
+  margin: 6px 0 0 6px;
+  border-radius: 2px;
+
+  &__label {
+    margin-right: 8px;
+  }
+
+  &__remove {
+    width: 15px;
+    background-size: contain;
+    background-image: svg-load('icon-cross.svg', fill=$color-new-gray);
+  }
+}

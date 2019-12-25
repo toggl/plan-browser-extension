@@ -1,0 +1,14 @@
+@import '~src/popup/task/content/field.module';
+
+.icon {
+  background-image: svg-load('./icon.svg', fill=$color-new-gray);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.heightauto {
+  height: auto !important;
+}

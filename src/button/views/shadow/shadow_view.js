@@ -1,8 +1,9 @@
-const View = require('ampersand-view');
-const StyleView = require('../style/style_view');
+import View from 'ampersand-view';
+import StyleView from '../style/style_view';
+import template from './shadow_view.hbs';
 
 const ShadowView = View.extend({
-  template: require('./shadow_view.hbs'),
+  template,
 
   props: {
     name: 'string',
@@ -39,7 +40,7 @@ const ShadowView = View.extend({
   },
 });
 
-module.exports = ShadowView;
+export default ShadowView;
 
 function createShadowRoot(el) {
   if (el.attachShadow) {

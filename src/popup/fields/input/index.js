@@ -1,12 +1,12 @@
-const View = require('ampersand-view');
-const template = require('./template.hbs');
+import View from 'ampersand-view';
+import template from './template.hbs';
 
 let labelKey = 1;
 function getInputID() {
   return `form-input${labelKey++}`;
 }
 
-module.exports = View.extend({
+export default View.extend({
   template,
 
   props: {

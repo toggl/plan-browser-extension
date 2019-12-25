@@ -1,0 +1,27 @@
+<form class="task-popup task-form {{=it.css.container}}" data-hook="form" autocomplete="off">
+  <div class="popup__inner">
+    <div class="row row--align-center">
+      <div class="popup__title row--grow"></div>
+      <div data-hook="readonly-label" class="task-popup__readonly-label">Read Only Permissions</div>
+      <div id="tw-form-{{=it.cid}}-account" data-hook="select-account"></div>
+    </div>
+
+    <div class="popup__errors" data-hook="errors"></div>
+
+    <div class="popup__form form" data-hook="content">
+    </div>
+  </div>
+
+  <div class="popup__buttons">
+    <button type="submit" class="button button--submit popup__button" data-hook="button-submit" tabindex="10">Add</button>
+    <button type="button" class="button button--cancel popup__button" data-hook="button-cancel" tabindex="11">Cancel</button>
+  </div>
+
+  <div class="task-popup__overlay" data-hook="done-overlay">
+    <div class="task-popup__done row row--vertical row--align-center">
+      <div class="task-popup__done-image"></div>
+      <h1>Added to Toggl Plan!</h1>
+      <p>You can see it on your timeline.</p>
+    </div>
+  </div>
+</form>

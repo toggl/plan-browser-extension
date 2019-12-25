@@ -1,6 +1,6 @@
-const Model = require('ampersand-model');
-const sync = require('../api/api_sync');
-const Collection = require('ampersand-rest-collection');
+import Model from 'ampersand-model';
+import sync from '../api/api_sync';
+import Collection from 'ampersand-rest-collection';
 
 const Segment = Model.extend({
   sync,
@@ -9,8 +9,8 @@ const Segment = Model.extend({
 
   props: {
     position: 'number',
-    name: 'string'
-  }
+    name: 'string',
+  },
 });
 
 const Segments = Collection.extend({
@@ -18,7 +18,7 @@ const Segments = Collection.extend({
 
   sync,
 
-  comparator: 'position'
+  comparator: 'position',
 });
 
-module.exports = Segments;
+export default Segments;

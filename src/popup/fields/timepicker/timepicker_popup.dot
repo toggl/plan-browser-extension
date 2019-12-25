@@ -1,0 +1,11 @@
+<div class="timepicker-list font-smally">
+  <div class="row-group">
+    {{~ it.items :item }}
+    <div class="row" data-hook="time" data-time="{{= item.time }}">
+      <div class="column column--stretch text-center">
+        <div class="button spacing-3--inner-vertical">{{= item.text }}</div>
+      </div>
+    </div>
+    {{~}}
+  </div>
+</div>
