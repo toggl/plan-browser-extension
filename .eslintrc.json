@@ -1,39 +1,44 @@
 {
+  "parser": "babel-eslint",
   "parserOptions": {
-    "ecmaVersion": 6,
     "sourceType": "module",
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true
-    }
+    "allowImportExportEverywhere": true
   },
+  "plugins": ["prefer-object-spread", "cypress"],
   "rules": {
-    "semi": "error",
+    "arrow-spacing": "warn",
+    "brace-style": "warn",
     "comma-dangle": "off",
-    "no-console": "off",
+    "curly": "error",
+    "eqeqeq": ["error", "smart"],
+    "key-spacing": "error",
     "keyword-spacing": "warn",
     "max-len": "warn",
-    "key-spacing": "error",
-    "prefer-const": "error",
-    "space-before-function-paren": ["error", "never"],
-    "space-before-blocks": ["warn", "always"],
-    "arrow-spacing": "warn",
-    "eqeqeq": ["error", "smart"],
+    "no-console": "off",
     "no-constant-condition": "off",
-    "curly": "error",
+    "no-eq-null": "warn",
+    "no-prototype-builtins": "warn",
+    "no-restricted-globals": ["error", "event", "Promise", "name", "context"],
+    "no-restricted-syntax": ["error", "ForOfStatement"],
     "no-var": "warn",
     "object-shorthand": "warn",
-    "no-restricted-globals": ["error", "event", "Promise", "find"],
-    "brace-style": "warn",
-    "no-eq-null": "warn",
-    "no-restricted-syntax": ["error", "ForOfStatement"],
-    "quotes": ["warn", "single"]
+    "prefer-const": "error",
+    "prefer-object-spread/prefer-object-spread": "error",
+    "prettier/prettier": "warn",
+    "require-atomic-updates": "off",
+    "quotes": ["warn", "single"],
+    "semi": "error",
+    "space-before-blocks": ["warn", "always"],
+    "space-before-function-paren": ["error", "never"]
   },
-  "extends": ["eslint:recommended"],
+  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
   "env": {
     "browser": true,
     "commonjs": true,
     "es6": true,
-    "node": true
+    "node": true,
+    "jquery": true,
+    "cypress/globals": true
   },
   "globals": {
     "chrome": true
