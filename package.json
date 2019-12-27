@@ -37,7 +37,7 @@
     "gulp-load-plugins": "1.0.0-rc.1",
     "gulp-rename": "1.2.2",
     "gulp-watchify": "miscer/gulp-watchify#v1.0.1",
-    "handlebars": "4.0.14",
+    "handlebars": "4.5.3",
     "hbsfy": "2.2.1",
     "husky": "0.14.3",
     "merge-stream": "0.1.8",
