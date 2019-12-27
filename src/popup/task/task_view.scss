@@ -73,13 +73,13 @@ select {
 
 .popup__inner {
   background: white;
-  padding: 16px #{$task-form-horizontal-padding};
+  padding: 32px #{$task-form-horizontal-padding};
 }
 
 .popup__title {
   margin: 3px;
   padding: 12px 10px;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .popup__buttons {

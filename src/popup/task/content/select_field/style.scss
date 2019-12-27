@@ -1,9 +1,6 @@
-.xpopup.task-form-select-field-popup {
+.xpopup.task-form-select-field-popup,
+.xpopup.status-dropdown-popup {
   width: calc(
     100% - #{$task-form-input-label-width} - #{$task-form-horizontal-padding * 2}
   );
-
-  .active {
-    background: #f2f2f2;
-  }
 }

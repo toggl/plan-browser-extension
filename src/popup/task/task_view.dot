@@ -1,7 +1,6 @@
 <form class="task-popup task-form {{=it.css.container}}" data-hook="form" autocomplete="off">
   <div class="popup__inner">
     <div class="row row--align-center">
-      <div class="popup__title row--grow"></div>
       <div data-hook="readonly-label" class="task-popup__readonly-label">Read Only Permissions</div>
       <div id="tw-form-{{=it.cid}}-account" data-hook="select-account"></div>
     </div>

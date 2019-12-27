@@ -184,21 +184,19 @@ const TaskView = View.extend({
       return false;
     }
 
-    if (task.workspace_members.length) {
-      if (!task.start_date) {
-        errors.addError('Start date cannot be empty');
-        return false;
-      }
+    if (!task.start_date) {
+      errors.addError('Start date cannot be empty');
+      return false;
+    }
 
-      if (!task.end_date) {
-        errors.addError('End date cannot be empty');
-        return false;
-      }
+    if (!task.end_date) {
+      errors.addError('End date cannot be empty');
+      return false;
+    }
 
-      if (moment(task.end_date).isBefore(task.start_date, 'day')) {
-        errors.addError('End date cannot be before start date');
-        return false;
-      }
+    if (moment(task.end_date).isBefore(task.start_date, 'day')) {
+      errors.addError('End date cannot be before start date');
+      return false;
     }
 
     return true;
