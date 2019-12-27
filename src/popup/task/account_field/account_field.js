@@ -3,29 +3,22 @@ import FilteredCollection from 'ampersand-filtered-subcollection';
 import { saveSelectedAccount } from 'src/utils/me';
 import * as api from 'src/api/api';
 import accounts from 'src/models/account_collection';
-import template from './account_field.hbs';
+import WorkspaceItem from './workspace_item/workspace_item';
+import template from './account_field.dot';
+import css from './account_field.module.scss';
 import './account_field.scss';
 
 const AccountField = View.extend({
   template,
+  css,
 
   props: {
-    value: 'number',
+    selectedAccountId: 'number',
     sortedAccounts: 'object',
-    showingWorkspaces: ['boolean', true, false],
     showing: ['boolean', false, false],
   },
 
   bindings: {
-    'workspace.name': {
-      type: 'text',
-      hook: 'workspace',
-    },
-    showingWorkspaces: {
-      type: 'booleanClass',
-      hook: 'workspaces',
-      name: 'account-field-popup__workspaces--active',
-    },
     showing: {
       type: 'booleanClass',
       hook: 'popup',
@@ -33,30 +26,9 @@ const AccountField = View.extend({
     },
   },
 
-  derived: {
-    workspace: {
-      deps: ['value'],
-      fn() {
-        return accounts.get(this.value);
-      },
-    },
-    accountsString: {
-      deps: ['value', 'sortedAccounts.models.length'],
-      fn() {
-        return this.sortedAccounts
-          .map(
-            account =>
-              `<div class='account-field-popup__item account-field-popup__workspace' data-workspace='${account.id}'>${account.name}</div>`
-          )
-          .join('');
-      },
-    },
-  },
-
   events: {
     click: 'onClick',
     'click [data-hook=signout]': 'onSignout',
-    'click [data-hook=change-workspace]': 'onChangeWorkspace',
     'click .account-field-popup__workspace': 'onChange',
     'click [data-hook=menu]': 'onShow',
   },
@@ -74,18 +46,16 @@ const AccountField = View.extend({
   },
 
   onChange(event) {
-    this.value = parseInt(event.target.dataset.workspace, 10);
-    saveSelectedAccount(this.value);
-    this.showingWorkspaces = false;
+    this.selectedAccountId = parseInt(
+      event.delegateTarget.dataset.workspace,
+      10
+    );
+    saveSelectedAccount(this.selectedAccountId);
+    this.onHide();
   },
 
   switchAccount(account) {
-    this.value = account.id;
-    this.render();
-  },
-
-  onChangeWorkspace() {
-    this.showingWorkspaces = !this.showingWorkspaces;
+    this.selectedAccountId = account.id;
   },
 
   onSignout() {
@@ -106,10 +76,16 @@ const AccountField = View.extend({
   render() {
     this.renderWithTemplate(this);
 
+    this.renderCollection(
+      this.sortedAccounts,
+      WorkspaceItem,
+      this.queryByHook('workspaces')
+    );
+
     const menu = this.queryByHook('menu');
     const popup = this.queryByHook('popup');
-    popup.style.top = `${menu.offsetTop + 30}px`;
-    popup.style.right = '6.5px';
+    popup.style.top = `${menu.offsetTop + 50}px`;
+    popup.style.right = '33px';
   },
 });
 

@@ -30,10 +30,6 @@
   &:focus {
     outline: none;
   }
-
-  &::placeholder {
-    font-weight: 400;
-  }
 }
 
 .dynamic-input__label {

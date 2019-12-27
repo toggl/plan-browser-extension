@@ -1,0 +1,16 @@
+.menu {
+  cursor: pointer;
+  background: #f2f2f2;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.menu-icon {
+  background-image: svg-load('./menu.svg');
+  width: 3.5px;
+  height: 14px;
+}

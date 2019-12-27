@@ -1,6 +1,7 @@
 import View from 'ampersand-view';
 import ColorPicker from './color_picker';
 import template from './color_popup.hbs';
+import './color_popup.scss';
 
 export default View.extend({
   template,

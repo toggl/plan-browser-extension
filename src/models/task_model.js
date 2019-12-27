@@ -11,8 +11,8 @@ const TaskModel = Model.extend({
     user_id: 'number',
     project_id: 'number',
     project_segment_id: 'number',
-    start_date: ['date', false, () => new Date()],
-    end_date: ['date', false, () => new Date()],
+    start_date: 'string',
+    end_date: 'string',
     start_time: 'string',
     end_time: 'string',
     estimated_minutes: 'number',
@@ -22,30 +22,14 @@ const TaskModel = Model.extend({
     workspace_members: ['array', true, () => []],
   },
 
-  parse(attrs) {
-    return {
-      ...attrs,
-      ...{
-        start_date: attrs.start_date
-          ? moment(attrs.start_date, 'YYYY-MM-DD').toDate()
-          : undefined,
-        end_date: attrs.end_date
-          ? moment(attrs.end_date, 'YYYY-MM-DD').toDate()
-          : undefined,
-      },
-    };
-  },
-
   serialize() {
     const res = Model.prototype.serialize.call(this);
-
     if (res.start_date) {
       res.start_date = moment(res.start_date).format('YYYY-MM-DD');
     }
     if (res.end_date) {
       res.end_date = moment(res.end_date).format('YYYY-MM-DD');
     }
-
     return res;
   },
 

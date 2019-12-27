@@ -26,7 +26,7 @@ $color-link-new: #0096ff;
 $color-new-success: #0dea9c;
 $color-new-link: #0041ff;
 $color-new-danger: #fb0046;
-$color-new-gray: #a6a6a6;
+$color-new-gray: #808080;
 $color-new-dark: #333e44;
 $color-dark: #21282c;
 
@@ -51,6 +51,7 @@ $color-text-dark: #201a32;
 $color-text-medium: #666666;
 $color-text-light: #999999;
 $color-text-extra-light: #bebebe;
+$color-text-placeholder: #a6a6a6;
 
 /* Border colors */
 
@@ -127,7 +128,7 @@ $colors: (
   42: #cfd8dc,
   43: #607d8b,
   44: #455a64,
-  45: #263238,
+  45: #263238
 );
 
 $design-colors: (
@@ -135,7 +136,7 @@ $design-colors: (
   'link': $color-new-link,
   'success': $color-new-success,
   'danger': $color-new-danger,
-  'gray': $color-new-gray,
+  'gray': $color-new-gray
 );
 
 /* Timeline */
@@ -176,6 +177,8 @@ $backlog-padding: 16px;
 // Task form
 
 $task-form-small-desktop-breakpoint: 960px;
+$task-form-input-label-width: 222px;
+$task-form-horizontal-padding: 32px;
 
 // Auth page
 

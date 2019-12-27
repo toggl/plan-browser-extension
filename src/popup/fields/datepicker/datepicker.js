@@ -113,7 +113,7 @@ const DatepickerPopup = View.extend({
   render() {
     this.picker = new Pikaday({
       onSelect: this.onSelect.bind(this),
-      firstDay: this.me.preferences.startOfWeek,
+      firstDay: this.me.preferences.startOfWeek || 1,
       setDefaultDate: true,
       defaultDate: this.date ? this.date : moment().format('MMM D, YYYY'),
     });

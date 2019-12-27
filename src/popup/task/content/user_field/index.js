@@ -41,6 +41,13 @@ export default View.extend({
       selector: '.task-form__field-input-container',
       no: 'task-form__field-input-container--readonly',
     },
+    'task.workspace_members.length': [
+      {
+        type: 'toggle',
+        hook: 'input-placeholder',
+        invert: true,
+      },
+    ],
   },
 
   derived: {

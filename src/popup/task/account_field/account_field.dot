@@ -1,0 +1,15 @@
+<div class="popup__account">
+  <div data-hook="menu" class="{{=it.css.menu}}">
+    <div class="{{=it.css['menu-icon']}}"></div>
+  </div>
+
+  <div class="account-field-popup" data-hook="popup">
+    <div class="account-field-popup__heading">WORKSPACES</div>
+
+    <div class="account-field-popup__workspaces" data-hook="workspaces"></div>
+
+    <div class="account-field-popup__item account-field-popup__signout" data-hook="signout">
+      <span class="account-field-popup__signout-icon"></span> Sign Out
+    </div>
+  </div>
+</div>

@@ -112,11 +112,11 @@ export default View.extend({
   subviews: {
     icon: {
       hook: 'tag-icon',
-      prepareView(el) {
+      prepareView() {
         const {
           parent: { selectedModel: model },
         } = this;
-        return new this.parent.iconView({ model, el });
+        return new this.parent.iconView({ model });
       },
     },
   },

@@ -22,9 +22,9 @@ export default View.extend({
   subviews: {
     icon: {
       hook: 'tag-icon',
-      prepareView(el) {
+      prepareView() {
         const { model } = this;
-        return new IconView({ el, model });
+        return new IconView({ model });
       },
     },
   },

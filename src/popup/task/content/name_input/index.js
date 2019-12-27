@@ -12,8 +12,34 @@ export default View.extend({
     },
   },
 
-  getTaskName() {
-    const { el } = this;
+  events: {
+    blur: 'onBlur',
+    keypress: 'onKeypress',
+  },
+
+  onBlur() {
+    this.saveTaskName();
+  },
+
+  onKeypress(event) {
+    if (event.keyCode === 13 || event.which === 13) {
+      event.preventDefault();
+    }
+    this.saveTaskName();
+  },
+
+  onKeyDown(event) {
+    if (event.keyCode === 13 || event.which === 13) {
+      event.preventDefault();
+    }
+  },
+
+  saveTaskName() {
+    const name = this.getElText(this.el);
+    this.parent.task.set({ name });
+  },
+
+  getElText(el) {
     if (!el.firstChild) {
       return '';
     }

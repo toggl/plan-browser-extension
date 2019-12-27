@@ -1,9 +1,4 @@
 .container {
-  width: 462px;
-
-  @media screen and (max-width: $task-form-small-desktop-breakpoint) {
-    width: 330px;
-  }
 }
 
 .input,
@@ -35,10 +30,6 @@
 .input {
   padding: 6px 8px;
   color: black;
-
-  &::placeholder {
-    color: #a6a6a6;
-  }
 }
 
 .heading {

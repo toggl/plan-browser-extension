@@ -17,9 +17,8 @@ const AuthView = View.extend({
   subviews: {
     email: {
       hook: 'input-email',
-      prepareView(el) {
+      prepareView() {
         return new TextField({
-          el,
           name: 'email',
           label: 'Email',
           placeholder: 'Type here...',
@@ -36,9 +35,8 @@ const AuthView = View.extend({
     },
     password: {
       hook: 'input-password',
-      prepareView(el) {
+      prepareView() {
         return new TextField({
-          el,
           name: 'password',
           label: 'Password',
           placeholder: 'Minimum 8 characters...',

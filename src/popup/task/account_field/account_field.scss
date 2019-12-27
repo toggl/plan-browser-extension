@@ -11,54 +11,25 @@
     display: block;
   }
 
-  &__arrow {
-    top: 0;
-    right: 2%;
-    margin-top: -5px;
-    margin-left: -7px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.07);
-    content: '';
-    display: block;
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    border-radius: 2px;
-    background-color: #fff;
-    z-index: 10;
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
-    background-color: $color-primary;
-  }
-
-  &__menu {
-    cursor: pointer;
-    padding: 11px;
-
-    &-icon {
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3c?xml version='1.0' encoding='UTF-8'?%3e%3csvg width='15px' height='4px' viewBox='0 0 15 4' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cg id='Artboard' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3e%3cg id='options_icon_new' fill='%237A43F3' fill-rule='nonzero'%3e%3cpath d='M7.75,-1.5 C6.783502,-1.5 6,-2.28350169 6,-3.25 C6,-4.21649831 6.783502,-5 7.75,-5 C8.716498,-5 9.5,-4.21649831 9.5,-3.25 C9.5,-2.28350169 8.716498,-1.5 7.75,-1.5 Z M7.75,3.75 C6.783502,3.75 6,2.9664983 6,2 C6,1.0335017 6.783502,0.25 7.75,0.25 C8.716498,0.25 9.5,1.0335017 9.5,2 C9.5,2.9664983 8.716498,3.75 7.75,3.75 Z M7.75,9 C6.783502,9 6,8.2164983 6,7.25 C6,6.2835017 6.783502,5.5 7.75,5.5 C8.716498,5.5 9.5,6.2835017 9.5,7.25 C9.5,8.2164983 8.716498,9 7.75,9 Z' id='Shape' transform='translate(7.750000, 2.000000) rotate(90.000000) translate(-7.750000, -2.000000) '%3e%3c/path%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
-      width: 15px;
-      height: 3.5px;
-    }
+  &__heading {
+    font-size: 10px;
+    line-height: 16px;
+    color: #a6a6a6;
+    padding: 8px;
   }
 
   &__item {
-    height: 44px;
-    background-color: #3367ff;
-    color: white;
+    height: 32px;
+    color: $color-new-gray;
     display: flex;
     align-items: center;
-    padding: 0 10px;
+    padding: 0 8px;
     cursor: pointer;
   }
 
   &__workspaces {
-    display: none;
-    max-height: 160px;
-    overflow-y: auto;
-
-    &--active {
-      display: block;
-    }
+    // max-height: 160px;
+    // overflow-y: auto;
   }
 
   &__workspace-label {

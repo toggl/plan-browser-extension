@@ -25,9 +25,8 @@ export default View.extend({
   subviews: {
     colorInputView: {
       hook: 'color-input',
-      prepareView(el) {
+      prepareView() {
         return new TextInput({
-          el,
           name: 'color_input',
           placeholder: 'Type color...',
           value: '209133',
@@ -62,7 +61,7 @@ export default View.extend({
       'updatePickerHex'
     );
 
-    // this.isPremium = session.account.isPremium;
+    this.isPremium = true; // session.account.isPremium;
   },
 
   render() {

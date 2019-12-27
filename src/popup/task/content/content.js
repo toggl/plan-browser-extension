@@ -25,9 +25,8 @@ const TaskView = View.extend({
   subviews: {
     colorField: {
       hook: 'color-input',
-      prepareView(el) {
+      prepareView() {
         return new ColorInput({
-          el,
           disabled: !this.enableEdit,
           task: this.task,
           workspace: this.workspace,
@@ -36,9 +35,8 @@ const TaskView = View.extend({
     },
     nameField: {
       hook: 'name-input',
-      prepareView(el) {
+      prepareView() {
         return new NameInput({
-          el,
           disabled: !this.enableEdit,
           task: this.task,
         });
@@ -46,9 +44,8 @@ const TaskView = View.extend({
     },
     statusField: {
       hook: 'status-field',
-      prepareView(el) {
+      prepareView() {
         return new StatusField({
-          el,
           disabled: !this.enableEdit,
           parent: this,
           task: this.task,
@@ -57,9 +54,8 @@ const TaskView = View.extend({
     },
     projectField: {
       hook: 'project-select',
-      prepareView(el) {
+      prepareView() {
         return new ProjectField({
-          el,
           isEditable: this.enableEdit,
           task: this.task,
           parent: this,
@@ -68,9 +64,8 @@ const TaskView = View.extend({
     },
     segmentField: {
       hook: 'segment-select',
-      prepareView(el) {
+      prepareView() {
         return new SegmentField({
-          el,
           isEditable: this.enableEdit,
           task: this.task,
           parent: this,
@@ -79,9 +74,8 @@ const TaskView = View.extend({
     },
     userField: {
       hook: 'user-select',
-      prepareView(el) {
+      prepareView() {
         return new UserField({
-          el,
           isEditable: this.enableEdit,
           task: this.task,
           workspace: this.workspace,
@@ -91,9 +85,8 @@ const TaskView = View.extend({
     },
     dateField: {
       hook: 'date-input',
-      prepareView(el) {
+      prepareView() {
         return new DateField({
-          el,
           parent: this,
           task: this.task,
           disabled: !this.enableEdit,
@@ -103,9 +96,8 @@ const TaskView = View.extend({
     },
     estimateField: {
       hook: 'estimate-input',
-      prepareView(el) {
+      prepareView() {
         return new EstimateField({
-          el,
           parent: this,
           disabled: !this.enableEdit,
           task: this.task,
@@ -114,9 +106,8 @@ const TaskView = View.extend({
     },
     timeField: {
       hook: 'time-input',
-      prepareView(el) {
+      prepareView() {
         return new TimeField({
-          el,
           parent: this,
           task: this.task,
           disabled: !this.enableEdit,
@@ -124,6 +115,17 @@ const TaskView = View.extend({
         });
       },
     },
+  },
+
+  render() {
+    this.renderWithTemplate(this);
+    this.focusFirstInput();
+  },
+
+  focusFirstInput() {
+    if (this.enableEdit) {
+      setTimeout(() => this.nameField.el.focus(), 100);
+    }
   },
 });
 

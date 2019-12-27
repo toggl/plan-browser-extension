@@ -14,6 +14,9 @@ export default View.extend({
     iconColorClass: {
       type: 'class',
     },
+    model: {
+      type: 'toggle',
+    },
   },
 
   derived: {
@@ -25,7 +28,7 @@ export default View.extend({
           return `color-${model.color_id}`;
         }
 
-        return 'color-22';
+        return 'color-21';
       },
     },
   },

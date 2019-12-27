@@ -1,0 +1,20 @@
+.timepicker-list {
+  width: 120px;
+  max-height: 312px;
+  overflow: auto;
+
+  .row {
+    color: $color-text-light;
+
+    &:hover,
+    &.active {
+      background: rgba($color-new-link, 0.12);
+      color: $color-new-link;
+    }
+  }
+
+  &, // override .popup--rounded
+  .content {
+    border-radius: 2px;
+  }
+}

@@ -3,7 +3,7 @@
 }
 
 .label {
-  width: 222px;
+  width: #{$task-form-input-label-width};
   height: 32px;
   padding-left: 9px;
   font-size: 13px;
@@ -24,11 +24,7 @@
   font-size: 13px;
   padding: 0 8px;
   position: relative;
-  width: 462px;
-
-  @media screen and (max-width: $task-form-small-desktop-breakpoint) {
-    width: 330px;
-  }
+  width: calc(100% - #{$task-form-input-label-width});
 
   &:hover {
     background: #f2f2f2;
@@ -37,7 +33,7 @@
 }
 
 .input__placeholder {
-  color: #a6a6a6;
+  color: $color-text-placeholder;
 }
 
 .readonly {

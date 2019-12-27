@@ -3,7 +3,7 @@
   <div class="estimate-field row row--align-center">
     <div class="estimate-field__input-wrapper row--align-center column column--grow input--rounded">
       <div data-hook="estimate-field-empty" class="row row--align-center">
-        <div class="column column--grow text--color-light">
+        <div class="column column--grow text--color-placeholder">
           Define...
         </div>
       </div>

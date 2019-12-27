@@ -30,11 +30,22 @@ body {
   padding: 0;
 }
 body {
-  color: #201a32;
-  background: white;
   position: relative;
   overflow-x: hidden;
 }
+
+body,
+input {
+  &,
+  &::placeholder {
+    font-weight: 400 !important;
+  }
+}
+
+input::placeholder {
+  color: $color-text-placeholder;
+}
+
 input,
 textarea,
 select,

@@ -1,9 +1,4 @@
 .container {
-  width: 462px;
-
-  @media screen and (max-width: $task-form-small-desktop-breakpoint) {
-    width: 330px;
-  }
 }
 
 .heading {

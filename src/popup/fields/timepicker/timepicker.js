@@ -4,7 +4,8 @@ import View from 'ampersand-view';
 import moment from 'moment';
 import { defer, isEmpty } from 'lodash';
 import DynamicInput from 'src/popup/fields/dynamic_input';
-import popupTemplate from './timepicker_popup.dot';
+import popupTemplate from './timepicker.dot';
+import './timepicker.scss';
 
 const TimePicker = View.extend({
   props: {
@@ -259,7 +260,7 @@ const TimepickerPopup = View.extend({
   },
 
   getLocalTimeFormat() {
-    this.me.preferences.militaryTime ? 'H:mm' : 'h:mm A';
+    return this.me.preferences.militaryTime ? 'H:mm' : 'h:mm A';
   },
 });
 

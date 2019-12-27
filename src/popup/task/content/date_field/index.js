@@ -26,7 +26,7 @@ export default View.extend({
   subviews: {
     startDate: {
       hook: 'input-start-date',
-      prepareView(el) {
+      prepareView() {
         const { disabled, task, me } = this;
         return new Datepicker({
           name: 'search_start_date',
@@ -34,13 +34,12 @@ export default View.extend({
           disabled,
           placeholder: 'Select Start Date',
           me,
-          el,
         });
       },
     },
     endDate: {
       hook: 'input-end-date',
-      prepareView(el) {
+      prepareView() {
         const { disabled, task, me } = this;
         return new Datepicker({
           name: 'search_end_date',
@@ -48,7 +47,6 @@ export default View.extend({
           disabled,
           placeholder: 'Select End Date',
           me,
-          el,
         });
       },
     },

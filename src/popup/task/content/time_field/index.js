@@ -26,10 +26,9 @@ export default View.extend({
   subviews: {
     startTime: {
       hook: 'input-start-time',
-      prepareView(el) {
+      prepareView() {
         const { disabled, task, me } = this;
         return new Timepicker({
-          el,
           name: 'search_start_time',
           time: task.start_time,
           disabled,
@@ -40,10 +39,9 @@ export default View.extend({
     },
     endTime: {
       hook: 'input-end-time',
-      prepareView(el) {
+      prepareView() {
         const { disabled, task, me } = this;
         return new Timepicker({
-          el,
           name: 'search_end_time',
           time: task.end_time,
           disabled,

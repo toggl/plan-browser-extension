@@ -1,6 +1,6 @@
-import Promise from 'bluebird';
 import moment from 'moment';
 import View from 'ampersand-view';
+import { sleep } from 'src/utils';
 import AccountField from './account_field/account_field';
 import FormErrors from '../form/form_errors';
 import accounts from 'src/models/account_collection';
@@ -27,9 +27,8 @@ const TaskView = View.extend({
 
     accountSwitcher: {
       hook: 'select-account',
-      prepareView(el) {
+      prepareView() {
         return new AccountField({
-          el,
           parent: this,
           selectOpts: {},
         });
@@ -82,10 +81,11 @@ const TaskView = View.extend({
   },
 
   async initialize() {
-    this.hub.trigger('loader:show');
+    this.showLoader();
 
     try {
       this.me = await fetchMe();
+      this.hideLoader();
       this.me.workspaces.map(workspace => accounts.add(workspace));
 
       this.accountSwitcher.switchAccount(
@@ -93,24 +93,33 @@ const TaskView = View.extend({
       );
     } catch (error) {
       console.log(error);
-      this.hub.trigger('loader:hide');
+      this.hideLoader();
       this.hub.trigger('error:show', error);
     }
   },
 
   render() {
     this.renderWithTemplate(this);
-    this.listenTo(this.accountSwitcher, 'change:value', this.onAccountSelected);
+    this.listenTo(
+      this.accountSwitcher,
+      'change:selectedAccountId',
+      this.onAccountSelected
+    );
     return this;
   },
 
   async onAccountSelected() {
-    const account = accounts.get(this.accountSwitcher.value);
+    this.showLoader();
+
+    const account = accounts.get(this.accountSwitcher.selectedAccountId);
     await account.projects.fetch();
     await account.users.fetch();
     await account.colors.updateRules();
     this.workspace = account;
 
+    if (this.content) {
+      this.content.remove();
+    }
     this.content = new Content({
       workspace: this.workspace,
       me: this.me,
@@ -119,10 +128,10 @@ const TaskView = View.extend({
     });
     this.renderSubview(this.content, this.queryByHook('content'));
 
-    this.hub.trigger('loader:hide');
+    this.hideLoader();
   },
 
-  onSubmit(event) {
+  async onSubmit(event) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -132,28 +141,18 @@ const TaskView = View.extend({
 
     this.workspace.tasks.add(this.model);
 
-    // default task color
-    if (!this.project.value) {
-      this.model.set({
-        color: 21,
-      });
-    }
-
     // save
-    this.showLoader();
-
-    this.model.save().then(
-      () => {
-        this.hub.trigger('task:created', this.model, this.workspace);
-
-        this.hideLoader();
-        this.showOverlay().then(() => this.closePopup());
-      },
-      error => {
-        this.hideLoader();
-        this.showError(error);
-      }
-    );
+    try {
+      this.showLoader();
+      await this.model.save();
+      this.hub.trigger('task:created', this.model, this.workspace);
+      this.hideLoader();
+      await this.showOverlay();
+      this.closePopup();
+    } catch (error) {
+      this.hideLoader();
+      this.showError(error);
+    }
   },
 
   onCancel(event) {
@@ -167,40 +166,42 @@ const TaskView = View.extend({
   },
 
   validate() {
-    this.errors.clearErrors();
+    const {
+      content: { task },
+      errors,
+    } = this;
 
-    if (!this.name.isFilled) {
-      this.errors.addError('Task name cannot be empty');
+    errors.clearErrors();
+
+    task.name = (task.name || '').trim();
+    if (!task.name) {
+      errors.addError('Task name cannot be empty');
       return false;
     }
 
-    if (!this.user.isFilled) {
-      this.errors.addError('User cannot be empty');
+    if (!(task.workspace_members.length || task.project_id)) {
+      errors.addError('Set assignee(s) or project');
       return false;
     }
 
-    if (this.user.hasUser) {
-      if (!this.start_date.isFilled) {
-        this.errors.addError('Start date cannot be empty');
+    if (task.workspace_members.length) {
+      if (!task.start_date) {
+        errors.addError('Start date cannot be empty');
         return false;
       }
 
-      if (!this.end_date.isFilled) {
-        this.errors.addError('End date cannot be empty');
+      if (!task.end_date) {
+        errors.addError('End date cannot be empty');
         return false;
       }
 
-      if (moment(this.end_date.value).isBefore(this.start_date.value, 'day')) {
-        this.errors.addError('End date cannot be before start date');
+      if (moment(task.end_date).isBefore(task.start_date, 'day')) {
+        errors.addError('End date cannot be before start date');
         return false;
       }
     }
 
     return true;
-  },
-
-  focusNameField() {
-    this.name.focus();
   },
 
   showLoader() {
@@ -211,11 +212,9 @@ const TaskView = View.extend({
     this.hub.trigger('loader:hide');
   },
 
-  showOverlay() {
-    return new Promise(resolve => {
-      this.overlay = true;
-      setTimeout(resolve, 2000);
-    });
+  async showOverlay() {
+    this.overlay = true;
+    await sleep(2000);
   },
 
   closePopup() {

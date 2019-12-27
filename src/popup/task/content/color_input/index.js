@@ -43,7 +43,7 @@ export default View.extend({
   },
 
   initialize() {
-    this.colorId = 22;
+    this.colorId = 21;
   },
 
   openColorPicker(event) {
@@ -78,6 +78,6 @@ export default View.extend({
 
   updateColor(color_id) {
     this.colorId = color_id;
-    this.parent.saveTask({ color_id });
+    this.parent.task.set({ color_id });
   },
 });
