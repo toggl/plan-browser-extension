@@ -16,7 +16,7 @@ function createObserver() {
 
 function createButton(title) {
   const name = title.innerText;
-  const link = title.href;
+  const link = title.href || window.location.href;
 
   const state = new ButtonState({
     link,
