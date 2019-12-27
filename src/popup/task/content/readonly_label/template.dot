@@ -1,6 +1,0 @@
-<div class="{{=it.css.container}} row row--align-center">
-  <span class="{{=it.css.icon}} icon-svg"></span>
-  &nbsp;
-  Read Only Permissions
-  |
-</div>

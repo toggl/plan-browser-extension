@@ -6,4 +6,5 @@
   autocomplete="off"
   name="search_name"
   tabindex="1"
+  class="{{=it.css.container}}"
 ></div>

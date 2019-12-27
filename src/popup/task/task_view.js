@@ -123,8 +123,8 @@ const TaskView = View.extend({
     this.content = new Content({
       workspace: this.workspace,
       me: this.me,
-      enableEdit: true,
       task: this.model,
+      enableEdit: !this.accountIsReadonly,
     });
     this.renderSubview(this.content, this.queryByHook('content'));
 

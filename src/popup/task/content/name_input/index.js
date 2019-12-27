@@ -1,14 +1,20 @@
 import View from 'ampersand-view';
-import template from './template.hbs';
+import template from './template.dot';
 import css from './style.module.scss';
 
 export default View.extend({
   template,
   css,
 
+  props: {
+    disabled: ['boolean', false, true],
+    task: ['state', true],
+  },
+
   bindings: {
-    'css.container': {
-      type: 'class',
+    disabled: {
+      type: 'booleanClass',
+      yes: css.disabled,
     },
   },
 
