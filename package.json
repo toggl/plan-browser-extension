@@ -35,6 +35,7 @@
     "querystring": "0.2.0",
     "superagent": "3.7.0",
     "tinycolor2": "^1.4.1",
+    "to-string-loader": "^1.1.6",
     "uuid": "2.0.1"
   },
   "devDependencies": {
@@ -103,11 +104,11 @@
     "dev": "webpack --watch",
     "build": "webpack",
     "tag": "/bin/bash bin/tag.sh",
-    "release": "gulp build:js build:less && mkdir -p tmp && rm -f tmp/tw-button.zip && cd app && zip -x *.DS_Store -r ../tmp/tw-button.zip .",
-    "source": "npm run buildclean && mkdir -p tmp && rm -f tmp/tw-button-source.zip && zip -x *.DS_Store -r tmp/tw-button-source.zip app src package.json README.md Gulpfile.js",
+    "release": "npm run build && mkdir -p tmp && rm -f tmp/tw-button.zip && cd build && zip -x *.DS_Store -r ../tmp/tw-button.zip .",
+    "source": "npm run buildclean && mkdir -p tmp && rm -f tmp/tw-button-source.zip && zip -x *.DS_Store -r tmp/tw-button-source.zip build src package.json README.md webpack.config.js",
     "lint": "eslint src webpack.config.js --quiet --cache",
     "precommit": "npm run lint",
-    "firefox": "cd app && web-ext run",
-    "buildclean": "rm -rf app/scripts app/styles"
+    "firefox": "cd build && web-ext run",
+    "buildclean": "rm -rf build"
   }
 }

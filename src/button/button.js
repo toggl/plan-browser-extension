@@ -3,7 +3,7 @@ import State from 'ampersand-state';
 import ButtonView from './views/button/button_view';
 import TaskModel from 'src/models/task_model';
 import * as collections from 'src/models/collections';
-import analytics from '../utils/analytics';
+import * as analytics from '../utils/analytics';
 
 const HubState = State.extend({});
 

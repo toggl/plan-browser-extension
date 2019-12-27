@@ -1,5 +1,5 @@
 import View from 'ampersand-view';
-import permissions from '../../utils/permissions';
+import * as permissions from '../../utils/permissions';
 import services from './services.json';
 import template from './form.hbs';
 

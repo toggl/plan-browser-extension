@@ -30,7 +30,7 @@ export default View.extend({
         const { disabled, task, me } = this;
         return new Datepicker({
           name: 'search_start_date',
-          date: task.start_date ? task.computedStartDate : null,
+          date: task.start_date ? moment(task.start_date).toDate() : null,
           disabled,
           placeholder: 'Select Start Date',
           me,
@@ -43,7 +43,7 @@ export default View.extend({
         const { disabled, task, me } = this;
         return new Datepicker({
           name: 'search_end_date',
-          date: task.end_date ? task.computedEndDate : null,
+          date: task.end_date ? moment(task.end_date).toDate() : null,
           disabled,
           placeholder: 'Select End Date',
           me,

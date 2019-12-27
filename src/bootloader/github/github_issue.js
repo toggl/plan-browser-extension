@@ -1,58 +1,35 @@
-import moment from 'moment';
 import HashMap from 'hashmap';
 import ButtonState from 'src/button/button';
-import observer from 'src/utils/observer';
+import * as observer from 'src/utils/observer';
+import * as content from '../../utils/content';
 import { generateTaskNotes } from '../../utils/quill';
 
 const buttons = new HashMap();
 
-const DATE_RE = /(January|February|March|April|May|June|July|August|September|October|November|December) (\d{1,2}), (\d{4})/;
-
 function createObserver() {
   observer
-    .create('.milestone')
+    .create('.js-issue-title, .js-issue-row .h4')
     .onAdded(createButton)
     .onRemoved(removeButton)
     .start();
 }
 
-function findDate(meta) {
-  const matches = DATE_RE.exec(meta);
-  if (!matches) {
-    return;
-  }
-
-  const m = moment(matches[0], 'MMMM DD, YYYY');
-  if (!m.isValid()) {
-    return;
-  }
-
-  return m.toDate();
-}
-
-function createButton(element) {
-  const titleEl = element.querySelector('.milestone-title-link');
-  const metaEl = element.querySelector('.milestone-meta');
-  const linkEl = titleEl.querySelector('a');
-
-  const name = titleEl.querySelector('a').innerText;
-  const date = findDate(metaEl.innerText);
-  const link = linkEl.href;
+function createButton(title) {
+  const name = title.innerText;
+  const link = title.href;
 
   const state = new ButtonState({
     link,
     task: {
       name,
-      end_date: date,
       notes: generateTaskNotes('GitHub', link),
     },
     anchor: 'element',
   });
 
-  const buttonEl = state.button.render().el;
-  titleEl.appendChild(buttonEl);
+  content.appendOrReplace(state, title);
 
-  buttons.set(element, state);
+  buttons.set(title, state);
 }
 
 function removeButton(node) {

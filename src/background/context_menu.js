@@ -1,5 +1,5 @@
 import TaskModel from 'src/models/task_model';
-import analytics from 'src/utils/analytics';
+import * as analytics from 'src/utils/analytics';
 import { openPopupWindow } from 'src/background/util/popup_window';
 
 chrome.contextMenus.create({

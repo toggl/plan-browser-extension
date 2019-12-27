@@ -1,6 +1,6 @@
 import View from 'ampersand-view';
 import StyleView from '../style/style_view';
-import template from './shadow_view.hbs';
+import template from './shadow_view.dot';
 
 const ShadowView = View.extend({
   template,

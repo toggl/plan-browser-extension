@@ -1,7 +1,7 @@
 import domify from 'domify';
 import HashMap from 'hashmap';
 import ButtonState from 'src/button/button';
-import observer from 'src/utils/observer';
+import * as observer from 'src/utils/observer';
 import { generateTaskNotes } from '../../utils/quill';
 import '../global.less';
 import './asana.less';
@@ -10,7 +10,7 @@ const buttons = new HashMap();
 
 function createObserver() {
   observer
-    .create('.Pane.PotListPage-detailsPane, .SingleTaskPaneModal-modal')
+    .create('.Pane.PotListPage-detailsPane, .SingleTaskPane')
     .onAdded(createButton)
     .onRemoved(removeButton)
     .start();

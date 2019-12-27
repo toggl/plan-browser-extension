@@ -3,7 +3,7 @@ import moment from 'moment';
 import HashMap from 'hashmap';
 import find from 'lodash.find';
 import ButtonState from 'src/button/button';
-import observer from 'src/utils/observer';
+import * as observer from 'src/utils/observer';
 import { generateTaskNotes } from '../../utils/quill';
 import '../global.less';
 import './podio.less';

@@ -78,7 +78,6 @@ module.exports = {
     pathinfo: false,
     filename: '[name].js',
   },
-  watch: true,
   mode: !prd ? 'development' : 'production',
   optimization: {
     minimizer: [
@@ -99,18 +98,28 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
       },
+
       {
         test: /\.dot$/,
         loader: 'dot-loader',
         options: {},
       },
+
       { test: /\.hbs$/, loader: 'handlebars-loader' },
+
       {
         test: /\.svg$/,
         loader: 'raw-loader',
       },
+
+      {
+        test: /\.text\.css$/,
+        use: ['to-string-loader', 'css-loader', postCSSLoader],
+      },
+
       {
         test: /\.css$/,
+        exclude: /\.text\.css$/,
         use: [
           !prd ? miniCssExtractLoader : 'style-loader',
           'css-loader',

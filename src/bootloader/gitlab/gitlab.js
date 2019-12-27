@@ -1,7 +1,7 @@
 import moment from 'moment';
 import HashMap from 'hashmap';
 import ButtonState from 'src/button/button';
-import observer from 'src/utils/observer';
+import * as observer from 'src/utils/observer';
 import { generateTaskNotes } from '../../utils/quill';
 import '../global.less';
 import './gitlab.less';

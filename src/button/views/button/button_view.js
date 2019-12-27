@@ -1,6 +1,6 @@
 import View from 'ampersand-view';
 import ShadowView from '../shadow/shadow_view';
-import style from '../../styles/button.less';
+import style from '../../styles/button.text.css';
 import template from './button_view.hbs';
 
 const ContentView = View.extend({

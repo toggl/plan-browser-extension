@@ -2,7 +2,7 @@ import moment from 'moment';
 import HashMap from 'hashmap';
 import AmpersandView from 'ampersand-view';
 import ButtonState from '../../button/button.js';
-import observer from 'src/utils/observer';
+import * as observer from 'src/utils/observer';
 import { generateTaskNotes } from '../../utils/quill';
 import template from './trello.hbs';
 import '../global.less';
