@@ -142,14 +142,12 @@ export default View.extend({
 
     isActive: {
       type: 'booleanClass',
-      hook: 'control',
-      name: 'control-group__control--active',
+      name: 'control-group--active',
     },
 
     showError: {
       type: 'booleanClass',
-      hook: 'control',
-      yes: 'control-group__control--error',
+      yes: 'control-group--error',
     },
 
     tabIndex: {

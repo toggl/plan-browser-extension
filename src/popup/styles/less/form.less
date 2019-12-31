@@ -15,12 +15,22 @@
   height: 35px;
 }
 
-.control-group__control--active {
-  border-color: @color-primary;
-}
+.control-group--active {
+  .control-group__label {
+    color: @color-primary;
+  }
+  .control-group__control {
+    border-color: @color-primary;
+  }
 
-.control-group__control--error {
-  border-color: @color-danger;
+  &.control-group--error {
+    .control-group__label {
+      color: @color-danger;
+    }
+    .control-group__control {
+      border-color: @color-danger;
+    }
+  }
 }
 
 .control-group__label {
@@ -89,7 +99,7 @@
     border-radius: 0;
   }
 
-  .control-group__control--active {
+  &.control-group--active .control-group__control {
     border-color: transparent;
   }
 

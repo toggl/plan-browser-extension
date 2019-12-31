@@ -1,4 +1,4 @@
-<div>
+<div class='{{=it.css.container}}'>
   <div class="{{=it.css.namewrap}} row">
     <div data-hook="color-input" class="{{=it.css.colorwrap}}"></div>
     <div data-hook="name-input" class="row--grow"></div>

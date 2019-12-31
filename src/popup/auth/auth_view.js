@@ -39,7 +39,7 @@ const AuthView = View.extend({
         return new TextField({
           name: 'password',
           label: 'Password',
-          placeholder: 'Minimum 8 characters...',
+          placeholder: 'Type here...',
           value: '',
           type: 'password',
           tabIndex: 2,
