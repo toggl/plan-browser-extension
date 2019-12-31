@@ -3,6 +3,7 @@ import _ from 'lodash';
 import View from 'ampersand-view';
 import TextInput from '../input';
 import ColorCircle from '../color_circle';
+import { getIsPremium } from 'src/api/billing';
 import template from './template.dot';
 
 export default View.extend({
@@ -51,6 +52,10 @@ export default View.extend({
   },
 
   initialize() {
+    this.onInit();
+  },
+
+  async onInit() {
     _.bindAll(
       this,
       'onPickerSelect',
@@ -61,7 +66,7 @@ export default View.extend({
       'updatePickerHex'
     );
 
-    this.isPremium = true; // session.account.isPremium;
+    this.isPremium = await getIsPremium(this.workspace);
   },
 
   render() {
@@ -195,6 +200,6 @@ export default View.extend({
   },
 
   onUpgrade() {
-    // router.navigate(getSettingsUrl('billing'), { trigger: true });
+    window.open('https://app.teamweek.com/#settings/billing', '_blank');
   },
 });

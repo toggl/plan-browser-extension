@@ -17,7 +17,7 @@ const TaskModel = Model.extend({
     end_time: 'string',
     estimated_minutes: 'number',
     notes: 'string',
-    color: 'number',
+    color_id: 'number',
     done: 'boolean',
     workspace_members: ['array', true, () => []],
   },

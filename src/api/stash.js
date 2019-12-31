@@ -1,87 +1,52 @@
 import _ from 'lodash';
-import Promise from 'bluebird';
-import superagent from 'superagent';
-import * as api from './api';
-import config from './config';
+import xhr from './xhr';
 
 const stash = {
   loaded: false,
   data: null,
 };
 
-export function getStash() {
-  const request = superagent.get(`${config.api.host}/stash/v2/`);
+const achievementId = 'use_tw_button';
 
-  request.set('Authorization', 'Bearer ' + api.auth.tokens.access_token);
+export async function triggerAchievementUseButton() {
+  await getStash();
 
-  return createRequestPromise(request, getStash).then(updateStash);
-}
+  const { data } = stash;
+  const achievedAchievements = _.get(
+    data,
+    'data.achievements.achievedAchievements',
+    []
+  );
+  const externalAchievements = _.get(
+    data,
+    'data.achievements.externalAchievements',
+    []
+  );
+  const isAchieved = achievedAchievements.indexOf(achievementId) !== -1;
+  const isRegistered = externalAchievements.indexOf(achievementId) !== -1;
 
-function triggerAchievement(achievementId) {
-  function achievementFn() {
-    return getStash().then(() => {
-      const { data } = stash;
-      const achievedAchievements = _.get(
-        data,
-        'data.achievements.achievedAchievements',
-        []
-      );
-      const externalAchievements = _.get(
-        data,
-        'data.achievements.externalAchievements',
-        []
-      );
-      const isAchieved = achievedAchievements.indexOf(achievementId) !== -1;
-      const isRegistered = externalAchievements.indexOf(achievementId) !== -1;
-
-      if (!isAchieved && !isRegistered) {
-        const request = superagent.post(`${config.api.host}/stash/v2/`);
-
-        request.send(
-          _.merge(data, {
-            achievements: _.merge({}, _.get(data, 'achievements', {}), {
-              externalAchievements: _.concat(
-                _.get(data, 'achievements.externalAchievements', []),
-                [achievementId]
-              ),
-            }),
-          })
-        );
-
-        request.set('Authorization', 'Bearer ' + api.auth.tokens.access_token);
-
-        return createRequestPromise(request, achievementFn).then(updateStash);
-      } else {
-        return Promise.resolve(stash.data);
-      }
+  if (!isAchieved && !isRegistered) {
+    const payload = _.merge(data, {
+      achievements: _.merge({}, _.get(data, 'achievements', {}), {
+        externalAchievements: _.concat(
+          _.get(data, 'achievements.externalAchievements', []),
+          [achievementId]
+        ),
+      }),
     });
+    const updatedStash = await xhr('post', '/stash/v2/', payload);
+    updateStash(updatedStash);
   }
 
-  return achievementFn;
+  return stash.data;
+}
+
+export async function getStash() {
+  const stash = await xhr('get', '/stash/v2/');
+  updateStash(stash);
 }
 
 function updateStash(updatedStash) {
   stash.loaded = true;
   stash.data = updatedStash;
 }
-
-function createRequestPromise(request, requestBuilder) {
-  return new Promise((resolve, reject) => {
-    request.end((error, response) => {
-      if (!response) {
-        return reject({ message: 'network_error', error });
-      } else if (response.unauthorized) {
-        return api.auth.refreshTokens().then(
-          () => requestBuilder(),
-          error => reject(error)
-        );
-      } else if (response.ok) {
-        return resolve(response.body);
-      } else {
-        return reject({ message: 'unknown_error' });
-      }
-    });
-  });
-}
-
-export const triggerAchievementUseButton = triggerAchievement('use_tw_button');

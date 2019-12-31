@@ -9,6 +9,7 @@ const AccountModel = Model.extend({
   props: {
     id: 'number',
     name: 'string',
+    pricing_system: 'string',
   },
 
   collections: {
