@@ -1,9 +1,9 @@
 {
-  "name": "Toggl Plan Button: Project Planning Calendar",
+  "name": "Toggl Plan: Project Planning Calendar",
   "version": "1.11.21",
   "manifest_version": 2,
   "description": "Add tasks directly into Toggl Plan from your favourite web tools",
-  "short_name": "TW Button",
+  "short_name": "Toggl Plan",
   "icons": {
     "80": "images/icon_80.png"
   },
