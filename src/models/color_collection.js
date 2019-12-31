@@ -2,6 +2,8 @@ import _ from 'lodash';
 import State from 'ampersand-state';
 import Collection from 'ampersand-collection';
 import tinycolor from 'tinycolor2';
+import Promise from 'bluebird';
+import xhr from 'src/api/xhr';
 
 function addCSSRule(sheet, selector, rules, index) {
   if ('insertRule' in sheet) {
@@ -233,6 +235,18 @@ export default Collection.extend({
     const { workspaceColorsStyleSheet: styleSheet } = this;
     clearCSSRules(styleSheet);
     this.models.forEach(model => addColorRules(styleSheet, model));
+  },
+
+  addColor(hex) {
+    const color = this.get(this.getIdFromHex(hex));
+    return color && color.isCustom
+      ? Promise.resolve(color)
+      : xhr('post', `/api/v4/${this.parent.id}/custom_colors`, { hex }).then(
+          data => {
+            this.add(data, { merge: true });
+            return this.get(this.getIdFromHex(hex));
+          }
+        );
   },
 
   getCustomColors() {
