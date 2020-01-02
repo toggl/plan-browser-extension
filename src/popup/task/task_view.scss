@@ -81,10 +81,20 @@ select {
   font-size: 20px;
 }
 
+.auth-popup {
+  position: relative;
+}
+
 .popup__buttons {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: 16px #{$task-form-horizontal-padding};
   display: flex;
   flex-direction: row-reverse;
+  background: #f8f8f8;
+  z-index: 100;
 }
 
 .popup__button {

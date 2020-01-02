@@ -7,6 +7,7 @@ const ProjectModel = Model.extend({
     id: 'number',
     name: 'string',
     color_id: 'number',
+    archived: ['boolean', true, false],
   },
 
   collections: {

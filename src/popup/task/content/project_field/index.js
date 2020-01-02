@@ -11,7 +11,8 @@ export default function(props) {
     heading: 'Project',
     headingIconClass: css.icon,
     iconView: IconView,
-    getCollectionItems: () => parent.workspace.projects.models,
+    getCollectionItems: () =>
+      parent.workspace.projects.models.filter(m => !m.archived),
     addButtonlabel: 'Add Project',
     modelIdProp: 'project_id',
     async addModel(name) {

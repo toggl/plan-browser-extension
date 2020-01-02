@@ -1,6 +1,5 @@
 .menu {
   cursor: pointer;
-  background: #f2f2f2;
   border-radius: 2px;
   display: flex;
   align-items: center;
@@ -9,6 +8,10 @@
   height: 24px;
   position: absolute;
   right: 16px;
+
+  &:hover {
+    background: #f2f2f2;
+  }
 }
 
 .menu-icon {
