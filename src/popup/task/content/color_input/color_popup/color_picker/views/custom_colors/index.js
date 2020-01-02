@@ -3,7 +3,6 @@ import _ from 'lodash';
 import View from 'ampersand-view';
 import TextInput from '../input';
 import ColorCircle from '../color_circle';
-import { getIsPremium } from 'src/api/billing';
 import template from './template.dot';
 
 export default View.extend({
@@ -11,12 +10,11 @@ export default View.extend({
 
   props: {
     selectedColorId: 'number',
-    isPremium: 'boolean',
     workspace: 'state',
   },
 
   bindings: {
-    isPremium: {
+    'workspace.isPremium': {
       type: 'toggle',
       yes: '[data-hook=picker-wrap]',
       no: '[data-hook=upsell-wrap]',
@@ -65,8 +63,6 @@ export default View.extend({
       'onSaveColor',
       'updatePickerHex'
     );
-
-    this.isPremium = await getIsPremium(this.workspace);
   },
 
   render() {

@@ -115,6 +115,7 @@ const TaskView = View.extend({
     await account.projects.fetch();
     await account.users.fetch();
     await account.colors.updateRules();
+    await account.loadBilling();
     this.workspace = account;
 
     if (this.content) {

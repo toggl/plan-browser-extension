@@ -3,7 +3,6 @@ import View from 'ampersand-view';
 import fuzzy from 'fuzzy';
 import hub from 'src/popup/utils/hub';
 import { createUser } from 'src/popup/utils/helpers';
-import { sleep } from 'src/utils';
 import { Suggestions, OtherMembers } from './models';
 import SuggestionItemView from './suggestion_item';
 import TagView from './tag_item';
@@ -149,7 +148,6 @@ export default View.extend({
   },
 
   async onUpdateCollection() {
-    await sleep(100);
     this.searchTerm ? this.listMatching() : this.listAll();
     this.render();
   },
@@ -250,7 +248,6 @@ export default View.extend({
   },
 
   getSuggestions() {
-    this.otherMembers._runFilters();
     return fuzzy.filter(
       this.searchTerm,
       this.otherMembers.models,
@@ -369,14 +366,13 @@ export default View.extend({
   async saveTask(workspace_members) {
     // console.log('saving %o', workspace_members);
     await this.parent.parent.task.set({ workspace_members });
-    await sleep(100);
     this.resetInput();
-    this.listAll();
+    await this.onUpdateCollection();
     hub.trigger('task:reassigned');
   },
 
   getIsPaying() {
-    return true; // todo
+    return this.parent.parent.workspace.isPremium;
   },
 
   resetInput() {
