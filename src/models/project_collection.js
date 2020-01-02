@@ -6,6 +6,8 @@ import sync from '../api/api_sync';
 const ProjectCollection = RestCollection.extend({
   model: ProjectModel,
 
+  comparator: 'name',
+
   url() {
     return config.api.host + '/api/v4/' + this.parent.id + '/projects';
   },

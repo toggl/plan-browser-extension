@@ -6,6 +6,7 @@ const Segment = Model.extend({
   sync,
 
   extraProperties: 'allow',
+  comparator: 'name',
 
   props: {
     position: 'number',
