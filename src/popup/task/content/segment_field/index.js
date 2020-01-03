@@ -65,16 +65,26 @@ export default function(props) {
     canRemove: false,
     async addModel(name) {
       const {
-        task: { project_id: projectId },
+        task: { project_id },
       } = props;
-      if (!projectId) {
+      if (!project_id) {
         return;
       }
-      const segment = await createSegment({ name, projectId });
+      const { workspace } = parent;
+      const segment = await createSegment(
+        {
+          workspace,
+          project: workspace.projects.findWhere({ id: project_id }),
+        },
+        {
+          name,
+          project_id,
+        }
+      );
       this.saveTask(segment);
     },
     async saveTask(segment) {
-      await parent.task.set({ project_segment_id: segment && segment.id });
+      parent.task.set({ project_segment_id: segment && segment.id });
     },
     parent,
   });

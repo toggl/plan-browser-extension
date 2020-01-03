@@ -105,7 +105,6 @@ export default View.extend({
     'click [data-hook=tag-remove]': 'onRemove',
     'focus input': 'onFocus',
     'input input': 'onInput',
-    'keydown input': 'onInputKeyPress',
     keydown: 'onContainerKeyPress',
   },
 

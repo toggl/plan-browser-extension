@@ -16,14 +16,17 @@ export default function(props) {
     addButtonlabel: 'Add Project',
     modelIdProp: 'project_id',
     async addModel(name) {
-      const project = await createProject({
-        name,
-        // color_id: 22,
-      });
+      const project = await createProject(
+        { workspace: parent.workspace },
+        {
+          name,
+          // color_id: 22,
+        }
+      );
 
-      parent.segments.project = project;
-      parent.segments.updateCollection();
-      parent.segments.segmentFilters();
+      // parent.segments.project = project;
+      // parent.segments.updateCollection();
+      // parent.segments.segmentFilters();
 
       this.saveTask(project);
     },
@@ -31,12 +34,13 @@ export default function(props) {
       let project_id = null,
         project_segment_id = null;
       if (project) {
-        const segment = project && project.segments.models[0];
         parent.colorField.colorId = project.color_id;
         project_id = project.id;
+        const segment = project && project.segments.first();
         project_segment_id = segment && segment.id;
       }
-      await parent.task.set({
+
+      parent.task.set({
         color_id: null,
         project_id,
         project_segment_id,

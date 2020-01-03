@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import View from 'ampersand-view';
 import fuzzy from 'fuzzy';
+import keycode from 'keycode';
 import hub from 'src/popup/utils/hub';
 import { createUser } from 'src/popup/utils/helpers';
 import { Suggestions, OtherMembers } from './models';
@@ -88,8 +89,8 @@ export default View.extend({
     'click [data-hook=add]': 'onCreateTag',
     'focus input': 'onFocus',
     'input input': 'onInput',
-    'keydown input': 'onKeyPress',
     'click [data-hook=tag-remove]': 'onRemoveTag',
+    keydown: 'onContainerKeyPress',
   },
 
   initialize() {
@@ -276,7 +277,18 @@ export default View.extend({
     this.listMatching(e.target.value);
   },
 
-  onKeyPress(event) {
+  onContainerKeyPress(event) {
+    if (
+      !this.isEditing &&
+      -1 !== ['backspace', 'delete'].indexOf(keycode(event))
+    ) {
+      return this.onRemoveLastTag(event);
+    }
+
+    this.onInputKeyPress(event);
+  },
+
+  onInputKeyPress(event) {
     switch (event.keyCode || event.which) {
       case 9:
         event.preventDefault();
@@ -330,7 +342,12 @@ export default View.extend({
   },
 
   async onCreateTag() {
-    const user = await createUser({ name: this.searchTerm });
+    const user = await createUser(
+      { workspace: this.parent.parent.workspace },
+      {
+        name: this.searchTerm,
+      }
+    );
     this.onAddTag(user);
   },
 
@@ -361,6 +378,18 @@ export default View.extend({
       await this.saveTask([]);
     }
     // this.close();
+  },
+
+  async onRemoveLastTag(event) {
+    event.preventDefault();
+    if (this.getIsPaying()) {
+      // console.log('removing %s', userId);
+      const memberIds = this.parent.members.models.map(m => m.membership_id);
+      memberIds.pop();
+      await this.saveTask(memberIds);
+    } else {
+      await this.saveTask([]);
+    }
   },
 
   async saveTask(workspace_members) {
