@@ -7,6 +7,7 @@ import { createUser } from 'src/popup/utils/helpers';
 import { Suggestions, OtherMembers } from './models';
 import SuggestionItemView from './suggestion_item';
 import TagView from './tag_item';
+import showPremiumView from './premium_popup';
 import template from './template.dot';
 import css from './style.module.scss';
 
@@ -25,7 +26,6 @@ export default View.extend({
   props: {
     searchTerm: 'string',
     isFocused: 'boolean',
-    isEditing: 'boolean',
     selectedSuggestionIndex: 'number',
     parent: ['state', true],
   },
@@ -279,7 +279,7 @@ export default View.extend({
 
   onContainerKeyPress(event) {
     if (
-      !this.isEditing &&
+      this.isEmpty &&
       -1 !== ['backspace', 'delete'].indexOf(keycode(event))
     ) {
       return this.onRemoveLastTag(event);
@@ -342,6 +342,10 @@ export default View.extend({
   },
 
   async onCreateTag() {
+    if (this.showUpgradePrompt()) {
+      return;
+    }
+
     const user = await createUser(
       { workspace: this.parent.parent.workspace },
       {
@@ -352,56 +356,52 @@ export default View.extend({
   },
 
   async onAddTag(user) {
-    // console.log('adding %s', user.membership_id);
-    if (this.getIsPaying()) {
-      const memberIds = this.parent.members.models.map(m => m.membership_id);
-      if (-1 === memberIds.indexOf(user.membership_id)) {
-        memberIds.push(user.membership_id);
-        await this.saveTask(memberIds);
-      }
-    } else {
-      await this.saveTask([user.membership_id]);
+    if (this.showUpgradePrompt()) {
+      return;
     }
-    // this.close();
+
+    const memberIds = this.parent.members.models.map(m => m.membership_id);
+    if (-1 === memberIds.indexOf(user.membership_id)) {
+      memberIds.push(user.membership_id);
+      await this.saveTask(memberIds);
+    }
   },
 
   async onRemoveTag(event) {
     event.preventDefault();
-    if (this.getIsPaying()) {
+    if (this.parent.canRemove) {
       const userId = parseInt(event.delegateTarget.dataset.id);
-      // console.log('removing %s', userId);
       const memberIds = this.parent.members.models
         .filter(u => u.id !== userId)
         .map(m => m.membership_id);
       await this.saveTask(memberIds);
-    } else {
-      await this.saveTask([]);
     }
-    // this.close();
   },
 
   async onRemoveLastTag(event) {
     event.preventDefault();
-    if (this.getIsPaying()) {
-      // console.log('removing %s', userId);
+    if (this.parent.canRemove) {
       const memberIds = this.parent.members.models.map(m => m.membership_id);
       memberIds.pop();
       await this.saveTask(memberIds);
-    } else {
-      await this.saveTask([]);
     }
   },
 
   async saveTask(workspace_members) {
-    // console.log('saving %o', workspace_members);
     await this.parent.parent.task.set({ workspace_members });
     this.resetInput();
     await this.onUpdateCollection();
     hub.trigger('task:reassigned');
   },
 
-  getIsPaying() {
-    return this.parent.parent.workspace.isPremium;
+  showUpgradePrompt() {
+    if (
+      this.parent.members.models.length &&
+      !this.parent.parent.workspace.isPremium
+    ) {
+      showPremiumView(this.queryByHook('input'));
+      return true;
+    }
   },
 
   resetInput() {
