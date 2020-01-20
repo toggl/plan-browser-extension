@@ -1,11 +1,16 @@
-const qs = require('querystring');
-const Promise = require('promise');
-const Events = require('ampersand-events');
-const PopupView = require('./popup/popup_view');
-const api = require('../api/api');
-const TaskModel = require('../models/task_model');
-const collections = require('../models/collections');
-require('./utils/handlebars_helpers');
+import './styles/less/popup.less';
+import './styles/sass/popup.scss';
+
+import qs from 'querystring';
+import Promise from 'promise';
+import Events from 'ampersand-events';
+import * as api from 'src/api/api';
+import TaskModel from 'src/models/task_model';
+import * as collections from 'src/models/collections';
+import PopupView from './popup/popup_view';
+
+import './utils/popups';
+import './utils/overlays';
 
 function parseQuery() {
   const query = location.search.substr(1);
@@ -20,7 +25,7 @@ function createTask(query) {
       end_date: query.end_date,
       start_time: query.start_time,
       end_time: query.end_time,
-      notes: query.notes
+      notes: query.notes,
     },
     { parse: true }
   );
@@ -36,12 +41,16 @@ function createView() {
   return new PopupView({
     hub: createHub(),
     task: createTask(query),
-    link: query.link
+    link: query.link,
   });
 }
 
 function renderView(view) {
-  view.render();
+  try {
+    view.render();
+  } catch (e) {
+    console.log(e);
+  }
   document.body.appendChild(view.el);
   view.resizeWindow();
 }

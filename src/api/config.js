@@ -1,5 +1,5 @@
-module.exports = {
+export default {
   api: {
-    host: 'https://teamweek.com'
-  }
+    host: 'https://teamweek.com',
+  },
 };

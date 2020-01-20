@@ -1,0 +1,121 @@
+.control-group {
+  align-items: stretch;
+}
+
+.control-group__control {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 34px;
+  border: 1px solid @color-border-light;
+  border-radius: 4px;
+  font-size: 13px;
+  transition: 0.15s ease-in-out border-color;
+  height: 35px;
+}
+
+.control-group--active {
+  .control-group__label {
+    color: @color-primary;
+  }
+  .control-group__control {
+    border-color: @color-primary;
+  }
+
+  &.control-group--error {
+    .control-group__label {
+      color: @color-danger;
+    }
+    .control-group__control {
+      border-color: @color-danger;
+    }
+  }
+}
+
+.control-group__label {
+  color: #808080;
+  width: 100px;
+}
+
+.control-group__input {
+  color: #000000;
+  font-size: 13px;
+  // font-weight: 500;
+  height: 32px;
+  border: none;
+  flex: 1;
+  background-color: transparent;
+  padding: 0 8px;
+  outline: none;
+  min-width: 0;
+  border-radius: 4px;
+
+  &::-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px @color-fill-light inset;
+  }
+
+  &::placeholder {
+    color: #808080;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
+}
+
+.control-group__select {
+  flex: 1;
+  padding-left: 0;
+  border-radius: 2px;
+  height: 33px;
+  line-height: 35px;
+  font-size: 13px;
+  color: #000000;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+
+  // Firefox
+  text-overflow: '';
+  text-indent: 0.01px;
+
+  &.icon-new-chevron-link,
+  &.icon-new-chevron-light {
+    background-position: right 10px top 50%;
+    background-size: 8px;
+    padding-right: 28px;
+    background-repeat: no-repeat;
+  }
+}
+
+.control-group--inline {
+  .control-group__control {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  &.control-group--active .control-group__control {
+    border-color: transparent;
+  }
+
+  .control-group__select {
+    color: rgba(0, 0, 0, 0.35);
+    text-decoration: underline;
+
+    &.icon-new-chevron-link,
+    &.icon-new-chevron-light {
+      background-position: right 0 top 50%;
+      background-repeat: no-repeat;
+      padding-right: 11px;
+    }
+  }
+
+  .control-group__label {
+    padding-right: 2px;
+  }
+}

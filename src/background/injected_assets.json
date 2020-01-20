@@ -1,18 +1,18 @@
 {
   "gitlab": {
-    "scripts": ["scripts/content_gitlab.js"],
-    "styles": ["styles/global.css", "styles/gitlab.css"]
+    "scripts": ["gitlab.js"],
+    "styles": ["global.css", "gitlab.css"]
   },
   "github": {
-    "scripts": ["scripts/content_github.js", "scripts/content_github_issues.js"],
-    "styles": ["styles/global.css", "styles/github.css"]
+    "scripts": ["github.js"],
+    "styles": ["global.css", "github.css"]
   },
   "jira": {
-    "scripts": ["scripts/content_jira.js"],
-    "styles": ["styles/global.css", "styles/jira.css"]
+    "scripts": ["jira.js"],
+    "styles": ["global.css", "jira.css"]
   },
   "bitbucket": {
-    "scripts": ["scripts/content_bitbucket.js"],
-    "styles": ["styles/global.css", "styles/bitbucket.css"]
+    "scripts": ["bitbucket.js"],
+    "styles": ["global.css", "bitbucket.css"]
   }
 }

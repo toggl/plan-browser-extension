@@ -1,0 +1,13 @@
+.tag {
+  height: 24px;
+  font-size: 13px;
+  padding: 8px 4px;
+  display: flex;
+  margin: 3px 6px 3px 0;
+  border-radius: 2px;
+
+  &__label {
+    margin-right: 8px;
+    flex: 1;
+  }
+}

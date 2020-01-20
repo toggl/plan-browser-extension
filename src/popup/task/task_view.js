@@ -1,156 +1,39 @@
-const Promise = require('bluebird');
-const moment = require('moment');
-const View = require('ampersand-view');
-const accounts = require('../../models/account_collection');
-const FormErrors = require('../form/form_errors');
-const UserField = require('../fields/user_field');
-const ProjectField = require('../fields/project_field');
-const EstimateField = require('../fields/estimate_field');
-const DateField = require('../fields/date_field');
-const TimeField = require('../fields/time_field');
-const AccountField = require('../fields/account_field');
-const SegmentField = require('../fields/segment_field');
-const TextField = require('../fields/input');
-const fetchMe = require('../../utils/me');
-const updateCustomColorsCss = require('../../utils/custom_colors_css');
+import moment from 'moment';
+import View from 'ampersand-view';
+import { sleep } from 'src/utils';
+import AccountField from './account_field/account_field';
+import FormErrors from '../form/form_errors';
+import accounts from 'src/models/account_collection';
+import fetchMe from '../../utils/me';
+import Content from './content/content';
+import './task_view.scss';
+import css from './task_view.module.scss';
+import template from './task_view.dot';
 
 const TaskView = View.extend({
-  template: require('./task_view.hbs'),
+  template,
+  css,
 
   props: {
     hub: 'object',
-    user: 'state',
-    project: 'state',
     overlay: 'boolean',
     workspace: 'state',
     me: 'object',
+    model: 'state',
   },
 
   subviews: {
-    account: {
+    errors: { hook: 'errors', constructor: FormErrors },
+
+    accountSwitcher: {
       hook: 'select-account',
-      prepareView(el) {
+      prepareView() {
         return new AccountField({
-          el,
           parent: this,
           selectOpts: {},
         });
       },
     },
-    name: {
-      hook: 'input-name',
-      prepareView(el) {
-        return new TextField({
-          el,
-          name: 'name',
-          label: 'Name',
-          placeholder: 'Type here...',
-          value: '',
-          tabIndex: 1,
-          validations: [
-            {
-              run: value => value.length > 0,
-              message: '*Name cannot be empty',
-            },
-          ],
-        });
-      },
-    },
-    user: {
-      hook: 'select-user',
-      prepareView(el) {
-        return new UserField({
-          el,
-          selectOpts: {
-            tabIndex: 2,
-          },
-        });
-      },
-    },
-    estimate: {
-      hook: 'input-estimate',
-      prepareView(el) {
-        return new EstimateField({
-          el,
-          tabIndex: 3,
-        });
-      },
-    },
-    project: {
-      hook: 'select-project',
-      prepareView(el) {
-        return new ProjectField({
-          el,
-          selectOpts: {
-            tabIndex: 4,
-          },
-        });
-      },
-    },
-    segment: {
-      hook: 'select-segment',
-      prepareView(el) {
-        return new SegmentField({
-          el,
-          selectOpts: {
-            tabIndex: 5,
-          },
-        });
-      },
-    },
-    start_time: {
-      hook: 'input-start-time',
-      prepareView(el) {
-        return new TimeField({
-          el,
-          inputOpts: {
-            tabIndex: 6,
-            name: 'start-time',
-            label: 'Start Time',
-          },
-        });
-      },
-    },
-    end_time: {
-      hook: 'input-end-time',
-      prepareView(el) {
-        return new TimeField({
-          el,
-          inputOpts: {
-            tabIndex: 7,
-            name: 'end-time',
-            label: 'End Time',
-          },
-        });
-      },
-    },
-    start_date: {
-      hook: 'input-start-date',
-      prepareView(el) {
-        return new DateField({
-          el,
-          inputOpts: {
-            tabIndex: 8,
-            name: 'start-date',
-            label: 'Start Date',
-          },
-        });
-      },
-    },
-    end_date: {
-      hook: 'input-end-date',
-      prepareView(el) {
-        return new DateField({
-          el,
-          inputOpts: {
-            tabIndex: 9,
-            name: 'end-date',
-            label: 'End Date',
-          },
-        });
-      },
-    },
-    errors: { hook: 'errors', constructor: FormErrors },
   },
 
   events: {
@@ -174,18 +57,6 @@ const TaskView = View.extend({
   },
 
   bindings: {
-    'user.isFilled': {
-      type: 'booleanClass',
-      hook: 'select-user',
-      yes: 'user-select--filled',
-      no: 'user-select--empty',
-    },
-    'project.isFilled': {
-      type: 'booleanClass',
-      hook: 'select-project',
-      yes: 'project-select--filled',
-      no: 'project-select--empty',
-    },
     overlay: {
       type: 'booleanClass',
       hook: 'done-overlay',
@@ -209,93 +80,59 @@ const TaskView = View.extend({
     ],
   },
 
+  async initialize() {
+    this.showLoader();
+
+    try {
+      this.me = await fetchMe();
+      this.hideLoader();
+      this.me.workspaces.map(workspace => accounts.add(workspace));
+
+      this.accountSwitcher.switchAccount(
+        accounts.get(this.me.preferences.selected_account_id)
+      );
+    } catch (error) {
+      console.log(error);
+      this.hideLoader();
+      this.hub.trigger('error:show', error);
+    }
+  },
+
   render() {
     this.renderWithTemplate(this);
-
-    [
-      this.name,
-      this.start_date,
-      this.end_date,
-      this.start_time,
-      this.end_time,
-      this.user,
-      this.project,
-      this.segment,
-      this.estimate,
-      this.account,
-    ].forEach(field => {
-      this.listenTo(field, 'change:value', this.hideErrors);
-    }, this);
-
-    this.listenTo(this.account, 'change:value', this.onAccountSelected);
-    this.listenTo(this.project, 'change:value', this.onProjectSelected);
-
-    this.name.value = this.model.name;
-    this.start_date.value = this.model.start_date;
-    this.end_date.value = this.model.end_date;
-    this.start_time.value = this.model.start_time;
-    this.end_time.value = this.model.end_time;
-
-    this.hub.trigger('loader:show');
-
-    fetchMe()
-      .then(me => {
-        this.me = me;
-        this.me.workspaces.map(workspace => accounts.add(workspace));
-        return accounts.fetchEverything();
-      })
-      .then(
-        () => {
-          const selectedAccountId = this.me.preferences.selected_account_id;
-          const account = accounts.get(selectedAccountId);
-          this.account.switchAccount(account);
-          updateCustomColorsCss(selectedAccountId);
-
-          // this.user.select.onSelect(this.me.name);
-
-          this.hub.trigger('loader:hide');
-          this.focusNameField();
-        },
-        error => {
-          this.hub.trigger('loader:hide');
-          this.hub.trigger('error:show', error);
-        }
-      );
-
+    this.listenTo(
+      this.accountSwitcher,
+      'change:selectedAccountId',
+      this.onAccountSelected
+    );
     return this;
   },
 
-  onAccountSelected() {
-    this.workspace = accounts.get(this.account.value);
-    this.user.switchAccount(this.workspace);
-    this.project.value = null;
-    this.project.collection = this.workspace.projects;
+  async onAccountSelected() {
+    this.showLoader();
 
-    // this.segment.collection = this.workspace.projects[0].segments;
+    const account = accounts.get(this.accountSwitcher.selectedAccountId);
+    await account.projects.fetch();
+    await account.users.fetch();
+    await account.colors.updateRules();
+    await account.loadBilling();
+    this.workspace = account;
 
-    this.name.input.disabled = this.accountIsReadonly;
-    this.user.disabled = this.accountIsReadonly;
-    this.project.disabled = this.accountIsReadonly;
-    this.segment.disabled = this.accountIsReadonly;
-    this.start_date.disabled = this.accountIsReadonly;
-    this.end_date.disabled = this.accountIsReadonly;
-    this.start_time.disabled = this.accountIsReadonly;
-    this.end_time.disabled = this.accountIsReadonly;
-    this.estimate.disabled = this.accountIsReadonly;
-  },
-
-  onProjectSelected() {
-    const projectId = this.project.value;
-    if (!projectId) {
-      return (this.segment.disabled = true);
+    if (this.content) {
+      this.content.remove();
     }
-    const project = this.workspace.projects.get(projectId);
-    this.segment.value = project.segments.models[0].id;
-    this.segment.collection = project.segments;
-    this.segment.disabled = this.accountIsReadonly;
+    this.content = new Content({
+      workspace: this.workspace,
+      me: this.me,
+      task: this.model,
+      enableEdit: !this.accountIsReadonly,
+    });
+    this.renderSubview(this.content, this.queryByHook('content'));
+
+    this.hideLoader();
   },
 
-  onSubmit(event) {
+  async onSubmit(event) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -303,46 +140,20 @@ const TaskView = View.extend({
       return;
     }
 
-    this.model.set({
-      name: this.name.input.value,
-      user_id: this.user.value,
-      project_id: this.project.value,
-      project_segment_id: this.segment.value,
-      start_date: this.start_date.value,
-      end_date: this.end_date.value,
-      start_time: this.start_time.value,
-      end_time: this.end_time.value,
-      estimated_minutes: this.estimate.value,
-    });
-
-    if (this.model.collection) {
-      this.model.collection.remove(this.model);
-    }
-
     this.workspace.tasks.add(this.model);
 
-    // default task color
-    if (!this.project.value) {
-      this.model.set({
-        color: 21,
-      });
-    }
-
     // save
-    this.showLoader();
-
-    this.model.save().then(
-      () => {
-        this.hub.trigger('task:created', this.model, this.workspace);
-
-        this.hideLoader();
-        this.showOverlay().then(() => this.closePopup());
-      },
-      error => {
-        this.hideLoader();
-        this.showError(error);
-      }
-    );
+    try {
+      this.showLoader();
+      await this.model.save();
+      this.hub.trigger('task:created', this.model, this.workspace);
+      this.hideLoader();
+      await this.showOverlay();
+      this.closePopup();
+    } catch (error) {
+      this.hideLoader();
+      this.showError(error);
+    }
   },
 
   onCancel(event) {
@@ -356,40 +167,40 @@ const TaskView = View.extend({
   },
 
   validate() {
-    this.errors.clearErrors();
+    const {
+      content: { task },
+      errors,
+    } = this;
 
-    if (!this.name.isFilled) {
-      this.errors.addError('Task name cannot be empty');
+    errors.clearErrors();
+
+    task.name = (task.name || '').trim();
+    if (!task.name) {
+      errors.addError('Task name cannot be empty');
       return false;
     }
 
-    if (!this.user.isFilled) {
-      this.errors.addError('User cannot be empty');
+    if (!(task.workspace_members.length || task.project_id)) {
+      errors.addError('Set assignee(s) or project');
       return false;
     }
 
-    if (this.user.hasUser) {
-      if (!this.start_date.isFilled) {
-        this.errors.addError('Start date cannot be empty');
-        return false;
-      }
+    if (!task.start_date) {
+      errors.addError('Start date cannot be empty');
+      return false;
+    }
 
-      if (!this.end_date.isFilled) {
-        this.errors.addError('End date cannot be empty');
-        return false;
-      }
+    if (!task.end_date) {
+      errors.addError('End date cannot be empty');
+      return false;
+    }
 
-      if (moment(this.end_date.value).isBefore(this.start_date.value, 'day')) {
-        this.errors.addError('End date cannot be before start date');
-        return false;
-      }
+    if (moment(task.end_date).isBefore(task.start_date, 'day')) {
+      errors.addError('End date cannot be before start date');
+      return false;
     }
 
     return true;
-  },
-
-  focusNameField() {
-    this.name.focus();
   },
 
   showLoader() {
@@ -400,11 +211,9 @@ const TaskView = View.extend({
     this.hub.trigger('loader:hide');
   },
 
-  showOverlay() {
-    return new Promise(resolve => {
-      this.overlay = true;
-      setTimeout(resolve, 2000);
-    });
+  async showOverlay() {
+    this.overlay = true;
+    await sleep(2000);
   },
 
   closePopup() {
@@ -416,4 +225,4 @@ const TaskView = View.extend({
   },
 });
 
-module.exports = TaskView;
+export default TaskView;

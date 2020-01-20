@@ -1,0 +1,14 @@
+<div class="{{=it.css.container}} row row--vertical">
+  <div class="text-center text--color-new-link {{=it.css.heading}}">
+    Premium Feature
+  </div>
+  <div class="text-center {{=it.css.subheading}}">
+    Upgrade your billing plan in order to multi assign tasks
+  </div>
+  <div data-hook='button-upgrade' class="row row--align-center row--justify-center hover button-v2 button-v2--link {{=it.css.button}} {{=it.css['button-upgrade']}}">
+    Upgrade
+  </div>
+  <div data-hook='button-cancel'  class="row row--align-center row--justify-center hover button-v2 {{=it.css.button}} {{=it.css['button-cancel']}}">
+    Cancel
+  </div>
+</div>

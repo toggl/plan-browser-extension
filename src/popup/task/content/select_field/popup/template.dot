@@ -1,0 +1,23 @@
+<div class="{{=it.css.container}}" tabindex="{{=it.parent.tabIndex}}">
+  <input
+    class="{{=it.css.input}} input input--block"
+    type="text"
+    autocomplete="off"
+    name="search_name"
+    data-hook="input"
+    placeholder="Select or Add"
+    tabindex="{{=it.parent.tabIndex}}" />
+
+  <div class="{{=it.css.tag}} row row--align-center pointer" data-hook="tag">
+    <span class="{{=it.css.tag__icon}}" data-hook='tag-icon'></span>
+    <span class="{{=it.css.tag__label}} overflow-ellipsis whitespace-nowrap" data-hook='tag-label'></span>
+    <span class="{{=it.css.tag__remove}} icon icon-svg icon-svg--8" data-hook='tag-remove'></span>
+  </div>
+
+  <div class="{{=it.css.suggestions}}">
+    <div class="{{=it.css.heading}} text--color-new-gray row row--align-center" data-hook='heading'></div>
+    <div data-hook="suggestions"></div>
+  </div>
+
+  <div class="{{=it.css.add}} row row--align-center row--justify-center hover" data-hook="add"></div>
+</div>

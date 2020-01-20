@@ -1,8 +1,7 @@
-const View = require('ampersand-view');
-const template = require('./template.hbs');
+import View from 'ampersand-view';
+import template from './template.hbs';
 
-module.exports = View.extend({
-
+export default View.extend({
   template,
 
   props: {
@@ -26,46 +25,51 @@ module.exports = View.extend({
     modifierClasses: {
       deps: ['modifiers', 'modifiers.length'],
       fn() {
-        return this.modifiers.reduce((modClass, modifier) => {
-          return `${modClass} control-group--${modifier}`;
-        }, '').trim();
-      }
+        return this.modifiers
+          .reduce((modClass, modifier) => {
+            return `${modClass} control-group--${modifier}`;
+          }, '')
+          .trim();
+      },
     },
 
     showError: {
       deps: ['isValid', 'isDirty', 'errorText'],
       fn() {
         return this.errorText && !this.isValid && this.isDirty;
-      }
+      },
     },
 
     formattedLabel: {
       deps: ['label'],
       fn() {
         return this.label ? `${this.label}: ` : '';
-      }
+      },
     },
 
     isInline: {
       deps: ['modifiers'],
       fn() {
         return this.modifiers && this.modifiers.indexOf('inline') !== -1;
-      }
-    }
+      },
+    },
   },
 
   bindings: {
-    formattedLabel: [{
-      type: 'toggle',
-      hook: 'label'
-    }, {
-      type: 'text',
-      hook: 'label'
-    }],
+    formattedLabel: [
+      {
+        type: 'toggle',
+        hook: 'label',
+      },
+      {
+        type: 'text',
+        hook: 'label',
+      },
+    ],
 
     placeholder: {
       type: 'text',
-      hook: 'placeholder'
+      hook: 'placeholder',
     },
 
     name: {
@@ -80,7 +84,7 @@ module.exports = View.extend({
 
     errorLabel: {
       type: 'attribute',
-      name: 'data-err'
+      name: 'data-err',
     },
 
     isInline: {
@@ -90,17 +94,21 @@ module.exports = View.extend({
       hook: 'select',
     },
 
-    errorText: [{
-      type: 'text',
-      hook: 'error-text',
-    }, {
-      type: 'toggle',
-      hook: 'error-text',
-    }, {
-      type: 'toggle',
-      hook: 'info-text',
-      invert: true,
-    }],
+    errorText: [
+      {
+        type: 'text',
+        hook: 'error-text',
+      },
+      {
+        type: 'toggle',
+        hook: 'error-text',
+      },
+      {
+        type: 'toggle',
+        hook: 'info-text',
+        invert: true,
+      },
+    ],
 
     infoText: {
       type: 'text',
@@ -122,8 +130,8 @@ module.exports = View.extend({
     tabIndex: {
       type: 'attribute',
       hook: 'select',
-      name: 'tabindex'
-    }
+      name: 'tabindex',
+    },
   },
 
   events: {
@@ -133,7 +141,7 @@ module.exports = View.extend({
   },
 
   initialize() {
-    this.listenTo(this, 'error', (errorText) => {
+    this.listenTo(this, 'error', errorText => {
       this.errorText = errorText;
       this.isValid = false;
       this.isDirty = true;
@@ -145,7 +153,7 @@ module.exports = View.extend({
   render() {
     this.renderWithTemplate();
     this.cacheElements({
-      selectElement: '[data-hook=select]'
+      selectElement: '[data-hook=select]',
     });
 
     if (this.value) {
@@ -198,7 +206,7 @@ module.exports = View.extend({
       isValid = isValid && validation.run(value);
 
       if (!isValid) {
-        this.errorText = validation.message || "*Choose an option";
+        this.errorText = validation.message || '*Choose an option';
         this.isValid = false;
         return;
       }

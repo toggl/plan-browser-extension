@@ -1,0 +1,124 @@
+.color-picker {
+  width: 100%;
+}
+
+.color-picker__custom__picker {
+  .picker-wrapper,
+  .slide-wrapper {
+    position: relative;
+  }
+
+  .picker-wrapper {
+    margin-right: 10px;
+  }
+
+  .picker,
+  .slide {
+    height: 120px;
+    cursor: crosshair;
+    box-sizing: border-box;
+    border: 1px solid $color-border-light;
+    border-radius: 2px;
+  }
+
+  .picker {
+    width: 134px;
+  }
+  .slide {
+    width: 24px;
+  }
+
+  .picker-indicator,
+  .slide-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .picker-indicator {
+    height: 10px;
+    width: 10px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+  }
+
+  .slide-indicator {
+    left: 0;
+    height: 8px;
+    width: 26px;
+    background-color: transparent;
+
+    &::before,
+    &::after {
+      position: absolute;
+      top: 0;
+      content: '';
+      width: 0;
+      height: 0;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+    }
+
+    &::before {
+      right: -2px;
+      border-right: 4px solid #000000;
+    }
+
+    &::after {
+      left: -4px;
+      border-left: 4px solid #000000;
+    }
+  }
+}
+
+.color-picker__custom__input {
+  width: 87px;
+  margin-right: 10px;
+}
+
+.color-picker__custom__prefix {
+  margin-right: 5px;
+  line-height: 24px;
+}
+
+.color-picker__color-circle,
+.color-picker__custom__preview {
+  height: 24px;
+  width: 24px;
+  border: 1px solid $color-border-light;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.color-picker__color-circle {
+  margin-right: 10px;
+  background-size: 8px;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: border-color 0.15s ease-in-out;
+  &:nth-child(5n) {
+    margin-right: 0;
+  }
+
+  &:hover {
+    cursor: pointer;
+    border-color: $color-border-dark;
+  }
+
+  &--dummy {
+    border: none;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.color-picker__custom__save-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  margin-left: 13px;
+}

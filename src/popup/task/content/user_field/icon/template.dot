@@ -1,0 +1,7 @@
+<div>
+  <div data-hook="initials-picture" class="profile-picture profile-picture--initials profile-picture--rounded {{=it.css.icon }}">
+    <div class="profile-picture__initials {{=it.css.initials}}" data-hook="initials"></div>
+  </div>
+
+  <img class="{{=it.css.userpic}}" alt="avatar" data-hook='image' />
+</div>

@@ -1,9 +1,10 @@
-const View = require('ampersand-view');
-const ShadowView = require('../shadow/shadow_view');
-const style = require('../../../../app/styles/button.css');
+import View from 'ampersand-view';
+import ShadowView from '../shadow/shadow_view';
+import style from '../../styles/button.text.css';
+import template from './button_view.hbs';
 
 const ContentView = View.extend({
-  template: require('./button_view.hbs'),
+  template,
 
   props: {
     hub: 'state',
@@ -47,4 +48,4 @@ const ButtonView = View.extend({
   },
 });
 
-module.exports = ButtonView;
+export default ButtonView;

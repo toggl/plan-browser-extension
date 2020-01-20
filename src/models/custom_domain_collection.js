@@ -1,9 +1,8 @@
-const RestCollection = require('ampersand-rest-collection');
-const CustomDomainModel = require('./custom_domain_model');
-const sync = require('../api/local_sync');
+import RestCollection from 'ampersand-rest-collection';
+import CustomDomainModel from './custom_domain_model';
+import sync from 'src/api/local_sync';
 
 const CustomDomainCollection = RestCollection.extend({
-
   model: CustomDomainModel,
   sync: sync('custom_domains'),
 
@@ -13,7 +12,7 @@ const CustomDomainCollection = RestCollection.extend({
         this.fetch();
       }
     });
-  }
+  },
 });
 
-module.exports = CustomDomainCollection;
+export default CustomDomainCollection;

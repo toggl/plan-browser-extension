@@ -1,4 +1,4 @@
-const State = require('ampersand-state');
+import State from 'ampersand-state';
 
 /**
  * State for storing OAuth client ID and secret
@@ -8,7 +8,7 @@ const OAuthState = State.extend({
     /** Client ID */
     id: 'string',
     /** Client secret */
-    secret: 'string'
+    secret: 'string',
   },
 
   derived: {
@@ -17,9 +17,9 @@ const OAuthState = State.extend({
       deps: ['id', 'secret'],
       fn() {
         return btoa(this.id + ':' + this.secret);
-      }
-    }
-  }
+      },
+    },
+  },
 });
 
-module.exports = OAuthState;
+export default OAuthState;

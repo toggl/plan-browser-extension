@@ -1,19 +1,20 @@
-const View = require('ampersand-view');
+import View from 'ampersand-view';
+import template from './loader_view.hbs';
 
 const LoaderView = View.extend({
-  template: require('./loader_view.hbs'),
+  template,
 
   props: {
     hub: 'object',
-    visible: 'boolean'
+    visible: 'boolean',
   },
 
   bindings: {
     visible: {
       type: 'booleanClass',
       yes: 'loader--visible',
-      no: 'loader--hidden'
-    }
+      no: 'loader--hidden',
+    },
   },
 
   initialize() {
@@ -32,7 +33,7 @@ const LoaderView = View.extend({
 
   hide() {
     this.visible = false;
-  }
+  },
 });
 
-module.exports = LoaderView;
+export default LoaderView;

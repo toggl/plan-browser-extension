@@ -1,0 +1,10 @@
+.button {
+}
+
+.button a {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: svg-load('./icon.svg');
+  background-size: 20px 20px;
+}

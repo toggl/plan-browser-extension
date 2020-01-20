@@ -1,11 +1,12 @@
-const View = require('ampersand-view');
+import View from 'ampersand-view';
+import template from './form_errors.hbs';
 
 const FormErrors = View.extend({
-  template: require('./form_errors.hbs'),
+  template,
 
   props: {
     errors: 'array',
-    isVisible: 'boolean'
+    isVisible: 'boolean',
   },
 
   derived: {
@@ -16,19 +17,19 @@ const FormErrors = View.extend({
           return null;
         }
         return this.errors.length > 0 ? this.errors[0] : null;
-      }
-    }
+      },
+    },
   },
 
   bindings: {
     firstError: {
-      type: 'text'
+      type: 'text',
     },
     isVisible: {
       type: 'booleanClass',
       yes: 'form-errors--visible',
-      no: 'form-errors--hidden'
-    }
+      no: 'form-errors--hidden',
+    },
   },
 
   render() {
@@ -43,7 +44,7 @@ const FormErrors = View.extend({
   clearErrors() {
     this.isVisible = false;
     this.errors = [];
-  }
+  },
 });
 
-module.exports = FormErrors;
+export default FormErrors;

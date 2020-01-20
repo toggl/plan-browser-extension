@@ -1,5 +1,5 @@
-const Model = require('ampersand-model');
-const storage = require('../utils/storage');
+import Model from 'ampersand-model';
+import * as storage from 'src/utils/storage';
 
 /** Model for storing OAuth access and refresh tokens in local storage */
 const TokensModel = Model.extend({
@@ -9,7 +9,7 @@ const TokensModel = Model.extend({
     /** Access token */
     access_token: 'string',
     /** Refresh token */
-    refresh_token: 'string'
+    refresh_token: 'string',
   },
 
   derived: {
@@ -18,8 +18,8 @@ const TokensModel = Model.extend({
       deps: ['access_token', 'refresh_token'],
       fn() {
         return this.access_token && this.refresh_token;
-      }
-    }
+      },
+    },
   },
 
   /**
@@ -54,7 +54,7 @@ const TokensModel = Model.extend({
         options.success();
       });
     }
-  }
+  },
 });
 
-module.exports = TokensModel;
+export default TokensModel;

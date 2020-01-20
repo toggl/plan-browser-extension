@@ -1,0 +1,24 @@
+.tw-label {
+  display: inline-block;
+  box-sizing: border-box;
+  height: 16px;
+  padding: 0 8px;
+  line-height: 16px;
+  border-radius: 100px;
+  background-color: $color-fill-light;
+  color: $color-new-gray;
+  font-weight: bold;
+  font-size: 11px;
+
+  @each $k, $v in $design-colors {
+    &--#{$k} {
+      background-color: rgba($v, 0.2);
+      color: $v;
+    }
+
+    &--#{$k}-dark {
+      background-color: $v;
+      color: white;
+    }
+  }
+}

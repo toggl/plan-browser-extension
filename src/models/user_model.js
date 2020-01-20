@@ -1,5 +1,5 @@
-const Model = require('ampersand-model');
-const sync = require('../api/api_sync');
+import Model from 'ampersand-model';
+import sync from '../api/api_sync';
 
 const UserModel = Model.extend({
   props: {
@@ -9,6 +9,8 @@ const UserModel = Model.extend({
     weight: 'number',
     picture_url: 'string',
     role: 'string',
+    initials: 'string',
+    membership_id: 'number',
   },
 
   sync,
@@ -19,4 +21,4 @@ const UserModel = Model.extend({
   },
 });
 
-module.exports = UserModel;
+export default UserModel;

@@ -1,5 +1,5 @@
-const OptionsView = require('./options_view.js');
-const api = require('../api/api');
+import OptionsView from './options_view.js';
+import * as api from '../api/api';
 
 function initialize() {
   return api.auth.load();

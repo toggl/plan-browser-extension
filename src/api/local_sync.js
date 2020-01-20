@@ -1,17 +1,16 @@
-const storage = require('../utils/storage');
-const find = require('lodash.find');
-const uuid = require('uuid');
+import * as storage from 'src/utils/storage';
+import find from 'lodash.find';
+import uuid from 'uuid';
 
-module.exports = function(namespace) {
+export default function(namespace) {
   const store = {
     get() {
       const items = {};
       items[namespace] = [];
 
-      return storage.get(items)
-        .then(function(data) {
-          return data[namespace];
-        });
+      return storage.get(items).then(function(data) {
+        return data[namespace];
+      });
     },
 
     set: models => {
@@ -29,10 +28,9 @@ module.exports = function(namespace) {
     },
 
     find(model) {
-      return this.get()
-        .then(models => {
-          return find(models, {id: model.id});
-        });
+      return this.get().then(models => {
+        return find(models, { id: model.id });
+      });
     },
 
     create(model) {
@@ -52,7 +50,7 @@ module.exports = function(namespace) {
       return this.get()
         .then(models => {
           const serialized = this.serialize(model);
-          const previous = find(models, {id: model.id});
+          const previous = find(models, { id: model.id });
           const index = models.indexOf(previous);
           models.splice(index, 1, serialized);
           return this.set(models);
@@ -61,14 +59,13 @@ module.exports = function(namespace) {
     },
 
     destroy(model) {
-      return this.get()
-        .then(models => {
-          const previous = find(models, {id: model.id});
-          const index = models.indexOf(previous);
-          models.splice(index, 1);
-          return this.set(models);
-        });
-    }
+      return this.get().then(models => {
+        const previous = find(models, { id: model.id });
+        const index = models.indexOf(previous);
+        models.splice(index, 1);
+        return this.set(models);
+      });
+    },
   };
 
   return function sync(method, model, options) {
@@ -91,4 +88,4 @@ module.exports = function(namespace) {
 
     return promise.then(options.success, options.error);
   };
-};
+}

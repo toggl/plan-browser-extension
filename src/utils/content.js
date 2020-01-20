@@ -1,8 +1,8 @@
-const HashMap = require('hashmap');
-const createObserver = require('./observer').create;
-const Button = require('../button/button');
+import HashMap from 'hashmap';
+import { create as createObserver } from './observer';
+import Button from '../button/button';
 
-exports.observe = function() {
+export const observe = function() {
   const args = Array.prototype.slice.call(arguments);
 
   if (typeof args[0] === 'string') {
@@ -30,29 +30,29 @@ exports.observe = function() {
   return observer;
 };
 
-exports.create = function(options) {
+export const create = function(options) {
   const button = new Button(options);
   return button;
 };
 
-exports.append = function(state, container) {
+export const append = function(state, container) {
   const el = state.button.render().el;
   container.appendChild(el);
 };
 
-exports.prepend = function(state, container) {
+export const prepend = function(state, container) {
   const el = state.button.render().el;
   container.insertBefore(el, container.firstChild);
 };
 
-exports.insert = function(state, previous) {
+export const insert = function(state, previous) {
   const el = state.button.render().el;
   const container = previous.parentNode;
   const next = previous.nextSibling;
   container.insertBefore(el, next);
 };
 
-exports.appendOrReplace = function(state, container) {
+export const appendOrReplace = function(state, container) {
   const previousEl = container.querySelector('.tw-button');
   const nextEl = state.button.render().el;
 
@@ -63,6 +63,6 @@ exports.appendOrReplace = function(state, container) {
   }
 };
 
-exports.remove = function(state) {
+export const remove = function(state) {
   state.remove();
 };

@@ -1,0 +1,39 @@
+.dynamic-input {
+  position: relative;
+  overflow: hidden;
+  min-width: 0.5em;
+
+  &--focus {
+    min-width: 1em;
+  }
+
+  .arrow {
+    margin: 0 5px;
+  }
+}
+
+.dynamic-input__input {
+  display: block;
+  box-sizing: border-box;
+  border: none;
+  background: transparent;
+  -webkit-appearance: none;
+  padding: 0;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 13px;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.dynamic-input__label {
+  visibility: hidden;
+  position: relative;
+  z-index: 0;
+}

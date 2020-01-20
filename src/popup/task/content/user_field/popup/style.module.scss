@@ -1,0 +1,39 @@
+.container {
+}
+
+.input {
+  padding: 3px 8px 0;
+  color: black;
+  border: none;
+  height: 32px;
+  font-size: 13px;
+  width: 200px;
+}
+
+.heading {
+  height: 32px;
+  font-size: 10px;
+  padding-left: 8px;
+}
+
+.add {
+  box-sizing: border-box;
+  width: 100%;
+  background: $color-new-link;
+  color: white;
+  height: 28px;
+  font-size: 13px;
+  padding: 0 8px;
+  margin-bottom: 8px;
+}
+
+.suggestions {
+  overflow-y: auto;
+  max-height: 191px;
+  padding-bottom: 8px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+}
