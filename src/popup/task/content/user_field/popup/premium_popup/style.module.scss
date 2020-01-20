@@ -1,0 +1,40 @@
+.container {
+  background-color: #ffffff;
+  width: 300px;
+  height: 255px;
+  padding: 40px 32px 32px;
+  border-radius: 2px;
+}
+
+.heading {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 20px;
+  margin-bottom: 8px;
+}
+
+.subheading {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  margin-bottom: 40px;
+}
+
+.button {
+  border-radius: 4px;
+  cursor: pointer;
+  height: 32px;
+  // font-weight: 600;
+  font-size: 13px;
+  line-height: 16px;
+  width: 100%;
+}
+
+.button-upgrade {
+  margin-bottom: 10px;
+}
+
+.button-cancel {
+  background: #e6e6e6;
+  color: #808080;
+}

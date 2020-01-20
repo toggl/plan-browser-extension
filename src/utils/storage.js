@@ -1,18 +1,18 @@
-const Promise = require('bluebird');
+import Promise from 'bluebird';
 
-exports.get = function(items) {
+export const get = function(items) {
   return new Promise(function(resolve) {
     chrome.storage.local.get(items, resolve);
   });
 };
 
-exports.set = function(items) {
+export const set = function(items) {
   return new Promise(function(resolve) {
     chrome.storage.local.set(items, resolve);
   });
 };
 
-exports.remove = function(items) {
+export const remove = function(items) {
   return new Promise(function(resolve) {
     chrome.storage.local.remove(items, resolve);
   });

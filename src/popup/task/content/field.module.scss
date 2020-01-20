@@ -1,0 +1,48 @@
+.container {
+  margin-top: 8px;
+}
+
+.label {
+  width: #{$task-form-input-label-width};
+  height: 32px;
+  padding-left: 9px;
+  font-size: 13px;
+}
+
+.icon {
+  margin-right: 25px;
+}
+
+.divider {
+  margin: 0 10px;
+}
+
+.input {
+  height: 32px;
+  border-radius: 2px;
+  border: 1px solid white;
+  font-size: 13px;
+  padding: 0 8px;
+  position: relative;
+  width: calc(100% - #{$task-form-input-label-width});
+
+  &:hover {
+    background: #f2f2f2;
+    border-color: #f2f2f2;
+  }
+}
+
+.input__placeholder {
+  color: $color-text-placeholder;
+}
+
+.readonly {
+  display: none;
+  background-image: svg-load('../../readonly.svg');
+  width: 10px;
+  height: 12px;
+  background-size: contain;
+  position: absolute;
+  top: 9px;
+  right: 11px;
+}

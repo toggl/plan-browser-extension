@@ -1,0 +1,10 @@
+.active-icon {
+  background-image: svg-load('./active-icon.svg');
+  width: 8.5px;
+  height: 7px;
+}
+
+.active {
+  background: #f2f2f2;
+  color: #0041ff !important;
+}

@@ -1,0 +1,4 @@
+<div class='account-field-popup__item account-field-popup__workspace' data-workspace='{{=it.model.id}}'>
+  <div class='row row--grow'>{{=it.model.name}}</div>
+  <div class='icon-svg {{=it.css['active-icon']}}' data-hook='active-icon'></div>
+</div>

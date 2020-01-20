@@ -1,5 +1,3 @@
-const TaskSourceCollection = require('../models/task_source_collection');
+import TaskSourceCollection from '../models/task_source_collection';
 
-module.exports = {
-  taskSources: new TaskSourceCollection()
-};
+export const taskSources = new TaskSourceCollection();

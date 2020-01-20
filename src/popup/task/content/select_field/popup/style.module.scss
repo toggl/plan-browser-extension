@@ -1,0 +1,56 @@
+.container {
+}
+
+.input,
+.tag {
+  background: #f2f2f2;
+  width: 100%;
+  height: 32px;
+  border: 1px solid #e6e6e6;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  font-size: 13px;
+}
+
+.tag {
+  padding: 0 8px;
+
+  &__label {
+    margin-right: 8px;
+  }
+
+  &__remove {
+    width: 15px;
+    background-size: contain;
+    margin-left: 8px;
+    background-image: svg-load('icon-cross.svg', fill=$color-new-gray);
+  }
+}
+
+.input {
+  padding: 6px 8px;
+  color: black;
+}
+
+.heading {
+  height: 32px;
+  font-size: 10px;
+  padding-left: 8px;
+}
+
+.add {
+  box-sizing: border-box;
+  width: 100%;
+  background: $color-new-link;
+  color: white;
+  height: 28px;
+  font-size: 13px;
+  padding: 0 8px;
+  margin-bottom: 8px;
+}
+
+.suggestions {
+  overflow-y: auto;
+  max-height: 191px;
+  padding-bottom: 8px;
+}

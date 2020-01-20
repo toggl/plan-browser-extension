@@ -1,0 +1,154 @@
+/*!
+ * Pikaday
+ * Copyright © 2014 David Bushell | BSD & MIT license | http://dbushell.com/
+ */
+
+.pika-single {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+  width: 370px;
+  padding: 15px;
+  font-weight: 600;
+  color: $color-text-light;
+}
+
+.pika-title {
+  position: relative;
+  text-align: center;
+  color: $color-link-new;
+}
+
+.pika-label {
+  display: inline-block;
+  *display: inline;
+  position: relative;
+  z-index: 9999;
+  overflow: hidden;
+  margin: 0;
+  padding: 0 3px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: bold;
+  background-color: #fff;
+}
+
+.pika-title select {
+  cursor: pointer;
+  position: absolute;
+  z-index: 9998;
+  margin: 0;
+  left: 0;
+  top: 5px;
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+
+.pika-prev,
+.pika-next {
+  display: block;
+  cursor: pointer;
+  position: relative;
+  outline: none;
+  border: 0;
+  padding: 0;
+  width: 20px;
+  height: 30px;
+  text-indent: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  background-color: transparent;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 75% 75%;
+  border-radius: 4px;
+  opacity: 0.3;
+  &:hover {
+    background-color: rgba($color-link-new, 0.3);
+  }
+}
+
+.pika-prev {
+  float: left;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAUklEQVR42u3VMQoAIBADQf8Pgj+OD9hG2CtONJB2ymQkKe0HbwAP0xucDiQWARITIDEBEnMgMQ8S8+AqBIl6kKgHiXqQqAeJepBo/z38J/U0uAHlaBkBl9I4GwAAAABJRU5ErkJggg==');
+}
+
+.pika-next {
+  float: right;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=');
+}
+
+.pika-prev.is-disabled,
+.pika-next.is-disabled {
+  cursor: default;
+  opacity: 0.2;
+}
+
+.pika-select {
+  display: inline-block;
+  *display: inline;
+}
+
+.pika-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 0;
+}
+
+.pika-table thead tr {
+  border-bottom: 1px solid $color-border-light;
+}
+
+.pika-table th,
+.pika-table td {
+  width: 14.285714285714286%;
+  padding: 0;
+}
+
+.pika-table th {
+  font-size: 14px;
+  text-align: center;
+  font-weight: 600;
+  padding: 15px 0;
+
+  abbr {
+    text-decoration: none;
+  }
+}
+
+.pika-table td {
+  padding: 6px;
+}
+
+.pika-button {
+  cursor: pointer;
+  display: block;
+  outline: none;
+  border: 0;
+  margin: 0;
+  width: 100%;
+  padding: 6px 5px;
+  font-size: 14px;
+  line-height: 15px;
+  text-align: center;
+  background: transparent;
+  color: $color-text-light;
+}
+
+.pika-button:hover,
+.is-selected .pika-button {
+  background: rgba($color-link-new, 0.1);
+  border-radius: 4px;
+  color: $color-link-new;
+}
+
+.is-selected .pika-button:hover {
+  background: rgba($color-link-new, 0.3);
+}
+
+.is-disabled .pika-button {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.3;
+}

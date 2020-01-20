@@ -1,37 +1,38 @@
-const View = require('ampersand-view');
-const permissions = require('../../utils/permissions');
-const services = require('./services.json');
+import View from 'ampersand-view';
+import * as permissions from '../../utils/permissions';
+import services from './services.json';
+import template from './item.hbs';
 
 const ItemView = View.extend({
-  template: require('./item.hbs'),
+  template,
 
   derived: {
     service: {
       deps: ['model.service'],
       fn() {
         return services[this.model.service];
-      }
-    }
+      },
+    },
   },
 
   bindings: {
     'model.domain': {
       type: 'text',
-      hook: 'domain'
+      hook: 'domain',
     },
-    'service': {
+    service: {
       type: 'text',
-      hook: 'service'
-    }
+      hook: 'service',
+    },
   },
 
   events: {
-    'click [data-hook=remove]': 'onRemove'
+    'click [data-hook=remove]': 'onRemove',
   },
 
   onRemove() {
     permissions.remove(this.model.domain).then(() => this.model.destroy());
-  }
+  },
 });
 
-module.exports = ItemView;
+export default ItemView;

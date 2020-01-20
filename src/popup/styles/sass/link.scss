@@ -1,0 +1,23 @@
+/*
+  Links.
+
+  .action - Indicates action link.
+
+  Styleguide 2.2
+*/
+.link {
+  text-decoration: none;
+
+  &.action {
+    color: $color-new-link;
+    &:hover { color: lighten($color-new-link, 5%); }
+  }
+
+  &.underlined {
+    text-decoration: underline;
+  }
+
+  &.success {
+    color: $color-new-success;
+  }
+}

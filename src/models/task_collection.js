@@ -1,7 +1,7 @@
-const RestCollection = require('ampersand-rest-collection');
-const TaskModel = require('./task_model');
-const config = require('../api/config');
-const sync = require('../api/api_sync');
+import RestCollection from 'ampersand-rest-collection';
+import TaskModel from './task_model';
+import config from '../api/config';
+import sync from '../api/api_sync';
 
 const TaskCollection = RestCollection.extend({
   model: TaskModel,
@@ -13,4 +13,4 @@ const TaskCollection = RestCollection.extend({
   sync,
 });
 
-module.exports = TaskCollection;
+export default TaskCollection;

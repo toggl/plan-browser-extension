@@ -1,0 +1,12 @@
+.task-form-estimate-field-container {
+  flex: 1;
+
+  &:hover .estimate-field__buttons {
+    display: flex;
+  }
+
+  .estimate-field {
+    padding-right: 10px;
+    width: 70px;
+  }
+}

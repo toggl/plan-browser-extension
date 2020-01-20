@@ -1,24 +1,25 @@
-const View = require('ampersand-view');
-const api = require('../api/api');
-const CustomDomainsView = require('./custom_domains/custom_domains');
+import View from 'ampersand-view';
+import * as api from '../api/api';
+import CustomDomainsView from './custom_domains/custom_domains';
+import template from './options_view.hbs';
 
 const OptionsView = View.extend({
-  template: require('./options_view.hbs'),
+  template,
 
   events: {
-    'click [data-hook=button-logout]': 'onLogout'
+    'click [data-hook=button-logout]': 'onLogout',
   },
 
   subviews: {
     domains: {
       hook: 'subview-domains',
-      constructor: CustomDomainsView
-    }
+      constructor: CustomDomainsView,
+    },
   },
 
   render() {
     this.renderWithTemplate({
-      isAuthenticated: api.auth.authenticated
+      isAuthenticated: api.auth.authenticated,
     });
 
     return this;
@@ -26,7 +27,7 @@ const OptionsView = View.extend({
 
   onLogout() {
     api.auth.revoke().then(() => this.render());
-  }
+  },
 });
 
-module.exports = OptionsView;
+export default OptionsView;

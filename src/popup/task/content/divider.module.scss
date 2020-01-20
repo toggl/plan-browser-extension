@@ -1,0 +1,10 @@
+.divider {
+  height: 1px;
+  background: $color-fill-medium;
+  margin-top: 32px;
+  margin-bottom: 32px;
+
+  // @media screen and (max-width: $task-form-small-desktop-breakpoint) {
+  //   margin: 0 40px;
+  // }
+}

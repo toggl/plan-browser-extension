@@ -1,3 +1,3 @@
-const AuthenticationState = require('../models/authentication_state');
+import AuthenticationState from 'src/models/authentication_state';
 
-exports.auth = new AuthenticationState();
+export const auth = new AuthenticationState();

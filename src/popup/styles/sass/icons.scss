@@ -1,0 +1,85 @@
+.icon-svg {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  content: '';
+  user-select: none;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  &.opaque {
+    opacity: 0.25;
+  }
+
+  &:after {
+    font-size: $font-small;
+  }
+
+  &--20,
+  &--small {
+    width: 20px;
+    height: 20px;
+  }
+
+  &--16 {
+    width: 16px;
+    height: 16px;
+  }
+
+  &--14,
+  &--tiny {
+    width: 14px;
+    height: 14px;
+  }
+
+  &--12 {
+    width: 12px;
+    height: 12px;
+  }
+
+  &--8 {
+    width: 8px;
+    height: 8px;
+  }
+
+  &--6 {
+    width: 6px;
+    height: 6px;
+  }
+
+  &--align-middle {
+    vertical-align: middle;
+  }
+
+  &--bg-contain {
+    background-size: contain;
+  }
+
+  &--bg-center {
+    background-position: center;
+  }
+
+  &--block {
+    display: block;
+  }
+
+  &--rotate-45 {
+    transform: rotate(45deg);
+  }
+
+  &--rotate-135 {
+    transform: rotate(135deg);
+  }
+
+  &--rotate-90 {
+    transform: rotate(90deg);
+  }
+
+  &--rotate-180 {
+    transform: rotate(180deg);
+  }
+
+  &--rotate-225 {
+    transform: rotate(225deg);
+  }
+}

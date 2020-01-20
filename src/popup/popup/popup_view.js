@@ -1,14 +1,15 @@
-const View = require('ampersand-view');
-const ViewSwitcher = require('ampersand-view-switcher');
-const api = require('../../api/api');
-const TaskView = require('../task/task_view');
-const AuthView = require('../auth/auth_view');
-const LoaderView = require('../loader/loader_view');
-const ErrorView = require('../error/error_view');
-const collections = require('../../models/collections');
+import View from 'ampersand-view';
+import ViewSwitcher from 'ampersand-view-switcher';
+import * as api from '../../api/api';
+import TaskView from '../task/task_view';
+import AuthView from '../auth/auth_view';
+import LoaderView from '../loader/loader_view';
+import ErrorView from '../error/error_view';
+import * as collections from 'src/models/collections';
+import template from './popup_view.dot';
 
 const PopupView = View.extend({
-  template: require('./popup_view.hbs'),
+  template,
 
   props: {
     hub: 'object',
@@ -91,4 +92,4 @@ const PopupView = View.extend({
   },
 });
 
-module.exports = PopupView;
+export default PopupView;

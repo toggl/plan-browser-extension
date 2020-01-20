@@ -1,0 +1,5 @@
+<div class="{{=it.css.tag}} row row--align-center pointer" data-hook="tag">
+  <span class="{{=it.css.tag__icon}}" data-hook='tag-icon'></span>
+  <span class="{{=it.css.tag__label}} overflow-ellipsis whitespace-nowrap" data-hook='tag-label'></span>
+  <span class="{{=it.css.tag__remove}} icon icon-svg icon-svg--8" data-hook='tag-remove'></span>
+</div>

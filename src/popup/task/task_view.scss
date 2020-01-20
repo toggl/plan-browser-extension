@@ -1,0 +1,142 @@
+.task-form {
+  position: relative;
+  transition: transform 0.15s ease-in-out;
+  border-radius: 2px;
+
+  .dynamic-input {
+    height: 32px;
+
+    &__input,
+    &__label {
+      cursor: pointer;
+      border-radius: 2px;
+      font-size: 13px;
+      padding: 0 8px;
+      height: 100%;
+
+      &:hover {
+        background: #f2f2f2;
+      }
+    }
+
+    .arrow {
+      display: none;
+    }
+  }
+
+  .estimate-field {
+    font-size: 13px;
+  }
+
+  .animated-checkbox {
+    background: white;
+  }
+
+  &__field-input-container {
+    width: calc(100% - #{$task-form-input-label-width});
+  }
+
+  .task-form__field-input-container--readonly:hover {
+    background: #f2f2f2;
+    border-color: #f2f2f2;
+    border-radius: 2px;
+
+    .task-form__readonly {
+      display: block;
+    }
+  }
+}
+
+[tabindex] {
+  outline: none;
+}
+
+[contenteditable='true']:empty:before {
+  content: attr(placeholder);
+  display: block; /* For Firefox */
+  color: $color-new-gray;
+  font-weight: 500;
+}
+
+.popup {
+  width: 100%;
+  line-height: initial;
+  -webkit-font-smoothing: initial;
+  font-size: 13px;
+}
+
+.popup,
+input,
+select {
+  font-family: 'Inter', sans-serif;
+}
+
+.popup__inner {
+  background: white;
+  padding: 16px #{$task-form-horizontal-padding};
+}
+
+.popup__title {
+  padding: 0 10px 16px;
+  font-size: 20px;
+}
+
+.auth-popup {
+  position: relative;
+}
+
+.popup__buttons {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px #{$task-form-horizontal-padding};
+  display: flex;
+  flex-direction: row-reverse;
+  background: #f8f8f8;
+  z-index: 100;
+}
+
+.popup__button {
+  margin-left: 10px;
+}
+
+.popup__copy {
+  margin: 3px;
+  padding: 12px;
+
+  background-color: #f8f8f8;
+  font-size: 14px;
+  color: #666;
+}
+
+.popup__account {
+  select {
+    padding: 6px;
+    margin-right: 20px;
+    box-sizing: border-box;
+
+    -webkit-appearance: none;
+    border-radius: 0;
+    border: none;
+    background-color: transparent;
+    font-size: 16px;
+    font-family: inherit;
+    background-color: #ebebeb;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.popup__content {
+  position: relative;
+  z-index: 1;
+
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+  }
+}

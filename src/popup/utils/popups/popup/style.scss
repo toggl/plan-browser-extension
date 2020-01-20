@@ -1,0 +1,116 @@
+/*
+  Popup.
+
+  .up - Triangle appears above popup.
+  .right - Triangle appears right of popup.
+  .down - Triangle appears below popup.
+  .left - Triangle appears left of popup.
+
+  Styleguide 7.3
+*/
+$row-height-tall: 54px;
+$row-height-medium: 48px;
+
+.xpopup {
+  position: fixed;
+  z-index: 200;
+  box-shadow: $popup-shadow;
+  background: white;
+
+  animation-duration: 0.08s;
+  animation-name: zoomIn;
+
+  .content {
+    // h1,
+    // h2,
+    // h3,
+    // h4 {
+    //   color: $color-success;
+    // }
+
+    position: relative;
+    z-index: 11;
+    background-color: white;
+
+    .color-selector-inline {
+      margin: 6px;
+    }
+  }
+
+  &.alert,
+  .alert {
+    border: 1px solid $color-border-alert;
+    .content {
+      background-color: $color-alert;
+      .row {
+        border-top: 1px solid $color-alert;
+      }
+    }
+  }
+
+  &--rounded,
+  &--rounded .content {
+    border-radius: 2px;
+  }
+
+  /*
+   * Arrows
+   */
+
+  .popup__arrow {
+    box-shadow: $popup-arrow-shadow;
+    content: '';
+    display: block;
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 2px;
+    background-color: white;
+    z-index: 10;
+    transform: rotate(45deg);
+  }
+  &.alert .popup__arrow {
+    background-color: $color-alert;
+  }
+  &.popup--onboard .popup__arrow {
+    background-color: black;
+  }
+  &.popup--action-arrow .popup__arrow {
+    background-color: $color-new-link;
+  }
+  &.popup--gray-arrow .popup__arrow {
+    background-color: $color-fill-light;
+  }
+
+  &.left .popup__arrow {
+    top: 50%;
+    left: 0;
+    margin-left: -5px;
+    margin-top: -7px;
+  }
+
+  &.up .popup__arrow {
+    top: 0;
+    left: 50%;
+    margin-top: -5px;
+    margin-left: -7px;
+  }
+
+  &.right .popup__arrow {
+    top: 50%;
+    right: 0;
+    margin-right: -5px;
+    margin-top: -7px;
+  }
+
+  &.down .popup__arrow {
+    bottom: 0;
+    left: 50%;
+    margin-bottom: -5px;
+    margin-left: -7px;
+  }
+
+  &.triangle-hide .popup__arrow {
+    display: none;
+  }
+}

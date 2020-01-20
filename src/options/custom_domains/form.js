@@ -1,21 +1,21 @@
-const View = require('ampersand-view');
-const permissions = require('../../utils/permissions');
-const services = require('./services.json');
+import View from 'ampersand-view';
+import * as permissions from '../../utils/permissions';
+import services from './services.json';
+import template from './form.hbs';
 
 const FormView = View.extend({
-
-  template: require('./form.hbs'),
+  template,
 
   props: {
-    error: 'string'
+    error: 'string',
   },
 
   events: {
-    'click [data-hook=create]': 'onCreate'
+    'click [data-hook=create]': 'onCreate',
   },
 
   render() {
-    this.renderWithTemplate({services});
+    this.renderWithTemplate({ services });
     return this;
   },
 
@@ -28,16 +28,18 @@ const FormView = View.extend({
       return;
     }
 
-    permissions.request(['tabs', 'webNavigation'], domain)
-      .then(() => this.collection.create({
-        domain,
-        service
-      }))
+    permissions
+      .request(['tabs', 'webNavigation'], domain)
+      .then(() =>
+        this.collection.create({
+          domain,
+          service,
+        })
+      )
       .then(() => this.render());
 
     this.error = null;
-  }
-
+  },
 });
 
-module.exports = FormView;
+export default FormView;

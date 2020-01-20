@@ -1,10 +1,11 @@
-const Promise = require('bluebird');
-const config = require('../api/config');
-const sync = require('../api/api_sync');
-const storage = require('./storage');
-const updateCustomColorsCss = require('./custom_colors_css');
-const find = require('lodash.find');
-const { triggerAchievementUseButton } = require('../api/stash');
+import Promise from 'bluebird';
+import config from 'src/api/config';
+import sync from 'src/api/api_sync';
+import * as storage from 'src/utils/storage';
+import find from 'lodash.find';
+import { triggerAchievementUseButton } from 'src/api/stash';
+import { presetColors } from 'src/models/color_collection';
+import accounts from 'src/models/account_collection';
 
 const fetch = () =>
   new Promise((resolve, reject) => {
@@ -17,7 +18,7 @@ const fetch = () =>
     sync('read', {}, opts);
   });
 
-module.exports = () =>
+export default () =>
   new Promise((resolve, reject) =>
     storage.get('me').then(({ me }) => {
       fetch()
@@ -25,7 +26,7 @@ module.exports = () =>
           data.workspaces = data.workspaces || data.accounts;
           data.workspaces = data.workspaces.filter(({ active }) => active);
           data.workspaces.forEach(w => {
-            w.customColors = w.custom_colors;
+            w.colors = [...presetColors, ...w.custom_colors];
             delete w.custom_colors;
           });
 
@@ -54,21 +55,20 @@ module.exports = () =>
     }, reject)
   );
 
-module.exports.set = data =>
+export const set = data =>
   new Promise((resolve, reject) =>
     storage.get('me').then(({ me }) => {
-      me = Object.assign({}, me, data);
+      me = { ...me, ...data };
       return storage.set({ me });
     }, reject)
   );
 
-module.exports.saveSelectedAccount = id =>
-  new Promise((resolve, reject) =>
-    storage.get('me').then(({ me }) => {
-      me.preferences.selected_account_id = id;
-      updateCustomColorsCss(id);
-      return storage.set({ me });
-    }, reject)
-  );
+export const saveSelectedAccount = async id => {
+  const { me } = await storage.get('me');
+  me.preferences.selected_account_id = id;
+  const account = accounts.get(id);
+  account.colors.updateRules();
+  return await storage.set({ me });
+};
 
-module.exports.clear = () => storage.remove('me');
+export const clear = () => storage.remove('me');

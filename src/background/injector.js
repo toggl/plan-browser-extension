@@ -1,5 +1,5 @@
-const CustomDomainCollection = require('../models/custom_domain_collection');
-const assets = require('./injected_assets.json');
+import CustomDomainCollection from 'src/models/custom_domain_collection';
+import assets from './injected_assets.json';
 
 const injector = {
   initialize() {
@@ -15,14 +15,14 @@ const injector = {
   },
 
   addNavigationListener(model) {
-    const listener = (details) => {
+    const listener = details => {
       this.injectTab(details.tabId, model.service);
     };
 
     this.listeners[model.id] = listener;
 
     chrome.webNavigation.onCompleted.addListener(listener, {
-      url: [{hostSuffix: model.domain}]
+      url: [{ hostSuffix: model.domain }],
     });
   },
 
@@ -34,13 +34,13 @@ const injector = {
 
   injectTab(tab, service) {
     assets[service].scripts.forEach(file => {
-      chrome.tabs.executeScript(tab, {file});
+      chrome.tabs.executeScript(tab, { file });
     });
 
     assets[service].styles.forEach(file => {
-      chrome.tabs.insertCSS(tab, {file});
+      chrome.tabs.insertCSS(tab, { file });
     });
-  }
+  },
 };
 
 injector.initialize();
