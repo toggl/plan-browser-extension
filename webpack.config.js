@@ -181,6 +181,7 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: 'src/images', to: 'images' },
       { from: 'src/manifest.json', to: 'manifest.json' },
+      { from: 'src/popup/fonts', to: 'fonts' },
     ]),
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en/),
     new webpack.ProvidePlugin({ $: 'jquery' }),
