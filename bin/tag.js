@@ -1,4 +1,4 @@
 #!/usr/bin/env node
 
-const manifest = require(__dirname + '/../app/manifest.chrome.json');
+const manifest = require(__dirname + '/../src/manifest.chrome.json');
 console.log(manifest.version);
