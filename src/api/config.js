@@ -1,5 +1,5 @@
 export default {
   api: {
-    host: 'https://teamweek.com',
+    host: 'https://plan.toggl.com',
   },
 };

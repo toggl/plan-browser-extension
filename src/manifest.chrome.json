@@ -1,19 +1,14 @@
 {
   "name": "Toggl Plan: Project Planning Calendar",
-  "version": "1.11.21",
+  "version": "2.0.2",
   "manifest_version": 2,
   "description": "Add tasks directly into Toggl Plan from your favourite web tools",
   "short_name": "Toggl Plan",
   "icons": {
     "80": "images/icon_80.png"
   },
-  "permissions": [
-    "storage",
-    "identity",
-    "contextMenus",
-    "https://teamweek.com/"
-  ],
-  "optional_permissions": ["http://*/", "https://*/", "tabs", "webNavigation"],
+  "permissions": ["storage", "identity", "contextMenus"],
+  "optional_permissions": ["tabs", "webNavigation"],
   "content_scripts": [
     {
       "matches": ["https://*.github.com/*"],

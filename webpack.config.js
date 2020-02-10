@@ -1,5 +1,6 @@
 'use strict';
 
+require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const join = p => path.join(__dirname, p);
@@ -20,6 +21,7 @@ const prd = false;
 
 const noop = () => {};
 const sourceMaps = prd ? 'cheap-module-eval-source-map' : false;
+const platform = process.env.IS_FIREFOX === 'true' ? 'firefox' : 'chrome';
 
 const miniCssExtractLoader = {
   loader: MiniCssExtractPlugin.loader,
@@ -180,7 +182,7 @@ module.exports = {
     new DashboardPlugin(),
     new CopyWebpackPlugin([
       { from: 'src/images', to: 'images' },
-      { from: 'src/manifest.json', to: 'manifest.json' },
+      { from: `src/manifest.${platform}.json`, to: 'manifest.json' },
       { from: 'src/popup/fonts', to: 'fonts' },
     ]),
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en/),
