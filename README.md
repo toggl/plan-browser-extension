@@ -1,4 +1,4 @@
-# Teamweek button
+# Toggl Plan extension
 
 ## Requirements
 
@@ -10,7 +10,7 @@ To build scripts and styles, run `npm run build`. To watch for changes in script
 
 ## Contributing
 
-If you want to help us with Teamweek Button by adding a new integration, follow these steps.
+If you want to help us with Toggl Plan extension by adding a new integration, follow these steps.
 
 ### Figure out where the button will go
 
