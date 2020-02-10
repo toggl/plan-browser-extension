@@ -13,7 +13,7 @@ const PremiumView = View.extend({
   },
 
   onSubmit() {
-    window.open('https://app.teamweek.com/#settings/billing', '_blank');
+    window.open('https://plan.toggl.com/#settings/billing', '_blank');
   },
 
   onCancel() {

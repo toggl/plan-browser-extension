@@ -196,6 +196,6 @@ export default View.extend({
   },
 
   onUpgrade() {
-    window.open('https://app.teamweek.com/#settings/billing', '_blank');
+    window.open('https://plan.toggl.com/#settings/billing', '_blank');
   },
 });

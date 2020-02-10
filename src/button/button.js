@@ -58,7 +58,7 @@ const ButtonState = State.extend({
   },
 
   handleTaskOpen(task, account) {
-    const url = `https://app.teamweek.com/#timeline/task/${account}/${task}`;
+    const url = `https://plan.toggl.com/#timeline/task/${account}/${task}`;
     window.open(url, '_blank');
   },
 
