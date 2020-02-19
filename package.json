@@ -97,7 +97,7 @@
     "webpack-dev-server": "^3.9.0"
   },
   "engines": {
-    "node": ">=11.0.0"
+    "node": ">=12.15.0"
   },
   "browserslist": [
     "last 2 Chrome versions",
@@ -109,7 +109,7 @@
     "build": "webpack",
     "tag": "/bin/bash bin/tag.sh",
     "release": "npm run build && mkdir -p tmp && rm -f tmp/tw-button.zip && cd build && zip -x *.DS_Store -r ../tmp/tw-button.zip .",
-    "source": "npm run buildclean && mkdir -p tmp && rm -f tmp/tw-button-source.zip && zip -x *.DS_Store -r tmp/tw-button-source.zip build src package.json README.md webpack.config.js",
+    "source": "npm run buildclean && mkdir -p tmp && rm -f tmp/tw-button-source.zip && zip -x *.DS_Store -r tmp/tw-button-source.zip build src package.json FIREFOX.md",
     "lint": "eslint src webpack.config.js --quiet --cache",
     "precommit": "npm run lint",
     "firefox": "cd build && web-ext run",
