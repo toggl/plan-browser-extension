@@ -108,11 +108,12 @@
     "dev": "webpack --watch",
     "build": "webpack",
     "tag": "/bin/bash bin/tag.sh",
-    "release": "npm run build && mkdir -p tmp && rm -f tmp/tw-button.zip && cd build && zip -x *.DS_Store -r ../tmp/tw-button.zip .",
-    "source": "npm run buildclean && mkdir -p tmp && rm -f tmp/tw-button-source.zip && zip -x *.DS_Store -r tmp/tw-button-source.zip build src package.json FIREFOX.md .nvmrc",
+    "chrome-release": "rm -rf build tmp && npm run build && mkdir -p tmp && cd build && zip -x *.DS_Store -r ../tmp/tw-button.zip .",
+    "firefox": "cd build && web-ext run",
+    "firefox-release": "IS_FIREFOX=true npm run chrome-release",
+    "firefox-source": "npm run buildclean && mkdir -p tmp && rm -f tmp/tw-button-source.zip && zip -x *.DS_Store -r tmp/tw-button-source.zip src .babelrc .env .eslintrc.json .nvmrc .prettierrc .stylelintrc.json FIREFOX.md package.json webpack.config.js",
     "lint": "eslint src webpack.config.js --quiet --cache",
     "precommit": "npm run lint",
-    "firefox": "cd build && web-ext run",
     "buildclean": "rm -rf app/scripts app/styles tmp"
   }
 }

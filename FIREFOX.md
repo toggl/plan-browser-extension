@@ -24,4 +24,4 @@ Install node modules:
 
     $ npm i
 
-Run `npm run release` to generate an archive in the local `tmp` directory.
+Run `npm run firefox-release` to generate an archive in the local `tmp` directory.
