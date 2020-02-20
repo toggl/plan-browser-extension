@@ -89,6 +89,7 @@
     "stylelint-scss": "^3.12.1",
     "tape": "^4.11.0",
     "terser-webpack-plugin": "^2.2.1",
+    "web-ext": "^4.0.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-dashboard": "^3.2.0",
@@ -96,7 +97,7 @@
     "webpack-dev-server": "^3.9.0"
   },
   "engines": {
-    "node": ">=11.0.0"
+    "node": ">=12.15.0"
   },
   "browserslist": [
     "last 2 Chrome versions",
@@ -107,11 +108,12 @@
     "dev": "webpack --watch",
     "build": "webpack",
     "tag": "/bin/bash bin/tag.sh",
-    "release": "npm run build && mkdir -p tmp && rm -f tmp/tw-button.zip && cd build && zip -x *.DS_Store -r ../tmp/tw-button.zip .",
-    "source": "npm run buildclean && mkdir -p tmp && rm -f tmp/tw-button-source.zip && zip -x *.DS_Store -r tmp/tw-button-source.zip build src package.json README.md webpack.config.js",
+    "chrome-release": "rm -rf build tmp && npm run build && mkdir -p tmp && cd build && zip -x *.DS_Store -r ../tmp/tw-button.zip .",
+    "firefox": "cd build && web-ext run",
+    "firefox-release": "IS_FIREFOX=true npm run chrome-release",
+    "firefox-source": "npm run buildclean && mkdir -p tmp && rm -f tmp/tw-button-source.zip && zip -x *.DS_Store -r tmp/tw-button-source.zip src .babelrc .env .eslintrc.json .nvmrc .prettierrc .stylelintrc.json FIREFOX.md package.json webpack.config.js",
     "lint": "eslint src webpack.config.js --quiet --cache",
     "precommit": "npm run lint",
-    "firefox": "cd build && web-ext run",
-    "buildclean": "rm -rf build"
+    "buildclean": "rm -rf app/scripts app/styles tmp"
   }
 }
