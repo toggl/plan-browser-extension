@@ -10,7 +10,9 @@ const buttons = new HashMap();
 
 function createObserver() {
   observer
-    .create('.Pane.PotListPage-detailsPane, .SingleTaskPane')
+    .create(
+      '.Pane.PotListPage-detailsPane, .SingleTaskPane, .SingleTaskPaneSpreadsheet'
+    )
     .onAdded(createButton)
     .onRemoved(removeButton)
     .start();
