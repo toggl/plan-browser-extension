@@ -40,7 +40,10 @@ function createButtonNew(node) {
       const name = titleEl.innerText;
       state.task.name = name;
 
-      const link = document.querySelector('[spacing="comfortable"] a').href;
+      let link = document.querySelector('[spacing="comfortable"] a').href;
+      link = ~link.indexOf('secure/BrowseProjects.jspa')
+        ? window.location.href
+        : link;
       state.task.notes = generateTaskNotes('JIRA', link);
       state.link = link;
 
@@ -79,7 +82,10 @@ function createButtonOld(node) {
       const name = titleEl.innerText;
       state.task.name = name;
 
-      const link = document.querySelector('#key-val, #issuekey-val a').href;
+      let link = document.querySelector('#key-val, #issuekey-val a').href;
+      link = ~link.indexOf('secure/BrowseProjects.jspa')
+        ? window.location.href
+        : link;
       state.task.notes = generateTaskNotes('JIRA', link);
       state.link = link;
 
