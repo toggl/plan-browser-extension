@@ -1,30 +1,62 @@
 import moment from 'moment';
-import twb from '../../utils/content';
+import * as twb from '../../utils/content';
 import '../global.less';
 import './gcalendar.less';
 
+const notTogglPseudoClass = ':not(.toggl-plan)';
+const popupDialogSelector = 'div[data-chips-dialog="true"]';
+const detailContainerSelector = 'div[data-is-create="false"]';
+const rootLevelSelectors = [
+  `${popupDialogSelector}`,
+  `${detailContainerSelector}${notTogglPseudoClass}`
+].join(',');
+
 twb.observe(
-  '.eb-root',
+  rootLevelSelectors,
   bubble => {
-    const title = bubble.querySelector('.eb-title').textContent;
-    const dates = parseRawDates(bubble.querySelector('.eb-date').textContent);
+    const isPopup = $(popupDialogSelector, bubble.parentElement).length > 0;
+    const isDetail = $(detailContainerSelector, bubble.parentElement).length > 0;
+
+
+    let $title, $date, title, date;
+
+    if (isPopup) {
+      $title = $('span[role="heading"', bubble);
+      title = $title ? $title.text().trim() : '';
+      $date = $title.parent().parent().find('div:last-child');
+      date = parseRawDates($date ? $date.text().trim() : '');
+    }
+
+    if (isDetail) {
+      $title = $('input[data-initial-value]', bubble);
+      title = $title ? $title.val().trim() : '';
+      date = {
+        start_date: moment($('input[aria-label="Start date"]').val().trim()) || new Date(),
+        end_date: moment($('input[aria-label="End date"]').val().trim()) || new Date(),
+        start_time: moment($('input[aria-label="Start time"]').val().trim()) || null,
+        end_time: moment($('input[aria-label="End time"]').val().trim()) || null,
+      }
+    }
+
+    console.log(date); // eslint-disable-line
 
     const button = twb.create({
-      task: { ...{ name: title }, ...dates },
+      task: { ...{ name: title }, ...date },
       anchor: 'screen',
     });
 
-    const container = bubble.querySelector('.eb-actions-right');
-    twb.prepend(button, container);
+    // const container = bubble.querySelector('.eb-actions-right');
+    // twb.prepend(button, container);
 
     return button;
   },
   button => {
-    twb.remove(button);
+    // twb.remove(button);
   }
 );
 
 const parseRawDates = raw => {
+  console.log(raw); // eslint-disable-line
   const parts = raw
     .split('–')
     .map(p => p.trim())
