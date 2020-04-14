@@ -1,6 +1,7 @@
-import twb from '../../utils/content';
 import '../global.less';
 import './zendesk.less';
+
+import * as twb from '../../utils/content';
 
 twb.observe(
   'section.ticket',
