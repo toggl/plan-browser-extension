@@ -1,6 +1,7 @@
-import twb from '../../utils/content';
 import '../global.less';
 import './tick.less';
+
+import * as twb from '../../utils/content';
 
 twb.observe(
   '#projects .task',

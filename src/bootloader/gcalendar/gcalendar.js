@@ -1,7 +1,9 @@
-import moment from 'moment';
-import twb from '../../utils/content';
 import '../global.less';
 import './gcalendar.less';
+
+import moment from 'moment';
+
+import * as twb from '../../utils/content';
 
 twb.observe(
   '.eb-root',
