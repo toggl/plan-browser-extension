@@ -9,21 +9,22 @@ const buttons = new HashMap();
 
 function createObserver() {
   observer
-    .create('.group-detail .row')
+    .create('.event-issue-header')
     .onAdded(createButton)
     .onRemoved(removeButton)
     .start();
 }
 
 function createButton(element) {
-  const containerElement = element.querySelector('h3 + div');
-  const preTitleElement = element.querySelector('h3 span > span:first-child');
-  const titleElement = element.querySelector('h3 + div > span:nth-child(2)');
+  const containerElement = element.querySelector('a > span > span:first-child');
+  const preTitleElement = element.querySelector('a > span > span:first-child');
+  const titleElement = element.querySelector('div:last-child');
+  const linkElement = element.querySelector('a');
 
   const preTitle = preTitleElement.innerText;
   const title = titleElement.innerText;
   const name = `${preTitle}: ${title}`;
-  const link = window.location.href;
+  const link = linkElement.href;
   const notes = generateTaskNotes('Sentry', link);
 
   const state = new ButtonState({
