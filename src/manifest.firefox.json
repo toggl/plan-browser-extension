@@ -73,6 +73,11 @@
       "matches": ["https://*.zendesk.com/*"],
       "js": ["zendesk.js"],
       "css": ["zendesk.css"]
+    },
+    {
+      "matches": ["https://*.sentry.io/organizations/*/issues/*"],
+      "js": ["sentry.js"],
+      "css": ["sentry.css"]
     }
   ],
   "web_accessible_resources": ["*.css", "fonts/*"],
