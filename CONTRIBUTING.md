@@ -90,6 +90,16 @@ You can run `npm run build` or `npm run watch` to compile extension code.
 
 Then you [load the extension into Chrome](https://developer.chrome.com/extensions/getstarted#unpacked).
 
+### Live Debugging
+
+To run the extension in your browser and get live updates:
+
+- Install `web-ext` globally using `npm i -g web-ext`.
+- Run `npm run watch` to rebuild the files on change.
+- Run `npm run firefox` or `npm run chrome` in a separate terminal window to load up the extension in a new instance of either Firefox or Chrome.
+
+The browser reloads the extension automatically when the built files have changed. In some instances, reloading the page where the extension is being tested might be necessary to get a full update.
+
 ### Pull request
 
 If everything works, make a pull request!

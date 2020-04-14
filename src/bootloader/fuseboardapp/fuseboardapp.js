@@ -1,6 +1,7 @@
-import twb from '../../utils/content';
 import '../global.less';
 import './fuseboardapp.less';
+
+import * as twb from '../../utils/content';
 
 /* Projects/Deals/Tickets list items */
 /* Project/Deal/Ticket task list items */

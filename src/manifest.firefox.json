@@ -1,6 +1,6 @@
 {
   "name": "Toggl Plan: Project Planning Calendar",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "manifest_version": 2,
   "author": "Toggl <support@toggl.com>",
   "description": "Add tasks directly into Toggl Plan from your favourite web tools",
@@ -79,6 +79,11 @@
       "matches": ["https://*.zendesk.com/*"],
       "js": ["zendesk.js"],
       "css": ["zendesk.css"]
+    },
+    {
+      "matches": ["https://*.sentry.io/organizations/*/issues/*"],
+      "js": ["sentry.js"],
+      "css": ["sentry.css"]
     }
   ],
   "web_accessible_resources": ["*.css", "fonts/*"],
