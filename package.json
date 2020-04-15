@@ -106,6 +106,7 @@
   "scripts": {
     "start": "webpack-dashboard -- npm run dev",
     "dev": "webpack --watch",
+    "firefox-dev": "IS_FIREFOX=true npm run dev",
     "build": "webpack",
     "tag": "/bin/bash bin/tag.sh",
     "chrome": "cd build && web-ext run -t chromium",
