@@ -198,32 +198,28 @@ module.exports = {
           canPrint: true,
         })
       : noop,
-    ...MAIN_PACKAGES.map(template => {
-      const usePlatformSpecific = fs.existsSync(
-        join(`src/${template}/${template}.${platform}.html`)
-      );
-      const filename = `${template}.html`;
-      const templateName = usePlatformSpecific
-        ? `${template}.${platform}.html`
-        : `${template}.html`;
-      const templatePath = join(`src/${template}/${templateName}`);
-
-      return new HtmlWebpackPlugin({
-        filename,
-        template: templatePath,
-        chunks: [template],
-        minify: prd
-          ? false
-          : {
-              collapseWhitespace: true,
-              removeComments: true,
-              removeRedundantAttributes: true,
-              removeScriptTypeAttributes: true,
-              removeStyleLinkTypeAttributes: true,
-              useShortDoctype: true,
-            },
-      });
-    }),
+    ...MAIN_PACKAGES.map(
+      template =>
+        new HtmlWebpackPlugin({
+          filename: `${template}.html`,
+          template: join(
+            `src/${template}/${
+              template === 'background' ? `${template}.${platform}` : template
+            }.html`
+          ),
+          chunks: [template],
+          minify: prd
+            ? false
+            : {
+                collapseWhitespace: true,
+                removeComments: true,
+                removeRedundantAttributes: true,
+                removeScriptTypeAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                useShortDoctype: true,
+              },
+        })
+    ),
   ],
 
   devtool: sourceMaps,
