@@ -202,7 +202,11 @@ module.exports = {
       template =>
         new HtmlWebpackPlugin({
           filename: `${template}.html`,
-          template: join(`src/${template}/${template}.html`),
+          template: join(
+            `src/${template}/${
+              template === 'background' ? `${template}.${platform}` : template
+            }.html`
+          ),
           chunks: [template],
           minify: prd
             ? false

@@ -86,7 +86,7 @@ In case you notice the button doesn't quite fit the container you can define a s
 
 ### Test the integration
 
-You can run `npm run build` or `npm run watch` to compile extension code.
+You can run `npm run build` or `npm run dev` to compile extension code.
 
 Then you [load the extension into Chrome](https://developer.chrome.com/extensions/getstarted#unpacked).
 
