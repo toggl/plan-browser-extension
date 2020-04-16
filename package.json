@@ -113,7 +113,7 @@
     "chrome-release": "rm -rf build tmp && npm run build && mkdir -p tmp && cd build && zip -x *.DS_Store -r ../tmp/tw-button.zip .",
     "firefox": "cd build && web-ext run -t firefox-desktop",
     "firefox-release": "IS_FIREFOX=true npm run chrome-release",
-    "firefox-source": "npm run buildclean && mkdir -p tmp && rm -f tmp/tw-button-source.zip && zip -x *.DS_Store -r tmp/tw-button-source.zip src .babelrc .env .eslintrc.json .nvmrc .prettierrc .stylelintrc.json FIREFOX.md package.json webpack.config.js",
+    "firefox-source": "npm run buildclean && mkdir -p tmp && rm -f tmp/tw-button-source.zip && zip -x *.DS_Store -r tmp/tw-button-source.zip src .babelrc .env .eslintrc.json .nvmrc .prettierrc .stylelintrc.json FIREFOX.md package.json package-lock.json webpack.config.js",
     "lint": "eslint src webpack.config.js --quiet --cache",
     "precommit": "npm run lint",
     "buildclean": "rm -rf app/scripts app/styles tmp"
