@@ -1,6 +1,7 @@
-import twb from '../../utils/content';
 import '../global.less';
 import './bitrix24.less';
+
+import * as twb from '../../utils/content';
 
 twb.observe(
   '.task-gantt-item',
