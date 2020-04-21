@@ -2,6 +2,7 @@ import difference from 'lodash.difference';
 
 function Observer(selector, element) {
   this.selector = selector;
+  this.attr = null;
   this.element = element ? element : document;
   this.mutationHandlers = [];
   this.seenElements = [];
@@ -10,7 +11,17 @@ function Observer(selector, element) {
   this.observer = new MutationObserver(onMutation);
 }
 
-Observer.prototype.onMutation = function() {
+Observer.prototype.onMutation = function(mutations) {
+  const lastMutation = mutations && mutations.pop();
+  if (
+    this.attr &&
+    lastMutation &&
+    lastMutation.type === 'attributes' &&
+    lastMutation.attributeName !== this.attr
+  ) {
+    return;
+  }
+
   const oldSeenElements = this.seenElements;
   const newSeenElements = this.findMatchingElements();
 
@@ -42,8 +53,21 @@ Observer.prototype.onRemoved = function(callback) {
   return this;
 };
 
+Observer.prototype.onAttributeChanged = function(attributeName, callback) {
+  this.attr = attributeName;
+  this.mutationHandlers.push(function(oldEls) {
+    oldEls.forEach(callback);
+  });
+
+  return this;
+};
+
 Observer.prototype.start = function() {
-  this.observer.observe(this.element, { childList: true, subtree: true });
+  this.observer.observe(this.element, {
+    attributes: typeof this.attr === 'string',
+    childList: true,
+    subtree: true,
+  });
   this.onMutation();
 
   return this;
