@@ -1,4 +1,3 @@
-import moment from 'moment';
 import * as twb from '../../utils/content';
 import '../global.less';
 import './gcalendar.less';
@@ -57,30 +56,10 @@ twb.observe(
       $title = $('input[data-initial-value]', bubble);
       title = $title ? $title.val().trim() : '';
       date = {
-        start_date:
-          moment(
-            $('input[aria-label="Start date"]')
-              .val()
-              .trim()
-          ) || new Date(),
-        end_date:
-          moment(
-            $('input[aria-label="End date"]')
-              .val()
-              .trim()
-          ) || new Date(),
-        start_time:
-          moment(
-            $('input[aria-label="Start time"]')
-              .val()
-              .trim()
-          ) || null,
-        end_time:
-          moment(
-            $('input[aria-label="End time"]')
-              .val()
-              .trim()
-          ) || null,
+        start_date: $('input[aria-label="Start date"]').val().trim(),
+        end_date: $('input[aria-label="End date"]').val().trim(),
+        start_time: $('input[aria-label="Start time"]').val().trim(),
+        end_time: $('input[aria-label="End time"]').val().trim()
       };
     }
 
@@ -89,8 +68,8 @@ twb.observe(
       anchor: 'screen',
     });
 
-    // const container = bubble.querySelector('.eb-actions-right');
-    // twb.prepend(button, container);
+    const container = $('[aria-label]:last-child', bubble).parent().next()[0];
+    twb.append(button, container);
 
     return button;
   },
@@ -100,39 +79,68 @@ twb.observe(
   'style'
 );
 
+const dddd = /(day|\d{4})$/
+const dd = /^\d{1,2}(?!:)/
+const mmdd = /^.{3,7} \d{1,2}(?!:)/
+const yyyy = /\d{4}$/
+const hh = /^\d{1,2}:/
+const ampm = /(a|p)m$/
+
 const parseRawDates = raw => {
   const parts = raw
     .split(',')
-    .filter(p => !p.match(/(day|\d{4})$/))
+    .filter(p => !p.match(dddd)) // Remove day of the week
     .join(',')
     .split('–')
     .join('⋅')
     .split('⋅')
     .map(p => p.trim())
-    .reduce(parsePart, '')
+    .map(parsePart)
 
-  return {
+  if (parts.length === 3) {
+    parts.shift()
+  }
+
+  if (parts.length === 1) {
+    parts.push(parts[0])
+  }
+
+  return parts.reduce((range, part, i) => {
+    const dateTime = part.split(year).filter(p => p.length > 0)
+    const key = i === 0 ? 'start' : 'end'
+    range[`${key}_date`] = `${dateTime[0]}${year}`;
+    range[`${key}_time`] = dateTime.length > 1 ? dateTime[1].replace(',', '').trim() : null;
+    return range;
+  }, {
     start_date: new Date(),
     end_date: new Date(),
     start_time: null,
     end_time: null,
-  };
+  })
 };
 
-const parsePart = (dateString, part, i, parts) => {
+const parsePart = (part, i, parts) => {
   // Add month
-  if (part.match(/^\d{1,2}(?!:)/) && i === 1) {
+  if (dd.test(part) && i === 1) {
     part = `${parts[0].split(' ')[0]} ${part}`;
   }
+
   // Add year
-  if (part.match(/^.{3,7} \d{1,2}(?!:)$/)) {
-    part = `${part}, ${year}`
-  }
+  part = part.replace(mmdd, `\$&, ${year}\$\``);
+
   // Add previous date
-  if (part.match(/^\d{1,2}:/) && i > 0) {
-    const day = parts[0]
-    const date = day.match(/\d{4}$/) ? day : `${day}, ${year}`
-    part = `${date}, ${part}`
+  if (hh.test(part) && i > 0) {
+    const day = parts[0];
+    const date = yyyy.test(day) ? day : `${day}, ${year}`;
+    let pp = ''
+
+    // Add am/pm
+    if (!ampm.test(part) && parts.length > 2) {
+      pp = parts[2].match(ampm)[0];
+    }
+
+    part = `${date}, ${part}${pp}`;
   }
-  console.log(part); // eslint-disable-line
+
+  return part;
 };
