@@ -129,6 +129,7 @@ _params.anchor_ - Either `'screen'` to show the popup in the center of the scree
 Create a new button. Return value of this function is then used when calling other functions on the `twb` object.
 
 **twb.append(button, element)**
+**twb.appendOrReplace(button, element)**
 **twb.prepend(button, element)**
 
 Append or prepend the button to the element.
