@@ -2,7 +2,7 @@ import * as twb from '../../utils/content';
 import '../global.less';
 import './gcalendar.less';
 
-const notTogglPseudoClass = ':not(.toggl-plan)';
+const notTogglPseudoClass = ':not(.tw-button)';
 const popupDialogSelector = 'div[data-chips-dialog="true"]';
 const detailContainerSelector = 'div[data-is-create="false"]';
 const rootLevelSelectors = [
@@ -10,7 +10,7 @@ const rootLevelSelectors = [
   `${detailContainerSelector}${notTogglPseudoClass}`,
 ].join(',');
 
-let year = new Date().getFullYear()
+let year = new Date().getFullYear();
 
 twb.observe(
   rootLevelSelectors,
@@ -19,11 +19,12 @@ twb.observe(
     const isDetail =
       $(detailContainerSelector, bubble.parentElement).length > 0;
 
-    let $title, $date, title, date;
+    let $title, $date, title, date, container;
     const yearFromURL = window.location.href.match(/\d{4}/)
     year = yearFromURL ? yearFromURL[0] : year
 
     if (isPopup) {
+      container = $('[aria-label]:last-child', bubble).parent().next()[0];
       $title = $('span[role="heading"', bubble);
       title = $title ? $title.text().trim() : '';
 
@@ -53,13 +54,20 @@ twb.observe(
     }
 
     if (isDetail) {
+      container = $('[aria-label="Save"]', bubble).next()[0];
       $title = $('input[data-initial-value]', bubble);
       title = $title ? $title.val().trim() : '';
+
+      const start_date = $('input[aria-label="Start date"]').val().trim();
+      const end_date = $('input[aria-label="End date"]').val().trim();
+      const start_time = $('input[aria-label="Start time"]').val().trim();
+      const end_time = $('input[aria-label="End time"]').val().trim();
+
       date = {
-        start_date: $('input[aria-label="Start date"]').val().trim(),
-        end_date: $('input[aria-label="End date"]').val().trim(),
-        start_time: $('input[aria-label="Start time"]').val().trim(),
-        end_time: $('input[aria-label="End time"]').val().trim()
+        start_date,
+        end_date,
+        start_time: start_date === end_date && start_time === '12:00am' && end_time === '12:00am' ? null : start_time,
+        end_time: start_date === end_date && start_time === '12:00am' && end_time === '12:00am' ? null : end_time
       };
     }
 
@@ -68,10 +76,19 @@ twb.observe(
       anchor: 'screen',
     });
 
-    const container = $('[aria-label]:last-child', bubble).parent().next()[0];
-    twb.append(button, container);
+    if (container.querySelector('.tw-button')) {
+      return button;
+    }
 
-    return button;
+    if (isPopup) {
+      twb.append(button, container);
+      return button;
+    }
+
+    if (isDetail) {
+      twb.append(button, container);
+      return button;
+    }
   },
   button => {
     twb.remove(button);
