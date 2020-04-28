@@ -13,6 +13,7 @@ export const observe = function() {
   const selector = args[1];
   const setup = args[2];
   const teardown = args[3];
+  const attributeName = args.length === 5 ? args[4] : null
 
   const values = new HashMap();
 
@@ -25,8 +26,15 @@ export const observe = function() {
       const value = values.get(element);
       teardown(value);
     })
-    .start();
 
+  if (typeof attributeName === 'string') {
+    observer.onAttributeChanged(attributeName, function(element) {
+      const value = setup(element);
+      values.set(element, value);
+    })
+  }
+
+  observer.start()
   return observer;
 };
 
