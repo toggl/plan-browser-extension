@@ -1,0 +1,3 @@
+<div class="{{=it.css.tag}} row p:items-center p:cursor-pointer bg" data-hook="tag">
+  <span class="{{=it.css.tag__label}} p:truncate" data-hook='tag-label'></span>
+</div>

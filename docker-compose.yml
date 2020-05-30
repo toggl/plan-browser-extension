@@ -1,9 +1,0 @@
-version: '2'
-
-services:
-  button:
-    container_name: teamweek_button
-    build: ./
-    volumes:
-      - ./tmp:/opt/tmp
-    command: /bin/bash -c "cp -f /opt/button/tmp/* /opt/tmp"

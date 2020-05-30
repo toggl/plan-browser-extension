@@ -1,0 +1,8 @@
+<div class="{{=it.css.tag}} row p:items-center p:cursor-pointer bg" data-hook="tag" data-tag-edit>
+  <span class="{{=it.css.tag__label}} p:truncate" data-hook='tag-label'></span>
+  <span class="js-disable-edit-click" data-hook='tag-remove'>
+    <svg width="8" height="8" xmlns="http://www.w3.org/2000/svg" class="js-disable-edit-click">
+      <path d="M6.4 0L4 2.4 1.6 0 0 1.6 2.4 4 0 6.4 1.6 8 4 5.6 6.4 8 8 6.4 5.6 4 8 1.6z" opacity="0.5" data-hook="tag-remove-icon-svg-path" class="js-disable-edit-click" />
+    </svg>
+  </span>
+</div>

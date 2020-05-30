@@ -1,0 +1,13 @@
+<div class='{{=it.css.container}}'>
+  <div class='row p:items-center p:justify-between p:pb-4 font-xxsmall'>
+    <div class='text--color-new-gray'>EDIT TAG</div>
+
+    <div class='text--color-new-danger p:cursor-pointer' data-hook='delete'>DELETE</div>
+  </div>
+
+  <div class='p:pb-4'>
+    <input type='text' class='input p:flex input--overflow input--text-dark input--placeholder-light title row--bg-light {{=it.css.input}}' placeholder='Enter tag name...' value="{{=it.tag.name}}" />
+  </div>
+
+  <div data-hook='color-picker'></div>
+</div>

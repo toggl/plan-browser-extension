@@ -1,0 +1,20 @@
+<div class="{{=it.css.container}}">
+  <div data-hook="tags" class="{{=it.css.tags}}">
+    <!-- tags -->
+    <input
+      class="{{=it.css.input}} input input--block"
+      type="text"
+      autocomplete="off"
+      name="search_name"
+      data-hook="input"
+      placeholder="Select or Add"
+      tabindex="{{=it.parent.tabIndex}}" />
+  </div>
+
+  <div data-hook="suggestions" class="{{=it.css.suggestions}}">
+    <div class="{{=it.css.heading}} text--color-new-gray row p:items-center" data-hook='heading'></div>
+    <div data-hook="suggestions-list" class="{{=it.css['suggestions-list']}}"></div>
+  </div>
+
+  <div class="{{=it.css.add}} row p:items-center" data-hook="add">Click to create <span data-hook='new-tag' class="{{=it.css['add-new-tag']}} bg"></span></div>
+</div>

@@ -1,0 +1,10 @@
+@import '~modules/task_form/field.module';
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.heightauto {
+  height: auto !important;
+}

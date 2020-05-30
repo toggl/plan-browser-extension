@@ -5,6 +5,7 @@ import StatusField from './status_field';
 import ProjectField from './project_field';
 import SegmentField from './segment_field';
 import UserField from './user_field';
+import TagsField from './tags_field';
 import DateField from './date_field';
 import EstimateField from './estimate_field';
 import TimeField from './time_field';
@@ -76,6 +77,17 @@ const TaskView = View.extend({
       hook: 'user-select',
       prepareView() {
         return new UserField({
+          isEditable: this.enableEdit,
+          task: this.task,
+          workspace: this.workspace,
+          parent: this,
+        });
+      },
+    },
+    tags: {
+      hook: 'tags-select',
+      prepareView() {
+        return new TagsField({
           isEditable: this.enableEdit,
           task: this.task,
           workspace: this.workspace,

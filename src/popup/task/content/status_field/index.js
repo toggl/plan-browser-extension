@@ -1,45 +1,42 @@
-import View from '../select_field_popup';
-import Popup from './popup';
 import hub from 'src/popup/utils/hub';
-import template from './template.dot';
+import View from '../select_field_popup';
+
+import Popup from './popup';
 import css from './style.module.scss';
-import './style.scss';
+import template from './template.dot';
 
 export default View.extend({
   template,
   css,
 
   props: {
-    task: 'state',
+    task: ['state', true],
     show: 'boolean',
     disabled: 'boolean',
+    isPublic: 'boolean',
+    isOwner: 'boolean',
+  },
+
+  session: {
+    isLoading: ['boolean', false, true],
   },
 
   derived: {
-    statusLabel: {
-      deps: ['task.done'],
-      fn() {
-        return this.task.done ? 'Done' : 'In Progress';
-      },
-    },
     canToggle: {
-      deps: ['disabled'],
+      deps: ['isPublic', 'disabled', 'isOwner'],
       fn() {
-        return !this.disabled;
+        return !this.isPublic && (!this.disabled || this.isOwner);
       },
     },
   },
 
   bindings: {
-    statusLabel: {
+    'task.fullStatusLabel': {
       type: 'text',
       hook: 'input-label',
     },
-    'task.done': {
-      type: 'booleanClass',
-      hook: 'input-label',
-      yes: css.done,
-      no: css.undone,
+    show: {
+      type: 'toggle',
     },
     canToggle: {
       type: 'booleanClass',
@@ -49,7 +46,6 @@ export default View.extend({
   },
 
   events: {
-    // 'click [data-hook=input]': 'startEditing',
     'focus [data-hook=input]': 'startEditing',
     'keydown [data-hook=input]': 'onKeyDown',
   },
@@ -68,7 +64,7 @@ export default View.extend({
     );
 
     hub.trigger('popups:show', {
-      name: 'status-dropdown-popup',
+      name: 'task-form-select-field-popup',
       content: this.popup,
       direction: 'up',
       modifiers: ['rounded'],
@@ -78,7 +74,7 @@ export default View.extend({
         transparent: true,
       },
       positioning: {
-        anchor: this.queryByHook('input'),
+        anchor: $(this.queryByHook('input')),
         position: 'center',
         alignments: ['top', 'bottom'],
       },
@@ -86,7 +82,7 @@ export default View.extend({
   },
 
   onKeyDown(event) {
-    const otherStatus = this.popup.queryByHook('other-status');
+    const otherStatus = this.popup?.queryByHook('other-status');
 
     switch (event.keyCode || event.which) {
       case 9:
@@ -99,15 +95,15 @@ export default View.extend({
         break;
       case 38:
         event.preventDefault();
-        otherStatus.classList.add('active');
+        otherStatus?.classList.add('active');
         break;
       case 40:
         event.preventDefault();
-        otherStatus.classList.add('active');
+        otherStatus?.classList.add('active');
         break;
       case 13:
         event.stopPropagation();
-        this.popup.toggleDone();
+        this.popup?.toggleDone();
         break;
     }
   },

@@ -7,6 +7,7 @@
   <div data-hook="project-select"></div>
   <div data-hook="segment-select"></div>
   <div data-hook="user-select"></div>
+  <div data-hook="tags-field"></div>
   <div data-hook="date-input"></div>
   <div data-hook="estimate-input"></div>
   <div data-hook="time-input"></div>

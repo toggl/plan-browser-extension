@@ -1,0 +1,30 @@
+.container {
+  height: 28px;
+  font-size: 13px;
+  padding: 0 8px;
+  justify-content: space-between;
+
+  &:hover {
+    background: var(--color-contrast-2);
+
+    .edit-icon {
+      display: flex;
+    }
+  }
+}
+
+.label {
+  box-sizing: border-box;
+  word-wrap: break-word;
+  font-size: 13px;
+  height: 20px;
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
+  border-radius: $radius-tiny;
+}
+
+.edit-icon {
+  flex-shrink: 0;
+  display: none;
+}

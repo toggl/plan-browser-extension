@@ -1,0 +1,12 @@
+.tag {
+  margin: 3px 6px 3px 0;
+  height: 20px;
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
+  border-radius: $radius-tiny;
+
+  &__label {
+    flex: 1;
+  }
+}

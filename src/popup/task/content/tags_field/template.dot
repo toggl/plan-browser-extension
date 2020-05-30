@@ -1,0 +1,16 @@
+<div class="{{=it.css.container}} row">
+  <div class="{{=it.css.label}} text--color-new-gray row p:items-center">
+    <span class="{{=it.css.icon}} icon icon-svg icon-svg--14" data-hook="heading-icon">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14.7375 8.2625L7.7375 1.2625C7.5625 1.0875 7.3875 1 7.125 1H1.875C1.35 1 1 1.35 1 1.875V7.125C1 7.3875 1.0875 7.5625 1.2625 7.7375L8.2625 14.7375C8.4375 14.9125 8.6125 15 8.875 15C9.1375 15 9.3125 14.9125 9.4875 14.7375L14.7375 9.4875C15.0875 9.1375 15.0875 8.6125 14.7375 8.2625ZM4.5 5.375C3.975 5.375 3.625 5.025 3.625 4.5C3.625 3.975 3.975 3.625 4.5 3.625C5.025 3.625 5.375 3.975 5.375 4.5C5.375 5.025 5.025 5.375 4.5 5.375Z" fill="#A6A6A6"/>
+      </svg>
+    </span>
+    <span data-hook="heading-label"></span>
+  </div>
+
+  <div data-hook="input" class="{{=it.css.input}} {{=it.css.heightauto}} row p:items-center p:cursor-pointer task-form__field-input-container" tabindex="{{=it.tabIndex}}">
+    <span class="{{=it.css.input__label}} {{=it.css.input__placeholder}}" data-hook='input-placeholder'>Select or Add</span>
+    <div data-hook="tags" class="{{=it.css.tags}} row p:flex-grow p:items-center font-small"></div>
+    <span class="task-form__readonly {{=it.css.readonly}} icon-svg"></span>
+  </div>
+</div>
