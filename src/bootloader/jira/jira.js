@@ -31,8 +31,7 @@ function createButtonNew(node) {
   });
 
   let buttonEl;
-  const actionsElSelector =
-    '[spacing="comfortable"] > div > div > div:nth-child(2)';
+  const actionsElSelector = '#jira-issue-header ';
 
   const titleObserver = observer
     .create('[spacing="comfortable"] h1', node)
@@ -50,7 +49,8 @@ function createButtonNew(node) {
       buttonEl = state.button.render().el;
       const actionsEl = node.querySelector(actionsElSelector);
       if (actionsEl) {
-        actionsEl.appendChild(buttonEl);
+        const childEl = actionsEl.parentNode.childNodes[2];
+        if (childEl) actionsEl.appendChild(childEl);
       }
     })
     .start();
