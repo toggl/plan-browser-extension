@@ -47,11 +47,6 @@ function createButtonNew(node) {
       state.link = link;
 
       buttonEl = state.button.render().el;
-      const actionsEl = node.querySelector(actionsElSelector);
-      if (actionsEl) {
-        const childEl = actionsEl.parentNode.childNodes[2];
-        if (childEl) actionsEl.appendChild(childEl);
-      }
     })
     .start();
 
