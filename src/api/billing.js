@@ -19,7 +19,7 @@ export async function getIsPremium(workspace) {
         `/deadwood/v1/${workspace.id}/subscription`
       );
       const plan = plans[plan_id];
-      return !!plan ? plan.member_limit > 5 : false;
+      return !!plan && plan.member_limit > 5;
     }
   }
 }
