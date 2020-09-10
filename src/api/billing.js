@@ -1,4 +1,5 @@
 import _ from 'lodash';
+
 import xhr from './xhr';
 
 export async function getIsPremium(workspace) {
@@ -18,7 +19,7 @@ export async function getIsPremium(workspace) {
         `/deadwood/v1/${workspace.id}/subscription`
       );
       const plan = plans[plan_id];
-      return plan.member_limit > 5;
+      return !!plan ? plan.member_limit > 5 : false;
     }
   }
 }
