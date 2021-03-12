@@ -1,5 +1,5 @@
 export default {
   api: {
-    host: 'https://plan.toggl.com',
+    host: 'https://api.plan.toggl.com',
   },
 };
