@@ -7,7 +7,7 @@ const TaskCollection = RestCollection.extend({
   model: TaskModel,
 
   url() {
-    return config.api.host + '/api/v5/' + this.parent.id + '/tasks';
+    return config.api.host + '/api/v6-rc1/' + this.parent.id + '/tasks';
   },
 
   sync,

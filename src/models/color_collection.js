@@ -241,7 +241,7 @@ export default Collection.extend({
     const color = this.get(this.getIdFromHex(hex));
     return color && color.isCustom
       ? Promise.resolve(color)
-      : xhr('post', `/api/v4/${this.parent.id}/custom_colors`, { hex }).then(
+      : xhr('post', `/api/v6-rc1/${this.parent.id}/custom_colors`, { hex }).then(
           data => {
             this.add(data, { merge: true });
             return this.get(this.getIdFromHex(hex));

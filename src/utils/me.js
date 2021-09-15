@@ -10,7 +10,7 @@ import accounts from 'src/models/account_collection';
 const fetch = () =>
   new Promise((resolve, reject) => {
     const opts = {
-      url: `${config.api.host}/api/v4/me`,
+      url: `${config.api.host}/api/v6-rc1/me`,
       error: reject,
       success: resolve,
     };

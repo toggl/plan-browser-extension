@@ -76,7 +76,7 @@ const AuthenticationState = State.extend({
     return new Promise((resolve, reject) => {
       // Create a request that will return access and refresh tokens
       request
-        .post(config.api.host + '/api/v5/authenticate/token')
+        .post(config.api.host + '/api/v6-rc1/authenticate/token')
         // Use base64'd client ID and secret for authorization
         .set('Authorization', 'Basic ' + this.oauth.token)
         // Send credentials in form data
@@ -119,7 +119,7 @@ const AuthenticationState = State.extend({
       this.refresh_promise = new Promise((resolve, reject) => {
         // Create a request that will fetch new tokens
         request
-          .post(config.api.host + '/api/v4/authenticate/token')
+          .post(config.api.host + '/api/v6-rc1/authenticate/token')
           // Use base64'd client ID and secret for authorization
           .set('Authorization', 'Basic ' + this.oauth.token)
           // Send refresh token in form data

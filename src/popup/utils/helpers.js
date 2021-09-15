@@ -28,7 +28,7 @@ export async function createUser({ workspace }, { name, role = 'regular' }) {
 
   name = name.substring(0, MAX_NAME_LENGTH);
 
-  const data = await xhr('post', `/api/v5/${workspace.id}/dummy_users`, {
+  const data = await xhr('post', `/api/v6-rc1/${workspace.id}/dummy_users`, {
     role,
     name,
   });
@@ -50,7 +50,7 @@ export async function createUser({ workspace }, { name, role = 'regular' }) {
   if (email) {
     await xhr(
       'post',
-      `/api/v5/${workspace.id}/dummy_users/${user.id}/invitation`,
+      `/api/v6-rc1/${workspace.id}/dummy_users/${user.id}/invitation`,
       { email }
     );
   }

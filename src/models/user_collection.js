@@ -9,7 +9,7 @@ const UserCollection = RestCollection.extend({
   comparator: 'name',
 
   url() {
-    return config.api.host + '/api/v4/' + this.parent.id + '/members';
+    return config.api.host + '/api/v6-rc1/' + this.parent.id + '/members';
   },
 
   sync,
