@@ -52,9 +52,9 @@ export default View.extend({
 
   derived: {
     canRemove: {
-      deps: ['task.project_id', 'task.workspace_members.length'],
+      deps: ['task.plan_id', 'task.workspace_members.length'],
       fn() {
-        const taskHasProject = !_.isNil(this.task.project_id);
+        const taskHasProject = !_.isNil(this.task.plan_id);
         const taskHasManyMembers = 1 < this.task.workspace_members.length;
         return taskHasProject || taskHasManyMembers;
       },

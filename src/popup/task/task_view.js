@@ -180,18 +180,8 @@ const TaskView = View.extend({
       return false;
     }
 
-    if (!(task.workspace_members.length || task.project_id)) {
+    if (!(task.workspace_members.length || task.plan_id)) {
       errors.addError('Set assignee(s) or project');
-      return false;
-    }
-
-    if (!task.start_date) {
-      errors.addError('Start date cannot be empty');
-      return false;
-    }
-
-    if (!task.end_date) {
-      errors.addError('End date cannot be empty');
       return false;
     }
 

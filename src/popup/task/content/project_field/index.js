@@ -8,13 +8,13 @@ export default function(props) {
   const field = new SelectField({
     ...props,
     tabIndex: 3,
-    heading: 'Project',
+    heading: 'Plan',
     headingIconClass: css.icon,
     iconView: IconView,
     getCollectionItems: () =>
       parent.workspace.projects.models.filter(m => !m.archived),
-    addButtonlabel: 'Add Project',
-    modelIdProp: 'project_id',
+    addButtonlabel: 'Add Plan',
+    modelIdProp: 'plan_id',
     async addModel(name) {
       const project = await createProject(
         { workspace: parent.workspace },
@@ -31,19 +31,23 @@ export default function(props) {
       this.saveTask(project);
     },
     async saveTask(project) {
-      let project_id = null,
-        project_segment_id = null;
+      let plan_id = null,
+        timeline_segment_id = null,
+        plan_status_id = null;
       if (project) {
         parent.colorField.colorId = project.color_id;
-        project_id = project.id;
+        plan_id = project.id;
         const segment = project && project.segments.first();
-        project_segment_id = segment && segment.id;
+        timeline_segment_id = segment && segment.id;
+        const status = project && project.statuses.first();
+        plan_status_id = status && status.id;
       }
 
       parent.task.set({
         color_id: null,
-        project_id,
-        project_segment_id,
+        plan_id,
+        timeline_segment_id,
+        plan_status_id,
       });
     },
     parent,

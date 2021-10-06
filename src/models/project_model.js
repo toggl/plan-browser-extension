@@ -1,6 +1,7 @@
 import Model from 'ampersand-model';
 import sync from '../api/api_sync';
 import SegmentCollection from './segment_collection';
+import StatusCollection from './status_collection';
 
 const ProjectModel = Model.extend({
   props: {
@@ -12,6 +13,7 @@ const ProjectModel = Model.extend({
 
   collections: {
     segments: SegmentCollection,
+    statuses: StatusCollection,
   },
 
   sync,

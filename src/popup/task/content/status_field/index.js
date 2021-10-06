@@ -1,114 +1,93 @@
-import View from '../select_field_popup';
-import Popup from './popup';
-import hub from 'src/popup/utils/hub';
-import template from './template.dot';
+import Collection from 'ampersand-collection';
+import FilteredSubcollection from 'ampersand-filtered-subcollection';
+import IconView from './icon';
+import SelectField from '../select_field';
 import css from './style.module.scss';
-import './style.scss';
+import { createStatus } from 'src/popup/utils/helpers';
 
-export default View.extend({
-  template,
-  css,
+const StatusesCollection = FilteredSubcollection.extend({
+  constructor(view) {
+    this.view = view;
 
-  props: {
-    task: 'state',
-    show: 'boolean',
-    disabled: 'boolean',
-  },
-
-  derived: {
-    statusLabel: {
-      deps: ['task.done'],
-      fn() {
-        return this.task.done ? 'Done' : 'In Progress';
-      },
-    },
-    canToggle: {
-      deps: ['disabled'],
-      fn() {
-        return !this.disabled;
-      },
-    },
-  },
-
-  bindings: {
-    statusLabel: {
-      type: 'text',
-      hook: 'input-label',
-    },
-    'task.done': {
-      type: 'booleanClass',
-      hook: 'input-label',
-      yes: css.done,
-      no: css.undone,
-    },
-    canToggle: {
-      type: 'booleanClass',
-      selector: '.task-form__field-input-container',
-      no: 'task-form__field-input-container--readonly',
-    },
-  },
-
-  events: {
-    // 'click [data-hook=input]': 'startEditing',
-    'focus [data-hook=input]': 'startEditing',
-    'keydown [data-hook=input]': 'onKeyDown',
-  },
-
-  startEditing(event) {
-    event.preventDefault();
-
-    this.stopEditing();
-
-    if (!this.canToggle) {
-      return;
-    }
-
-    this.popup = this.registerPopup(
-      new Popup({ parent: this, task: this.task })
-    );
-
-    hub.trigger('popups:show', {
-      name: 'status-dropdown-popup',
-      content: this.popup,
-      direction: 'up',
-      modifiers: ['rounded'],
-      hideArrow: true,
-      overlay: {
-        closeOnClick: true,
-        transparent: true,
-      },
-      positioning: {
-        anchor: this.queryByHook('input'),
-        position: 'center',
-        alignments: ['top', 'bottom'],
+    FilteredSubcollection.call(this, new Collection(), {
+      where: {},
+      comparator({ position }) {
+        return position;
       },
     });
+
+    this.updateCollection();
+    this.statusFilters();
   },
 
-  onKeyDown(event) {
-    const otherStatus = this.popup.queryByHook('other-status');
+  statusFilters() {
+    if (this.project) {
+      const { statuses } = this.project;
 
-    switch (event.keyCode || event.which) {
-      case 9:
-        this.stopEditing();
-        break;
-      case 37:
-      case 39:
-        event.preventDefault();
-        event.stopPropagation();
-        break;
-      case 38:
-        event.preventDefault();
-        otherStatus.classList.add('active');
-        break;
-      case 40:
-        event.preventDefault();
-        otherStatus.classList.add('active');
-        break;
-      case 13:
-        event.stopPropagation();
-        this.popup.toggleDone();
-        break;
+      this.collection = statuses;
+
+      this.listenTo(statuses, 'sync add remove change', () =>
+        this._runFilters()
+      );
+    }
+
+    this.listenTo(this.view.task, 'change:plan_id', () =>
+      this.updateCollection()
+    );
+
+    this._runFilters();
+  },
+
+  updateCollection() {
+    const { plan_id: planId } = this.view.task;
+    if (!planId) {
+      this.stopListening(this.collection, 'sync add remove change');
+      this.collection = new Collection();
+    } else {
+      this.project = this.view.workspace.projects.get(planId);
+      this.statusFilters();
     }
   },
 });
+
+export default function(props) {
+  const { parent } = props;
+  const statuses = new StatusesCollection(parent);
+  const field = new SelectField({
+    ...props,
+    tabIndex: 2,
+    heading: 'Status',
+    headingIconClass: css.icon,
+    getCollectionItems: () => statuses.models,
+    iconView: IconView,
+    addButtonlabel: 'Add Status',
+    modelIdProp: 'plan_status_id',
+    canRemove: false,
+    async addModel(name) {
+      const {
+        task: { plan_id },
+      } = props;
+      if (!plan_id) {
+        return;
+      }
+      const { workspace } = parent;
+      const status = await createStatus(
+        {
+          workspace,
+          project: workspace.projects.findWhere({ id: plan_id }),
+        },
+        {
+          name,
+          plan_id,
+        }
+      );
+      this.saveTask(status);
+    },
+    async saveTask(status) {
+      parent.task.set({ plan_status_id: status && status.id });
+    },
+    parent,
+  });
+
+  return field;
+}

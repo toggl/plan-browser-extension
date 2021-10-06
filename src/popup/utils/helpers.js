@@ -19,6 +19,13 @@ export async function createSegment({ project }, attrs) {
   });
 }
 
+export async function createStatus({ project }, attrs) {
+  return new Promise(resolve => {
+    const status = project.statuses.create(attrs);
+    status.once('sync', resolve);
+  });
+}
+
 export async function createUser({ workspace }, { name, role = 'regular' }) {
   let email = '';
   if (utils.isEmail(name)) {
