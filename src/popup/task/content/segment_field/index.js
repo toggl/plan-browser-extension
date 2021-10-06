@@ -31,7 +31,7 @@ const SegmentsCollection = FilteredSubcollection.extend({
       );
     }
 
-    this.listenTo(this.view.task, 'change:project_id', () =>
+    this.listenTo(this.view.task, 'change:plan_id', () =>
       this.updateCollection()
     );
 
@@ -39,12 +39,12 @@ const SegmentsCollection = FilteredSubcollection.extend({
   },
 
   updateCollection() {
-    const { project_id: projectId } = this.view.task;
-    if (!projectId) {
+    const { plan_id: planId } = this.view.task;
+    if (!planId) {
       this.stopListening(this.collection, 'sync add remove change');
       this.collection = new Collection();
     } else {
-      this.project = this.view.workspace.projects.get(projectId);
+      this.project = this.view.workspace.projects.get(planId);
       this.segmentFilters();
     }
   },
@@ -61,30 +61,30 @@ export default function(props) {
     getCollectionItems: () => segments.models,
     iconView: IconView,
     addButtonlabel: 'Add Segment',
-    modelIdProp: 'project_segment_id',
+    modelIdProp: 'timeline_segment_id',
     canRemove: false,
     async addModel(name) {
       const {
-        task: { project_id },
+        task: { plan_id },
       } = props;
-      if (!project_id) {
+      if (!plan_id) {
         return;
       }
       const { workspace } = parent;
       const segment = await createSegment(
         {
           workspace,
-          project: workspace.projects.findWhere({ id: project_id }),
+          project: workspace.projects.findWhere({ id: plan_id }),
         },
         {
           name,
-          project_id,
+          plan_id,
         }
       );
       this.saveTask(segment);
     },
     async saveTask(segment) {
-      parent.task.set({ project_segment_id: segment && segment.id });
+      parent.task.set({ timeline_segment_id: segment && segment.id });
     },
     parent,
   });

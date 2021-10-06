@@ -14,7 +14,7 @@ export default function(props) {
     getCollectionItems: () =>
       parent.workspace.projects.models.filter(m => !m.archived),
     addButtonlabel: 'Add Project',
-    modelIdProp: 'project_id',
+    modelIdProp: 'plan_id',
     async addModel(name) {
       const project = await createProject(
         { workspace: parent.workspace },
@@ -31,19 +31,19 @@ export default function(props) {
       this.saveTask(project);
     },
     async saveTask(project) {
-      let project_id = null,
-        project_segment_id = null;
+      let plan_id = null,
+        timeline_segment_id = null;
       if (project) {
         parent.colorField.colorId = project.color_id;
-        project_id = project.id;
+        plan_id = project.id;
         const segment = project && project.segments.first();
-        project_segment_id = segment && segment.id;
+        timeline_segment_id = segment && segment.id;
       }
 
       parent.task.set({
         color_id: null,
-        project_id,
-        project_segment_id,
+        plan_id,
+        timeline_segment_id,
       });
     },
     parent,

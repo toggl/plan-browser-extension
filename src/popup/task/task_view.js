@@ -180,7 +180,7 @@ const TaskView = View.extend({
       return false;
     }
 
-    if (!(task.workspace_members.length || task.project_id)) {
+    if (!(task.workspace_members.length || task.plan_id)) {
       errors.addError('Set assignee(s) or project');
       return false;
     }
