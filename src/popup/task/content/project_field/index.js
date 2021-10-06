@@ -8,12 +8,12 @@ export default function(props) {
   const field = new SelectField({
     ...props,
     tabIndex: 3,
-    heading: 'Project',
+    heading: 'Plan',
     headingIconClass: css.icon,
     iconView: IconView,
     getCollectionItems: () =>
       parent.workspace.projects.models.filter(m => !m.archived),
-    addButtonlabel: 'Add Project',
+    addButtonlabel: 'Add Plan',
     modelIdProp: 'plan_id',
     async addModel(name) {
       const project = await createProject(
