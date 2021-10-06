@@ -9,7 +9,7 @@ const ProjectCollection = RestCollection.extend({
   comparator: 'name',
 
   url() {
-    return config.api.host + '/api/v6-rc1/' + this.parent.id + '/projects';
+    return config.api.host + '/api/v6-rc1/' + this.parent.id + '/plans';
   },
 
   sync,

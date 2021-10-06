@@ -17,6 +17,21 @@
   margin-right: 8px;
 }
 
+.emoji {
+  min-width: 12px;
+  margin-right: 4px;
+
+  &:empty::before {
+    background-color: $color-fill-medium;
+    border-radius: 4px;
+    content: '';
+    display: block;
+    height: 12px;
+    margin-right: 4px;
+    width: 12px;
+  }
+}
+
 .userpic {
   display: block;
 }

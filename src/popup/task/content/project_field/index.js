@@ -32,18 +32,22 @@ export default function(props) {
     },
     async saveTask(project) {
       let plan_id = null,
-        timeline_segment_id = null;
+        timeline_segment_id = null,
+        plan_status_id = null;
       if (project) {
         parent.colorField.colorId = project.color_id;
         plan_id = project.id;
         const segment = project && project.segments.first();
         timeline_segment_id = segment && segment.id;
+        const status = project && project.statuses.first();
+        plan_status_id = status && status.id;
       }
 
       parent.task.set({
         color_id: null,
         plan_id,
         timeline_segment_id,
+        plan_status_id,
       });
     },
     parent,

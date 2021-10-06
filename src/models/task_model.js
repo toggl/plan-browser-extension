@@ -11,6 +11,7 @@ const TaskModel = Model.extend({
     user_id: 'number',
     plan_id: 'number',
     timeline_segment_id: 'number',
+    plan_status_id: 'number',
     start_date: 'date',
     end_date: 'date',
     start_time: 'string',
