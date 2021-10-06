@@ -46,9 +46,9 @@ const TaskView = View.extend({
       hook: 'status-field',
       prepareView() {
         return new StatusField({
-          disabled: !this.enableEdit,
-          parent: this,
+          isEditable: this.enableEdit,
           task: this.task,
+          parent: this,
         });
       },
     },
@@ -119,6 +119,10 @@ const TaskView = View.extend({
 
   render() {
     this.renderWithTemplate(this);
+    this.listenToAndRun(this, 'change:task.plan_id', () => {
+      this.segmentField.set('isEditable', Boolean(this.task.plan_id));
+      this.statusField.set('isEditable', Boolean(this.task.plan_id));
+    });
     this.focusFirstInput();
   },
 
