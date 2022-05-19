@@ -1,0 +1,7 @@
+<label class="{{=it.css.container}}">
+  <span data-hook="radio:input-container" class="{{=it.css.input}}">
+    <input data-hook="radio:input" type="radio" />
+    <span class="{{=it.css.control}}"></span>
+  </span>
+  <span data-hook="radio:label" class="{{=it.css.label}}"></span>
+</label>

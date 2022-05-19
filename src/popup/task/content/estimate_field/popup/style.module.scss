@@ -1,0 +1,119 @@
+.title {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: $font-xxsmall;
+  line-height: 12.5px;
+  text-transform: uppercase;
+  color: $color-new-gray;
+}
+
+.types {
+  padding: 4px 24px 8px 8px;
+  font-size: $font-small;
+
+  .daily {
+    margin-bottom: 14px;
+  }
+}
+
+.definitions {
+  padding: 0 24px 20px 8px;
+
+  .hours {
+    margin-bottom: 8px;
+  }
+
+  .definition {
+    display: flex;
+    align-items: center;
+  }
+
+  .input_container {
+    width: 20px;
+    display: flex;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+    font-size: $font-small;
+    text-align: center;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: $color-fill-medium-light;
+    margin-right: 8px;
+  }
+
+  .input {
+    outline: none;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    text-align: center;
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      appearance: none;
+      margin: 0;
+    }
+  }
+
+  .input_label {
+    display: flex;
+    flex: 1 1 0%;
+    align-items: center;
+    font-size: $font-small;
+  }
+
+  .input_controls {
+    display: flex;
+  }
+
+  .input_control {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: transparent;
+    transition: background-color 0.25s;
+
+    &:hover {
+      background-color: $color-fill-medium-light;
+    }
+
+    &:first-child {
+      margin-right: 12px;
+    }
+
+    .input_decrement {
+      background-position: center;
+      background-size: contain;
+      background-image: svg-load('./icons/minus.svg');
+    }
+
+    .input_increment {
+      background-position: center;
+      background-size: contain;
+      background-image: svg-load('./icons/plus.svg');
+    }
+  }
+}
+
+.skip_weekends_container {
+  padding: 0 16px 20px 8px;
+}
+
+.checkbox {
+  font-weight: normal;
+  font-size: $font-small;
+  margin-left: 8px;
+}

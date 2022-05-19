@@ -176,16 +176,22 @@ module.exports = {
     extensions: ['.js'],
     alias: {
       src: path.resolve('./src'),
+      components: path.resolve('./src/components'),
     },
   },
   plugins: [
     new DashboardPlugin(),
-    new CopyWebpackPlugin([
-      platform === 'chrome' && { from: 'src/images/icon_128.png', to: 'icon.png' },
-      { from: 'src/images', to: 'images' },
-      { from: `src/manifest.${platform}.json`, to: 'manifest.json' },
-      { from: 'src/popup/fonts', to: 'fonts' },
-    ].filter(Boolean)),
+    new CopyWebpackPlugin(
+      [
+        platform === 'chrome' && {
+          from: 'src/images/icon_128.png',
+          to: 'icon.png',
+        },
+        { from: 'src/images', to: 'images' },
+        { from: `src/manifest.${platform}.json`, to: 'manifest.json' },
+        { from: 'src/popup/fonts', to: 'fonts' },
+      ].filter(Boolean)
+    ),
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en/),
     new webpack.ProvidePlugin({ $: 'jquery' }),
     new MiniCssExtractPlugin({

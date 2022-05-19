@@ -32,6 +32,7 @@ $color-dark: #21282c;
 
 $color-primary: #7a43f3;
 $color-secondary: rgba($color-new-link, 0.1);
+$color-logo: #a876f5;
 
 $color-new-yellow: #fccb00;
 $color-new-orange: #ff9e15;
@@ -128,7 +129,7 @@ $colors: (
   42: #cfd8dc,
   43: #607d8b,
   44: #455a64,
-  45: #263238
+  45: #263238,
 );
 
 $design-colors: (
@@ -136,7 +137,7 @@ $design-colors: (
   'link': $color-new-link,
   'success': $color-new-success,
   'danger': $color-new-danger,
-  'gray': $color-new-gray
+  'gray': $color-new-gray,
 );
 
 /* Timeline */

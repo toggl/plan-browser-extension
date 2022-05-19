@@ -1,6 +1,7 @@
 import Promise from 'bluebird';
 import config from 'src/api/config';
 import sync from 'src/api/api_sync';
+import { continuousClamp } from 'src/utils/clamp';
 import * as storage from 'src/utils/storage';
 import find from 'lodash.find';
 import { triggerAchievementUseButton } from 'src/api/stash';
@@ -44,6 +45,15 @@ export default () =>
           }
 
           data.preferences.selected_account_id = selectedAccountId;
+
+          const startOfWeek = data.preferences.start_of_week ?? 1;
+          const minWeekDay = 0;
+          const maxWeekDay = 6;
+
+          data.preferences.weekend_days = [
+            continuousClamp(minWeekDay, startOfWeek + 5, maxWeekDay),
+            continuousClamp(minWeekDay, startOfWeek + 6, maxWeekDay),
+          ];
 
           me = data;
 

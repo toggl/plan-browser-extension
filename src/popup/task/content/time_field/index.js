@@ -32,7 +32,7 @@ export default View.extend({
           name: 'search_start_time',
           time: task.start_time,
           disabled,
-          placeholder: 'Select Start Time',
+          placeholder: 'Select start time',
           me,
         });
       },
@@ -45,7 +45,7 @@ export default View.extend({
           name: 'search_end_time',
           time: task.end_time,
           disabled,
-          placeholder: 'Select End Time',
+          placeholder: 'Select end time',
           me,
         });
       },

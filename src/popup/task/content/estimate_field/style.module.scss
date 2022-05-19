@@ -3,3 +3,7 @@
 .iconsvg {
   background-image: svg-load('./icon.svg', fill=$color-new-gray);
 }
+
+.placeholder {
+  color: $color-text-placeholder;
+}

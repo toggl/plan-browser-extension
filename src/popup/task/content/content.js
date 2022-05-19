@@ -101,6 +101,7 @@ const TaskView = View.extend({
           parent: this,
           disabled: !this.enableEdit,
           task: this.task,
+          me: this.me,
         });
       },
     },
