@@ -1,0 +1,20 @@
+<div class="{{=it.css.container}}">
+  <div data-hook="tags" class="{{=it.css.tags}} space-x-4">
+    {{= it.tags }}
+    <input
+      class="{{=it.css.input}} input input--block"
+      type="text"
+      autocomplete="off"
+      name="search_name"
+      data-hook="input"
+      placeholder="Search or add"
+      tabindex="0" />
+  </div>
+
+  <div class="{{=it.css.suggestions}}">
+    <div class="{{=it.css.heading}} text--color-new-gray row row--align-center" data-hook='heading'></div>
+    <div data-hook="suggestions"></div>
+  </div>
+
+  <div class="{{=it.css.add}} row row--align-center row--justify-center hover" data-hook="add"></div>
+</div>

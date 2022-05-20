@@ -64,3 +64,10 @@ export async function createUser({ workspace }, { name, role = 'regular' }) {
 
   return user;
 }
+
+export async function createTag(plan, attributes) {
+  return new Promise(resolve => {
+    const tag = plan.tags.create(attributes);
+    tag.once('sync', resolve);
+  });
+}

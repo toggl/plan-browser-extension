@@ -1,18 +1,4 @@
-import Model from 'ampersand-model';
-import Collection from 'ampersand-collection';
 import FilteredSubcollection from 'ampersand-filtered-subcollection';
-
-export const Suggestion = Model.extend({
-  props: {
-    string: 'string',
-    original: 'object',
-    index: 'number',
-  },
-});
-
-export const Suggestions = Collection.extend({
-  model: Suggestion,
-});
 
 export const OtherMembers = FilteredSubcollection.extend({
   constructor(task, users) {

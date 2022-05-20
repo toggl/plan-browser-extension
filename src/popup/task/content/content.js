@@ -8,6 +8,7 @@ import UserField from './user_field';
 import DateField from './date_field';
 import EstimateField from './estimate_field';
 import TimeField from './time_field';
+import TagsField from './tags_field';
 import css from './content.module.scss';
 import template from './content.dot';
 
@@ -116,11 +117,23 @@ const TaskView = View.extend({
         });
       },
     },
+    tagsField: {
+      hook: 'tags-select',
+      prepareView() {
+        return new TagsField({
+          isEditable: this.enableEdit,
+          task: this.task,
+          workspace: this.workspace,
+          parent: this,
+        });
+      },
+    },
   },
 
   render() {
     this.renderWithTemplate(this);
     this.listenToAndRun(this, 'change:task.plan_id', () => {
+      this.tagsField.set('isEditable', Boolean(this.task.plan_id));
       this.segmentField.set('isEditable', Boolean(this.task.plan_id));
       this.statusField.set('isEditable', Boolean(this.task.plan_id));
     });

@@ -34,3 +34,15 @@ export function continuousClamp(lower, number, upper) {
 
   return number;
 }
+
+/**
+ * Clamps a value to a lower and upper limit. Loops back to the lower
+ * limit when the value exceeds the upper limit and vice versa.
+ */
+export function loopClamp(lower, number, upper) {
+  if (typeof number !== 'number') {
+    return number;
+  }
+
+  return number < lower ? upper : number > upper ? lower : number;
+}

@@ -25,6 +25,7 @@ const TaskModel = Model.extend({
     notes: 'string',
     color_id: 'number',
     done: 'boolean',
+    tag_ids: ['array', false, () => []],
     workspace_members: ['array', true, () => []],
   },
 

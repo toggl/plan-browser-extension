@@ -103,7 +103,7 @@ module.exports = {
 
       {
         test: /\.dot$/,
-        loader: 'dot-loader',
+        loader: require.resolve('./src/utils/dot-loader'),
         options: {},
       },
 

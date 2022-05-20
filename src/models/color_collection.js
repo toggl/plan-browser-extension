@@ -34,6 +34,7 @@ function addColorRules(sheet, color) {
     lightHex,
     alpha25,
     alpha75,
+    isLight,
     // darkHexIsLight,
   } = color;
   // const darkHexTextColor = darkHexIsLight ? '#201a32' : '#ffffff';
@@ -50,6 +51,10 @@ function addColorRules(sheet, color) {
       .row--bg-color.color-${id}
     `,
       rule: `background-color: ${hex}`,
+    },
+    {
+      selector: `.fg.color-${id}`,
+      rule: `color: ${isLight ? 'black' : 'white'}`,
     },
     {
       selector: `.task.color-${id}`,
@@ -241,12 +246,12 @@ export default Collection.extend({
     const color = this.get(this.getIdFromHex(hex));
     return color && color.isCustom
       ? Promise.resolve(color)
-      : xhr('post', `/api/v6-rc1/${this.parent.id}/custom_colors`, { hex }).then(
-          data => {
-            this.add(data, { merge: true });
-            return this.get(this.getIdFromHex(hex));
-          }
-        );
+      : xhr('post', `/api/v6-rc1/${this.parent.id}/custom_colors`, {
+          hex,
+        }).then(data => {
+          this.add(data, { merge: true });
+          return this.get(this.getIdFromHex(hex));
+        });
   },
 
   getCustomColors() {

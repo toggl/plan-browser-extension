@@ -1,16 +1,18 @@
-import View from 'ampersand-view';
-import fuzzy from 'fuzzy';
-import keycode from 'keycode';
-import _ from 'lodash';
-import Suggestions from 'src/models/suggestion_collection';
-import { createUser } from 'src/popup/utils/helpers';
-import hub from 'src/popup/utils/hub';
-import { OtherMembers } from './models';
-import showPremiumView from './premium_popup';
+import AmpersandView from 'ampersand-view';
+
 import css from './style.module.scss';
-import SuggestionItemView from './suggestion_item';
-import TagView from './tag_item';
 import template from './template.dot';
+import Suggestions from 'src/models/suggestion_collection';
+import SuggestionItemView from './suggestion';
+import TagView from '../tag';
+import keycode from 'keycode';
+import FilteredCollection from 'ampersand-filtered-subcollection';
+import { createTag } from 'src/popup/utils/helpers';
+import _find from 'lodash/find';
+import _isEmpty from 'lodash/isEmpty';
+import _bindAll from 'lodash/bindAll';
+import _isNil from 'lodash/isNil';
+import fuzzy from 'fuzzy';
 
 const FUZZY_OPTIONS = {
   pre: '<strong>',
@@ -20,43 +22,32 @@ const FUZZY_OPTIONS = {
   },
 };
 
-export default View.extend({
+export default AmpersandView.extend({
   template,
   css,
 
   props: {
+    task: 'state',
+    workspace: 'state',
+    selected: 'any',
+    options: 'any',
+  },
+
+  session: {
+    available: 'any',
+    randomColorId: 'number',
     searchTerm: 'string',
     isFocused: 'boolean',
+    isCreatingTag: 'boolean',
     selectedSuggestionIndex: 'number',
-    parent: ['state', true],
-  },
-
-  collections: {
-    suggestions: Suggestions,
-  },
-
-  bindings: {
-    isAddVisible: [{ type: 'toggle', hook: 'add' }],
-    heading: {
-      type: 'text',
-      hook: 'heading',
-    },
-    'parent.addButtonlabel': {
-      type: 'text',
-      hook: 'add',
-    },
-    'suggestions.length': {
-      type: 'toggle',
-      hook: 'suggestions',
-    },
   },
 
   derived: {
     isExactMatch: {
       deps: ['searchTerm', 'otherMembers.models'],
       fn() {
-        return !!_.find(
-          this.otherMembers.models,
+        return !!_find(
+          this.available.models,
           model =>
             model.name.toUpperCase() === this.searchTerm.trim().toUpperCase()
         );
@@ -65,7 +56,7 @@ export default View.extend({
     isEmpty: {
       deps: ['searchTerm'],
       fn() {
-        return _.isEmpty(this.searchTerm);
+        return _isEmpty(this.searchTerm);
       },
     },
     isAddVisible: {
@@ -77,81 +68,79 @@ export default View.extend({
     heading: {
       deps: ['isAddVisible'],
       fn() {
-        return (!this.isAddVisible
-          ? `SELECT ${this.parent.labelName}`
-          : `NO ${this.parent.labelName} FOUND`
-        ).toUpperCase();
+        return !this.isAddVisible ? 'SELECT TAGS' : 'NO TAGS FOUND';
+      },
+    },
+    addButtonlabel: {
+      deps: ['searchTerm'],
+      fn() {
+        return `Create '${this.searchTerm}' tag`;
       },
     },
   },
 
+  collections: {
+    suggestions: Suggestions,
+  },
+
   events: {
-    'mousedown [data-hook=bottom]': 'onMousedown',
     'click [data-hook=add]': 'onCreateTag',
     'focus input': 'onFocus',
     'input input': 'onInput',
-    'click [data-hook=tag-remove]': 'onRemoveTag',
+    'click [data-hook="tag:remove"]': 'onRemoveTag',
     keydown: 'onContainerKeyPress',
   },
 
+  bindings: {
+    isAddVisible: {
+      type: 'toggle',
+      hook: 'add',
+    },
+    heading: {
+      type: 'text',
+      hook: 'heading',
+    },
+    addButtonlabel: {
+      type: 'text',
+      hook: 'add',
+    },
+    'suggestions.length': {
+      type: 'toggle',
+      hook: 'suggestions',
+    },
+  },
+
   initialize() {
-    _.bindAll(this, 'onRemoveTag', 'highlightSelectedRow');
+    this.bindMethods();
+    this.setSessionVariables();
+    this.addEventListeners();
+  },
 
-    this.otherMembers = new OtherMembers(
-      this.parent.task,
-      this.parent.workspace.users
-    );
+  bindMethods() {
+    _bindAll(this, 'highlightSelectedRow');
+  },
 
+  setSessionVariables() {
+    this.available = new FilteredCollection(this.options, {
+      filter: model => {
+        return !this.task.tag_ids.includes(model.id);
+      },
+    });
+    this.generateRandomColor();
     this.listAll();
+  },
+
+  addEventListeners() {
+    this.listenToAndRun(this.task, 'change:tag_ids', () => {
+      this.available?._runFilters();
+      this.onUpdateCollection();
+    });
+
     this.listenTo(
       this,
       'change:selectedSuggestionIndex',
       this.highlightSelectedRow
     );
-    this.listenTo(
-      this.parent.membersCollectionSize,
-      'change:length',
-      this.onUpdateCollection
-    );
-    this.listenTo(this.parent.members, 'add remove', this.onUpdateCollection);
-    this.listenTo(this.parent, 'change:canRemove', this.onUpdateCollection);
-  },
-
-  render() {
-    this.renderTags();
-    this.renderWithTemplate();
-    this.renderCollection(
-      this.suggestions,
-      SuggestionItemView,
-      this.queryByHook('suggestions'),
-      {
-        viewOptions: {
-          onSelect: model => this.onSelect(model),
-        },
-      }
-    );
-    setTimeout(() => {
-      const el = this.queryByHook('input');
-      el.focus();
-    }, 0);
-  },
-
-  renderTags() {
-    this.members = this.parent.members.models
-      .map(model => {
-        const v = new TagView({
-          model,
-          parent: this,
-        });
-        v.render();
-        return v.el.outerHTML;
-      })
-      .join('');
-  },
-
-  async onUpdateCollection() {
-    this.searchTerm ? this.listMatching() : this.listAll();
-    this.render();
   },
 
   update(value) {
@@ -170,7 +159,7 @@ export default View.extend({
   },
 
   goUp() {
-    if (!_.isNil(this.selectedSuggestionIndex)) {
+    if (!_isNil(this.selectedSuggestionIndex)) {
       if (this.selectedSuggestionIndex > 0) {
         return this.selectedSuggestionIndex--;
       }
@@ -180,7 +169,7 @@ export default View.extend({
   },
 
   goDown() {
-    if (!_.isNil(this.selectedSuggestionIndex)) {
+    if (!_isNil(this.selectedSuggestionIndex)) {
       if (this.selectedSuggestionIndex < this.getNumberOfRows() - 1) {
         this.selectedSuggestionIndex++;
       }
@@ -190,15 +179,42 @@ export default View.extend({
   },
 
   async useSelected() {
-    if (!_.isNil(this.selectedSuggestionIndex)) {
+    if (!_isNil(this.selectedSuggestionIndex)) {
       const rows = this.getSelectableRows();
       const {
         dataset: { modelId },
       } = rows[this.selectedSuggestionIndex];
-      await this.onAddTag(this.getModel({ id: parseInt(modelId) }));
+      this.onAddTag(this.getModel({ id: parseInt(modelId) }));
     } else if (this.isAddVisible) {
       this.onCreateTag();
     }
+  },
+
+  getSelectableRows() {
+    return this.queryAll('[data-model-id]');
+  },
+
+  getNumberOfRows() {
+    return this.suggestions.length;
+  },
+
+  getAllItems() {
+    return this.available.models.map(item => ({
+      string: item.name,
+      original: item,
+    }));
+  },
+
+  getModel(query) {
+    return _find(this.options.models, query);
+  },
+
+  getSuggestions() {
+    return fuzzy.filter(this.searchTerm, this.available.models, FUZZY_OPTIONS);
+  },
+
+  generateRandomColor() {
+    this.randomColorId = this.workspace.colors.getRandomPresetColor()?.id ?? 30;
   },
 
   highlightSelectedRow() {
@@ -234,35 +250,9 @@ export default View.extend({
     }
   },
 
-  getSelectableRows() {
-    return this.queryAll('[data-model-id]');
-  },
-
-  getNumberOfRows() {
-    return this.suggestions.length;
-  },
-
-  getAllItems() {
-    return this.otherMembers.models.map(item => ({
-      string: item.name,
-      original: item,
-    }));
-  },
-
-  getSuggestions() {
-    return fuzzy.filter(
-      this.searchTerm,
-      this.otherMembers.models,
-      FUZZY_OPTIONS
-    );
-  },
-
-  onMousedown(event) {
-    event.preventDefault();
-  },
-
-  async onSelect(user) {
-    await this.onAddTag(user);
+  onUpdateCollection() {
+    this.searchTerm ? this.listMatching() : this.listAll();
+    this.render();
   },
 
   onFocus() {
@@ -338,71 +328,98 @@ export default View.extend({
     }
   },
 
-  getModel(query) {
-    return _.find(this.parent.workspace.users.models, query);
-  },
-
   async onCreateTag() {
-    if (this.showUpgradePrompt()) {
+    const { plan_id } = this.task;
+    const name = this.searchTerm;
+    const color_id = this.randomColorId;
+
+    if (!plan_id || !name?.length) {
       return;
     }
 
-    const user = await createUser(
-      { workspace: this.parent.parent.workspace },
+    this.isCreatingTag = true;
+
+    try {
+      const attributes = { name, color_id, plan_id };
+      const plan = this.workspace.projects.findWhere({ id: plan_id });
+      const model = await createTag(plan, attributes);
+
+      if (model) {
+        this.onAddTag(model);
+      }
+
+      this.generateRandomColor();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      this.isCreatingTag = false;
+    }
+  },
+
+  onAddTag(model) {
+    const id = model.id;
+    const tagIds = this.selected.models.map(o => o.id);
+
+    if (!tagIds.includes(id)) {
+      this.save([...tagIds, id]);
+    }
+  },
+
+  onRemoveTag(event) {
+    event.preventDefault();
+    const id = +event.delegateTarget.dataset.id;
+    const tagIds = this.selected.models.map(o => o.id);
+    const index = tagIds.indexOf(id);
+
+    if (~index) {
+      tagIds.splice(index, 1);
+      this.save(tagIds);
+    }
+  },
+
+  onRemoveLastTag(event) {
+    event.preventDefault();
+    const tagIds = this.selected.models.map(o => o.id);
+    tagIds.pop();
+    this.save(tagIds);
+  },
+
+  render() {
+    this.renderTags();
+    this.renderWithTemplate();
+    this.renderCollection(
+      this.suggestions,
+      SuggestionItemView,
+      this.queryByHook('suggestions'),
       {
-        name: this.searchTerm,
+        viewOptions: {
+          onSelect: model => this.onAddTag(model),
+        },
       }
     );
-    this.onAddTag(user);
+
+    setTimeout(() => {
+      const el = this.queryByHook('input');
+      el.focus();
+    }, 0);
   },
 
-  async onAddTag(user) {
-    if (this.showUpgradePrompt()) {
-      return;
-    }
-
-    const memberIds = this.parent.members.models.map(m => m.membership_id);
-    if (-1 === memberIds.indexOf(user.membership_id)) {
-      memberIds.push(user.membership_id);
-      await this.saveTask(memberIds);
-    }
+  renderTags() {
+    this.tags = this.selected.models
+      .map(model => {
+        const view = new TagView({
+          model,
+          canRemove: true,
+        });
+        view.render();
+        return view.el.outerHTML;
+      })
+      .join('');
   },
 
-  async onRemoveTag(event) {
-    event.preventDefault();
-    if (this.parent.canRemove) {
-      const userId = parseInt(event.delegateTarget.dataset.id);
-      const memberIds = this.parent.members.models
-        .filter(u => u.id !== userId)
-        .map(m => m.membership_id);
-      await this.saveTask(memberIds);
-    }
-  },
-
-  async onRemoveLastTag(event) {
-    event.preventDefault();
-    if (this.parent.canRemove) {
-      const memberIds = this.parent.members.models.map(m => m.membership_id);
-      memberIds.pop();
-      await this.saveTask(memberIds);
-    }
-  },
-
-  async saveTask(workspace_members) {
-    await this.parent.parent.task.set({ workspace_members });
+  save(tagIds = []) {
     this.resetInput();
-    await this.onUpdateCollection();
-    hub.trigger('task:reassigned');
-  },
-
-  showUpgradePrompt() {
-    if (
-      this.parent.members.models.length &&
-      !this.parent.parent.workspace.isPremium
-    ) {
-      showPremiumView(this.queryByHook('input'));
-      return true;
-    }
+    this.task.tag_ids = tagIds;
   },
 
   resetInput() {
