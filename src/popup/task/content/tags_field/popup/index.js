@@ -77,6 +77,12 @@ export default AmpersandView.extend({
         return `Create '${this.searchTerm}' tag`;
       },
     },
+    addButtonColorClass: {
+      deps: ['randomColorId'],
+      fn() {
+        return `color-${this.randomColorId}`;
+      },
+    },
   },
 
   collections: {
@@ -102,6 +108,10 @@ export default AmpersandView.extend({
     },
     addButtonlabel: {
       type: 'text',
+      hook: 'add',
+    },
+    addButtonColorClass: {
+      type: 'class',
       hook: 'add',
     },
     'suggestions.length': {

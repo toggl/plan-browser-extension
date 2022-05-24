@@ -16,5 +16,5 @@
     <div data-hook="suggestions"></div>
   </div>
 
-  <div class="{{=it.css.add}} row row--align-center row--justify-center hover" data-hook="add"></div>
+  <div class="{{=it.css.add}} row row--align-center row--justify-center hover bg fg" data-hook="add"></div>
 </div>
