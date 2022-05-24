@@ -1,4 +1,4 @@
-<div class="{{=it.css.container}}">
+<div>
   <div data-hook="tags" class="{{=it.css.tags}} space-x-4">
     {{= it.tags }}
     <input
