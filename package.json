@@ -22,7 +22,7 @@
     "handlebars": "4.5.3",
     "hashmap": "2.0.3",
     "instadate": "0.6.0",
-    "is-email": "0.1.1",
+    "is-email": "1.0.1",
     "jquery": "3.5.1",
     "keycode": "2.2.0",
     "lodash.difference": "3.2.1",
