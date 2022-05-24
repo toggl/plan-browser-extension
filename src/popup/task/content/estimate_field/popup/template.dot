@@ -1,0 +1,53 @@
+<div data-hook="estimate-popup:container" class="{{=it.css.container}}">
+   <div class="{{=it.css.title}}" data-hook="estimate-popup:type:title">Select Type</div>
+   <div class="{{=it.css.types}}">
+      <div class="{{=it.css.daily}}" data-hook="estimate-popup:type:daily"></div>
+      <div data-hook="estimate-popup:type:total"></div>
+   </div>
+   <div class="{{=it.css.title}}" data-hook="estimate-popup:time:title">Define</div>
+   <div class="{{=it.css.definitions}}">
+    <div class="{{=it.css.definition}} {{=it.css.hours}}">
+      <div
+        class="{{=it.css.input_container}}">
+        <input
+          data-hook="estimate-popup:hours"
+          class="{{=it.css.input}}"
+          placeholder="0"
+          type="number"
+          min="0" />
+      </div>
+      <div class="{{=it.css.input_label}}">hours</div>
+      <div class="{{=it.css.input_controls}}">
+        <div
+          data-hook="estimate-popup:decrement"
+          class="{{=it.css.input_control}}">
+          <span class="icon-svg icon-svg--8 {{=it.css.input_decrement}}">
+          </span>
+        </div>
+        <div
+          data-hook="estimate-popup:increment"
+          class="{{=it.css.input_control}}">
+          <span class="icon-svg icon-svg--16 {{=it.css.input_increment}}">
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="{{=it.css.definition}}">
+      <div
+        class="{{=it.css.input_container}}">
+        <input
+          data-hook="estimate-popup:minutes"
+          class="{{=it.css.input}}"
+          placeholder="0"
+          type="number"
+          min="0"
+          max="59"
+          maxlength="2" />
+      </div>
+      <div class="{{=it.css.input_label}}">minutes</div>
+    </div>
+   </div>
+   <div class="{{=it.css.skip_weekends_container}}">
+      <div data-hook="estimate-popup:skip-weekends"></div>
+   </div>
+</div>

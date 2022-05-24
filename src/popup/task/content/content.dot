@@ -4,10 +4,11 @@
     <div data-hook="name-input" class="row--grow"></div>
   </div>
   <div data-hook="status-field"></div>
+  <div data-hook="date-input"></div>
+  <div data-hook="user-select"></div>
   <div data-hook="project-select"></div>
   <div data-hook="segment-select"></div>
-  <div data-hook="user-select"></div>
-  <div data-hook="date-input"></div>
-  <div data-hook="estimate-input"></div>
+  <div data-hook="tags-select"></div>
   <div data-hook="time-input"></div>
+  <div data-hook="estimate-input"></div>
 </div>

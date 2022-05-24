@@ -1,8 +1,11 @@
-import View from 'ampersand-view';
-import EstimateField from 'src/popup/fields/estimate_field/estimate_field';
-import template from './template.dot';
+import hub from 'src/popup/utils/hub';
+import { MINUTES_IN_AN_HOUR } from 'src/utils/datetime';
+import { toTitleCase } from 'src/utils/to-title-case';
+import View from '../select_field_popup';
+import Popup from './popup';
 import css from './style.module.scss';
 import './style.scss';
+import template from './template.dot';
 
 export default View.extend({
   template,
@@ -10,7 +13,51 @@ export default View.extend({
 
   props: {
     task: ['state', true],
+    me: ['object', true],
     disabled: 'boolean',
+  },
+
+  derived: {
+    estimateExists: {
+      deps: ['task.estimated_minutes'],
+      fn() {
+        return !!this.task.estimated_minutes;
+      },
+    },
+    estimateLabel: {
+      deps: [
+        'estimateExists',
+        'task.estimated_minutes',
+        'task.estimate_type',
+        'task.estimate_skips_weekend',
+      ],
+      fn() {
+        if (!this.estimateExists) {
+          return 'Define...';
+        }
+
+        const estimated_minutes = this.task.estimatedMinutes();
+        const hours = Math.floor(estimated_minutes / MINUTES_IN_AN_HOUR);
+        const minutes = estimated_minutes % MINUTES_IN_AN_HOUR;
+        const summary = [];
+
+        if (hours) {
+          summary.push(`${hours}h`);
+        }
+
+        if (minutes) {
+          summary.push(`${minutes}m`);
+        }
+
+        summary.push(toTitleCase(this.task.estimate_type ?? 'daily'));
+
+        if (this.task.estimate_skips_weekend) {
+          summary.push('WD');
+        }
+
+        return summary.join(' ');
+      },
+    },
   },
 
   bindings: {
@@ -19,18 +66,15 @@ export default View.extend({
       selector: '.task-form__field-input-container',
       yes: 'task-form__field-input-container--readonly',
     },
-  },
-
-  subviews: {
-    estimateField: {
+    estimateLabel: {
+      type: 'text',
       hook: 'estimate-input',
-      prepareView() {
-        const { disabled, task } = this;
-        return new EstimateField({
-          disabled,
-          value: task.estimated_minutes || 0,
-        });
-      },
+    },
+    estimateExists: {
+      type: 'booleanClass',
+      hook: 'estimate-input',
+      name: css.placeholder,
+      invert: true,
     },
   },
 
@@ -41,18 +85,40 @@ export default View.extend({
 
   render() {
     this.renderWithTemplate();
-    this.listenTo(this.estimateField, 'change:value', this.updateEstimate);
   },
 
-  updateEstimate() {
-    this.parent.task.set({ estimated_minutes: this.estimateField.value });
-  },
+  startEditing(event) {
+    event.preventDefault();
 
-  updateElValue() {
-    this.estimateField.value = this.task.estimated_minutes || 0;
-  },
+    this.stopEditing();
 
-  startEditing() {
-    this.estimateField.startEditing();
+    if (this.disabled) {
+      return;
+    }
+
+    this.popup = this.registerPopup(
+      new Popup({
+        parent: this,
+        task: this.task,
+        me: this.me,
+      })
+    );
+
+    hub.trigger('popups:show', {
+      name: 'task-form-estimate-field-popup',
+      content: this.popup,
+      direction: 'up',
+      modifiers: ['rounded'],
+      hideArrow: true,
+      overlay: {
+        closeOnClick: true,
+        transparent: true,
+      },
+      positioning: {
+        anchor: this.queryByHook('input'),
+        position: 'down',
+        alignments: ['left'],
+      },
+    });
   },
 });

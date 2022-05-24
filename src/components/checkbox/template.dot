@@ -1,0 +1,4 @@
+<div data-hook="animated-checkbox" class="{{=it.css.container}}">
+  <div data-hook="checkbox" class="{{=it.css.checkbox}}"></div>
+  <div data-hook="label" class="{{=it.css.label}}"></div>
+</div>

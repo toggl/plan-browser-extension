@@ -1,0 +1,16 @@
+.container {
+  height: 28px;
+  font-size: $font-small;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f2f2f2;
+  }
+
+  &:global(.active) {
+    background-color: #f2f2f2;
+  }
+}

@@ -1,0 +1,6 @@
+<div data-hook="tag:container" class="bg fg {{=it.css.container}} space-x-4">
+   <div data-hook="tag:content"></div>
+   <div data-hook="tag:remove" class="icon-svg icon-svg--8 {{=it.css.remove}}">
+      {{#def.import('../icons/cross.svg')}}
+   </div>
+</div>

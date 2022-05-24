@@ -1,0 +1,114 @@
+.container {
+  display: flex;
+  align-items: center;
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+
+    .checkbox {
+      pointer-events: none;
+    }
+  }
+}
+
+.checkbox {
+  box-sizing: content-box;
+  border: 1px solid $color-border-dark;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background-color 0.25s ease-in-out, border-color 0.25s ease-in-out,
+    box-shadow 0.25s ease-in-out;
+  background-color: $color-fill-medium-light;
+
+  &.transparent {
+    background-color: transparent;
+  }
+
+  &:hover:not(&--checked) {
+    background-color: $color-secondary;
+    border-color: $color-logo;
+  }
+  &:focus {
+    box-shadow: 0 0 0 4px rgba(127, 103, 138, 0.125);
+    background-color: $color-secondary;
+    border-color: $color-new-link !important;
+    transition: none !important;
+
+    &.checked::after {
+      opacity: 0.9;
+    }
+  }
+  &:after {
+    background: $color-new-link;
+    position: absolute;
+    content: '';
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.15s;
+  }
+  &:before {
+    background-image: svg-load('./icons/check.svg', fill=white);
+    background-repeat: no-repeat;
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-position: center;
+    z-index: 1;
+    opacity: 0;
+    content: '';
+    transition: opacity 0.15s, clip-path 0.5s;
+    transition-delay: 0.15s;
+    background-size: 69%;
+  }
+}
+
+.checked {
+  border-color: $color-new-link;
+  &:after {
+    transform: scale(1);
+  }
+  &:before {
+    opacity: 1;
+  }
+}
+
+.label {
+  margin-left: 12px;
+  cursor: pointer;
+}
+
+$widths: 24 16 14;
+@each $width in $widths {
+  // radius of the circle is calculated using pythagoras theorem
+  $hypotenuse: ceil($width * 1.41);
+  // how many pixels the circle is overlapping the checkbox from the edge
+  $overlap: ($hypotenuse - $width) / 2;
+
+  .size-#{$width} {
+    height: #{$width}px;
+    width: #{$width}px;
+
+    &:after {
+      height: #{$hypotenuse}px;
+      width: #{$hypotenuse}px;
+      top: -#{$overlap}px;
+      left: -#{$overlap}px;
+    }
+
+    &:before {
+      height: #{$width}px;
+      width: #{$width}px;
+      $checkmark-edge: ceil($width - $width * 0.2);
+      clip-path: inset(0 #{$checkmark-edge}px 0 0);
+    }
+
+    &.checked::before {
+      $checkmark-edge: floor($width * 0.2);
+      clip-path: inset(0 #{$checkmark-edge}px 0 0);
+    }
+  }
+}

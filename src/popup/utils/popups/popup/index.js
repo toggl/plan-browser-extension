@@ -65,6 +65,7 @@ const Popup = View.extend({
 
   remove() {
     this.$tooltip = null;
+    this.options.content.remove?.();
     // hub.trigger('scroll:enable', this.cid);
     View.prototype.remove.call(this);
   },

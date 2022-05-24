@@ -1,7 +1,7 @@
 <div
   contenteditable="true"
   spellcheck="false"
-  placeholder="Untitled"
+  placeholder="Type task name..."
   type="text"
   autocomplete="off"
   name="search_name"

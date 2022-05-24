@@ -43,7 +43,7 @@ export default View.extend({
   },
 
   initialize() {
-    this.colorId = 21;
+    this.colorId = 30;
   },
 
   openColorPicker(event) {

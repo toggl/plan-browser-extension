@@ -1,6 +1,6 @@
 {
   "name": "teamweek-button",
-  "version": "2.11.0",
+  "version": "2.12.0",
   "dependencies": {
     "@babel/runtime": "7.7.4",
     "ampersand-collection": "2.0.0",
@@ -42,6 +42,8 @@
   },
   "devDependencies": {
     "@babel/core": "7.7.2",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "7.17.12",
+    "@babel/plugin-proposal-optional-chaining": "7.17.12",
     "@babel/plugin-transform-shorthand-properties": "7.7.4",
     "@babel/preset-env": "7.7.1",
     "autoprefixer": "6.6.1",
@@ -89,7 +91,7 @@
     "stylelint-scss": "3.12.1",
     "tape": "4.11.0",
     "terser-webpack-plugin": "2.2.1",
-    "web-ext": "4.1.0",
+    "web-ext": "6.8.0",
     "webpack": "4.41.2",
     "webpack-cli": "3.3.10",
     "webpack-dashboard": "3.2.0",

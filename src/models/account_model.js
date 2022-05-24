@@ -11,6 +11,7 @@ const AccountModel = Model.extend({
     id: 'number',
     name: 'string',
     pricing_system: 'string',
+    start_of_week: 'number',
   },
 
   session: {

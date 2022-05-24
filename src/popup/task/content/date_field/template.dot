@@ -1,7 +1,7 @@
 <div class="{{=it.css.container}} row row--align-center">
   <div class="{{=it.css.label}} text--color-new-gray row row--align-center">
     <span class="{{=it.css.icon}} {{=it.css.iconsvg}} icon icon-svg icon-svg--14" data-hook="heading-icon"></span>
-    From - To
+    From - to
   </div>
 
   <div data-hook="input" class="row row--align-center pointer relative row--grow task-form__field-input-container">

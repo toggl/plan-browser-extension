@@ -32,7 +32,7 @@ export default View.extend({
           name: 'search_start_date',
           date: task.start_date ? moment(task.start_date).toDate() : null,
           disabled,
-          placeholder: 'Select Start Date',
+          placeholder: 'Select start date',
           me,
         });
       },
@@ -45,7 +45,7 @@ export default View.extend({
           name: 'search_end_date',
           date: task.end_date ? moment(task.end_date).toDate() : null,
           disabled,
-          placeholder: 'Select End Date',
+          placeholder: 'Select end date',
           me,
         });
       },

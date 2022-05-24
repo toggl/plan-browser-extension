@@ -1,15 +1,16 @@
-import _ from 'lodash';
 import View from 'ampersand-view';
 import fuzzy from 'fuzzy';
 import keycode from 'keycode';
-import hub from 'src/popup/utils/hub';
+import _ from 'lodash';
+import Suggestions from 'src/models/suggestion_collection';
 import { createUser } from 'src/popup/utils/helpers';
-import { Suggestions, OtherMembers } from './models';
+import hub from 'src/popup/utils/hub';
+import { OtherMembers } from './models';
+import showPremiumView from './premium_popup';
+import css from './style.module.scss';
 import SuggestionItemView from './suggestion_item';
 import TagView from './tag_item';
-import showPremiumView from './premium_popup';
 import template from './template.dot';
-import css from './style.module.scss';
 
 const FUZZY_OPTIONS = {
   pre: '<strong>',

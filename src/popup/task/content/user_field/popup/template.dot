@@ -7,7 +7,7 @@
       autocomplete="off"
       name="search_name"
       data-hook="input"
-      placeholder="Select or Add"
+      placeholder="Search or add"
       tabindex="{{=it.parent.tabIndex}}" />
   </div>
 

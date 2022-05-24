@@ -1,7 +1,7 @@
 import qs from 'querystring';
 
 export const POPUP_WIDTH = 625;
-export const POPUP_HEIGHT = 485;
+export const POPUP_HEIGHT = 525;
 const BUTTON_MARGIN = 20;
 const BUTTON_SIZE = 20;
 

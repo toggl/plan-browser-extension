@@ -5,7 +5,7 @@
     autocomplete="off"
     name="search_name"
     data-hook="input"
-    placeholder="Select or Add"
+    placeholder="Search or add"
     tabindex="{{=it.parent.tabIndex}}" />
 
   <div class="{{=it.css.tag}} row row--align-center pointer" data-hook="tag">

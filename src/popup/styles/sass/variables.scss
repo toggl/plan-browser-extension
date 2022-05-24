@@ -32,6 +32,7 @@ $color-dark: #21282c;
 
 $color-primary: #7a43f3;
 $color-secondary: rgba($color-new-link, 0.1);
+$color-logo: #a876f5;
 
 $color-new-yellow: #fccb00;
 $color-new-orange: #ff9e15;
@@ -63,6 +64,7 @@ $color-border-light-new: #e5e5e5;
 /* Border Radius */
 $radius-none: 0;
 $radius-tiny: 2px;
+$radius-small: 4px;
 $radius-rounded: 9999px;
 
 /* Spacings */
@@ -128,7 +130,7 @@ $colors: (
   42: #cfd8dc,
   43: #607d8b,
   44: #455a64,
-  45: #263238
+  45: #263238,
 );
 
 $design-colors: (
@@ -136,7 +138,7 @@ $design-colors: (
   'link': $color-new-link,
   'success': $color-new-success,
   'danger': $color-new-danger,
-  'gray': $color-new-gray
+  'gray': $color-new-gray,
 );
 
 /* Timeline */
@@ -153,7 +155,11 @@ $popup-shadow: 0 10px 60px 0 rgba(0, 0, 0, 0.25);
 $popup-arrow-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.07);
 
 /* Transitions */
-$transition-fast: 0.2s ease-in-out;
+$transition-slower: 0.6s ease-in-out;
+$transition-slow: 0.45s ease-in-out;
+$transition-fast: 0.25s ease-in-out;
+$transition-faster: 0.125s ease;
+$transition-delay: 0.125s;
 
 /* Media queries */
 
