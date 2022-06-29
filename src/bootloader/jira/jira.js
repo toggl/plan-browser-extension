@@ -31,18 +31,16 @@ function createButtonNew(node) {
   });
 
   let buttonEl;
-  const actionsElSelector = '#jira-issue-header ';
+  const titleElSelector =
+    'h1[data-test-id="issue.views.issue-base.foundation.summary.heading"]';
 
   const titleObserver = observer
-    .create('[spacing="comfortable"] h1', node)
+    .create(titleElSelector, node)
     .onAdded(function(titleEl) {
       const name = titleEl.innerText;
-      state.task.name = name;
+      const link = window.location.href;
 
-      let link = document.querySelector('[spacing="comfortable"] a').href;
-      link = ~link.indexOf('secure/BrowseProjects.jspa')
-        ? window.location.href
-        : link;
+      state.task.name = name;
       state.task.notes = generateTaskNotes('JIRA', link);
       state.link = link;
 
@@ -51,9 +49,12 @@ function createButtonNew(node) {
     .start();
 
   const actionsObserver = observer
-    .create(actionsElSelector, node)
-    .onAdded(function(actionsEl) {
-      actionsEl.appendChild(buttonEl);
+    .create(titleElSelector, node)
+    .onAdded(function(titleEl) {
+      buttonEl.style.alignSelf = 'center';
+      buttonEl.style.marginLeft = '0';
+
+      titleEl.parentNode.insertBefore(buttonEl, titleEl);
     })
     .start();
 
