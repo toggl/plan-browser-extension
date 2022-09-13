@@ -1,6 +1,6 @@
 {
   "name": "Toggl Plan: Project Planning Calendar",
-  "version": "2.13.0",
+  "version": "3.0.0",
   "manifest_version": 3,
   "author": "Toggl <support@toggl.com>",
   "description": "Add tasks directly into Toggl Plan from your favourite web tools",
