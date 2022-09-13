@@ -1,7 +1,7 @@
 {
   "name": "Toggl Plan: Project Planning Calendar",
-  "version": "2.13.0",
-  "manifest_version": 2,
+  "version": "3.0.0",
+  "manifest_version": 3,
   "author": "Toggl <support@toggl.com>",
   "description": "Add tasks directly into Toggl Plan from your favourite web tools",
   "short_name": "Toggl Plan",
@@ -81,17 +81,23 @@
       "css": ["sentry.css"]
     }
   ],
-  "web_accessible_resources": ["*.css", "fonts/*"],
+  "web_accessible_resources": [
+    {
+      "resources": ["*.css", "fonts/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "minimum_chrome_version": "35",
   "options_ui": {
-    "page": "options.html",
-    "chrome_style": true
+    "page": "options.html"
   },
   "background": {
     "page": "background.html"
   },
-  "content_security_policy": "script-src 'self'; object-src 'self'",
-  "browser_action": {
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "action": {
     "default_icon": {
       "20": "images/icon_20.png",
       "40": "images/icon_40.png",

@@ -1,13 +1,14 @@
-import { POPUP_WIDTH, POPUP_HEIGHT } from 'src/background/util/popup_window';
+import config from 'src/api/config';
+import { addOnExtensionClickListener, createURL } from './util';
 
-chrome.browserAction.onClicked.addListener(function() {
+addOnExtensionClickListener(function() {
   chrome.windows.getCurrent({}, win => {
     chrome.windows.create({
-      url: chrome.extension.getURL('popup.html?name='),
-      width: POPUP_WIDTH,
-      height: POPUP_HEIGHT,
+      url: createURL({ name: '' }),
+      width: config.popup.width,
+      height: config.popup.height,
       top: 120,
-      left: win.width - POPUP_WIDTH - 20,
+      left: win.width - config.popup.width - 20,
       type: 'popup',
     });
   });

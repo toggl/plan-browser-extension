@@ -1,6 +1,6 @@
 import TaskModel from 'src/models/task_model';
 import * as analytics from 'src/utils/analytics';
-import { openPopupWindow } from 'src/background/util/popup_window';
+import { openPopupWindow } from 'src/background/util';
 
 chrome.contextMenus.create({
   id: 'context-add',
