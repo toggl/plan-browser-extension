@@ -187,6 +187,11 @@ module.exports = {
       IS_FIREFOX: JSON.stringify(process.env.IS_FIREFOX),
       IS_PRODUCTION: JSON.stringify(process.env.IS_PRODUCTION === 'true'),
       MANIFEST_V2: JSON.stringify(process.env.MANIFEST_V2),
+      RUDDERSTACK_KEY: JSON.stringify(
+        process.env.IS_PRODUCTION === 'true'
+          ? process.env.RUDDERSTACK_PRODUCTION_KEY
+          : process.env.RUDDERSTACK_STAGING_KEY
+      ),
     }),
     new CopyWebpackPlugin(
       [

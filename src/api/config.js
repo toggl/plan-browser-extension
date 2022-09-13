@@ -7,9 +7,7 @@ export default {
   },
   rudderStack: {
     dataPlaneUrl: 'https://toggl-dataplane.rudderstack.com',
-    key: IS_PRODUCTION
-      ? '1n43wlaD9MHBMXIWmXY5Am3ZpnI'
-      : '1n3kyWOwIjSb314A7sXAA20LW6d',
+    key: RUDDERSTACK_KEY,
   },
   popup: {
     width: 625,
