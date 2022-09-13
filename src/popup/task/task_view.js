@@ -9,6 +9,7 @@ import Content from './content/content';
 import './task_view.scss';
 import css from './task_view.module.scss';
 import template from './task_view.dot';
+import { trackTaskCreated } from 'src/utils/analytics';
 
 const TaskView = View.extend({
   template,
@@ -147,6 +148,7 @@ const TaskView = View.extend({
       this.showLoader();
       await this.model.save();
       this.hub.trigger('task:created', this.model, this.workspace);
+      this.trackTaskCreatedEvent(this.model);
       this.hideLoader();
       await this.showOverlay();
       this.closePopup();
@@ -212,6 +214,20 @@ const TaskView = View.extend({
 
   showError(error) {
     this.hub.trigger('error:show', error);
+  },
+
+  trackTaskCreatedEvent(task) {
+    const taskPlan = task.plan_id
+      ? this.workspace.projects.findWhere({ id: task.plan_id })
+      : null;
+    const segmentName = task.timeline_segment_id
+      ? taskPlan?.segments.findWhere({ id: task.timeline_segment_id })?.name
+      : '';
+    const statusName = task.plan_status_id
+      ? taskPlan?.statuses.findWhere({ id: task.plan_status_id })?.name
+      : '';
+
+    trackTaskCreated(task, statusName, segmentName);
   },
 });
 

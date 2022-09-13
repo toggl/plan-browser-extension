@@ -39,7 +39,7 @@
     "superagent": "3.7.0",
     "tinycolor2": "1.4.1",
     "to-string-loader": "1.1.6",
-    "uuid": "2.0.1"
+    "uuid": "9.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.7.2",
@@ -109,13 +109,13 @@
   "scripts": {
     "start": "webpack-dashboard -- npm run dev",
     "dev": "webpack --watch",
-    "firefox-dev": "IS_FIREFOX=true npm run dev",
-    "build": "webpack",
+    "firefox-dev": "IS_FIREFOX=true MANIFEST_V2=true npm run dev",
+    "build": "IS_PRODUCTION=true webpack",
     "tag": "/bin/bash bin/tag.sh",
     "chrome": "cd build && web-ext run -t chromium",
     "chrome-release": "rm -rf build tmp && npm run build && mkdir -p tmp && cd build && zip -x *.DS_Store -r ../tmp/tw-button.zip .",
     "firefox": "cd build && web-ext run -t firefox-desktop",
-    "firefox-release": "IS_FIREFOX=true npm run chrome-release",
+    "firefox-release": "IS_FIREFOX=true MANIFEST_V2=true npm run chrome-release",
     "firefox-source": "npm run buildclean && mkdir -p tmp && rm -f tmp/tw-button-source.zip && zip -x *.DS_Store -r tmp/tw-button-source.zip src .babelrc .env .eslintrc.json .nvmrc .prettierrc .stylelintrc.json FIREFOX.md package.json package-lock.json webpack.config.js",
     "lint": "eslint src webpack.config.js --quiet --cache",
     "precommit": "npm run lint",

@@ -11,6 +11,7 @@ const postCSSInlineSVG = require('postcss-inline-svg');
 const jsonImporter = require('node-sass-json-importer');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const DefinePlugin = webpack.DefinePlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -22,6 +23,7 @@ const prd = false;
 const noop = () => {};
 const sourceMaps = prd ? 'cheap-module-eval-source-map' : false;
 const platform = process.env.IS_FIREFOX === 'true' ? 'firefox' : 'chrome';
+const manifestVersion = process.env.MANIFEST_V2 === 'true' ? 'v2' : 'v3';
 
 const miniCssExtractLoader = {
   loader: MiniCssExtractPlugin.loader,
@@ -181,6 +183,11 @@ module.exports = {
   },
   plugins: [
     new DashboardPlugin(),
+    new DefinePlugin({
+      IS_FIREFOX: JSON.stringify(process.env.IS_FIREFOX),
+      IS_PRODUCTION: JSON.stringify(process.env.IS_PRODUCTION === 'true'),
+      MANIFEST_V2: JSON.stringify(process.env.MANIFEST_V2),
+    }),
     new CopyWebpackPlugin(
       [
         platform === 'chrome' && {
@@ -188,7 +195,10 @@ module.exports = {
           to: 'icon.png',
         },
         { from: 'src/images', to: 'images' },
-        { from: `src/manifest.${platform}.json`, to: 'manifest.json' },
+        {
+          from: `src/manifest.${platform}.${manifestVersion}.json`,
+          to: 'manifest.json',
+        },
         { from: 'src/popup/fonts', to: 'fonts' },
       ].filter(Boolean)
     ),

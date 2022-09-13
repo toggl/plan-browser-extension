@@ -1,6 +1,6 @@
 import * as storage from 'src/utils/storage';
 import find from 'lodash.find';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function(namespace) {
   const store = {
@@ -34,7 +34,7 @@ export default function(namespace) {
     },
 
     create(model) {
-      model.id = uuid.v4();
+      model.id = uuidv4();
 
       return this.get()
         .then(models => {

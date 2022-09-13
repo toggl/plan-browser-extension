@@ -1,5 +1,6 @@
 import CustomDomainCollection from 'src/models/custom_domain_collection';
 import assets from './injected_assets.json';
+import { executeScript, insertCSS } from './util';
 
 const injector = {
   initialize() {
@@ -34,11 +35,11 @@ const injector = {
 
   injectTab(tab, service) {
     assets[service].scripts.forEach(file => {
-      chrome.tabs.executeScript(tab, { file });
+      executeScript(tab, file);
     });
 
     assets[service].styles.forEach(file => {
-      chrome.tabs.insertCSS(tab, { file });
+      insertCSS(tab, file);
     });
   },
 };
