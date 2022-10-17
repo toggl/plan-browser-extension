@@ -56,7 +56,7 @@
     "copy-webpack-plugin": "5.0.5",
     "css-loader": "3.2.0",
     "cssnano": "3.10.0",
-    "cypress": "3.4.1",
+    "cypress": "10.10.0",
     "del": "1.2.0",
     "dot-loader": "0.1.1",
     "dotenv": "8.2.0",
