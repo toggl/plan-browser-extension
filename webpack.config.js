@@ -184,9 +184,9 @@ module.exports = {
   plugins: [
     new DashboardPlugin(),
     new DefinePlugin({
-      IS_FIREFOX: JSON.stringify(process.env.IS_FIREFOX),
+      IS_FIREFOX: JSON.stringify(process.env.IS_FIREFOX === 'true'),
       IS_PRODUCTION: JSON.stringify(process.env.IS_PRODUCTION === 'true'),
-      MANIFEST_V2: JSON.stringify(process.env.MANIFEST_V2),
+      MANIFEST_V2: JSON.stringify(process.env.MANIFEST_V2 === 'true'),
       RUDDERSTACK_KEY: JSON.stringify(
         process.env.IS_PRODUCTION === 'true'
           ? process.env.RUDDERSTACK_PRODUCTION_KEY
