@@ -1,7 +1,7 @@
 {
   "name": "teamweek-button",
   "description": "Browser extensions for Toggl Plan",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "dependencies": {
     "@babel/runtime": "7.7.4",
     "ampersand-collection": "2.0.0",
