@@ -14,10 +14,10 @@ export async function getIsPremium(workspace) {
 
     default: {
       const plans = _.keyBy(await xhr('get', '/deadwood/v1/plans'), 'id');
-      const { plan_id } = await xhr(
+      const plan_id = await xhr(
         'get',
         `/deadwood/v1/${workspace.id}/subscription`
-      );
+      )?.plan_id;
       const plan = plans[plan_id];
       return !!plan && plan.member_limit > 5;
     }
