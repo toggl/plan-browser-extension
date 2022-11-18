@@ -77,7 +77,7 @@
     "lint-staged": "9.4.3",
     "lodash.assign": "4.2.0",
     "mini-css-extract-plugin": "0.8.0",
-    "node-sass": "4.14.1",
+    "node-sass": "7.0.3",
     "node-sass-json-importer": "4.3.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "postcss-inline-svg": "4.1.0",
