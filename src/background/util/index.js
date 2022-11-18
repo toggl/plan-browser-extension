@@ -41,6 +41,10 @@ export function addOnExtensionClickListener(callback) {
   chrome.action.onClicked.addListener(callback);
 }
 
+export function addExtensionRemovedListener(callback) {
+  chrome.windows.onRemoved.addListener(callback);
+}
+
 export function executeScript(tabId, file) {
   if (getIsManifestV2()) {
     chrome.tabs.executeScript(tabId, { file });
