@@ -5,11 +5,10 @@ import {
   createURL,
 } from './util';
 
-let windowId = false;
+let windowId = null;
 
 addOnExtensionClickListener(win => {
-  if (windowId === false) {
-    windowId = true;
+  if (windowId === null) {
     chrome.windows.create(
       {
         url: createURL({ name: '' }),
@@ -23,13 +22,13 @@ addOnExtensionClickListener(win => {
         windowId = win.id;
       }
     );
-  } else if (typeof windowId === 'number') {
+  } else {
     chrome.windows.update(windowId, { focused: true });
   }
 });
 
 addExtensionRemovedListener(winId => {
   if (windowId === winId) {
-    windowId = false;
+    windowId = null;
   }
 });
