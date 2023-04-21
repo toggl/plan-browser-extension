@@ -4,6 +4,12 @@ import request from 'superagent';
 import config from 'src/api/config';
 import OAuthState from './oauth_state';
 import TokensModel from './tokens_model';
+import { randomString } from '../utils/string';
+import { generateCodeChallenge } from '../utils/crypto';
+
+const sharedAuthServiceClientId = '7295cd34-5090-4372-6cb4-1b107f679cad';
+const sharedAuthLoginUrl = 'https://accounts.toggl.space/plan/login';
+const sharedAuthRefreshTokenUrl = 'https://accounts.toggl.space/oauth/token';
 
 const AuthenticationState = State.extend({
   props: {
@@ -64,6 +70,91 @@ const AuthenticationState = State.extend({
    */
   revoke() {
     return this.tokens.clear().destroy();
+  },
+
+  async launchSharedAuthFlow() {
+    const redirectUri = chrome.identity.getRedirectURL();
+    const state = this.generateSharedAuthState();
+    const codeVerifier = this.generateSharedAuthCodeVerifier();
+    const [codeChallenge, codeChallengeMethod] =
+      await this.generateSharedAuthCodeChallenge(codeVerifier);
+    const authUrl = await this.setupSharedAuthUrl({
+      codeChallenge,
+      codeChallengeMethod,
+      state,
+      redirectUri,
+    });
+
+    chrome.identity.launchWebAuthFlow(
+      {
+        urL: authUrl,
+        interactive: true,
+      },
+      async (redirectUrl) => {
+        if (!redirectUrl) {
+          console.error('authorization failed');
+          return;
+        }
+        // get search params from the redirect url
+        const urlParams = new URL(redirectUrl).searchParams;
+        const responseCode = urlParams.get('code');
+        const responseState = urlParams.get('state');
+        if (responseState !== state) {
+          console.error('state mismatch');
+          return;
+        }
+        // fetch shared auth tokens
+        try {
+          const tokens = await this.fetchSharedAuthTokens({
+            code: responseCode,
+            codeVerifier,
+            redirectUri,
+          });
+          this.tokens.save(tokens);
+        } catch (err) {
+          console.error('failed to fetch auth tokens');
+        }
+      }
+    );
+  },
+  async setupSharedAuthUrl({
+    codeChallenge,
+    codeChallengeMethod,
+    state,
+    redirectUri,
+  }) {
+    const authUrl = new URL(sharedAuthLoginUrl);
+    authUrl.searchParams.append('response_type', 'code');
+    authUrl.searchParams.append('client_id', 'XXX');
+    authUrl.searchParams.append('redirect_uri', redirectUri);
+    authUrl.searchParams.append('code_challenge', codeChallenge);
+    authUrl.searchParams.append('code_challenge_method', codeChallengeMethod);
+    authUrl.searchParams.append('state', state);
+    return authUrl.toString();
+  },
+  generateSharedAuthCodeChallenge(codeVerifier) {
+    return generateCodeChallenge(codeVerifier);
+  },
+  generateSharedAuthState() {
+    return randomString();
+  },
+  generateSharedAuthCodeVerifier() {
+    return randomString(64);
+  },
+  async fetchSharedAuthTokens({ code, codeVerifier, redirectUri }) {
+    const postParams = new FormData();
+    postParams.append('client_id', sharedAuthServiceClientId);
+    postParams.append('code_verifier', codeVerifier);
+    postParams.append('grant_type', 'authorization_code');
+    postParams.append('code', code);
+    postParams.append('redirect_uri', redirectUri);
+
+    const response = await fetch(sharedAuthRefreshTokenUrl, {
+      method: 'POST',
+      body: postParams,
+    });
+    const tokens = await response.json();
+    return tokens;
   },
 
   /**
