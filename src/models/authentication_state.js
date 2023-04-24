@@ -73,7 +73,7 @@ const AuthenticationState = State.extend({
   },
 
   async launchSharedAuthFlow() {
-    const redirectUri = chrome.identity.getRedirectURL();
+    const redirectUrl = chrome.identity.getRedirectURL();
     const state = this.generateSharedAuthState();
     const codeVerifier = this.generateSharedAuthCodeVerifier();
     const [codeChallenge, codeChallengeMethod] =
@@ -82,12 +82,12 @@ const AuthenticationState = State.extend({
       codeChallenge,
       codeChallengeMethod,
       state,
-      redirectUri,
+      redirectUrl,
     });
 
     chrome.identity.launchWebAuthFlow(
       {
-        urL: authUrl,
+        url: authUrl,
         interactive: true,
       },
       async (redirectUrl) => {
@@ -108,7 +108,7 @@ const AuthenticationState = State.extend({
           const tokens = await this.fetchSharedAuthTokens({
             code: responseCode,
             codeVerifier,
-            redirectUri,
+            redirectUrl,
           });
           this.tokens.save(tokens);
         } catch (err) {
@@ -121,12 +121,12 @@ const AuthenticationState = State.extend({
     codeChallenge,
     codeChallengeMethod,
     state,
-    redirectUri,
+    redirectUrl,
   }) {
     const authUrl = new URL(sharedAuthLoginUrl);
     authUrl.searchParams.append('response_type', 'code');
     authUrl.searchParams.append('client_id', 'XXX');
-    authUrl.searchParams.append('redirect_uri', redirectUri);
+    authUrl.searchParams.append('redirect_uri', redirectUrl);
     authUrl.searchParams.append('code_challenge', codeChallenge);
     authUrl.searchParams.append('code_challenge_method', codeChallengeMethod);
     authUrl.searchParams.append('state', state);
@@ -141,13 +141,13 @@ const AuthenticationState = State.extend({
   generateSharedAuthCodeVerifier() {
     return randomString(64);
   },
-  async fetchSharedAuthTokens({ code, codeVerifier, redirectUri }) {
+  async fetchSharedAuthTokens({ code, codeVerifier, redirectUrl }) {
     const postParams = new FormData();
     postParams.append('client_id', sharedAuthServiceClientId);
     postParams.append('code_verifier', codeVerifier);
     postParams.append('grant_type', 'authorization_code');
     postParams.append('code', code);
-    postParams.append('redirect_uri', redirectUri);
+    postParams.append('redirect_uri', redirectUrl);
 
     const response = await fetch(sharedAuthRefreshTokenUrl, {
       method: 'POST',

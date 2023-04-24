@@ -26,7 +26,7 @@ const AuthView = View.extend({
           tabIndex: 1,
           validations: [
             {
-              run: value => value.length > 0,
+              run: (value) => value.length > 0,
               message: '*Email cannot be empty',
             },
           ],
@@ -45,7 +45,7 @@ const AuthView = View.extend({
           tabIndex: 2,
           validations: [
             {
-              run: value => value.length > 0,
+              run: (value) => value.length > 0,
               message: '*Password cannot be empty',
             },
           ],
@@ -56,14 +56,19 @@ const AuthView = View.extend({
   },
 
   events: {
+    'click [data-hook=button-signin]': 'onSignin',
     'submit [data-hook=form]': 'onSubmit',
     'click [data-hook=button-cancel]': 'onCancel',
   },
 
   render() {
     this.renderWithTemplate(this);
-    this.email.focus();
     return this;
+  },
+
+  onSignin() {
+    console.log('onSignin');
+    api.auth.launchSharedAuthFlow();
   },
 
   onSubmit(event) {
@@ -85,13 +90,13 @@ const AuthView = View.extend({
     Promise.all([
       clearMe(),
       api.auth.authenticate(credentials).then(
-        function() {
+        function () {
           hub.trigger('loader:hide');
           triggerAchievementUseButton();
           hub.trigger('popup:update');
           return null;
         },
-        function(error) {
+        function (error) {
           hub.trigger('loader:hide');
           hub.trigger('error:show', error);
         }

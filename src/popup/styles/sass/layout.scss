@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .row {
   display: flex;
   box-sizing: border-box;
@@ -120,11 +122,11 @@
 
 @for $i from 1 through 12 {
   .column-#{$i} {
-    width: 100% * ($i / 12);
+    width: 100% * math.div($i, 12);
   }
 
   .offset-#{$i} {
-    margin-left: 100% * ($i / 12);
+    margin-left: 100% * math.div($i, 12);
   }
 }
 

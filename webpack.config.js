@@ -3,12 +3,11 @@
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
-const join = p => path.join(__dirname, p);
+const join = (p) => path.join(__dirname, p);
 const webpack = require('webpack');
 const cssnano = require('cssnano');
 const autoprefixer = require('autoprefixer');
 const postCSSInlineSVG = require('postcss-inline-svg');
-const jsonImporter = require('node-sass-json-importer');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const DefinePlugin = webpack.DefinePlugin;
@@ -47,9 +46,7 @@ const postCSSLoader = {
 const sassLoader = {
   loader: 'sass-loader',
   options: {
-    sassOptions: {
-      importer: jsonImporter(),
-    },
+    sassOptions: {},
   },
 };
 
@@ -66,10 +63,10 @@ const sassResourcesLoader = {
 const MAIN_PACKAGES = ['background', 'popup', 'options'];
 
 const entry = {};
-MAIN_PACKAGES.forEach(p => {
+MAIN_PACKAGES.forEach((p) => {
   entry[p] = path.resolve(`src/${p}/${p}.js`);
 });
-fs.readdirSync('src/bootloader').forEach(f => {
+fs.readdirSync('src/bootloader').forEach((f) => {
   if (fs.lstatSync(path.resolve(`src/bootloader/${f}`)).isDirectory()) {
     entry[f] = path.resolve(`src/bootloader/${f}/${f}.js`);
   }
@@ -221,7 +218,7 @@ module.exports = {
         })
       : noop,
     ...MAIN_PACKAGES.map(
-      template =>
+      (template) =>
         new HtmlWebpackPlugin({
           filename: `${template}.html`,
           template: join(

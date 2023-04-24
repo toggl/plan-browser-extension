@@ -8,7 +8,7 @@
   "icons": {
     "80": "images/icon_80.png"
   },
-  "permissions": ["storage", "contextMenus"],
+  "permissions": ["storage", "contextMenus", "identity"],
   "optional_permissions": ["tabs", "webNavigation"],
   "content_scripts": [
     {
