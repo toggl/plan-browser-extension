@@ -8,6 +8,7 @@
   "icons": {
     "80": "images/icon_80.png"
   },
+  "host_permissions": ["*://*.toggl.com/*", "*://*.toggl.space/*"],
   "permissions": ["storage", "contextMenus", "identity"],
   "optional_permissions": ["tabs", "webNavigation"],
   "content_scripts": [
