@@ -21,7 +21,7 @@ export function openPopupWindow(data) {
 }
 
 export function getIsManifestV2() {
-  return MANIFEST_V2 === 'true' ? true : false;
+  return MANIFEST_V2 === 'true' || MANIFEST_V2 === true ? true : false;
 }
 
 export function createURL(params = {}) {
