@@ -9,6 +9,7 @@ import { generateCodeChallenge } from '../utils/crypto';
 
 const sharedAuthServiceClientId = '7295cd34-5090-4372-6cb4-1b107f679cad';
 const sharedAuthLoginUrl = 'https://accounts.toggl.space/plan/login';
+const sharedAuthSignupUrl = 'https://accounts.toggl.space/plan/signup';
 const sharedAuthRefreshTokenUrl = 'https://accounts.toggl.space/oauth/token';
 
 const AuthenticationState = State.extend({
@@ -72,18 +73,21 @@ const AuthenticationState = State.extend({
     return this.tokens.clear().destroy();
   },
 
-  async launchSharedAuthFlow() {
+  async launchSharedAuthFlow(type = 'signin') {
     const redirectUrl = chrome.identity.getRedirectURL();
     const state = this.generateSharedAuthState();
     const codeVerifier = this.generateSharedAuthCodeVerifier();
     const [codeChallenge, codeChallengeMethod] =
       await this.generateSharedAuthCodeChallenge(codeVerifier);
-    const authUrl = await this.setupSharedAuthUrl({
-      codeChallenge,
-      codeChallengeMethod,
-      state,
-      redirectUrl,
-    });
+    const authUrl = await this.setupSharedAuthUrl(
+      type === 'signin' ? sharedAuthLoginUrl : sharedAuthSignupUrl,
+      {
+        codeChallenge,
+        codeChallengeMethod,
+        state,
+        redirectUrl,
+      }
+    );
 
     chrome.identity.launchWebAuthFlow(
       {
@@ -117,15 +121,13 @@ const AuthenticationState = State.extend({
       }
     );
   },
-  async setupSharedAuthUrl({
-    codeChallenge,
-    codeChallengeMethod,
-    state,
-    redirectUrl,
-  }) {
-    const authUrl = new URL(sharedAuthLoginUrl);
+  async setupSharedAuthUrl(
+    url,
+    { codeChallenge, codeChallengeMethod, state, redirectUrl }
+  ) {
+    const authUrl = new URL(url);
     authUrl.searchParams.append('response_type', 'code');
-    authUrl.searchParams.append('client_id', 'XXX');
+    authUrl.searchParams.append('client_id', sharedAuthServiceClientId);
     authUrl.searchParams.append('redirect_uri', redirectUrl);
     authUrl.searchParams.append('code_challenge', codeChallenge);
     authUrl.searchParams.append('code_challenge_method', codeChallengeMethod);

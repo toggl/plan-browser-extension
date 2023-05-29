@@ -33,3 +33,31 @@
   src: url('/fonts/Inter-Bold.woff2') format('woff2'),
     url('/fonts/Inter-Bold.woff') format('woff');
 }
+
+@font-face {
+  font-display: swap;
+  font-family: 'GT Haptik';
+  src: url('/fonts/gt-haptik/GT-Haptik-Bold.woff2') format('woff2'),
+    url('/fonts/gt-haptik/GT-Haptik-Bold.woff') format('woff');
+  font-weight: 700;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'GT Haptik';
+  src: url('/fonts/gt-haptik/GT-Haptik-Regular.woff2') format('woff2'),
+    url('/fonts/gt-haptik/GT-Haptik-Regular.woff') format('woff');
+  font-weight: 400;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'GT Haptik';
+  src: url('/fonts/gt-haptik/GT-Haptik-Medium-Rotalic-2.eot');
+  src: url('/fonts/gt-haptik/GT-Haptik-Medium-Rotalic-2.eot?#iefix')
+      format('embedded-opentype'),
+    url('/fonts/gt-haptik/GT-Haptik-Medium-Rotalic-2.woff2') format('woff2'),
+    url('/fonts/gt-haptik/GT-Haptik-Medium-Rotalic-2.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+}
