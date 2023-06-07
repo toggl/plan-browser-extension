@@ -10,7 +10,7 @@ import { generateCodeChallenge } from '../utils/crypto';
 const sharedAuthServiceClientId = '7295cd34-5090-4372-6cb4-1b107f679cad';
 const sharedAuthLoginUrl = 'https://accounts.toggl.space/plan/login';
 const sharedAuthSignupUrl = 'https://accounts.toggl.space/plan/signup';
-const sharedAuthRefreshTokenUrl = 'https://accounts.toggl.space/oauth/token';
+const sharedAuthRefreshTokenUrl = 'https://accounts.toggl.space/api/oauth/token';
 
 const AuthenticationState = State.extend({
   props: {
@@ -144,15 +144,17 @@ const AuthenticationState = State.extend({
     return randomString(64);
   },
   async fetchSharedAuthTokens({ code, codeVerifier, redirectUrl }) {
-    const postParams = new FormData();
-    postParams.append('client_id', sharedAuthServiceClientId);
-    postParams.append('code_verifier', codeVerifier);
-    postParams.append('grant_type', 'authorization_code');
-    postParams.append('code', code);
-    postParams.append('redirect_uri', redirectUrl);
+    const postParams = new URLSearchParams({
+        client_id: sharedAuthServiceClientId,
+        code_verifier: codeVerifier,
+        grant_type: 'authorization_code',
+        code: code,
+        redirect_uri: redirectUrl
+    }).toString();
 
     const response = await fetch(sharedAuthRefreshTokenUrl, {
       method: 'POST',
+      headers: { 'Content-type': 'application/x-www-form-urlencoded' },
       body: postParams,
     });
     const tokens = await response.json();
@@ -216,6 +218,7 @@ const AuthenticationState = State.extend({
           // Use base64'd client ID and secret for authorization
           .set('Authorization', 'Basic ' + this.oauth.token)
           // Send refresh token in form data
+          // TODO: check if it's `x-www-form-urlencoded`
           .type('form')
           .send({
             refresh_token: this.tokens.refresh_token,
