@@ -7,7 +7,7 @@ import TokensModel from './tokens_model';
 import { randomString } from '../utils/string';
 import { generateCodeChallenge } from '../utils/crypto';
 
-const sharedAuthServiceClientId = '7295cd34-5090-4372-6cb4-1b107f679cad';
+const sharedAuthServiceClientId = 'b51552c8-7bf6-4811-6bd0-4370e517827c';
 const sharedAuthLoginUrl = 'https://accounts.toggl.space/plan/login';
 const sharedAuthSignupUrl = 'https://accounts.toggl.space/plan/signup';
 const sharedAuthRefreshTokenUrl = 'https://accounts.toggl.space/api/oauth/token';
@@ -94,13 +94,13 @@ const AuthenticationState = State.extend({
         url: authUrl,
         interactive: true,
       },
-      async (redirectUrl) => {
-        if (!redirectUrl) {
+      async (callbackUrl) => {
+        if (!callbackUrl) {
           console.error('authorization failed');
           return;
         }
         // get search params from the redirect url
-        const urlParams = new URL(redirectUrl).searchParams;
+        const urlParams = new URL(callbackUrl).searchParams;
         const responseCode = urlParams.get('code');
         const responseState = urlParams.get('state');
         if (responseState !== state) {
