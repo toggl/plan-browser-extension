@@ -7,11 +7,11 @@ import TokensModel from './tokens_model';
 import { randomString } from '../utils/string';
 import { generateCodeChallenge } from '../utils/crypto';
 
-const sharedAuthServiceClientId = 'd051f059-6812-47da-4923-566bbda71749';
-const sharedAuthLoginUrl = 'https://accounts.toggl.space/plan/login';
-const sharedAuthSignupUrl = 'https://accounts.toggl.space/plan/signup';
-const sharedAuthRefreshTokenUrl =
-  'https://accounts.toggl.space/api/oauth/token';
+const sharedAuthServiceClientId = 'b51552c8-7bf6-4811-6bd0-4370e517827c';
+const sharedAuthLoginUrl = 'https://accounts.toggl.com/plan/login';
+const sharedAuthSignupUrl = 'https://accounts.toggl.com/plan/signup';
+const sharedAuthRefreshTokenUrl = 'https://accounts.toggl.com/api/oauth/token';
+const sharedAuthSessionsUrl = 'https://accounts.toggl.com/api/sessions';
 
 const AuthenticationState = State.extend({
   props: {
@@ -70,7 +70,13 @@ const AuthenticationState = State.extend({
    *
    * @return Promise
    */
-  revoke() {
+  async revoke() {
+    await fetch(sharedAuthSessionsUrl, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${this.tokens.access_token}`,
+      },
+    });
     return this.tokens.clear().destroy();
   },
 
