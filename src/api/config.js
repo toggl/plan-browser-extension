@@ -10,8 +10,8 @@ export default {
     key: RUDDERSTACK_KEY,
   },
   popup: {
-    width: 625,
-    height: 525,
+    width: 700,
+    height: 740,
     buttonMargin: 20,
     buttonSize: 20,
   },

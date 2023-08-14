@@ -1,5 +1,6 @@
 {
   "name": "Toggl Plan: Project Planning Calendar",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxm3PifguYiFk+uAqbTSlPO0fwzbPJF7eGYHD9MFZZfupkGv/auivjNWmL13dClcsHHHv5+XVarMQ0bUUQ6ONTGnh7deFNJLHKQMBGUyryIiVsB/c0jWHNi8vJJjhggSZx6X97M0L+xCehsp6TgovCVwY6ouD78oVvvqB+S/SMUbP4CWN3Qp+7QdSuOmzCcVAaveHQxokrhkaLJXWk+0q8pGQGxr0wwxyUa7C1VdFBHS/MqFyhuK0aSC9dbPiwJ1vTn8y9DyxbBrxQnCCcMgIBrFwqJbfi8E+NfjFcctoXRbbfuuWJBJxtP8ZdhYoeBJEFCxczRFaA4rhREpfuMzW2wIDAQAB",
   "version": "3.1.2",
   "manifest_version": 3,
   "author": "Toggl <support@toggl.com>",
@@ -8,7 +9,8 @@
   "icons": {
     "80": "images/icon_80.png"
   },
-  "permissions": ["storage", "contextMenus"],
+  "host_permissions": ["*://*.toggl.com/*", "*://*.toggl.space/*"],
+  "permissions": ["storage", "contextMenus", "identity"],
   "optional_permissions": ["tabs", "webNavigation"],
   "content_scripts": [
     {

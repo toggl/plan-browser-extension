@@ -44,11 +44,11 @@
   cursor: pointer;
 
   &:hover .button--menu {
-    @extend .button--menu:hover;
+    @extend .button--menu, :hover;
   }
 
   &:hover .button--menu.button--active {
-    @extend .button--menu.button--active:hover;
+    @extend .button--menu, .button--active, :hover;
   }
 }
 

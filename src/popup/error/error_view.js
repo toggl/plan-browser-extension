@@ -30,6 +30,10 @@ const ErrorView = View.extend({
       message: 'Ouch, something went wrong. Please try logging in again.',
       contact_us: false,
     },
+    authorization_failed: {
+      message: 'Authorization failed. Please try logging in again',
+      contact_us: false,
+    },
     default: {
       message:
         'Something went horribly wrong, you should not even see this message',

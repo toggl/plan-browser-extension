@@ -86,7 +86,7 @@ $widths: 24 16 14;
   // radius of the circle is calculated using pythagoras theorem
   $hypotenuse: ceil($width * 1.41);
   // how many pixels the circle is overlapping the checkbox from the edge
-  $overlap: ($hypotenuse - $width) / 2;
+  $overlap: calc(($hypotenuse - $width) / 2);
 
   .size-#{$width} {
     height: #{$width}px;

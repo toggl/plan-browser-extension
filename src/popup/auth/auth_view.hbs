@@ -1,28 +1,14 @@
 <form class="auth-popup" data-hook="form" autocomplete="off">
   <div class="popup__inner">
-    <div class="row row--align-center">
-      <div class="popup__title row--grow">Login to Toggl Plan</div>
-    </div>
-
     <div class="popup__errors" data-hook="errors"></div>
 
     <div class="popup__form form">
-      <div class="row row--align-center">
-        <div class="column">
-          <div data-hook="input-email"></div>
-        </div>
-      </div>
-
-      <div class="row row--align-center">
-        <div class="column">
-          <div data-hook="input-password"></div>
-        </div>
-      </div>
+      <img class="plan-logo" src="/images/plan_logo.svg" />
+      <img class="auth-image" src="/images/auth_illustration.png" />
+      <p class="auth-subtitle">Nearly there!</p>
+      <p>Click the button below to log in and start planning</p>
+      <button type="button" class="button button--submit popup__button auth-button" data-hook="button-signin" tabindex="3">Log In</button>
+      <button type="button" class="button button--cancel popup__button auth-button" data-hook="button-signup" tabindex="4">Sign up instead</button>
     </div>
-  </div>
-
-  <div class="popup__buttons">
-    <button type="submit" class="button button--submit popup__button" data-hook="button-submit" tabindex="3">Sign In</button>
-    <button type="button" class="button button--cancel popup__button" data-hook="button-cancel" tabindex="4">Cancel</button>
-  </div>
 </form>
+</div>
