@@ -7,7 +7,9 @@ import TokensModel from './tokens_model';
 import { randomString } from '../utils/string';
 import { generateCodeChallenge } from '../utils/crypto';
 
-const sharedAuthServiceClientId = 'b51552c8-7bf6-4811-6bd0-4370e517827c';
+const chromeClientId = 'b51552c8-7bf6-4811-6bd0-4370e517827c';
+const firefoxClientId = '7f26fb99-8637-43ce-b439-f26236406b8b';
+const sharedAuthServiceClientId = IS_FIREFOX ? firefoxClientId : chromeClientId;
 const sharedAuthLoginUrl = 'https://accounts.toggl.com/plan/login';
 const sharedAuthSignupUrl = 'https://accounts.toggl.com/plan/signup';
 const sharedAuthRefreshTokenUrl = 'https://accounts.toggl.com/api/oauth/token';

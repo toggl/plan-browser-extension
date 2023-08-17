@@ -1,15 +1,20 @@
 {
   "name": "Toggl Plan: Project Planning Calendar",
-  "version": "3.2.1",
-  "manifest_version": 3,
+  "version": "3.1.2",
+  "manifest_version": 2,
   "author": "Toggl <support@toggl.com>",
   "description": "Add tasks directly into Toggl Plan from your favourite web tools",
   "short_name": "Toggl Plan",
   "icons": {
     "80": "images/icon_80.png"
   },
-  "host_permissions": ["*://*.toggl.com/*", "*://*.toggl.space/*"],
-  "permissions": ["storage", "contextMenus", "identity"],
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "identity",
+    "*://*.toggl.com/*",
+    "*://*.toggl.space/*"
+  ],
   "optional_permissions": ["tabs", "webNavigation"],
   "content_scripts": [
     {
@@ -82,23 +87,17 @@
       "css": ["sentry.css"]
     }
   ],
-  "web_accessible_resources": [
-    {
-      "resources": ["*.css", "fonts/*"],
-      "matches": ["<all_urls>"]
-    }
-  ],
-  "minimum_chrome_version": "88",
+  "web_accessible_resources": ["*.css", "fonts/*"],
+  "minimum_chrome_version": "35",
   "options_ui": {
-    "page": "options.html"
+    "page": "options.html",
+    "chrome_style": true
   },
   "background": {
     "page": "background.html"
   },
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
-  },
-  "action": {
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "browser_action": {
     "default_icon": {
       "20": "images/icon_20.png",
       "40": "images/icon_40.png",
