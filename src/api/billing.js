@@ -12,6 +12,14 @@ export async function getIsPremium(workspace) {
       return 'expired' !== current_subscription_state;
     }
 
+    case 'stardust': {
+      const { current_subscription_state } = await xhr(
+        'get',
+        `/billing/v1/${workspace.id}/customer`
+      );
+      return 'expired' !== current_subscription_state;
+    }
+
     default: {
       const plans = _.keyBy(await xhr('get', '/deadwood/v1/plans'), 'id');
       const plan_id = await xhr(
