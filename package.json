@@ -92,12 +92,12 @@
     "stylelint-scss": "3.12.1",
     "tape": "4.11.0",
     "terser-webpack-plugin": "2.2.1",
-    "web-ext": "6.8.0",
+    "web-ext": "10.8.0",
     "webpack": "4.41.2",
     "webpack-cli": "3.3.10",
     "webpack-dashboard": "3.2.0",
     "webpack-dev-middleware": "3.7.2",
-    "webpack-dev-server": "3.9.0"
+    "webpack-dev-server": "6.1.0"
   },
   "engines": {
     "node": ">=12.15.0"
